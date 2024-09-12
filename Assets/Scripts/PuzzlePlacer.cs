@@ -2,117 +2,21 @@ using UnityEngine;
 
 public class PuzzlePlacer : MonoBehaviour
 {
-    public int[,] Grid;
-    public int[][,] PuzzleArr;
-
-    // 그리드 크기
-    public int GridRows = 9;
-    public int GridCols = 9;
-
+    private GridManager _gridManager = null;
+    private PuzzleManager _puzzleManager = null;
+    private void Awake()
+    {
+        _gridManager = this.GetComponent<GridManager>();
+        _puzzleManager = this.GetComponent<PuzzleManager>();
+    }
     private void Start()
     {
-        Grid = new int[GridRows, GridCols];
-        PuzzleArr = new int[][,] {
-            new int[,] // 퍼즐001
-            {
-                { 1, 1, 1, 0 },
-                { 1, 0, 0, 0 },
-                { 1, 0, 0 ,0 },
-                { 0, 0, 0 ,0 }
-            },
-            new int[,] // 퍼즐002
-            {
-                { 0, 0, 1, 0 },
-                { 0, 0, 1, 0 },
-                { 1, 1, 1, 0 },
-                { 0, 0, 0, 0 }
-            },
-            new int[,] // 퍼즐003
-            {
-                { 1, 1, 1, 0 },
-                { 0, 0, 0, 0 },
-                { 0, 0, 0, 0 },
-                { 0, 0, 0, 0 }
-            },
-            new int[,] // 퍼즐004
-            {
-                { 1, 1, 1, 1 },
-                { 0, 0, 0, 0 },
-                { 0, 0, 0, 0 },
-                { 0, 0, 0, 0 }
-            },
-            new int[,] // 퍼즐005
-            {
-                { 1, 0, 0, 0 },
-                { 1, 0, 0, 0 },
-                { 1, 0, 0, 0 },
-                { 0, 0, 0, 0 }
-            },
-            new int[,] // 퍼즐006
-            {
-                { 1, 0, 0, 0 },
-                { 1, 0, 0, 0 },
-                { 1, 0, 0, 0 },
-                { 1, 0, 0, 0 }
-            },
-            new int[,] // 퍼즐007
-            {
-                { 1, 1, 0, 0 },
-                { 0, 1, 0, 0 },
-                { 0, 1, 1, 0 },
-                { 0, 0, 0, 0 }
-            },
-            new int[,] // 퍼즐008
-            {
-                { 0, 1, 1, 0 },
-                { 0, 1, 0, 0 },
-                { 1, 1, 0, 0 },
-                { 0, 0, 0, 0 }
-            }
-            ,
-            new int[,] // 퍼즐009
-            {
-                { 1, 1, 1, 0 },
-                { 0, 1, 0, 0 },
-                { 0, 1, 0, 0 },
-                { 0, 0, 0, 0 }
-            },
-            new int[,] // 퍼즐010
-            {
-                { 0, 1, 0, 0 },
-                { 0, 1, 0, 0 },
-                { 1, 1, 1, 0 },
-                { 0, 0, 0, 0 }
-            },
-            new int[,] // 퍼즐011
-            {
-                { 1, 0, 0, 0 },
-                { 1, 1, 0, 0 },
-                { 1, 0, 0, 0 },
-                { 0, 0, 0, 0 }
-            },
-            new int[,] // 퍼즐012
-            {
-                { 0, 1, 0, 0 },
-                { 1, 1, 1, 0 },
-                { 0, 0, 0, 0 },
-                { 0, 0, 0, 0 }
-            },
-            new int[,] // 퍼즐013
-            {
-                { 1, 1, 0, 0 },
-                { 1, 1, 0, 0 },
-                { 0, 0, 0, 0 },
-                { 0, 0, 0, 0 }
-            }
-        };
-
-        //// 퍼즐을 (1,1)위치에 놓을 수 있는지 확인
-        //if (CanPlacePuzzle(Grid, Puzzle, 1, 1))
-        //{
-        //    Debug.Log("퍼즐을 놓을 수 있습니다.");
-        //    PlacePuzzle(Grid, Puzzle, 1, 1);
-        //}
+        // 퍼즐을 (1,1)위치에 놓을 수 있는지 확인
+        if (CanPlacePuzzle(_gridManager.GridRowsCols, _puzzleManager.PuzzleArr[0], 1, 1))
+        {
+            Debug.Log("퍼즐을 놓을 수 있습니다.");
+            PlacePuzzle(_gridManager.GridRowsCols, _puzzleManager.PuzzleArr[0], 1, 1);
+        }
     }
 
     /// <summary>
@@ -121,8 +25,8 @@ public class PuzzlePlacer : MonoBehaviour
     /// <returns></returns>
     private bool CanPlacePuzzle(int[,] grid, int[,] puzzle, int row, int col)
     {
-        int puzzleRows = puzzle.GetLength(0); // 3
-        int puzzleCols = puzzle.GetLength(1); // 3
+        int puzzleRows = puzzle.GetLength(0); //4
+        int puzzleCols = puzzle.GetLength(1); //4
 
         // 퍼즐이 그리드를 벗어나는지 확인
         if (row + puzzleRows > grid.GetLength(0) || col + puzzleCols > grid.GetLength(1))
