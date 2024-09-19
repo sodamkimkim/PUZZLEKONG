@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3096827426435114545}
   - component: {fileID: 8639300354973136934}
-  - component: {fileID: 461078832481452335}
+  - component: {fileID: 480097853782961635}
   m_Layer: 0
   m_Name: Puzzle_NoLine
   m_TagString: Untagged
@@ -85,7 +85,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!61 &461078832481452335
+--- !u!61 &480097853782961635
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
