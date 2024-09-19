@@ -118,19 +118,7 @@ public class BuildPuzzlePrefab : MonoBehaviour
                     if (selectedPuzzle[r, c] == 1)
                     {
                         bool isUpperOffset = false;
-                        bool isLeftOffset = false;
-                        //if (r == 0 && c == 0)
-                        //    puzzlePartPrefab = _puzzlePrefab_NoLine;
-                        //else
-                        //{
-                        //    if (r == 0 && c != 0)
-                        //        puzzlePartPrefab = _puzzlePrefab_leftLine;
-                        //    else if (r != 0 && c == 0)
-                        //        puzzlePartPrefab = _puzzlePrefab_UpperLine;
-                        //    else
-                        //        puzzlePartPrefab = _puzzlePrefab_LeftUpperLine;
-                        //}
-
+                        bool isLeftOffset = false; 
                         if (r == 0 && c == 0)
                         {
                             //puzzlePartPrefab = _puzzlePrefab_NoLine;
@@ -169,6 +157,12 @@ public class BuildPuzzlePrefab : MonoBehaviour
             puzzlePrefab.transform.rotation = Quaternion.identity;
             SetPivotToChildCenter(puzzlePrefab.transform);
             puzzlePrefab.transform.position = new Vector3(i * puzzlePrefab.transform.localScale.x * 4f, -3f, 0f);
+            puzzlePrefab.AddComponent<Rigidbody2D>();
+            if(puzzlePrefab.GetComponent<Rigidbody2D>()!=null)
+            {
+                puzzlePrefab.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
+            }
+            puzzlePrefab.AddComponent<Puzzle>();
         }
     }
     private void SetPivotToChildCenter(Transform puzzlePrefabTr)

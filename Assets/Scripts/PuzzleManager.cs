@@ -3,7 +3,8 @@ using UnityEngine;
 public class PuzzleManager : MonoBehaviour
 {
     public GameObject[] PuzzlePrefabArr = null;
-    public GameObject[] PuzzleArr = new GameObject[3]; 
+    public GameObject[] PuzzleArr = new GameObject[3];
+    public Vector3 PuzzleInitialSize = new Vector3(0.2f, 0.2f, 1f);
     private void Awake()
     {
         PuzzlePrefabArr = Resources.LoadAll<GameObject>("Prefabs/Puzzles/");
@@ -20,7 +21,7 @@ public class PuzzleManager : MonoBehaviour
     {
         GameObject puzzleGo = Instantiate(PuzzlePrefabArr[puzzleArrIdx]);
 
-        puzzleGo.transform.localScale = new Vector3(0.4f, 0.4f, 1);
+        puzzleGo.transform.localScale = PuzzleInitialSize;
         puzzleGo.transform.rotation = Quaternion.identity;
 
         if (instantiateIdx == 0)
