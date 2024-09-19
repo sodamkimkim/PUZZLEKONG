@@ -181,7 +181,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8dd53ba57cad8eb4fb490d6a4566ea34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _puzzlePrefab: {fileID: 810909902217833062, guid: 346e1106612bdc74ab84618ec876671e, type: 3}
+  PuzzlePrefabArr: []
+  PuzzleArr:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!114 &40165676
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -747,7 +751,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &2138726961
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -760,10 +764,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 956234e15f5ac244fb59c3dca2c4a5d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _puzzlePrefab_leftLine: {fileID: 0}
-  _puzzlePrefab_UpperLine: {fileID: 0}
-  _puzzlePrefab_NoLine: {fileID: 0}
-  _puzzleManager: {fileID: 40165675}
 --- !u!4 &2138726962
 Transform:
   m_ObjectHideFlags: 0
@@ -953,6 +953,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Grid
       objectReference: {fileID: 0}
+    - target: {fileID: 7874842815381003910, guid: 990f6229439ced742add6a13febc690d, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1035,8 +1039,8 @@ SceneRoots:
   - {fileID: 705336744}
   - {fileID: 550452985}
   - {fileID: 2138726962}
-  - {fileID: 40165673}
   - {fileID: 477544019943999700}
   - {fileID: 381431160}
   - {fileID: 6902733188173072614}
   - {fileID: 1677111972}
+  - {fileID: 40165673}

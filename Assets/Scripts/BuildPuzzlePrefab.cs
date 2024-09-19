@@ -1,29 +1,112 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class BuildPuzzlePrefab : MonoBehaviour
 {
-    [SerializeField]
-    PuzzleManager _puzzleManager = null;
+    public int[][,] PuzzleArr = new int[][,] {
+            new int[,] // ∆€¡Ò001
+            {
+                { 1, 1, 1, 0 },
+                { 1, 0, 0, 0 },
+                { 1, 0, 0 ,0 },
+                { 0, 0, 0 ,0 }
+            },
+            new int[,] // ∆€¡Ò002
+            {
+                { 0, 0, 1, 0 },
+                { 0, 0, 1, 0 },
+                { 1, 1, 1, 0 },
+                { 0, 0, 0, 0 }
+            },
+            new int[,] // ∆€¡Ò003
+            {
+                { 1, 1, 1, 0 },
+                { 0, 0, 0, 0 },
+                { 0, 0, 0, 0 },
+                { 0, 0, 0, 0 }
+            },
+            new int[,] // ∆€¡Ò004
+            {
+                { 1, 1, 1, 1 },
+                { 0, 0, 0, 0 },
+                { 0, 0, 0, 0 },
+                { 0, 0, 0, 0 }
+            },
+            new int[,] // ∆€¡Ò005
+            {
+                { 1, 0, 0, 0 },
+                { 1, 0, 0, 0 },
+                { 1, 0, 0, 0 },
+                { 0, 0, 0, 0 }
+            },
+            new int[,] // ∆€¡Ò006
+            {
+                { 1, 0, 0, 0 },
+                { 1, 0, 0, 0 },
+                { 1, 0, 0, 0 },
+                { 1, 0, 0, 0 }
+            },
+            new int[,] // ∆€¡Ò007
+            {
+                { 1, 1, 0, 0 },
+                { 0, 1, 0, 0 },
+                { 0, 1, 1, 0 },
+                { 0, 0, 0, 0 }
+            },
+            new int[,] // ∆€¡Ò008
+            {
+                { 0, 1, 1, 0 },
+                { 0, 1, 0, 0 },
+                { 1, 1, 0, 0 },
+                { 0, 0, 0, 0 }
+            }
+            ,
+            new int[,] // ∆€¡Ò009
+            {
+                { 1, 1, 1, 0 },
+                { 0, 1, 0, 0 },
+                { 0, 1, 0, 0 },
+                { 0, 0, 0, 0 }
+            },
+            new int[,] // ∆€¡Ò010
+            {
+                { 0, 1, 0, 0 },
+                { 0, 1, 0, 0 },
+                { 1, 1, 1, 0 },
+                { 0, 0, 0, 0 }
+            },
+            new int[,] // ∆€¡Ò011
+            {
+                { 1, 0, 0, 0 },
+                { 1, 1, 0, 0 },
+                { 1, 0, 0, 0 },
+                { 0, 0, 0, 0 }
+            },
+            new int[,] // ∆€¡Ò012
+            {
+                { 0, 1, 0, 0 },
+                { 1, 1, 1, 0 },
+                { 0, 0, 0, 0 },
+                { 0, 0, 0, 0 }
+            },
+            new int[,] // ∆€¡Ò013
+            {
+                { 1, 1, 0, 0 },
+                { 1, 1, 0, 0 },
+                { 0, 0, 0, 0 },
+                { 0, 0, 0, 0 }
+            }
+        };
     private void Start()
     {
         BuildPuzzlePrefabFunc();
     }
     private void BuildPuzzlePrefabFunc()
     {
-        GameObject _puzzlePrefab_leftLine = null;
-        GameObject _puzzlePrefab_UpperLine = null;
-        GameObject _puzzlePrefab_LeftUpperLine = null;
-        GameObject _puzzlePrefab_NoLine = null;
-        _puzzlePrefab_leftLine = Resources.Load<GameObject>("Prefabs/BuildPuzzle/Puzzle_LeftLine");
-        _puzzlePrefab_UpperLine = Resources.Load<GameObject>("Prefabs/BuildPuzzle/Puzzle_UpperLine");
-        _puzzlePrefab_LeftUpperLine = Resources.Load<GameObject>("Prefabs/BuildPuzzle/Puzzle_LeftUpperLine");
-        _puzzlePrefab_NoLine = Resources.Load<GameObject>("Prefabs/BuildPuzzle/Puzzle_NoLine");
+        GameObject _puzzlePrefab_NoLine = Resources.Load<GameObject>("Prefabs/BuildPuzzle/Puzzle_NoLine");
 
-        for (int i = 0; i < _puzzleManager.PuzzleArr.Length; i++)
+        for (int i = 0; i < PuzzleArr.Length; i++)
         {
-            int[,] selectedPuzzle = _puzzleManager.PuzzleArr[i];
+            int[,] selectedPuzzle = PuzzleArr[i];
             GameObject puzzlePrefab = new GameObject($"Puzzle_{i}");
 
             int puzzleRows = selectedPuzzle.GetLength(0);
@@ -34,23 +117,50 @@ public class BuildPuzzlePrefab : MonoBehaviour
                 {
                     if (selectedPuzzle[r, c] == 1)
                     {
-                        GameObject puzzlePartPrefab = null;
+                        bool isUpperOffset = false;
+                        bool isLeftOffset = false;
+                        //if (r == 0 && c == 0)
+                        //    puzzlePartPrefab = _puzzlePrefab_NoLine;
+                        //else
+                        //{
+                        //    if (r == 0 && c != 0)
+                        //        puzzlePartPrefab = _puzzlePrefab_leftLine;
+                        //    else if (r != 0 && c == 0)
+                        //        puzzlePartPrefab = _puzzlePrefab_UpperLine;
+                        //    else
+                        //        puzzlePartPrefab = _puzzlePrefab_LeftUpperLine;
+                        //}
+
                         if (r == 0 && c == 0)
-                            puzzlePartPrefab = _puzzlePrefab_NoLine;
+                        {
+                            //puzzlePartPrefab = _puzzlePrefab_NoLine;
+                            isUpperOffset = false;
+                            isLeftOffset = false;
+                        }
                         else
                         {
                             if (r == 0 && c != 0)
-                                puzzlePartPrefab = _puzzlePrefab_leftLine;
+                            {
+                                //puzzlePartPrefab = _puzzlePrefab_leftLine; 
+                                isLeftOffset = true;
+                            }
                             else if (r != 0 && c == 0)
-                                puzzlePartPrefab = _puzzlePrefab_UpperLine;
+                            {
+                                //puzzlePartPrefab = _puzzlePrefab_UpperLine;
+                                isUpperOffset = true;
+                            }
                             else
-                                puzzlePartPrefab = _puzzlePrefab_LeftUpperLine;
+                            {
+                                //puzzlePartPrefab = _puzzlePrefab_LeftUpperLine;
+                                isUpperOffset = true;
+                                isLeftOffset = true;
+                            }
                         }
 
-                        GameObject puzzlePart = Instantiate(puzzlePartPrefab, puzzlePrefab.transform);
+                        GameObject puzzlePart = Instantiate(_puzzlePrefab_NoLine, puzzlePrefab.transform);
                         puzzlePart.name = $"PuzzlePart_R{r}_C{c}";
                         puzzlePart.transform.rotation = Quaternion.identity;
-                        puzzlePart.transform.localPosition = new Vector3(puzzlePart.transform.localScale.x * c, -puzzlePart.transform.localScale.y * r, 0);
+                        puzzlePart.transform.localPosition = new Vector3(puzzlePart.transform.localScale.x * c + (isLeftOffset ? 0.1f*c : 0), -(puzzlePart.transform.localScale.y * r + (isUpperOffset ? 0.1f*r : 0)), 0);
                     }
 
                 }
@@ -58,7 +168,7 @@ public class BuildPuzzlePrefab : MonoBehaviour
             puzzlePrefab.transform.localScale = new Vector3(1f, 1f, 1f);
             puzzlePrefab.transform.rotation = Quaternion.identity;
             SetPivotToChildCenter(puzzlePrefab.transform);
-            puzzlePrefab.transform.position = new Vector3(i*puzzlePrefab.transform.localScale.x * 4f, -3f, 0f);
+            puzzlePrefab.transform.position = new Vector3(i * puzzlePrefab.transform.localScale.x * 4f, -3f, 0f);
         }
     }
     private void SetPivotToChildCenter(Transform puzzlePrefabTr)

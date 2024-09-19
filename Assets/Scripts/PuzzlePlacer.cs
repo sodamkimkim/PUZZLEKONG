@@ -11,12 +11,12 @@ public class PuzzlePlacer : MonoBehaviour
     }
     private void Start()
     {
-        // 퍼즐을 (1,1)위치에 놓을 수 있는지 확인
-        if (CanPlacePuzzle(_gridManager.GridRowsCols, _puzzleManager.PuzzleArr[0], 1, 1))
-        {
-            Debug.Log("퍼즐을 놓을 수 있습니다.");
-            PlacePuzzle(_gridManager.GridRowsCols, _puzzleManager.PuzzleArr[0], 1, 1);
-        }
+        //// 퍼즐을 (1,1)위치에 놓을 수 있는지 확인
+        //if (CanPlacePuzzle(_gridManager.GridRowsCols, _puzzleManager.PuzzleArr[0], 1, 1))
+        //{
+        //    Debug.Log("퍼즐을 놓을 수 있습니다.");
+        //    PlacePuzzle(_gridManager.GridRowsCols, _puzzleManager.PuzzleArr[0], 1, 1);
+        //}
     }
 
     /// <summary>
