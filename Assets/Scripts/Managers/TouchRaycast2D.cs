@@ -2,54 +2,75 @@ using UnityEngine;
 
 public class TouchRaycast2D : MonoBehaviour
 {
-    private Ray _ray;
-    private RaycastHit2D _hit;
-    private static GameObject _rayTargetGo = null;
-    private float _rayMaxDist = 10000f;
-
-    private void Update()
-    {
-        ShotRay();
-    }
-    private void ShotRay()
-    {
-        // PC에서 마우스를 터치처럼 처리하는 부분
+    public GameObject TouchingGo = null; 
+    public void ShotRay(Enum.eTouchFunc eTouchFunc)
+    { 
 #if UNITY_EDITOR || UNITY_STANDALONE
-        if (Input.GetMouseButtonDown(0))
+        Vector3 mouseWorldPos2 = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector2 rayOrigin2 = new Vector2(mouseWorldPos2.x, mouseWorldPos2.y);
+
+        RaycastHit2D hit2 = Physics2D.Raycast(rayOrigin2, Vector2.zero);
+
+        if (hit2.collider != null && hit2.transform.GetComponentInParent<Puzzle>() != null)
         {
-            Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            Vector2 rayOrigin = new Vector2(mouseWorldPos.x, mouseWorldPos.y);
-
-            RaycastHit2D hit = Physics2D.Raycast(rayOrigin, Vector2.zero);
-
-            if (hit.collider != null)
+            Transform puzzleTr = hit2.transform.GetComponentInParent<Puzzle>().transform;
+            Debug.Log("Hit 2D object: " + hit2.collider.name);
+            switch (eTouchFunc)
             {
-                Debug.Log("Hit 2D object: " + hit.collider.name);
+                case Enum.eTouchFunc.TouchBegin:
+                    SetTouchBegin(puzzleTr);
+                    break;
+                case Enum.eTouchFunc.TouchMoved:
+                    SetTouchMoved(puzzleTr, hit2);
+                    break;
             }
-        }
+        } 
 #endif
         if (Input.touchCount > 0)
         {
             Touch touch = Input.GetTouch(0);
-            if (touch.phase == TouchPhase.Began)
+            // 터치 위치를 월드 좌표로 변환
+            Vector3 touchWorldPos = Camera.main.ScreenToWorldPoint(touch.position);
+
+            // Raycast 시작 위치 설정 (z축 제거)
+            Vector2 rayOrigin = new Vector2(touchWorldPos.x, touchWorldPos.y);
+
+            // Raycast발사 (터치된 위치 기준으로 Ray 발사)
+            RaycastHit2D hit = Physics2D.Raycast(rayOrigin, Vector2.zero);
+             
+            if (hit.collider != null && hit.transform.GetComponentInParent<Puzzle>() != null)
             {
-                // 터치 위치를 월드 좌표로 변환
-                Vector3 touchWorldPos = Camera.main.ScreenToWorldPoint(touch.position);
-
-                // Raycast 시작 위치 설정 (z축 제거)
-                Vector2 rayOrigin = new Vector2(touchWorldPos.x, touchWorldPos.y);
-
-                // Raycast발사 (터치된 위치 기준으로 Ray 발사)
-                RaycastHit2D hit = Physics2D.Raycast(rayOrigin, Vector2.zero);
-
-                // Raycast에 충돌한 오브젝트가 있는지 확인
-                if (hit.collider != null)
+                Transform puzzleTr = hit.transform.GetComponentInParent<Puzzle>().transform;
+                Debug.Log("Hit 2D object: " + hit.collider.name);
+                switch (eTouchFunc)
                 {
-                    // 충돌한 오브젝트의 이름 출력
-                    Debug.Log("Hit 2D object: " + hit.collider.name);
+                    case Enum.eTouchFunc.TouchBegin:
+                        SetTouchBegin(puzzleTr);
+                        break;
+                    case Enum.eTouchFunc.TouchMoved:
+                        SetTouchMoved(puzzleTr, hit);
+                        break;
                 }
-
-            }
+            } 
         }
+    }
+
+    private void SetTouchBegin(Transform puzzleTr)
+    {
+        if (TouchingGo == puzzleTr.gameObject) return; 
+        TouchingGo = puzzleTr.gameObject;
+        TouchingGo.transform.localScale = new Vector3(0.5f, 0.5f, 1f);
+    }
+    private void SetTouchMoved(Transform puzzleTr, RaycastHit2D hit)
+    {
+        if (TouchingGo == null) return; 
+        TouchingGo.transform.position = hit.point; 
+    }
+    public void SetTouchEnd()
+    {
+        if (TouchingGo == null) return;
+        TouchingGo.transform.localScale = new Vector3(0.2f, 0.2f, 1f);
+        TouchingGo.transform.position = TouchingGo.GetComponent<Puzzle>().InitialPos;
+        TouchingGo = null;
     }
 } // end of class

@@ -159,13 +159,12 @@ public class BuildPuzzlePrefab : MonoBehaviour
             puzzlePrefab.transform.position = new Vector3(i * puzzlePrefab.transform.localScale.x * 4f, -3f, 0f);
 
             puzzlePrefab.AddComponent<Rigidbody2D>();
-            if(puzzlePrefab.GetComponent<Rigidbody2D>()!=null)
+            if (puzzlePrefab.GetComponent<Rigidbody2D>() != null)
             {
                 puzzlePrefab.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
             }
             puzzlePrefab.AddComponent<Puzzle>();
-            puzzlePrefab.tag = "Puzzle";
-
+            puzzlePrefab.tag = "Puzzle"; 
         }
     }
     private void SetPivotToChildCenter(Transform puzzlePrefabTr)
@@ -197,4 +196,5 @@ public class BuildPuzzlePrefab : MonoBehaviour
             child.position += offset;
         }
     }
+ 
 } // end of class

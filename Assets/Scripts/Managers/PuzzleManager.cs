@@ -24,13 +24,16 @@ public class PuzzleManager : MonoBehaviour
         puzzleGo.transform.localScale = PuzzleInitialSize;
         puzzleGo.transform.rotation = Quaternion.identity;
 
+        Vector3 pos = Vector3.zero;
         if (instantiateIdx == 0)
-            puzzleGo.transform.position = new Vector3(-1.5f, -3.22f, 0f);
+            pos = new Vector3(-1.5f, -3.22f, 0f);
         else if (instantiateIdx == 1)
-            puzzleGo.transform.position = new Vector3(0f, -3.22f, 0f);
+            pos = new Vector3(0f, -3.22f, 0f);
         else
-            puzzleGo.transform.position = new Vector3(1.5f, -3.22f, 0f);
+            pos = new Vector3(1.5f, -3.22f, 0f);
 
+        puzzleGo.transform.position = pos;
+        puzzleGo.GetComponent<Puzzle>().SetInitialPos(pos);
         return puzzleGo;
     }
 
