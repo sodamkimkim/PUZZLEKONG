@@ -2,12 +2,12 @@ using UnityEngine;
 
 public class PuzzlePlacer : MonoBehaviour
 {
-    private GridManager _gridManager = null;
-    private PuzzleManager _puzzleManager = null;
+    private GridSpawner _gridManager = null;
+    private PuzzleSpawner _puzzleManager = null;
     private void Awake()
     {
-        _gridManager = this.GetComponent<GridManager>();
-        _puzzleManager = this.GetComponent<PuzzleManager>();
+        _gridManager = this.GetComponent<GridSpawner>();
+        _puzzleManager = this.GetComponent<PuzzleSpawner>();
     }
     private void Start()
     {

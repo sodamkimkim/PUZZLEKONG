@@ -14,8 +14,7 @@ public class TouchRaycast2D : MonoBehaviour
 
         if (hit2.collider != null && hit2.transform.GetComponentInParent<Puzzle>() != null)
         {
-            Transform puzzleTr = hit2.transform.GetComponentInParent<Puzzle>().transform;
-            Debug.Log("Hit 2D object: " + hit2.collider.name);
+            Transform puzzleTr = hit2.transform.GetComponentInParent<Puzzle>().transform; 
             switch (eTouchFunc)
             {
                 case Enum.eTouchFunc.TouchBegin:
@@ -29,20 +28,16 @@ public class TouchRaycast2D : MonoBehaviour
 #endif
         if (Input.touchCount > 0)
         {
-            Touch touch = Input.GetTouch(0);
-            // 터치 위치를 월드 좌표로 변환
+            Touch touch = Input.GetTouch(0); 
             Vector3 touchWorldPos = Camera.main.ScreenToWorldPoint(touch.position);
-
-            // Raycast 시작 위치 설정 (z축 제거)
+             
             Vector2 rayOrigin = new Vector2(touchWorldPos.x, touchWorldPos.y);
-
-            // Raycast발사 (터치된 위치 기준으로 Ray 발사)
+             
             RaycastHit2D hit = Physics2D.Raycast(rayOrigin, Vector2.zero);
              
             if (hit.collider != null && hit.transform.GetComponentInParent<Puzzle>() != null)
             {
-                Transform puzzleTr = hit.transform.GetComponentInParent<Puzzle>().transform;
-                Debug.Log("Hit 2D object: " + hit.collider.name);
+                Transform puzzleTr = hit.transform.GetComponentInParent<Puzzle>().transform; 
                 switch (eTouchFunc)
                 {
                     case Enum.eTouchFunc.TouchBegin:
@@ -61,7 +56,7 @@ public class TouchRaycast2D : MonoBehaviour
         if (TouchingGo == puzzleTr.gameObject) return; 
         TouchingGo = puzzleTr.gameObject;
         _selectedGoInitialPos = TouchingGo.transform.position;
-        TouchingGo.transform.localScale = new Vector3(0.5f, 0.5f, 1f);
+        TouchingGo.transform.localScale = Factor.PZNormal;
     }
     private void SetTouchMoved(Transform puzzleTr, RaycastHit2D hit)
     {
@@ -71,7 +66,7 @@ public class TouchRaycast2D : MonoBehaviour
     public void SetTouchEnd()
     {
         if (TouchingGo == null) return;
-        TouchingGo.transform.localScale = new Vector3(0.2f, 0.2f, 1f);
+        TouchingGo.transform.localScale = Factor.PZSmall;
         TouchingGo.transform.position = _selectedGoInitialPos;
         TouchingGo = null;
     }

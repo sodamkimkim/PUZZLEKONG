@@ -1,16 +1,13 @@
 using UnityEngine;
 
-public class PuzzleManager : MonoBehaviour
+public class PuzzleSpawner : MonoBehaviour
 {
     public GameObject[] PuzzlePrefabArr = null;
-    public GameObject[] PuzzleArr = new GameObject[3];
-    public Vector3 PuzzleInitialSize = new Vector3(0.2f, 0.2f, 1f);
-    private void Awake()
-    {
-        PuzzlePrefabArr = Resources.LoadAll<GameObject>("Prefabs/Puzzles/");
-    }
+    public GameObject[] PuzzleArr = new GameObject[3]; 
+ 
     private void Start()
     {
+        PuzzlePrefabArr = Resources.LoadAll<GameObject>(Path.Puzzles);
         if (PuzzlePrefabArr == null || PuzzlePrefabArr.Length == 0) { Debug.Log("?"); return; }
         Debug.Log(PuzzlePrefabArr.Length);
         PuzzleArr[0] = InstantiatePuzzle(0, Random.Range(0, PuzzlePrefabArr.Length));
@@ -21,7 +18,7 @@ public class PuzzleManager : MonoBehaviour
     {
         GameObject puzzleGo = Instantiate(PuzzlePrefabArr[puzzleArrIdx]);
 
-        puzzleGo.transform.localScale = PuzzleInitialSize;
+        puzzleGo.transform.localScale = Factor.PZSmall;
         puzzleGo.transform.rotation = Quaternion.identity;
 
         Vector3 pos = Vector3.zero;

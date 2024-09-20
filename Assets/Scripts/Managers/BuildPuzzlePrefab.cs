@@ -102,7 +102,7 @@ public class BuildPuzzlePrefab : MonoBehaviour
     }
     private void BuildPuzzlePrefabFunc()
     {
-        GameObject _puzzlePrefab_NoLine = Resources.Load<GameObject>("Prefabs/BuildPuzzle/Puzzle_NoLine");
+        GameObject _puzzlePrefab_NoLine = Resources.Load<GameObject>(Path.PuzzlePartPrefab);
 
         for (int i = 0; i < PuzzleArr.Length; i++)
         {
@@ -118,7 +118,7 @@ public class BuildPuzzlePrefab : MonoBehaviour
                     if (selectedPuzzle[r, c] == 1)
                     {
                         bool isUpperOffset = false;
-                        bool isLeftOffset = false; 
+                        bool isLeftOffset = false;
                         if (r == 0 && c == 0)
                         {
                             //puzzlePartPrefab = _puzzlePrefab_NoLine;
@@ -148,16 +148,19 @@ public class BuildPuzzlePrefab : MonoBehaviour
                         GameObject puzzlePart = Instantiate(_puzzlePrefab_NoLine, puzzlePrefab.transform);
                         puzzlePart.name = $"PuzzlePart";
                         puzzlePart.transform.rotation = Quaternion.identity;
-                        puzzlePart.transform.localPosition = new Vector3(puzzlePart.transform.localScale.x * c + (isLeftOffset ? 0.1f*c : 0), -(puzzlePart.transform.localScale.y * r + (isUpperOffset ? 0.1f*r : 0)), 0);
-                        if(puzzlePart.GetComponent<BoxCollider2D>()!=null) 
-                            puzzlePart.GetComponent<BoxCollider2D>().size = new Vector2(1.1f, 1.1f); 
+                        puzzlePart.transform.localPosition = new Vector3(puzzlePart.transform.localScale.x * c + (isLeftOffset ? 0.1f * c : 0), -(puzzlePart.transform.localScale.y * r + (isUpperOffset ? 0.1f * r : 0)), 0);
+                        if (puzzlePart.GetComponent<BoxCollider2D>() != null)
+                            puzzlePart.GetComponent<BoxCollider2D>().size = new Vector2(1.1f, 1.1f);
                     }
 
                 }
             }
             puzzlePrefab.transform.localScale = new Vector3(1f, 1f, 1f);
             puzzlePrefab.transform.rotation = Quaternion.identity;
-            SetPivotToChildCenter(puzzlePrefab.transform);
+
+            Util util = new Util();
+            util.SetPivotToChildCenter(puzzlePrefab.transform);
+
             puzzlePrefab.transform.position = new Vector3(i * puzzlePrefab.transform.localScale.x * 4f, -3f, 0f);
 
             puzzlePrefab.AddComponent<Rigidbody2D>();
@@ -166,37 +169,8 @@ public class BuildPuzzlePrefab : MonoBehaviour
                 puzzlePrefab.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
             }
             puzzlePrefab.AddComponent<Puzzle>();
-            puzzlePrefab.tag = "Puzzle"; 
+            puzzlePrefab.tag = "Puzzle";
         }
     }
-    private void SetPivotToChildCenter(Transform puzzlePrefabTr)
-    {
-        if (puzzlePrefabTr.childCount == 0)
-        {
-            Debug.LogWarning("This GameObject has no children.");
-            return;
-        }
 
-        // 자식들의 월드 좌표를 합산하여 중심 계산
-        Vector3 center = Vector3.zero;
-        foreach (Transform child in puzzlePrefabTr)
-        {
-            center += child.position;
-        }
-        center /= puzzlePrefabTr.childCount;
-
-        // 부모의 위치를 중심으로 이동하고, 자식들의 위치를 새로운 부모 위치에 맞게 조정
-        Vector3 parentPos = puzzlePrefabTr.position;
-        Vector3 offset = parentPos - center;
-
-        // 부모 오브젝트를 자식들의 중심으로 이동
-        puzzlePrefabTr.position = center;
-
-        // 자식들의 위치를 새로운 부모 위치에 맞게 이동
-        foreach (Transform child in puzzlePrefabTr)
-        {
-            child.position += offset;
-        }
-    }
- 
 } // end of class
