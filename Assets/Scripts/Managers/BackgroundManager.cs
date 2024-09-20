@@ -22,34 +22,35 @@ public class BackgroundManager : MonoBehaviour
     public GameObject GetBGGo(Enum.eTheme eTheme)
     {
         GameObject bgGo = null;
+        Factor factor = new Factor();
         switch (eTheme)
         { 
             case Enum.eTheme.Grey:
                 bgGo = Instantiate(BGArr[0], Vector3.zero, Quaternion.identity);
-                bgGo.GetComponent<SpriteRenderer>().color = new Factor().Grey1;
+                bgGo.GetComponent<SpriteRenderer>().color = factor.Grey1;
                 break;
             case Enum.eTheme.Green:
                 bgGo = Instantiate(BGArr[0], Vector3.zero, Quaternion.identity);
-                bgGo.GetComponent<SpriteRenderer>().color = new Factor().Green1;
+                bgGo.GetComponent<SpriteRenderer>().color = factor.Green1;
                 break;
             case Enum.eTheme.LightPurple:
                 bgGo = Instantiate(BGArr[0], Vector3.zero, Quaternion.identity);
-                bgGo.GetComponent<SpriteRenderer>().color = new Factor().LightPurple1;
+                bgGo.GetComponent<SpriteRenderer>().color = factor.LightPurple1;
                 break;
             case Enum.eTheme.LightBlue:
                 bgGo = Instantiate(BGArr[0], Vector3.zero, Quaternion.identity);
-                bgGo.GetComponent<SpriteRenderer>().color = new Factor().LightBlue1;
+                bgGo.GetComponent<SpriteRenderer>().color = factor.LightBlue1;
                 break;
             case Enum.eTheme.Pink:
                 bgGo = Instantiate(BGArr[0], Vector3.zero, Quaternion.identity);
-                bgGo.GetComponent<SpriteRenderer>().color = new Factor().Pink1;
+                bgGo.GetComponent<SpriteRenderer>().color = factor.Pink1;
                 break;
             case Enum.eTheme.Mint:
                 bgGo = Instantiate(BGArr[1], Vector3.zero, Quaternion.identity);
-                bgGo.GetComponent<SpriteRenderer>().color = new Factor().BGColorDefault;
+                bgGo.GetComponent<SpriteRenderer>().color = factor.BGColorDefault;
                 break;
         }
-        bgGo.transform.position = new Factor().PosBG;
+        bgGo.transform.position = factor.PosBG;
         return bgGo;
     } 
 } // end of class
