@@ -2,7 +2,8 @@ using UnityEngine;
 
 public class TouchRaycast2D : MonoBehaviour
 {
-    public GameObject TouchingGo = null; 
+    public GameObject TouchingGo = null;
+    private Vector3 _selectedGoInitialPos = Vector3.zero;
     public void ShotRay(Enum.eTouchFunc eTouchFunc)
     { 
 #if UNITY_EDITOR || UNITY_STANDALONE
@@ -59,6 +60,7 @@ public class TouchRaycast2D : MonoBehaviour
     {
         if (TouchingGo == puzzleTr.gameObject) return; 
         TouchingGo = puzzleTr.gameObject;
+        _selectedGoInitialPos = TouchingGo.transform.position;
         TouchingGo.transform.localScale = new Vector3(0.5f, 0.5f, 1f);
     }
     private void SetTouchMoved(Transform puzzleTr, RaycastHit2D hit)
@@ -70,7 +72,7 @@ public class TouchRaycast2D : MonoBehaviour
     {
         if (TouchingGo == null) return;
         TouchingGo.transform.localScale = new Vector3(0.2f, 0.2f, 1f);
-        TouchingGo.transform.position = TouchingGo.GetComponent<Puzzle>().InitialPos;
+        TouchingGo.transform.position = _selectedGoInitialPos;
         TouchingGo = null;
     }
 } // end of class

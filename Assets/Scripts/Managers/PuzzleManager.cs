@@ -33,7 +33,6 @@ public class PuzzleManager : MonoBehaviour
             pos = new Vector3(1.5f, -3.22f, 0f);
 
         puzzleGo.transform.position = pos;
-        puzzleGo.GetComponent<Puzzle>().SetInitialPos(pos);
         return puzzleGo;
     }
 

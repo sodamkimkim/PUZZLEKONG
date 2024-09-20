@@ -146,9 +146,11 @@ public class BuildPuzzlePrefab : MonoBehaviour
                         }
 
                         GameObject puzzlePart = Instantiate(_puzzlePrefab_NoLine, puzzlePrefab.transform);
-                        puzzlePart.name = $"PuzzlePart_R{r}_C{c}";
+                        puzzlePart.name = $"PuzzlePart";
                         puzzlePart.transform.rotation = Quaternion.identity;
                         puzzlePart.transform.localPosition = new Vector3(puzzlePart.transform.localScale.x * c + (isLeftOffset ? 0.1f*c : 0), -(puzzlePart.transform.localScale.y * r + (isUpperOffset ? 0.1f*r : 0)), 0);
+                        if(puzzlePart.GetComponent<BoxCollider2D>()!=null) 
+                            puzzlePart.GetComponent<BoxCollider2D>().size = new Vector2(1.1f, 1.1f); 
                     }
 
                 }
