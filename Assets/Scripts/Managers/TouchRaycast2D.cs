@@ -56,7 +56,7 @@ public class TouchRaycast2D : MonoBehaviour
         if (TouchingGo == puzzleTr.gameObject) return; 
         TouchingGo = puzzleTr.gameObject;
         _selectedGoInitialPos = TouchingGo.transform.position;
-        TouchingGo.transform.localScale = Factor.PZNormal;
+        TouchingGo.transform.localScale = Factor.ScalePuzzleNormal;
     }
     private void SetTouchMoved(Transform puzzleTr, RaycastHit2D hit)
     {
@@ -66,7 +66,7 @@ public class TouchRaycast2D : MonoBehaviour
     public void SetTouchEnd()
     {
         if (TouchingGo == null) return;
-        TouchingGo.transform.localScale = Factor.PZSmall;
+        TouchingGo.transform.localScale = Factor.ScalePuzzleSmall;
         TouchingGo.transform.position = _selectedGoInitialPos;
         TouchingGo = null;
     }

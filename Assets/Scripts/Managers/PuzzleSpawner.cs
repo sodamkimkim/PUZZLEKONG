@@ -3,9 +3,13 @@ using UnityEngine;
 public class PuzzleSpawner : MonoBehaviour
 {
     public GameObject[] PuzzlePrefabArr = null;
-    public GameObject[] PuzzleArr = new GameObject[3]; 
- 
+    public GameObject[] PuzzleArr = new GameObject[3];
+
     private void Start()
+    {
+        LazyStart();
+    }
+    private void LazyStart()
     {
         PuzzlePrefabArr = Resources.LoadAll<GameObject>(Path.Puzzles);
         if (PuzzlePrefabArr == null || PuzzlePrefabArr.Length == 0) { Debug.Log("?"); return; }
@@ -18,7 +22,7 @@ public class PuzzleSpawner : MonoBehaviour
     {
         GameObject puzzleGo = Instantiate(PuzzlePrefabArr[puzzleArrIdx]);
 
-        puzzleGo.transform.localScale = Factor.PZSmall;
+        puzzleGo.transform.localScale = Factor.ScalePuzzleSmall;
         puzzleGo.transform.rotation = Quaternion.identity;
 
         Vector3 pos = Vector3.zero;
@@ -30,6 +34,32 @@ public class PuzzleSpawner : MonoBehaviour
             pos = new Vector3(1.5f, -3.22f, 0f);
 
         puzzleGo.transform.position = pos;
+
+        Factor factor = new Factor();
+        foreach (SpriteRenderer spr in puzzleGo.GetComponentsInChildren<SpriteRenderer>())
+        {
+            switch (ThemeManager.ETheme)
+            {
+                case Enum.eTheme.Grey:
+                    spr.color = factor.Grey4;
+                    break;
+                case Enum.eTheme.Green:
+                    spr.color = factor.Green4;
+                    break; 
+                case Enum.eTheme.LightPurple:
+                    spr.color = factor.LightBlue4;
+                    break;
+                case Enum.eTheme.LightBlue:
+                    spr.color = factor.LightBlue4;
+                    break;
+                case Enum.eTheme.Pink:
+                    spr.color = factor.Pink4;
+                    break;
+                case Enum.eTheme.Mint:
+                    spr.color = factor.Grey4;
+                    break;
+            }
+        }
         return puzzleGo;
     }
 

@@ -9,7 +9,7 @@ public class KeyInput : MonoBehaviour
     }
     private void Update()
     {
-        KeyInputFunc();
+       KeyInputFunc();
     }
     private void KeyInputFunc()
     {
