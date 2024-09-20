@@ -102,7 +102,7 @@ public class BuildPuzzlePrefab : MonoBehaviour
     }
     private void BuildPuzzlePrefabFunc()
     {
-        GameObject _puzzlePrefab_NoLine = Resources.Load<GameObject>(Path.PuzzlePartPrefab);
+        GameObject _puzzlePrefab_NoLine = Resources.Load<GameObject>(new Path().PuzzlePartPrefab);
 
         for (int i = 0; i < PuzzleArr.Length; i++)
         {

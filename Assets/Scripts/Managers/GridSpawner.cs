@@ -16,7 +16,7 @@ public class GridSpawner : MonoBehaviour
         Factor factor = new Factor();
         if (gridGo.AddComponent<Grid>())
         {
-            GameObject pzPartPrefab = Resources.Load<GameObject>(Path.PuzzlePartPrefab);
+            GameObject pzPartPrefab = Resources.Load<GameObject>(new Path().PuzzlePartPrefab);
             for (int i = 0; i < GridRowsCols[0, 0]; i++)
             {
                 for (int j = 0; j < GridRowsCols[0, 1]; j++)

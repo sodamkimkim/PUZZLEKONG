@@ -11,7 +11,7 @@ public class PuzzleSpawner : MonoBehaviour
     }
     private void LazyStart()
     {
-        PuzzlePrefabArr = Resources.LoadAll<GameObject>(Path.Puzzles);
+        PuzzlePrefabArr = Resources.LoadAll<GameObject>(new Path().Puzzles);
         if (PuzzlePrefabArr == null || PuzzlePrefabArr.Length == 0) { Debug.Log("?"); return; }
         Debug.Log(PuzzlePrefabArr.Length);
         PuzzleArr[0] = InstantiatePuzzle(0, Random.Range(0, PuzzlePrefabArr.Length));
