@@ -102,7 +102,7 @@ public class BuildPuzzlePrefab : MonoBehaviour
     }
     private void BuildPuzzlePrefabFunc()
     {
-        GameObject _puzzlePrefab_NoLine = Resources.Load<GameObject>(new Path().PuzzlePartPrefab);
+        GameObject _puzzlePrefab_NoLine = Resources.Load<GameObject>(Path.PuzzlePartPrefab);
 
         for (int i = 0; i < PuzzleArr.Length; i++)
         {
@@ -157,9 +157,8 @@ public class BuildPuzzlePrefab : MonoBehaviour
             }
             puzzlePrefab.transform.localScale = new Vector3(1f, 1f, 1f);
             puzzlePrefab.transform.rotation = Quaternion.identity;
-
-            Util util = new Util();
-            util.SetPivotToChildCenter(puzzlePrefab.transform);
+             
+            Util.SetPivotToChildCenter(puzzlePrefab.transform);
 
             puzzlePrefab.transform.position = new Vector3(i * puzzlePrefab.transform.localScale.x * 4f, -3f, 0f);
 

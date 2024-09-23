@@ -10,13 +10,12 @@ public class PuzzleSpawner : MonoBehaviour
 
     private void Start()
     {
-     LazyStart();
+        LazyStart();
     }
     private void LazyStart()
     {
-        PuzzlePrefabArr = Resources.LoadAll<GameObject>(new Path().Puzzles);
-        if (PuzzlePrefabArr == null || PuzzlePrefabArr.Length == 0) { Debug.Log("?"); return; }
-       // Debug.Log(PuzzlePrefabArr.Length);
+        PuzzlePrefabArr = Resources.LoadAll<GameObject>(Path.Puzzles);
+        if (PuzzlePrefabArr == null || PuzzlePrefabArr.Length == 0) { Debug.Log("No Prefabs"); return; }
         PuzzleArr[0] = InstantiatePuzzle(0, Random.Range(0, PuzzlePrefabArr.Length));
         PuzzleArr[1] = InstantiatePuzzle(1, Random.Range(0, PuzzlePrefabArr.Length));
         PuzzleArr[2] = InstantiatePuzzle(2, Random.Range(0, PuzzlePrefabArr.Length));
@@ -24,14 +23,13 @@ public class PuzzleSpawner : MonoBehaviour
     public static int HasPuzzlCheck()
     {
         int cnt = 0;
-        foreach(GameObject go in PuzzleArr)
+        foreach (GameObject go in PuzzleArr)
         {
-            if (go!=null)
+            if (go != null)
                 cnt++;
             else
                 continue;
-        }
-        Debug.Log(cnt);
+        } 
         return cnt;
     }
     private GameObject InstantiatePuzzle(int instantiateIdx, int puzzleArrIdx)
@@ -50,7 +48,7 @@ public class PuzzleSpawner : MonoBehaviour
             pos = new Vector3(1.5f, -3.22f, 0f);
 
         puzzleGo.transform.position = pos;
-         
+
         foreach (SpriteRenderer spr in puzzleGo.GetComponentsInChildren<SpriteRenderer>())
         {
             switch (ThemeManager.ETheme)
@@ -60,7 +58,7 @@ public class PuzzleSpawner : MonoBehaviour
                     break;
                 case Enum.eTheme.Green:
                     spr.color = Factor.Green4;
-                    break; 
+                    break;
                 case Enum.eTheme.LightPurple:
                     spr.color = Factor.LightPurple4;
                     break;

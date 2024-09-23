@@ -16,10 +16,17 @@ public class PuzzlePlacer : MonoBehaviour
         //{
         //    Debug.Log("퍼즐을 놓을 수 있습니다.");
         //    PlacePuzzle(_gridManager.GridRowsCols, _puzzleManager.PuzzleArr[0], 1, 1);
-        //}
-        PuzzleSpawner.HasPuzzlCheck();
+        //} 
+        LazyStart();
     }
 
+    private void LazyStart()
+    {
+        if (GridSpawner.IsGridGoReady && PuzzleSpawner.HasPuzzlCheck() != 0)
+        {
+            Debug.Log("LazyStart");
+        }
+    }
     /// <summary>
     /// 퍼즐을 (row, col)위치에 놓을 수 있는 지 확인
     /// </summary>
