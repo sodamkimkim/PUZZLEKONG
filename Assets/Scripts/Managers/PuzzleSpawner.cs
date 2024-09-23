@@ -1,6 +1,4 @@
 using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
 [DefaultExecutionOrder(-8)]
 public class PuzzleSpawner : MonoBehaviour
 {
@@ -75,8 +73,9 @@ public class PuzzleSpawner : MonoBehaviour
                     break;
             }
         }
-        puzzleGo.GetComponent<Puzzle>().Data = PZArrResource.Data[puzzleArrIdx];
-        Debug.Log($"idx:{instantiateIdx}: puzzleArrIdx_{puzzleArrIdx}: {PZArrResource.ConvertPuzzleArrayToString(PZArrResource.Data[puzzleArrIdx])}");
+        Puzzle puzzle = puzzleGo.GetComponent<Puzzle>();
+        puzzle.Data = PZArrResource.PZArrArr[puzzleArrIdx];
+        Debug.Log($"idx:{instantiateIdx}: puzzleArrIdx_{puzzleArrIdx}: {PZArrResource.ConvertPuzzleArrayToString(puzzle.Data)}");
         return puzzleGo;
     }
 } // end of class

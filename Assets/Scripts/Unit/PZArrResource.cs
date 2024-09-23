@@ -1,9 +1,8 @@
 using System.Text;
-using UnityEngine;
 
 public class PZArrResource
 {
-    public static int[][,] Data = new int[][,] {
+    public static int[][,] PZArrArr = new int[][,] {
             new int[,] // ∆€¡Ò000
             {
                 { 1, 1, 1, 0 },

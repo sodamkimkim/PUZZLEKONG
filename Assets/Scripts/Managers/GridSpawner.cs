@@ -34,7 +34,7 @@ public class GridSpawner : MonoBehaviour
     private void Start()
     {
         InitializeGridColor();
-        IsGridGoReady = SpawnGridGo(_gridGo, GridArrayResource.Data[1]);
+        IsGridGoReady = SpawnGridGo(_gridGo, GridArrayResource.GridArrArr[1]);
         Debug.Log(SprDic.Count);
     }
     private void InitializeGridColor()

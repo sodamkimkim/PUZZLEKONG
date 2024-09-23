@@ -1,6 +1,6 @@
 public class GridArrayResource
 {
-    public static int[][,] Data = new int[][,]{
+    public static int[][,] GridArrArr = new int[][,]{
         new int [,]
         {
             {0,0,0,0,0,0,0,0,0},
