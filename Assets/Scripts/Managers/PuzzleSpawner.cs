@@ -1,15 +1,16 @@
 using UnityEngine;
 
+[DefaultExecutionOrder(-8)]
 public class PuzzleSpawner : MonoBehaviour
 {
     [SerializeField]
     private Transform _puzzleParentTr = null;
     public GameObject[] PuzzlePrefabArr = null;
-    public GameObject[] PuzzleArr = new GameObject[3];
+    public static GameObject[] PuzzleArr = new GameObject[3];
 
     private void Start()
     {
-        LazyStart();
+     LazyStart();
     }
     private void LazyStart()
     {
@@ -19,6 +20,19 @@ public class PuzzleSpawner : MonoBehaviour
         PuzzleArr[0] = InstantiatePuzzle(0, Random.Range(0, PuzzlePrefabArr.Length));
         PuzzleArr[1] = InstantiatePuzzle(1, Random.Range(0, PuzzlePrefabArr.Length));
         PuzzleArr[2] = InstantiatePuzzle(2, Random.Range(0, PuzzlePrefabArr.Length));
+    }
+    public static int HasPuzzlCheck()
+    {
+        int cnt = 0;
+        foreach(GameObject go in PuzzleArr)
+        {
+            if (go!=null)
+                cnt++;
+            else
+                continue;
+        }
+        Debug.Log(cnt);
+        return cnt;
     }
     private GameObject InstantiatePuzzle(int instantiateIdx, int puzzleArrIdx)
     {

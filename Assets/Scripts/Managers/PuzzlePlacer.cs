@@ -17,6 +17,7 @@ public class PuzzlePlacer : MonoBehaviour
         //    Debug.Log("퍼즐을 놓을 수 있습니다.");
         //    PlacePuzzle(_gridManager.GridRowsCols, _puzzleManager.PuzzleArr[0], 1, 1);
         //}
+        PuzzleSpawner.HasPuzzlCheck();
     }
 
     /// <summary>
