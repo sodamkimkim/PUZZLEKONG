@@ -1,12 +1,14 @@
 using UnityEngine;
-
+using System.Collections;
+using System.Collections.Generic;
 [DefaultExecutionOrder(-8)]
 public class PuzzleSpawner : MonoBehaviour
 {
     [SerializeField]
     private Transform _puzzleParentTr = null;
-    public GameObject[] PuzzlePrefabArr = null;
-    public static GameObject[] PuzzleArr = new GameObject[3];
+    [SerializeField]
+    public GameObject[] PuzzlePrefabArr = new GameObject[13];
+    public GameObject[] PuzzleArr = new GameObject[3];
 
     private void Start()
     {
@@ -14,13 +16,13 @@ public class PuzzleSpawner : MonoBehaviour
     }
     private void LazyStart()
     {
-        PuzzlePrefabArr = Resources.LoadAll<GameObject>(Path.Puzzles);
         if (PuzzlePrefabArr == null || PuzzlePrefabArr.Length == 0) { Debug.Log("No Prefabs"); return; }
         PuzzleArr[0] = InstantiatePuzzle(0, Random.Range(0, PuzzlePrefabArr.Length));
         PuzzleArr[1] = InstantiatePuzzle(1, Random.Range(0, PuzzlePrefabArr.Length));
         PuzzleArr[2] = InstantiatePuzzle(2, Random.Range(0, PuzzlePrefabArr.Length));
     }
-    public static int HasPuzzlCheck()
+
+    public int HasPuzzlCheck()
     {
         int cnt = 0;
         foreach (GameObject go in PuzzleArr)
@@ -29,7 +31,7 @@ public class PuzzleSpawner : MonoBehaviour
                 cnt++;
             else
                 continue;
-        } 
+        }
         return cnt;
     }
     private GameObject InstantiatePuzzle(int instantiateIdx, int puzzleArrIdx)
@@ -73,9 +75,8 @@ public class PuzzleSpawner : MonoBehaviour
                     break;
             }
         }
+        puzzleGo.GetComponent<Puzzle>().Data = PZArrResource.Data[puzzleArrIdx];
+        Debug.Log($"idx:{instantiateIdx}: puzzleArrIdx_{puzzleArrIdx}: {PZArrResource.ConvertPuzzleArrayToString(PZArrResource.Data[puzzleArrIdx])}");
         return puzzleGo;
     }
-
-
-
 } // end of class

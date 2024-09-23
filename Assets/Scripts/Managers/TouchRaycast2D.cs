@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class TouchRaycast2D : MonoBehaviour
 {
-    public GameObject TouchingGo = null;
+    public static GameObject TouchingGo = null;
     private Vector3 _selectedGoInitialPos = Vector3.zero;
     public void ShotRay(Enum.eTouchFunc eTouchFunc)
     { 
@@ -65,6 +65,8 @@ public class TouchRaycast2D : MonoBehaviour
     }
     public void SetTouchEnd()
     {
+        // TODO 
+        // Puzzle Grid에 할당되지 않았다면
         if (TouchingGo == null) return;
         TouchingGo.transform.localScale = Factor.ScalePuzzleSmall;
         TouchingGo.transform.position = _selectedGoInitialPos;

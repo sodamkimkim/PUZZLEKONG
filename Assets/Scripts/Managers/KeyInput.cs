@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class KeyInput : MonoBehaviour
 {
+    [SerializeField]
+    private PuzzlePlacer _puzzlePlacer = null;
     private TouchRaycast2D _touchRaycast2D = null;
     private void Awake()
     {
@@ -9,7 +11,7 @@ public class KeyInput : MonoBehaviour
     }
     private void Update()
     {
-       KeyInputFunc();
+        KeyInputFunc();
     }
     private void KeyInputFunc()
     {
@@ -20,7 +22,12 @@ public class KeyInput : MonoBehaviour
         if (Input.GetMouseButton(0))
             _touchRaycast2D.ShotRay(Enum.eTouchFunc.TouchMoved);
         if (Input.GetMouseButtonUp(0))
-            _touchRaycast2D.SetTouchEnd();
+        {
+            //if (_puzzlePlacer.CanPlacePuzzle(TouchRaycast2D.TouchingGo))
+            //    _puzzlePlacer.PlacePuzzle();
+            //else
+            //    _touchRaycast2D.SetTouchEnd();
+        }
 #endif
         if (Input.touchCount > 0)
         {
@@ -30,7 +37,14 @@ public class KeyInput : MonoBehaviour
             if (touch.phase == TouchPhase.Moved)
                 _touchRaycast2D.ShotRay(Enum.eTouchFunc.TouchMoved);
             if (touch.phase == TouchPhase.Ended)
-                _touchRaycast2D.SetTouchEnd();
+            {
+                // TODO
+                //if (PuzzlePlacer.CanPlacePuzzle())
+                //    PuzzlePlacer.PlacePuzzle();
+                //else
+                //    _touchRaycast2D.SetTouchEnd();
+            }
+
         }
     }
 } // end of class

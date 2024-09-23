@@ -1,101 +1,7 @@
 using UnityEngine;
-
+[DefaultExecutionOrder(-100)]
 public class BuildPuzzlePrefab : MonoBehaviour
-{
-    public int[][,] PuzzleArr = new int[][,] {
-            new int[,] // ∆€¡Ò001
-            {
-                { 1, 1, 1, 0 },
-                { 1, 0, 0, 0 },
-                { 1, 0, 0 ,0 },
-                { 0, 0, 0 ,0 }
-            },
-            new int[,] // ∆€¡Ò002
-            {
-                { 0, 0, 1, 0 },
-                { 0, 0, 1, 0 },
-                { 1, 1, 1, 0 },
-                { 0, 0, 0, 0 }
-            },
-            new int[,] // ∆€¡Ò003
-            {
-                { 1, 1, 1, 0 },
-                { 0, 0, 0, 0 },
-                { 0, 0, 0, 0 },
-                { 0, 0, 0, 0 }
-            },
-            new int[,] // ∆€¡Ò004
-            {
-                { 1, 1, 1, 1 },
-                { 0, 0, 0, 0 },
-                { 0, 0, 0, 0 },
-                { 0, 0, 0, 0 }
-            },
-            new int[,] // ∆€¡Ò005
-            {
-                { 1, 0, 0, 0 },
-                { 1, 0, 0, 0 },
-                { 1, 0, 0, 0 },
-                { 0, 0, 0, 0 }
-            },
-            new int[,] // ∆€¡Ò006
-            {
-                { 1, 0, 0, 0 },
-                { 1, 0, 0, 0 },
-                { 1, 0, 0, 0 },
-                { 1, 0, 0, 0 }
-            },
-            new int[,] // ∆€¡Ò007
-            {
-                { 1, 1, 0, 0 },
-                { 0, 1, 0, 0 },
-                { 0, 1, 1, 0 },
-                { 0, 0, 0, 0 }
-            },
-            new int[,] // ∆€¡Ò008
-            {
-                { 0, 1, 1, 0 },
-                { 0, 1, 0, 0 },
-                { 1, 1, 0, 0 },
-                { 0, 0, 0, 0 }
-            }
-            ,
-            new int[,] // ∆€¡Ò009
-            {
-                { 1, 1, 1, 0 },
-                { 0, 1, 0, 0 },
-                { 0, 1, 0, 0 },
-                { 0, 0, 0, 0 }
-            },
-            new int[,] // ∆€¡Ò010
-            {
-                { 0, 1, 0, 0 },
-                { 0, 1, 0, 0 },
-                { 1, 1, 1, 0 },
-                { 0, 0, 0, 0 }
-            },
-            new int[,] // ∆€¡Ò011
-            {
-                { 1, 0, 0, 0 },
-                { 1, 1, 0, 0 },
-                { 1, 0, 0, 0 },
-                { 0, 0, 0, 0 }
-            },
-            new int[,] // ∆€¡Ò012
-            {
-                { 0, 1, 0, 0 },
-                { 1, 1, 1, 0 },
-                { 0, 0, 0, 0 },
-                { 0, 0, 0, 0 }
-            },
-            new int[,] // ∆€¡Ò013
-            {
-                { 1, 1, 0, 0 },
-                { 1, 1, 0, 0 },
-                { 0, 0, 0, 0 },
-                { 0, 0, 0, 0 }
-            }
-        };
+{ 
     private void Start()
     {
         BuildPuzzlePrefabFunc();
@@ -104,9 +10,9 @@ public class BuildPuzzlePrefab : MonoBehaviour
     {
         GameObject _puzzlePrefab_NoLine = Resources.Load<GameObject>(Path.PuzzlePartPrefab);
 
-        for (int i = 0; i < PuzzleArr.Length; i++)
+        for (int i = 0; i < PZArrResource.Data.Length; i++)
         {
-            int[,] selectedPuzzle = PuzzleArr[i];
+            int[,] selectedPuzzle = PZArrResource.Data[i];
             GameObject puzzlePrefab = new GameObject($"Puzzle_{i}");
 
             int puzzleRows = selectedPuzzle.GetLength(0);
@@ -167,9 +73,14 @@ public class BuildPuzzlePrefab : MonoBehaviour
             {
                 puzzlePrefab.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
             }
-            puzzlePrefab.AddComponent<Puzzle>();
+            Puzzle puzzle = puzzlePrefab.AddComponent<Puzzle>();
+            puzzle.Data = selectedPuzzle;
             puzzlePrefab.tag = "Puzzle";
+
+          
         }
+
+
     }
 
 } // end of class

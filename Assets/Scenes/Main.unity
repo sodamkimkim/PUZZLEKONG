@@ -185,7 +185,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _puzzleParentTr: {fileID: 1208679615}
-  PuzzlePrefabArr: []
+  PuzzlePrefabArr:
+  - {fileID: 8756528013708828700, guid: 15766ca892e02084491f7fdf7dc6568a, type: 3}
+  - {fileID: 8648001831617187974, guid: 0198e02beeadbb74498c50f30a502641, type: 3}
+  - {fileID: 848515650039854538, guid: 69294d4cd6076b746b12224558a23cfe, type: 3}
+  - {fileID: 7005870737449889801, guid: 97e98a884f8be8b4cb82a7278fa62bdf, type: 3}
+  - {fileID: 765353117699795376, guid: 9b66ff672f311584b99343f894f20611, type: 3}
+  - {fileID: 3673670128899183947, guid: f9ec21160a718c442b9fcf99c5a4dcd6, type: 3}
+  - {fileID: 5700042882867610323, guid: 100bed63bed2e714e923e72370a69b98, type: 3}
+  - {fileID: 3081097900591624076, guid: cb23a647bd7c3ff48bb2acc6140e1be4, type: 3}
+  - {fileID: 480290259377396659, guid: 845984da2b3595a49a06a76beab9ef3a, type: 3}
+  - {fileID: 2379177168947344588, guid: 50adf192a9fb08841ae8e7ba112d642c, type: 3}
+  - {fileID: 6307370122901187692, guid: 8799aa4202affba41ad31383a6702d42, type: 3}
+  - {fileID: 226910522175002502, guid: d09e88a08f50ed64b9b42bbfe4bdb571, type: 3}
+  - {fileID: 8226534717920437321, guid: 7b8df693fc55f664f97fa39da47d5214, type: 3}
   PuzzleArr:
   - {fileID: 0}
   - {fileID: 0}
@@ -389,7 +402,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39327abe8d04b854dafa70fc4bab1bab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TouchingGo: {fileID: 0}
 --- !u!114 &519420034
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -402,6 +414,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c16d1f24585b714daa13d12dc7df7c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _puzzlePlacer: {fileID: 0}
 --- !u!1 &550452981
 GameObject:
   m_ObjectHideFlags: 0
@@ -653,7 +666,7 @@ SceneRoots:
   - {fileID: 519420032}
   - {fileID: 705336744}
   - {fileID: 550452985}
-  - {fileID: 40165673}
   - {fileID: 316545523}
   - {fileID: 723105367}
   - {fileID: 1208679615}
+  - {fileID: 40165673}

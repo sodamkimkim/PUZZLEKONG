@@ -23,7 +23,6 @@ public class GridSpawner : MonoBehaviour
     #region Grid 배열, part관리
     public int[,] NowGridArr = null;
     public Dictionary<string, SpriteRenderer> SprDic = new Dictionary<string, SpriteRenderer>();
-    private GridArrayResource _gridArrResrouce = new GridArrayResource();
     #endregion
 
     #region Grid Color
@@ -35,7 +34,7 @@ public class GridSpawner : MonoBehaviour
     private void Start()
     {
         InitializeGridColor();
-        IsGridGoReady = SpawnGridGo(_gridGo, _gridArrResrouce.GridArrArr[1]);
+        IsGridGoReady = SpawnGridGo(_gridGo, GridArrayResource.Data[1]);
         Debug.Log(SprDic.Count);
     }
     private void InitializeGridColor()
