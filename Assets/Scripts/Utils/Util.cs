@@ -1,8 +1,9 @@
 using UnityEngine;
-
-public class Util  
+using System.Collections;
+using System.Collections.Generic;
+public static class Util  
 {
-    public void SetPivotToChildCenter(Transform parentTr)
+    public static void SetPivotToChildCenter(Transform parentTr)
     {
         if (parentTr.childCount == 0)
         {
@@ -31,5 +32,11 @@ public class Util
             child.position += offset;
         }
     }
-
+    public static void AddDictionary<T>(Dictionary<string, T> dic, string key, T value)
+    {
+        if (dic.ContainsKey(key))
+            dic[key] = value;
+        else
+            dic.Add(key, value);
+    }
 }
