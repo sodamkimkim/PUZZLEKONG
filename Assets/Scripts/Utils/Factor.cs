@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Factor
+public class Factor:MonoBehaviour
 {
     #region Transform
     public Vector3 PosBG { get => new Vector3(0f, 0f, 10f); }
