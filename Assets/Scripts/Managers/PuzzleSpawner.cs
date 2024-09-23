@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class PuzzleSpawner : MonoBehaviour
 {
+    [SerializeField]
+    private Transform _puzzleParentTr = null;
     public GameObject[] PuzzlePrefabArr = null;
     public GameObject[] PuzzleArr = new GameObject[3];
 
@@ -13,14 +15,14 @@ public class PuzzleSpawner : MonoBehaviour
     {
         PuzzlePrefabArr = Resources.LoadAll<GameObject>(new Path().Puzzles);
         if (PuzzlePrefabArr == null || PuzzlePrefabArr.Length == 0) { Debug.Log("?"); return; }
-        Debug.Log(PuzzlePrefabArr.Length);
+       // Debug.Log(PuzzlePrefabArr.Length);
         PuzzleArr[0] = InstantiatePuzzle(0, Random.Range(0, PuzzlePrefabArr.Length));
         PuzzleArr[1] = InstantiatePuzzle(1, Random.Range(0, PuzzlePrefabArr.Length));
         PuzzleArr[2] = InstantiatePuzzle(2, Random.Range(0, PuzzlePrefabArr.Length));
     }
     private GameObject InstantiatePuzzle(int instantiateIdx, int puzzleArrIdx)
     {
-        GameObject puzzleGo = Instantiate(PuzzlePrefabArr[puzzleArrIdx]);
+        GameObject puzzleGo = Instantiate(PuzzlePrefabArr[puzzleArrIdx], _puzzleParentTr);
 
         puzzleGo.transform.localScale = Factor.ScalePuzzleSmall;
         puzzleGo.transform.rotation = Quaternion.identity;
@@ -34,29 +36,28 @@ public class PuzzleSpawner : MonoBehaviour
             pos = new Vector3(1.5f, -3.22f, 0f);
 
         puzzleGo.transform.position = pos;
-
-        Factor factor = new Factor();
+         
         foreach (SpriteRenderer spr in puzzleGo.GetComponentsInChildren<SpriteRenderer>())
         {
             switch (ThemeManager.ETheme)
             {
                 case Enum.eTheme.Grey:
-                    spr.color = factor.Grey4;
+                    spr.color = Factor.Grey4;
                     break;
                 case Enum.eTheme.Green:
-                    spr.color = factor.Green4;
+                    spr.color = Factor.Green4;
                     break; 
                 case Enum.eTheme.LightPurple:
-                    spr.color = factor.LightBlue4;
+                    spr.color = Factor.LightPurple4;
                     break;
                 case Enum.eTheme.LightBlue:
-                    spr.color = factor.LightBlue4;
+                    spr.color = Factor.LightBlue4;
                     break;
                 case Enum.eTheme.Pink:
-                    spr.color = factor.Pink4;
+                    spr.color = Factor.Pink4;
                     break;
                 case Enum.eTheme.Mint:
-                    spr.color = factor.Grey4;
+                    spr.color = Factor.Grey4;
                     break;
             }
         }
