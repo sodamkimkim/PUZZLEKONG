@@ -6,26 +6,37 @@ public class PuzzleManager : MonoBehaviour
     private Transform _puzzleParentTr = null;
     [SerializeField]
     private GameObject[] PuzzlePrefabArr = new GameObject[13];
-    private GameObject[] PuzzleArr = new GameObject[3];
-    private PuzzlePlacableChecker _puzzlePlacableChecker = null;
+    public GameObject[] PuzzleGoArr { get; private set; }
 
     private void Awake()
     {
-        _puzzlePlacableChecker = this.GetComponent<PuzzlePlacableChecker>();
+        PuzzleGoArr = new GameObject[3];
     }
 
     private void Start()
     {
         LazyStart();
     }
+
     private void LazyStart()
     {
-        if (PuzzlePrefabArr == null || PuzzlePrefabArr.Length == 0) { Debug.Log("No Prefabs"); return; }
-        PuzzleArr[0] = InstantiatePuzzle(0, Random.Range(0, PuzzlePrefabArr.Length));
-        PuzzleArr[1] = InstantiatePuzzle(1, Random.Range(0, PuzzlePrefabArr.Length));
-        PuzzleArr[2] = InstantiatePuzzle(2, Random.Range(0, PuzzlePrefabArr.Length));
-        _puzzlePlacableChecker.StartCheck(true,PuzzleArr);
-    } 
+        if (PuzzlePrefabArr == null || PuzzlePrefabArr.Length == 0)
+        { Debug.Log("No Prefabs"); return; }
+        InstantiateNewPuzzleGo(); 
+    }
+    private void InstantiateNewPuzzleGo()
+    {
+        PuzzleGoArr[0] = InstantiatePuzzle(0, Random.Range(0, PuzzlePrefabArr.Length));
+        PuzzleGoArr[1] = InstantiatePuzzle(1, Random.Range(0, PuzzlePrefabArr.Length));
+        PuzzleGoArr[2] = InstantiatePuzzle(2, Random.Range(0, PuzzlePrefabArr.Length));
+        _checkPlacableCallback?.Invoke();
+    }
+    public delegate void CheckPlacable();
+    private CheckPlacable _checkPlacableCallback;
+    public void Iniit(CheckPlacable checkPlacableCallback)
+    {
+        _checkPlacableCallback = checkPlacableCallback;
+    }
     private GameObject InstantiatePuzzle(int instantiateIdx, int puzzleArrIdx)
     {
         GameObject puzzleGo = Instantiate(PuzzlePrefabArr[puzzleArrIdx], _puzzleParentTr);

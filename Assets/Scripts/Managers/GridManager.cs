@@ -31,6 +31,12 @@ public class GridManager : MonoBehaviour
     public Color Color_PZIn { get; private set; }
     #endregion
 
+    public delegate void CheckPlacable();
+    private CheckPlacable _checkPlacableCallback;
+    public void Iniit(CheckPlacable checkPlacableCallback)
+    {
+        _checkPlacableCallback = checkPlacableCallback;
+    }
     private void Start()
     {
         InitializeGridColor();

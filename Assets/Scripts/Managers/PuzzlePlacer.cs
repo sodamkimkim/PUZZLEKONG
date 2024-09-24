@@ -2,12 +2,10 @@ using UnityEngine;
 
 public class PuzzlePlacer : MonoBehaviour
 {
-    private GridManager _gridSpawner = null;
-    private PuzzleManager _puzzleSpawner = null;
+ 
     private void Awake()
     {
-        _gridSpawner = this.GetComponent<GridManager>();
-        _puzzleSpawner = this.GetComponent<PuzzleManager>();
+ 
     }
     private void Start()
     {
@@ -16,10 +14,13 @@ public class PuzzlePlacer : MonoBehaviour
 
     private void LazyStart()
     {
-        //if (GridSpawner.IsGridGoReady && _puzzleSpawner.HasPuzzlCheck() != 0)
-        //{
-        //    Debug.Log("LazyStart"); 
-        //}
+ 
+    }
+    public delegate void CheckPlacable();
+    private CheckPlacable _checkPlacableCallback;
+    public void Iniit(CheckPlacable checkPlacableCallback)
+    {
+        _checkPlacableCallback = checkPlacableCallback;
     }
     /// <summary>
     /// 퍼즐을 (row, col)위치에 놓을 수 있는 지 확인

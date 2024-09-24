@@ -134,9 +134,6 @@ GameObject:
   - component: {fileID: 40165679}
   - component: {fileID: 40165678}
   - component: {fileID: 40165680}
-  - component: {fileID: 40165677}
-  - component: {fileID: 40165676}
-  - component: {fileID: 40165675}
   - component: {fileID: 40165681}
   m_Layer: 0
   m_Name: GameManager
@@ -157,66 +154,12 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 824247289}
+  - {fileID: 540252144}
+  - {fileID: 699796258}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &40165675
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 40165672}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c487ed47df7e1fa42800e91c614338f1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _puzzleParentTr: {fileID: 1208679615}
-  PuzzlePrefabArr:
-  - {fileID: 8756528013708828700, guid: 15766ca892e02084491f7fdf7dc6568a, type: 3}
-  - {fileID: 8648001831617187974, guid: 0198e02beeadbb74498c50f30a502641, type: 3}
-  - {fileID: 848515650039854538, guid: 69294d4cd6076b746b12224558a23cfe, type: 3}
-  - {fileID: 7005870737449889801, guid: 97e98a884f8be8b4cb82a7278fa62bdf, type: 3}
-  - {fileID: 765353117699795376, guid: 9b66ff672f311584b99343f894f20611, type: 3}
-  - {fileID: 3673670128899183947, guid: f9ec21160a718c442b9fcf99c5a4dcd6, type: 3}
-  - {fileID: 5700042882867610323, guid: 100bed63bed2e714e923e72370a69b98, type: 3}
-  - {fileID: 3081097900591624076, guid: cb23a647bd7c3ff48bb2acc6140e1be4, type: 3}
-  - {fileID: 480290259377396659, guid: 845984da2b3595a49a06a76beab9ef3a, type: 3}
-  - {fileID: 2379177168947344588, guid: 50adf192a9fb08841ae8e7ba112d642c, type: 3}
-  - {fileID: 6307370122901187692, guid: 8799aa4202affba41ad31383a6702d42, type: 3}
-  - {fileID: 226910522175002502, guid: d09e88a08f50ed64b9b42bbfe4bdb571, type: 3}
-  - {fileID: 8226534717920437321, guid: 7b8df693fc55f664f97fa39da47d5214, type: 3}
-  PuzzleArr:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
---- !u!114 &40165676
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 40165672}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 623607de6930b0d4c974a03b1dc3723a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _gridParentTr: {fileID: 723105367}
---- !u!114 &40165677
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 40165672}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 243a8c91ea25b8b4a9df2158608e5afe, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _bgParentTr: {fileID: 316545523}
 --- !u!114 &40165678
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -415,6 +358,51 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _puzzlePlacer: {fileID: 0}
+--- !u!1 &540252143
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 540252144}
+  - component: {fileID: 540252145}
+  m_Layer: 0
+  m_Name: GridManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &540252144
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 540252143}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 40165673}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &540252145
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 540252143}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 623607de6930b0d4c974a03b1dc3723a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _gridParentTr: {fileID: 723105367}
 --- !u!1 &550452981
 GameObject:
   m_ObjectHideFlags: 0
@@ -529,6 +517,65 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42abd34eb7fb91148b79fc01085da9b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &699796257
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 699796258}
+  - component: {fileID: 699796259}
+  m_Layer: 0
+  m_Name: PuzzleManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &699796258
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 699796257}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 40165673}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &699796259
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 699796257}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c487ed47df7e1fa42800e91c614338f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _puzzleParentTr: {fileID: 1208679615}
+  PuzzlePrefabArr:
+  - {fileID: 8756528013708828700, guid: 15766ca892e02084491f7fdf7dc6568a, type: 3}
+  - {fileID: 8648001831617187974, guid: 0198e02beeadbb74498c50f30a502641, type: 3}
+  - {fileID: 848515650039854538, guid: 69294d4cd6076b746b12224558a23cfe, type: 3}
+  - {fileID: 7005870737449889801, guid: 97e98a884f8be8b4cb82a7278fa62bdf, type: 3}
+  - {fileID: 765353117699795376, guid: 9b66ff672f311584b99343f894f20611, type: 3}
+  - {fileID: 3673670128899183947, guid: f9ec21160a718c442b9fcf99c5a4dcd6, type: 3}
+  - {fileID: 5700042882867610323, guid: 100bed63bed2e714e923e72370a69b98, type: 3}
+  - {fileID: 3081097900591624076, guid: cb23a647bd7c3ff48bb2acc6140e1be4, type: 3}
+  - {fileID: 480290259377396659, guid: 845984da2b3595a49a06a76beab9ef3a, type: 3}
+  - {fileID: 2379177168947344588, guid: 50adf192a9fb08841ae8e7ba112d642c, type: 3}
+  - {fileID: 6307370122901187692, guid: 8799aa4202affba41ad31383a6702d42, type: 3}
+  - {fileID: 226910522175002502, guid: d09e88a08f50ed64b9b42bbfe4bdb571, type: 3}
+  - {fileID: 8226534717920437321, guid: 7b8df693fc55f664f97fa39da47d5214, type: 3}
 --- !u!1 &705336741
 GameObject:
   m_ObjectHideFlags: 0
@@ -628,6 +675,51 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &824247288
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 824247289}
+  - component: {fileID: 824247290}
+  m_Layer: 0
+  m_Name: BackGroundManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &824247289
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 824247288}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 40165673}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &824247290
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 824247288}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 243a8c91ea25b8b4a9df2158608e5afe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _bgParentTr: {fileID: 316545523}
 --- !u!1 &1208679614
 GameObject:
   m_ObjectHideFlags: 0
