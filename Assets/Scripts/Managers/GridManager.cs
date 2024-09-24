@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Collections;
 using UnityEngine;
 [DefaultExecutionOrder(-9)]
-public class GridSpawner : MonoBehaviour
+public class GridManager : MonoBehaviour
 {
     [SerializeField]
     private Transform _gridParentTr = null;
@@ -26,9 +26,9 @@ public class GridSpawner : MonoBehaviour
     #endregion
 
     #region Grid Color
-    private Color color_Nothing = Color.clear;
-    private Color color_Placable = Color.clear;
-    private Color color_PZIn = Color.clear;
+    public Color Color_Nothing { get; private set; }
+    public Color Color_Placable { get; private set; }
+    public Color Color_PZIn { get; private set; }
     #endregion
 
     private void Start()
@@ -42,34 +42,34 @@ public class GridSpawner : MonoBehaviour
         switch (ThemeManager.ETheme)
         {
             case Enum.eTheme.Grey:
-                color_Nothing = Factor.Grey2;
-                color_Placable = Factor.Grey3;
-                color_PZIn = Factor.Grey4;
+                Color_Nothing = Factor.Grey2;
+                Color_Placable = Factor.Grey3;
+                Color_PZIn = Factor.Grey4;
                 break;
             case Enum.eTheme.Green:
-                color_Nothing = Factor.Green2;
-                color_Placable = Factor.Green3;
-                color_PZIn = Factor.Green4;
+                Color_Nothing = Factor.Green2;
+                Color_Placable = Factor.Green3;
+                Color_PZIn = Factor.Green4;
                 break;
             case Enum.eTheme.LightPurple:
-                color_Nothing = Factor.LightPurple2;
-                color_Placable = Factor.LightPurple3;
-                color_PZIn = Factor.LightPurple4;
+                Color_Nothing = Factor.LightPurple2;
+                Color_Placable = Factor.LightPurple3;
+                Color_PZIn = Factor.LightPurple4;
                 break;
             case Enum.eTheme.LightBlue:
-                color_Nothing = Factor.LightBlue2;
-                color_Placable = Factor.LightBlue3;
-                color_PZIn = Factor.LightBlue4;
+                Color_Nothing = Factor.LightBlue2;
+                Color_Placable = Factor.LightBlue3;
+                Color_PZIn = Factor.LightBlue4;
                 break;
             case Enum.eTheme.Pink:
-                color_Nothing = Factor.Pink2;
-                color_Placable = Factor.Pink3;
-                color_PZIn = Factor.Pink4;
+                Color_Nothing = Factor.Pink2;
+                Color_Placable = Factor.Pink3;
+                Color_PZIn = Factor.Pink4;
                 break;
             case Enum.eTheme.Mint:
-                color_Nothing = Factor.BGColorDefault;
-                color_Placable = Factor.Grey3;
-                color_PZIn = Factor.Grey4;
+                Color_Nothing = Factor.BGColorDefault;
+                Color_Placable = Factor.Grey3;
+                Color_PZIn = Factor.Grey4;
                 break;
         }
     }
@@ -95,7 +95,10 @@ public class GridSpawner : MonoBehaviour
                     SpriteRenderer spr = gridPartGo.GetComponent<SpriteRenderer>();
                     Util.AddDictionary(SprDic, gridPartGo.name, spr);
                     SetGridColor(spr, NowGridArr[i, j]);
-                    gridPartGo.AddComponent<GridPart>();
+                    GridPart gridPart = gridPartGo.AddComponent<GridPart>();
+                    gridPart.HasPuzzle = NowGridArr[i, j] == 1 ? true : false;
+                    gridPart.IdxRow = i;
+                    gridPart.IdxCol = j;
                 }
             }
         }
@@ -116,6 +119,6 @@ public class GridSpawner : MonoBehaviour
     /// <param name="gridPartValue"></param>
     private void SetGridColor(SpriteRenderer spr, int gridPartValue)
     {
-        spr.color = gridPartValue == 1 ? color_PZIn : color_Nothing;
+        spr.color = gridPartValue == 1 ? Color_PZIn : Color_Nothing;
     }
 } // end of class

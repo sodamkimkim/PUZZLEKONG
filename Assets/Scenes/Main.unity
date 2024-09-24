@@ -137,7 +137,7 @@ GameObject:
   - component: {fileID: 40165677}
   - component: {fileID: 40165676}
   - component: {fileID: 40165675}
-  - component: {fileID: 40165674}
+  - component: {fileID: 40165681}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -160,18 +160,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &40165674
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 40165672}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 66fd20cc32a981c49a88f656bcb31462, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &40165675
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -181,7 +169,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 40165672}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8dd53ba57cad8eb4fb490d6a4566ea34, type: 3}
+  m_Script: {fileID: 11500000, guid: c487ed47df7e1fa42800e91c614338f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _puzzleParentTr: {fileID: 1208679615}
@@ -212,7 +200,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 40165672}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b4a80b146809c324399aa2ac37b65703, type: 3}
+  m_Script: {fileID: 11500000, guid: 623607de6930b0d4c974a03b1dc3723a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _gridParentTr: {fileID: 723105367}
@@ -263,6 +251,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c68a18dac02eaaa4fa90900331d99a4a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &40165681
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 40165672}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95d12868cbee9a24e93ce3cfb4c24c9e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &316545522

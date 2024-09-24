@@ -1,12 +1,18 @@
 using UnityEngine;
 [DefaultExecutionOrder(-8)]
-public class PuzzleSpawner : MonoBehaviour
+public class PuzzleManager : MonoBehaviour
 {
     [SerializeField]
     private Transform _puzzleParentTr = null;
     [SerializeField]
-    public GameObject[] PuzzlePrefabArr = new GameObject[13];
-    public GameObject[] PuzzleArr = new GameObject[3];
+    private GameObject[] PuzzlePrefabArr = new GameObject[13];
+    private GameObject[] PuzzleArr = new GameObject[3];
+    private PuzzlePlacableChecker _puzzlePlacableChecker = null;
+
+    private void Awake()
+    {
+        _puzzlePlacableChecker = this.GetComponent<PuzzlePlacableChecker>();
+    }
 
     private void Start()
     {
@@ -18,20 +24,8 @@ public class PuzzleSpawner : MonoBehaviour
         PuzzleArr[0] = InstantiatePuzzle(0, Random.Range(0, PuzzlePrefabArr.Length));
         PuzzleArr[1] = InstantiatePuzzle(1, Random.Range(0, PuzzlePrefabArr.Length));
         PuzzleArr[2] = InstantiatePuzzle(2, Random.Range(0, PuzzlePrefabArr.Length));
-    }
-
-    public int HasPuzzlCheck()
-    {
-        int cnt = 0;
-        foreach (GameObject go in PuzzleArr)
-        {
-            if (go != null)
-                cnt++;
-            else
-                continue;
-        }
-        return cnt;
-    }
+        _puzzlePlacableChecker.StartCheck(true,PuzzleArr);
+    } 
     private GameObject InstantiatePuzzle(int instantiateIdx, int puzzleArrIdx)
     {
         GameObject puzzleGo = Instantiate(PuzzlePrefabArr[puzzleArrIdx], _puzzleParentTr);
