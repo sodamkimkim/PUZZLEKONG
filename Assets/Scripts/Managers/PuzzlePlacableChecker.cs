@@ -30,19 +30,25 @@ public class PuzzlePlacableChecker : MonoBehaviour
             _timeElapsed = 0f;
         }
     }
-    public void StartCheck(bool isStartRepeating, GameObject[] puzzleArr)
+    public void StartCheck(bool isStartRepeating, GameObject[] puzzleGoArr)
     {
-        _repeatingAction += () => Check(puzzleArr);
+        _repeatingAction += () => Check(puzzleGoArr);
         _isStartRepeating = isStartRepeating;
     }
-    private void Check(GameObject[] puzzleArr)
+
+    /// <summary>
+    /// 배열의 각 GameObject Placable Check
+    /// </summary>
+    /// <param name="puzzleGoArr"></param>
+    private void Check(GameObject[] puzzleGoArr)
     {
+        // TODO - puzzleGoArr Check
 
-        if (IsCheckGameOver(puzzleArr))
+
+        if (IsCheckGameOver(puzzleGoArr))
             GameOver();
-
-
     }
+
     /// <summary>
     ///  - 배열내 모든 Puzzle Go Placable == false => GameOver
     /// </summary>
@@ -52,7 +58,7 @@ public class PuzzlePlacableChecker : MonoBehaviour
     {
         int puzzleCnt = 0;
         int gameOverCheckNum = 0;
-        //List<bool> isGameOvercheckList = new List<bool>();
+
         foreach (GameObject go in puzzleGoArr)
         {
             // 해당 배열 내 Puzzle Go가 있고 Placable이면 true반환
@@ -73,28 +79,21 @@ public class PuzzlePlacableChecker : MonoBehaviour
             return false;
         }
         else if (puzzleCnt != 0 && puzzleCnt == gameOverCheckNum)
-        {
-            // GameOver
-            return true;
-        }
+            return true; // GameOver 
         else
-        {
-            //GameOver는 아님
-            return false;
-        }
+            return false; //GameOver는 아님 
     }
 
     private void StageComplete()
     {
         // TODO -  Stage Complete Process
+        Debug.LogError("StageComplete");
     }
 
-    private void CheckPlacable(int[,] puzzleArr)
-    {
 
-    }
     private void GameOver()
     {
         // TODO - GameOverProcess
+        Debug.LogError("GameOver");
     }
 } // end of class
