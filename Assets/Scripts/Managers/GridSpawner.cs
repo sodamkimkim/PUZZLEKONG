@@ -91,9 +91,11 @@ public class GridSpawner : MonoBehaviour
                     GameObject gridPartGo = Instantiate(pzPartPrefab, Vector3.zero, Quaternion.identity, _gridGo.transform);
                     gridPartGo.name = $"GridPart_{i}_{j}";
                     gridPartGo.transform.localPosition = new Vector3(j + j * 0.1f, -(i + i * 0.1f), 0f);
+                    gridPartGo.GetComponent<BoxCollider2D>().size = new Vector2(1.1f, 1.1f);
                     SpriteRenderer spr = gridPartGo.GetComponent<SpriteRenderer>();
                     Util.AddDictionary(SprDic, gridPartGo.name, spr);
                     SetGridColor(spr, NowGridArr[i, j]);
+                    gridPartGo.AddComponent<GridPart>();
                 }
             }
         }

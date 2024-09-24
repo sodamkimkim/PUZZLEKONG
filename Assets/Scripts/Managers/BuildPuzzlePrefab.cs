@@ -54,8 +54,12 @@ public class BuildPuzzlePrefab : MonoBehaviour
                         puzzlePart.name = $"PuzzlePart";
                         puzzlePart.transform.rotation = Quaternion.identity;
                         puzzlePart.transform.localPosition = new Vector3(puzzlePart.transform.localScale.x * c + (isLeftOffset ? 0.1f * c : 0), -(puzzlePart.transform.localScale.y * r + (isUpperOffset ? 0.1f * r : 0)), 0);
+
+                        if (puzzlePart.GetComponent<BoxCollider2D>() == null)
+                            puzzlePart.AddComponent<BoxCollider2D>();
                         if (puzzlePart.GetComponent<BoxCollider2D>() != null)
                             puzzlePart.GetComponent<BoxCollider2D>().size = new Vector2(1.1f, 1.1f);
+                        puzzlePart.AddComponent<PZPart>();
                     }
 
                 }
@@ -71,12 +75,8 @@ public class BuildPuzzlePrefab : MonoBehaviour
             if (puzzlePrefab.GetComponent<Rigidbody2D>() != null)
             {
                 puzzlePrefab.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
-            }
-            Puzzle puzzle = puzzlePrefab.AddComponent<Puzzle>();
-            puzzle.Data = selectedPuzzle;
-            puzzlePrefab.tag = "Puzzle";
-
-          
+            } 
+            puzzlePrefab.tag = "Puzzle"; 
         }
 
 

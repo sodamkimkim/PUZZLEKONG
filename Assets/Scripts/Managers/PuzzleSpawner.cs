@@ -72,6 +72,8 @@ public class PuzzleSpawner : MonoBehaviour
                     spr.color = Factor.Grey4;
                     break;
             }
+            if (spr.gameObject.GetComponent<PZPart>() == null)
+                spr.gameObject.AddComponent<PZPart>();
         }
         Puzzle puzzle = puzzleGo.GetComponent<Puzzle>();
         puzzle.Data = PZArrResource.PZArrArr[puzzleArrIdx];
