@@ -9,7 +9,7 @@ public class GridManager : MonoBehaviour
 
     #region GridGo°ü¸®
     private Grid _grid;
-    public Grid Grid { get => _grid; set => _grid = value; }
+    public Grid Grid { get => _grid; private set => _grid = value; }
     private static bool _isGridReady = false;
     public static bool IsGridGoReady
     {
@@ -32,7 +32,7 @@ public class GridManager : MonoBehaviour
     #endregion
 
     public delegate void CheckPlacable();
-    private CheckPlacable _checkPlacableCallback;
+    private CheckPlacable _checkPlacableCallback { get; set; }
 
     public void Iniit(CheckPlacable checkPlacableCallback)
     {
@@ -88,7 +88,9 @@ public class GridManager : MonoBehaviour
     }
 
     public bool SpawnGridGo(int[,] gridArr, GameObject pzPartPrefab)
-    { 
+    {
+        int rowCnt = gridArr.GetLength(0);
+        int colCnt = gridArr.GetLength(1);
       GameObject  gridGo = new GameObject("Grid");
         gridGo.transform.parent = _gridParentTr;
 
@@ -99,9 +101,9 @@ public class GridManager : MonoBehaviour
             Grid = grid;
 
        
-            for (int i = 0; i < gridArr.GetLength(0); i++)
+            for (int i = 0; i < rowCnt; i++)
             {
-                for (int j = 0; j < gridArr.GetLength(1); j++)
+                for (int j = 0; j < colCnt; j++)
                 {
                     GameObject gridPartGo = Instantiate(pzPartPrefab, Vector3.zero, Quaternion.identity, gridGo.transform);
                     gridPartGo.name = $"GridPart_{i}_{j}";
@@ -122,6 +124,11 @@ public class GridManager : MonoBehaviour
         gridGo.tag = "Grid";
         gridGo.transform.position = Factor.PosGridSpawn;
         gridGo.transform.localScale = Factor.ScalePuzzleNormal;
+
+        // BoxCollider2D
+        BoxCollider2D collider =  gridGo.AddComponent<BoxCollider2D>();
+        collider.isTrigger = true;
+        collider.size = new Vector2(rowCnt * 1.1f, colCnt * 1.1f);
         return true;
     }
 

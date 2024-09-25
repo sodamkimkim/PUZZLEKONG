@@ -88,7 +88,7 @@ GameObject:
   - component: {fileID: 2663800512252067180}
   m_Layer: 0
   m_Name: PuzzlePart
-  m_TagString: Untagged
+  m_TagString: Puzzle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -218,7 +218,7 @@ GameObject:
   - component: {fileID: 4546334519423251924}
   m_Layer: 0
   m_Name: PuzzlePart
-  m_TagString: Untagged
+  m_TagString: Puzzle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -348,7 +348,7 @@ GameObject:
   - component: {fileID: 1021681406359128681}
   m_Layer: 0
   m_Name: PuzzlePart
-  m_TagString: Untagged
+  m_TagString: Puzzle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

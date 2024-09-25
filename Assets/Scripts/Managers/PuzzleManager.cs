@@ -4,9 +4,13 @@ public class PuzzleManager : MonoBehaviour
 {
     [SerializeField]
     private Transform _puzzleParentTr = null;
+
     [SerializeField]
     private GameObject[] PuzzlePrefabArr = new GameObject[13];
-    public GameObject[] PuzzleGoArr { get; private set; }
+
+    private GameObject[] _puzzleGoArr;
+
+    public GameObject[] PuzzleGoArr { get => _puzzleGoArr; private set => _puzzleGoArr = value; }
 
     private void Awake()
     {
@@ -22,7 +26,7 @@ public class PuzzleManager : MonoBehaviour
     {
         if (PuzzlePrefabArr == null || PuzzlePrefabArr.Length == 0)
         { Debug.Log("No Prefabs"); return; }
-        InstantiateNewPuzzleGo(); 
+        InstantiateNewPuzzleGo();
     }
     private void InstantiateNewPuzzleGo()
     {
@@ -32,7 +36,7 @@ public class PuzzleManager : MonoBehaviour
         _checkPlacableCallback?.Invoke();
     }
     public delegate void CheckPlacable();
-    private CheckPlacable _checkPlacableCallback;
+    private CheckPlacable _checkPlacableCallback { get; set; }
     public void Iniit(CheckPlacable checkPlacableCallback)
     {
         _checkPlacableCallback = checkPlacableCallback;
@@ -82,7 +86,7 @@ public class PuzzleManager : MonoBehaviour
         }
         Puzzle puzzle = puzzleGo.GetComponent<Puzzle>();
         puzzle.Data = PuzzleArrayRepository.PZArrArr[puzzleArrIdx];
-      //  Debug.Log($"idx:{instantiateIdx}: puzzleArrIdx_{puzzleArrIdx}: {Util.ConvertDoubleArrayToString(puzzle.Data)}");
+        //  Debug.Log($"idx:{instantiateIdx}: puzzleArrIdx_{puzzleArrIdx}: {Util.ConvertDoubleArrayToString(puzzle.Data)}");
         return puzzleGo;
     }
 } // end of class

@@ -135,6 +135,8 @@ GameObject:
   - component: {fileID: 40165678}
   - component: {fileID: 40165680}
   - component: {fileID: 40165681}
+  - component: {fileID: 40165682}
+  - component: {fileID: 40165683}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -206,6 +208,30 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 95d12868cbee9a24e93ce3cfb4c24c9e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &40165682
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 40165672}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 66fd20cc32a981c49a88f656bcb31462, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &40165683
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 40165672}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 796227d60ca0a0e40a9c2815e37bb1f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &116086849
@@ -295,7 +321,6 @@ GameObject:
   - component: {fileID: 519420031}
   - component: {fileID: 519420029}
   - component: {fileID: 519420033}
-  - component: {fileID: 519420034}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -389,19 +414,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39327abe8d04b854dafa70fc4bab1bab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &519420034
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 519420028}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7c16d1f24585b714daa13d12dc7df7c4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _puzzlePlacer: {fileID: 0}
+  _puzzlePlaceManager: {fileID: 40165682}
 --- !u!1 &540252143
 GameObject:
   m_ObjectHideFlags: 0
@@ -571,7 +584,6 @@ GameObject:
   m_Component:
   - component: {fileID: 699796258}
   - component: {fileID: 699796259}
-  - component: {fileID: 699796260}
   m_Layer: 0
   m_Name: PuzzleManager
   m_TagString: Untagged
@@ -621,18 +633,6 @@ MonoBehaviour:
   - {fileID: 6307370122901187692, guid: 8799aa4202affba41ad31383a6702d42, type: 3}
   - {fileID: 226910522175002502, guid: d09e88a08f50ed64b9b42bbfe4bdb571, type: 3}
   - {fileID: 8226534717920437321, guid: 7b8df693fc55f664f97fa39da47d5214, type: 3}
---- !u!114 &699796260
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 699796257}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 66fd20cc32a981c49a88f656bcb31462, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &705336741
 GameObject:
   m_ObjectHideFlags: 0
