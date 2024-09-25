@@ -1,6 +1,8 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
+
 public static class Util  
 {
     public static void SetPivotToChildCenter(Transform parentTr)
@@ -38,5 +40,44 @@ public static class Util
             dic[key] = value;
         else
             dic.Add(key, value);
+    }
+
+    /// <summary>
+    /// 이중 배열을 문자열로 변환하는 메서드
+    /// </summary>
+    /// <param name="dbArray"></param>
+    /// <returns></returns>
+    public static string ConvertDoubleArrayToString(int[,] dbArray)
+    {
+        StringBuilder sb = new StringBuilder();
+
+        int rows = dbArray.GetLength(0);
+        int cols = dbArray.GetLength(1);
+        sb.AppendLine();
+        for (int r = 0; r < rows; r++)
+        {
+            for (int c = 0; c < cols; c++)
+            {
+                sb.Append(dbArray[r, c].ToString());
+                if (c < cols - 1)
+                    sb.Append(", "); // 각 숫자 사이에 쉼표 추가
+            }
+            sb.AppendLine(); // 각 행 끝에 줄바꿈 추가
+        }
+
+        return sb.ToString();
+    }
+    public static string ConvertArrayToString(int[] array)
+    {
+        StringBuilder sb = new StringBuilder();
+  
+        for (int r = 0; r < array.Length; r++)
+        { 
+                sb.Append(array[r].ToString());
+                if (r < array.Length - 1)
+                    sb.Append(", ");   // 각 숫자 사이에 쉼표 추가
+        }
+
+        return sb.ToString();
     }
 }

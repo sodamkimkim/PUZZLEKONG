@@ -8,8 +8,7 @@ using UnityEngine;
 /// - 모두 Placable == false => GameOver
 /// - check는 특정시간 반복이 아니라 이벤트 종속
 ///   ㄴ1. puzzle 3개 새로 생성됐을 때(PuzzleManager),
-///   2. 퍼즐 그리드에 드랍 됐을 때(puzzlePlacer),
-///   3. puzzle complete되어서 gridarr reset됐을 때(GridManager) 
+///   2. 퍼즐 그리드에 드랍 됐을 때 (complete되거나 안되거나 어쩄뜬 gridArr는 refresh 됨 ) (GridManager) 
 /// 
 /// return ) 
 /// - 각 퍼즐 Placable T|F & 각 퍼즐 Placable Grid자리 색깔변경
@@ -19,19 +18,16 @@ using UnityEngine;
 public class PuzzlePlacableChecker : MonoBehaviour
 {
     private GridManager _gridManager = null;
-    private PuzzleManager _puzzleManager = null;
-    private PuzzlePlacer _puzzlePlacer = null;
+    private PuzzleManager _puzzleManager = null; 
     private void Awake()
     {
         _gridManager = this.GetComponentInChildren<GridManager>();
-        _puzzleManager = this.GetComponentInChildren<PuzzleManager>();
-        _puzzlePlacer = this.GetComponentInChildren<PuzzlePlacer>();
+        _puzzleManager = this.GetComponentInChildren<PuzzleManager>(); 
     }
     private void Start()
     {
         _gridManager.Iniit(CheckPlacable);
-        _puzzleManager.Iniit(CheckPlacable);
-        _puzzlePlacer.Iniit(CheckPlacable);
+        _puzzleManager.Iniit(CheckPlacable); 
     }
     /// <summary>
     /// 배열의 각 GameObject Placable Check
@@ -39,7 +35,7 @@ public class PuzzlePlacableChecker : MonoBehaviour
     /// <param name="puzzleGoArr"></param>
     public void CheckPlacable()
     {
-        if (IsCheckGameOver(_puzzleManager.PuzzleGoArr))
+        if (IsCheckGameOver(_gridManager.Grid.Data, _puzzleManager.PuzzleGoArr))
             GameOver();
     }
  
@@ -48,7 +44,7 @@ public class PuzzlePlacableChecker : MonoBehaviour
     /// </summary>
     /// <param name="puzzleGoArr"></param>
     /// <returns> T: GameOver, F: NotGameOver </returns>
-    private bool IsCheckGameOver(GameObject[] puzzleGoArr)
+    private bool IsCheckGameOver(int[,] grid, GameObject[] puzzleGoArr)
     {
         int puzzleCnt = 0;
         int gameOverCheckNum = 0;
@@ -59,8 +55,8 @@ public class PuzzlePlacableChecker : MonoBehaviour
             if (go.GetComponent<Puzzle>() != null)
             {
                 puzzleCnt++;
-                Puzzle puzzle = go.GetComponent<Puzzle>();
-                if (puzzle.CheckPlacable(_gridManager.NowGridArr))
+                
+                if (CheckPlacable(grid, go.GetComponent<Puzzle>()))
                     gameOverCheckNum++;
             }
             else // 해당 배열 내 Puzzle Go 없음
@@ -76,6 +72,11 @@ public class PuzzlePlacableChecker : MonoBehaviour
             return true; // GameOver 
         else
             return false; //GameOver는 아님 
+    }
+    private bool CheckPlacable(int[,] grid, Puzzle puzzle)
+    {
+        // TODO
+        return true;
     }
 
     private void StageComplete()

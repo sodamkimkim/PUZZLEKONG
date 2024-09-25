@@ -81,8 +81,8 @@ public class PuzzleManager : MonoBehaviour
                 spr.gameObject.AddComponent<PZPart>();
         }
         Puzzle puzzle = puzzleGo.GetComponent<Puzzle>();
-        puzzle.Data = PZArrResource.PZArrArr[puzzleArrIdx];
-        Debug.Log($"idx:{instantiateIdx}: puzzleArrIdx_{puzzleArrIdx}: {PZArrResource.ConvertPuzzleArrayToString(puzzle.Data)}");
+        puzzle.Data = PuzzleArrayRepository.PZArrArr[puzzleArrIdx];
+      //  Debug.Log($"idx:{instantiateIdx}: puzzleArrIdx_{puzzleArrIdx}: {Util.ConvertDoubleArrayToString(puzzle.Data)}");
         return puzzleGo;
     }
 } // end of class

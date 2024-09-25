@@ -9,9 +9,9 @@ public class BuildPuzzlePrefab : MonoBehaviour
     {
         GameObject _puzzlePrefab_NoLine = Resources.Load<GameObject>(Path.PuzzlePartPrefab);
 
-        for (int i = 0; i < PZArrResource.PZArrArr.Length; i++)
+        for (int i = 0; i < PuzzleArrayRepository.PZArrArr.Length; i++)
         {
-            int[,] selectedPuzzle = PZArrResource.PZArrArr[i];
+            int[,] selectedPuzzle = PuzzleArrayRepository.PZArrArr[i];
             GameObject puzzlePrefab = new GameObject($"Puzzle_{i}");
 
             int puzzleRows = selectedPuzzle.GetLength(0);

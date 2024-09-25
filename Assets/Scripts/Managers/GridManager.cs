@@ -8,7 +8,8 @@ public class GridManager : MonoBehaviour
     private Transform _gridParentTr = null;
 
     #region GridGo包府
-    private GameObject _gridGo { get; set; }
+    private Grid _grid;
+    public Grid Grid { get => _grid; set => _grid = value; }
     private static bool _isGridReady = false;
     public static bool IsGridGoReady
     {
@@ -21,7 +22,6 @@ public class GridManager : MonoBehaviour
     #endregion
 
     #region Grid 硅凯, part包府
-    public int[,] NowGridArr = null;
     public Dictionary<string, SpriteRenderer> SprDic = new Dictionary<string, SpriteRenderer>();
     #endregion
 
@@ -33,15 +33,22 @@ public class GridManager : MonoBehaviour
 
     public delegate void CheckPlacable();
     private CheckPlacable _checkPlacableCallback;
+
     public void Iniit(CheckPlacable checkPlacableCallback)
     {
         _checkPlacableCallback = checkPlacableCallback;
     }
+
     private void Start()
     {
+        LazyStart();
+    }
+    private void LazyStart()
+    {
         InitializeGridColor();
-        IsGridGoReady = SpawnGridGo(_gridGo, GridArrayResource.GridArrArr[1]);
-        Debug.Log(SprDic.Count);
+        GameObject pzPartPrefab = Resources.Load<GameObject>(Path.PuzzlePartPrefab);
+        IsGridGoReady = SpawnGridGo(GridArrayRepository.GridArrArr[1], pzPartPrefab);
+        //    Debug.Log(SprDic.Count);
     }
     private void InitializeGridColor()
     {
@@ -80,39 +87,41 @@ public class GridManager : MonoBehaviour
         }
     }
 
-    public bool SpawnGridGo(GameObject _gridGo, int[,] gridArr)
-    {
-        NowGridArr = gridArr;
-        _gridGo = new GameObject("Grid");
-        _gridGo.transform.parent = _gridParentTr;
+    public bool SpawnGridGo(int[,] gridArr, GameObject pzPartPrefab)
+    { 
+      GameObject  gridGo = new GameObject("Grid");
+        gridGo.transform.parent = _gridParentTr;
 
-        if (_gridGo.AddComponent<Grid>())
+        if (gridGo.AddComponent<Grid>())
         {
-            GameObject pzPartPrefab = Resources.Load<GameObject>(Path.PuzzlePartPrefab);
+            Grid grid = gridGo.GetComponent<Grid>();
+            grid.Data = gridArr;
+            Grid = grid;
 
-            for (int i = 0; i < NowGridArr.GetLength(0); i++)
+       
+            for (int i = 0; i < gridArr.GetLength(0); i++)
             {
-                for (int j = 0; j < NowGridArr.GetLength(1); j++)
+                for (int j = 0; j < gridArr.GetLength(1); j++)
                 {
-                    GameObject gridPartGo = Instantiate(pzPartPrefab, Vector3.zero, Quaternion.identity, _gridGo.transform);
+                    GameObject gridPartGo = Instantiate(pzPartPrefab, Vector3.zero, Quaternion.identity, gridGo.transform);
                     gridPartGo.name = $"GridPart_{i}_{j}";
                     gridPartGo.transform.localPosition = new Vector3(j + j * 0.1f, -(i + i * 0.1f), 0f);
                     gridPartGo.GetComponent<BoxCollider2D>().size = new Vector2(1.1f, 1.1f);
                     SpriteRenderer spr = gridPartGo.GetComponent<SpriteRenderer>();
                     Util.AddDictionary(SprDic, gridPartGo.name, spr);
-                    SetGridColor(spr, NowGridArr[i, j]);
+                    SetGridColor(spr, gridArr[i, j]);
                     GridPart gridPart = gridPartGo.AddComponent<GridPart>();
-                    gridPart.HasPuzzle = NowGridArr[i, j] == 1 ? true : false;
+                    gridPart.HasPuzzle = gridArr[i, j] == 1 ? true : false;
                     gridPart.IdxRow = i;
                     gridPart.IdxCol = j;
                 }
             }
         }
 
-        Util.SetPivotToChildCenter(_gridGo.transform);
-        _gridGo.tag = "Grid";
-        _gridGo.transform.position = Factor.PosGridSpawn;
-        _gridGo.transform.localScale = Factor.ScalePuzzleNormal;
+        Util.SetPivotToChildCenter(gridGo.transform);
+        gridGo.tag = "Grid";
+        gridGo.transform.position = Factor.PosGridSpawn;
+        gridGo.transform.localScale = Factor.ScalePuzzleNormal;
         return true;
     }
 

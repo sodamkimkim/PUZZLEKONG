@@ -1,4 +1,4 @@
-public class GridArrayResource
+public class GridArrayRepository
 {
     public static int[][,] GridArrArr = new int[][,]{
         new int [,]
