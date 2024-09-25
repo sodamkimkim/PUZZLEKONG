@@ -25,26 +25,21 @@ public class TouchRaycast2D : MonoBehaviour
 
         if (hit2.collider != null && hit2.transform.GetComponentInParent<Puzzle>() != null)
         {
-            Transform puzzleTr = hit2.transform.GetComponentInParent<Puzzle>().transform;
+            Puzzle puzzle = hit2.transform.GetComponentInParent<Puzzle>();
 
             if (Input.GetMouseButtonDown(0))
-                SetTouchBegin(puzzleTr);
-
-            else if (Input.GetMouseButtonUp(0))
-            {
-                if (_puzzlePlaceManager.CheckPlacable_TouchingGo(TouchRaycast2D.TouchingGo))
-                    _puzzlePlaceManager.PlacePuzzle();
-                else
-                    SetTouchEnd_PuzzleReturn();
-            }
-            else
-                SetTouchEnd_PuzzleReturn();
-        }
-        else
-            SetTouchEnd_PuzzleReturn();
+                SetTouchBegin(puzzle, hit2);
+        } 
 
         if (Input.GetMouseButton(0))
             SetTouchMoved(hit2);
+        else if (Input.GetMouseButtonUp(0))
+        {
+            if (_puzzlePlaceManager.CheckPlacable_TouchingGo(TouchRaycast2D.TouchingGo))
+                _puzzlePlaceManager.PlacePuzzle();
+            else
+                SetTouchEnd_PuzzleReturn();
+        }
 #endif
         //#region Mobile Touch
         //if (Input.touchCount > 0)
@@ -80,17 +75,23 @@ public class TouchRaycast2D : MonoBehaviour
     }
 
 
-    private void SetTouchBegin(Transform puzzleTr)
+    private void SetTouchBegin(Puzzle puzzle, RaycastHit2D hit)
     {
-        if (TouchingGo == puzzleTr.gameObject) return;
-        TouchingGo = puzzleTr.gameObject;
-        _selectedGoInitialPos = TouchingGo.transform.position;
+        if (TouchingGo == puzzle.gameObject) return;
+        TouchingGo = puzzle.gameObject;
+        _selectedGoInitialPos = puzzle.SpawnPos;
         TouchingGo.transform.localScale = Factor.ScalePuzzleNormal;
+
+        Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        pos.z = 0;
+        TouchingGo.transform.position = pos;
     }
     private void SetTouchMoved(RaycastHit2D hit)
     {
         if (TouchingGo == null) return;
-        TouchingGo.transform.position = hit.point;
+        Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        pos.z = 0;
+        TouchingGo.transform.position = pos;
 
         // TODO
         // placable check & mark

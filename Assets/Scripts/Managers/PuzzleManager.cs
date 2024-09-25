@@ -50,11 +50,11 @@ public class PuzzleManager : MonoBehaviour
 
         Vector3 pos = Vector3.zero;
         if (instantiateIdx == 0)
-            pos = new Vector3(-1.5f, -3.22f, 0f);
+            pos = Factor.PosPuzzleSpawn0;
         else if (instantiateIdx == 1)
-            pos = new Vector3(0f, -3.22f, 0f);
+            pos = Factor.PosPuzzleSpawn1;
         else
-            pos = new Vector3(1.5f, -3.22f, 0f);
+            pos = Factor.PosPuzzleSpawn2;
 
         puzzleGo.transform.position = pos;
 
@@ -86,6 +86,7 @@ public class PuzzleManager : MonoBehaviour
         }
         Puzzle puzzle = puzzleGo.GetComponent<Puzzle>();
         puzzle.Data = PuzzleArrayRepository.PZArrArr[puzzleArrIdx];
+        puzzle.SpawnPos = pos;
         //  Debug.Log($"idx:{instantiateIdx}: puzzleArrIdx_{puzzleArrIdx}: {Util.ConvertDoubleArrayToString(puzzle.Data)}");
         return puzzleGo;
     }

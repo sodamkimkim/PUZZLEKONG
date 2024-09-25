@@ -40,5 +40,6 @@ public class Puzzle : MonoBehaviour
         return rcIdxArr;
     }
 
-
+    private Vector3 _spawnPos;
+    public Vector3 SpawnPos { get => _spawnPos; set => _spawnPos = value; }
 } // end of class

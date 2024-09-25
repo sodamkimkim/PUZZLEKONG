@@ -6,6 +6,10 @@ public class Factor:MonoBehaviour
     public static Vector3 PosBG { get => new Vector3(0f, 0f, 10f); }
     public static Vector3 PosGridSpawn { get => new Vector3(0f, 1f, 2f); }
 
+    public static Vector3 PosPuzzleSpawn0 { get => new Vector3(-1.5f, -3.22f, 0f); }
+    public static Vector3 PosPuzzleSpawn1 { get => new Vector3(0f, -3.22f, 0f); }
+    public static Vector3 PosPuzzleSpawn2 { get => new Vector3(1.5f, -3.22f, 0f); }
+
     public static Vector3 ScalePuzzleSmall { get => new Vector3(0.2f, 0.2f, 1f); }
     public static Vector3 ScalePuzzleNormal { get => new Vector3(0.5f, 0.5f, 1f); }
     #endregion
