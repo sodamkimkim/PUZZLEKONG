@@ -6,11 +6,14 @@ public class GridManager : MonoBehaviour
 {
     [SerializeField]
     private Transform _gridParentTr = null;
+    #region Grid 硅凯, part包府
+    public Dictionary<string, SpriteRenderer> SprDic = new Dictionary<string, SpriteRenderer>();
+    #endregion
+    private Grid _grid;
+    private static bool _isGridReady = false;
 
     #region GridGo包府
-    private Grid _grid;
     public Grid Grid { get => _grid; private set => _grid = value; }
-    private static bool _isGridReady = false;
     public static bool IsGridGoReady
     {
         get => _isGridReady;
@@ -21,9 +24,6 @@ public class GridManager : MonoBehaviour
     }
     #endregion
 
-    #region Grid 硅凯, part包府
-    public Dictionary<string, SpriteRenderer> SprDic = new Dictionary<string, SpriteRenderer>();
-    #endregion
 
     #region Grid Color
     public Color Color_Nothing { get; private set; }
@@ -125,8 +125,13 @@ public class GridManager : MonoBehaviour
         gridGo.transform.position = Factor.PosGridSpawn;
         gridGo.transform.localScale = Factor.ScalePuzzleNormal;
 
+
+        //// Rigidbody
+        //Rigidbody2D rigidbody2D = gridGo.AddComponent<Rigidbody2D>();
+        //rigidbody2D.constraints = RigidbodyConstraints2D.FreezeAll;
+
         // BoxCollider2D
-        BoxCollider2D collider =  gridGo.AddComponent<BoxCollider2D>();
+        BoxCollider2D collider = gridGo.AddComponent<BoxCollider2D>();
         collider.isTrigger = true;
         collider.size = new Vector2(rowCnt * 1.1f, colCnt * 1.1f);
         return true;

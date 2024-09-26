@@ -30,9 +30,9 @@ public class PuzzleManager : MonoBehaviour
     }
     private void InstantiateNewPuzzleGo()
     {
-        PuzzleGoArr[0] = InstantiatePuzzle(0, Random.Range(0, PuzzlePrefabArr.Length));
-        PuzzleGoArr[1] = InstantiatePuzzle(1, Random.Range(0, PuzzlePrefabArr.Length));
-        PuzzleGoArr[2] = InstantiatePuzzle(2, Random.Range(0, PuzzlePrefabArr.Length));
+        PuzzleGoArr[0] = SpawnPuzzle(0, Random.Range(0, PuzzlePrefabArr.Length));
+        PuzzleGoArr[1] = SpawnPuzzle(1, Random.Range(0, PuzzlePrefabArr.Length));
+        PuzzleGoArr[2] = SpawnPuzzle(2, Random.Range(0, PuzzlePrefabArr.Length));
         _checkPlacableCallback?.Invoke();
     }
     public delegate void CheckPlacable();
@@ -41,10 +41,10 @@ public class PuzzleManager : MonoBehaviour
     {
         _checkPlacableCallback = checkPlacableCallback;
     }
-    private GameObject InstantiatePuzzle(int instantiateIdx, int puzzleArrIdx)
+    private GameObject SpawnPuzzle(int instantiateIdx, int puzzleArrIdx)
     {
         GameObject puzzleGo = Instantiate(PuzzlePrefabArr[puzzleArrIdx], _puzzleParentTr);
-
+        puzzleGo.tag = "Puzzle";
         puzzleGo.transform.localScale = Factor.ScalePuzzleSmall;
         puzzleGo.transform.rotation = Quaternion.identity;
 
@@ -58,6 +58,18 @@ public class PuzzleManager : MonoBehaviour
 
         puzzleGo.transform.position = pos;
 
+        // Rigidbody component
+        Util.AddComponent<Rigidbody2D>(puzzleGo);
+        Rigidbody2D rigidbody2D = puzzleGo.GetComponent<Rigidbody2D>();
+        rigidbody2D.constraints = RigidbodyConstraints2D.FreezeAll;
+
+        // Puzzle component
+        Util.AddComponent<Puzzle>(puzzleGo);
+        if (puzzleGo.GetComponent<Puzzle>() == null)
+            puzzleGo.AddComponent<Puzzle>();
+
+        Puzzle puzzle = puzzleGo.GetComponent<Puzzle>();
+        puzzle.Data = PuzzleArrayRepository.PZArrArr[puzzleArrIdx];
         foreach (SpriteRenderer spr in puzzleGo.GetComponentsInChildren<SpriteRenderer>())
         {
             switch (ThemeManager.ETheme)
@@ -81,11 +93,16 @@ public class PuzzleManager : MonoBehaviour
                     spr.color = Factor.Grey4;
                     break;
             }
-            if (spr.gameObject.GetComponent<PZPart>() == null)
-                spr.gameObject.AddComponent<PZPart>();
+            Util.AddComponent<PZPart>(spr.gameObject);
+
+            puzzle.ChildColor = spr.color;
+            PZPart pZPart = spr.gameObject.GetComponent<PZPart>();
+            pZPart.ParentPuzzle = puzzle;
+            puzzle.ChildPZPartList.Add(pZPart);
+            puzzle.ChildSprList.Add(spr);
         }
-        Puzzle puzzle = puzzleGo.GetComponent<Puzzle>();
-        puzzle.Data = PuzzleArrayRepository.PZArrArr[puzzleArrIdx];
+
+
         puzzle.SpawnPos = pos;
         //  Debug.Log($"idx:{instantiateIdx}: puzzleArrIdx_{puzzleArrIdx}: {Util.ConvertDoubleArrayToString(puzzle.Data)}");
         return puzzleGo;

@@ -26,9 +26,9 @@ public class PuzzlePlacableChecker : MonoBehaviour
     ///   2. 퍼즐 그리드에 드랍 됐을 때 (complete되거나 안되거나 어쩄뜬 gridArr는 refresh 됨 ) (GridManager) 
     /// </summary>
     /// <param name="puzzleGoArr"></param>
-    public void CheckPlacable_AllRemainingPuzzles(Grid grid, GameObject[] puzzleGoArr)
+    public void CheckPlacable_AllRemainingPuzzles(int[,] grid, GameObject[] puzzleGoArr)
     {
-        if (IsCheckGameOver(grid.Data, puzzleGoArr))
+        if (IsCheckGameOver(grid, puzzleGoArr))
             GameOver();
     }
  
@@ -76,18 +76,21 @@ public class PuzzlePlacableChecker : MonoBehaviour
     public bool CheckPuzzleInGrid()
     {
         // TODO
-
-        return true;
+        bool temp = false;
+        Debug.Log($"CheckPuzzleInGrid {temp}");
+        return false;
     }
     /// <summary>
-    /// 해당 Grid에 PUZZLE을 넣을 수 있는지 확인
+    /// 해당 Grid배열에 PUZZLE을 넣을 수 있는지 확인
     /// </summary>
     /// <param name="grid"></param>
     /// <param name="puzzle"></param>
     /// <returns></returns>
-    private bool CheckPlacable(int[,] grid, Puzzle puzzle)
+    public bool CheckPlacable(int[,] grid, Puzzle puzzle)
     {
         // TODO
+        bool temp = true;
+        Debug.Log($"CheckPlacable {temp}");
         return true;
     }
     /// <summary>
