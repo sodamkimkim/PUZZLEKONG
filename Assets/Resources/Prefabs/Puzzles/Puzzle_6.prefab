@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8180628697428512920}
   m_Layer: 0
   m_Name: PuzzlePart
-  m_TagString: Puzzle
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -143,7 +143,7 @@ GameObject:
   - component: {fileID: 5419608282983859741}
   m_Layer: 0
   m_Name: PuzzlePart
-  m_TagString: Puzzle
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -273,7 +273,7 @@ GameObject:
   - component: {fileID: 7071839551290268808}
   m_Layer: 0
   m_Name: PuzzlePart
-  m_TagString: Puzzle
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -399,8 +399,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5188755084875305966}
-  - component: {fileID: 3965855267064743858}
   - component: {fileID: 2418707643622879222}
+  - component: {fileID: -1947551513849807155}
   m_Layer: 0
   m_Name: Puzzle_6
   m_TagString: Puzzle
@@ -428,7 +428,19 @@ Transform:
   - {fileID: 7175698958829038549}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!50 &3965855267064743858
+--- !u!114 &2418707643622879222
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5700042882867610323}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2fea73a61f6edae4889a8edc84ed5e4b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!50 &-1947551513849807155
 Rigidbody2D:
   serializedVersion: 4
   m_ObjectHideFlags: 0
@@ -455,18 +467,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 7
---- !u!114 &2418707643622879222
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5700042882867610323}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2fea73a61f6edae4889a8edc84ed5e4b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &6687270375603510394
 GameObject:
   m_ObjectHideFlags: 0
@@ -480,7 +480,7 @@ GameObject:
   - component: {fileID: 2167804911966777780}
   m_Layer: 0
   m_Name: PuzzlePart
-  m_TagString: Puzzle
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -610,7 +610,7 @@ GameObject:
   - component: {fileID: 7890212591793431470}
   m_Layer: 0
   m_Name: PuzzlePart
-  m_TagString: Puzzle
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
