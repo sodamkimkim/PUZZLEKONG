@@ -1,6 +1,6 @@
-using UnityEngine; 
+using UnityEngine;
 public class BuildPuzzlePrefab : MonoBehaviour
-{ 
+{
     private void Start()
     {
         BuildPuzzlePrefabFunc();
@@ -33,50 +33,39 @@ public class BuildPuzzlePrefab : MonoBehaviour
                         else
                         {
                             if (r == 0 && c != 0)
-                            {
-                                //puzzlePartPrefab = _puzzlePrefab_leftLine; 
                                 isLeftOffset = true;
-                            }
                             else if (r != 0 && c == 0)
-                            {
-                                //puzzlePartPrefab = _puzzlePrefab_UpperLine;
                                 isUpperOffset = true;
-                            }
                             else
                             {
-                                //puzzlePartPrefab = _puzzlePrefab_LeftUpperLine;
                                 isUpperOffset = true;
                                 isLeftOffset = true;
                             }
                         }
 
-                        GameObject puzzlePart = Instantiate(_puzzlePrefab_NoLine, puzzlePrefab.transform);
-                        puzzlePart.name = $"PuzzlePart";
-                        puzzlePart.transform.rotation = Quaternion.identity;
-                        puzzlePart.transform.localPosition = new Vector3(puzzlePart.transform.localScale.x * c + (isLeftOffset ? 0.1f * c : 0), -(puzzlePart.transform.localScale.y * r + (isUpperOffset ? 0.1f * r : 0)), 0);
+                        GameObject puzzlePartGo = Instantiate(_puzzlePrefab_NoLine, puzzlePrefab.transform);
+                        puzzlePartGo.name = $"PuzzlePart";
+                        puzzlePartGo.transform.rotation = Quaternion.identity;
+                        puzzlePartGo.transform.localPosition = new Vector3(puzzlePartGo.transform.localScale.x * c + (isLeftOffset ? 0.1f * c : 0), -(puzzlePartGo.transform.localScale.y * r + (isUpperOffset ? 0.1f * r : 0)), 0);
 
-                        if (puzzlePart.GetComponent<BoxCollider2D>() == null)
-                            puzzlePart.AddComponent<BoxCollider2D>();
-                        if (puzzlePart.GetComponent<BoxCollider2D>() != null)
-                            puzzlePart.GetComponent<BoxCollider2D>().size = new Vector2(1.1f, 1.1f);
-                        puzzlePart.AddComponent<PZPart>();
+                        BoxCollider2D boxCollider2D = Util.AddComponent<BoxCollider2D>(puzzlePartGo);
+                        boxCollider2D.size = new Vector2(1.1f, 1.1f);
+
+                        Util.AddComponent<PZPart>(puzzlePartGo);
                     }
 
                 }
             }
             puzzlePrefab.transform.localScale = new Vector3(1f, 1f, 1f);
             puzzlePrefab.transform.rotation = Quaternion.identity;
-             
+
             Util.SetPivotToChildCenter(puzzlePrefab.transform);
 
             puzzlePrefab.transform.position = new Vector3(i * puzzlePrefab.transform.localScale.x * 4f, -3f, 0f);
 
-            puzzlePrefab.AddComponent<Rigidbody2D>();
-            if (puzzlePrefab.GetComponent<Rigidbody2D>() != null)
-            {
-                puzzlePrefab.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
-            } 
-            puzzlePrefab.tag = "Puzzle"; 
+            Rigidbody2D rigidbody2D = Util.AddComponent<Rigidbody2D>(puzzlePrefab);
+            rigidbody2D.constraints = RigidbodyConstraints2D.FreezeAll;
+            puzzlePrefab.tag = "Puzzle";
         }
 
 
