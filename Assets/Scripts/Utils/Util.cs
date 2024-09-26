@@ -41,7 +41,7 @@ public static class Util
         else
             dic.Add(key, value);
     }
-    public static T AddComponent<T>(GameObject go) where T : Component
+    public static T CheckAndAddComponent<T>(GameObject go) where T : Component
     {
         T component = go.GetComponent<T>();
         if (component == null)

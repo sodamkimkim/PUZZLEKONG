@@ -2,8 +2,11 @@ using UnityEngine;
 
 public class PZPart : MonoBehaviour
 {
+    #region Hidden Private Variables
     private bool _isInGrid;
     private Puzzle _parentPuzzle;
+    #endregion
+
     public bool IsInGrid { get => _isInGrid; private set => _isInGrid = value; }
     public Puzzle ParentPuzzle { get => _parentPuzzle; set => _parentPuzzle = value; }
 

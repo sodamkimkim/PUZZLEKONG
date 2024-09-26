@@ -4,8 +4,8 @@ public class TouchRaycast2D : MonoBehaviour
 {
     [SerializeField]
     private PuzzlePlaceManager _puzzlePlaceManager = null;
-
-    public static GameObject TouchingGo = null;
+    private Puzzle _touchingPZ = null;
+    public Puzzle TouchingPuzzle { get =>_touchingPZ; set => _touchingPZ = value; }
     private Vector3 _selectedGoInitialPos = Vector3.zero;
     //private void Start()
     //{
@@ -35,7 +35,7 @@ public class TouchRaycast2D : MonoBehaviour
             SetTouchMoved(hit2);
         else if (Input.GetMouseButtonUp(0))
         {
-            if (_puzzlePlaceManager.CheckPlacable_TouchingGo(TouchRaycast2D.TouchingGo))
+            if (_puzzlePlaceManager.CheckPlacable_TouchingPZ(TouchingPuzzle))
                 _puzzlePlaceManager.PlacePuzzle();
             else
                 SetTouchEnd_PuzzleReturn();
@@ -77,21 +77,21 @@ public class TouchRaycast2D : MonoBehaviour
 
     private void SetTouchBegin(Puzzle puzzle, RaycastHit2D hit)
     {
-        if (TouchingGo == puzzle.gameObject) return;
-        TouchingGo = puzzle.gameObject;
+        if (TouchingPuzzle == puzzle) return;
+        TouchingPuzzle = puzzle;
         _selectedGoInitialPos = puzzle.SpawnPos;
-        TouchingGo.transform.localScale = Factor.ScalePuzzleNormal;
+        TouchingPuzzle.transform.localScale = Factor.ScalePuzzleNormal;
 
         Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         pos.z = 0;
-        TouchingGo.transform.position = pos;
+        TouchingPuzzle.transform.position = pos;
     }
     private void SetTouchMoved(RaycastHit2D hit)
     {
-        if (TouchingGo == null) return;
+        if (TouchingPuzzle == null) return;
         Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         pos.z = 0;
-        TouchingGo.transform.position = pos;
+        TouchingPuzzle.transform.position = pos;
 
         // TODO
         // placable check & mark
@@ -101,9 +101,9 @@ public class TouchRaycast2D : MonoBehaviour
     {
         // TODO 
         // Puzzle Grid에 할당되지 않았다면
-        if (TouchingGo == null) return;
-        TouchingGo.transform.localScale = Factor.ScalePuzzleSmall;
-        TouchingGo.transform.position = _selectedGoInitialPos;
-        TouchingGo = null;
+        if (TouchingPuzzle == null) return;
+        TouchingPuzzle.transform.localScale = Factor.ScalePuzzleSmall;
+        TouchingPuzzle.transform.position = _selectedGoInitialPos;
+        TouchingPuzzle = null;
     }
 } // end of class

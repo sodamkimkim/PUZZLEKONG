@@ -59,12 +59,12 @@ public class PuzzleManager : MonoBehaviour
         puzzleGo.transform.position = pos;
 
         // Rigidbody component
-        Util.AddComponent<Rigidbody2D>(puzzleGo);
+        Util.CheckAndAddComponent<Rigidbody2D>(puzzleGo);
         Rigidbody2D rigidbody2D = puzzleGo.GetComponent<Rigidbody2D>();
         rigidbody2D.constraints = RigidbodyConstraints2D.FreezeAll;
 
         // Puzzle component
-        Util.AddComponent<Puzzle>(puzzleGo);
+        Util.CheckAndAddComponent<Puzzle>(puzzleGo);
         if (puzzleGo.GetComponent<Puzzle>() == null)
             puzzleGo.AddComponent<Puzzle>();
 
@@ -93,7 +93,7 @@ public class PuzzleManager : MonoBehaviour
                     spr.color = Factor.Grey4;
                     break;
             }
-            Util.AddComponent<PZPart>(spr.gameObject);
+            Util.CheckAndAddComponent<PZPart>(spr.gameObject);
 
             puzzle.ChildColor = spr.color;
             PZPart pZPart = spr.gameObject.GetComponent<PZPart>();

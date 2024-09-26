@@ -4,12 +4,16 @@ using System.Collections.Generic;
 
 public class Puzzle : MonoBehaviour
 {
+    #region Hidden Private Variables
     private int[,] _data;
     private int[] _lastIdx;
     private Vector3 _spawnPos;
     private List<PZPart> _childPZPartList = new List<PZPart>();
     private List<SpriteRenderer> _childSpr = new List<SpriteRenderer>();
     private Color _childColor = Color.clear;
+    private bool _isInGrid = false;
+    #endregion
+
     public int[,] Data
     {
         get => _data;
@@ -25,7 +29,7 @@ public class Puzzle : MonoBehaviour
     public List<PZPart> ChildPZPartList { get => _childPZPartList; private set => _childPZPartList = value; }
     public List<SpriteRenderer> ChildSprList { get => _childSpr; private set => _childSpr = value; }
     public Color ChildColor { get => _childColor; set => _childColor = value; }
-
+    public bool IsInGrid { get => _isInGrid; set => _isInGrid = value; }
     private int[] GetLastIdx(int[,] dbArr)
     {
         int[] rcIdxArr = new int[2] { 0, 0 };
@@ -53,16 +57,24 @@ public class Puzzle : MonoBehaviour
 
     public void HandleCallbackChildPuzzlePartCollision(bool isEnter)
     {
-
         if (isEnter)
         {
             if (CheckAllChildInGrid())
+            {
+                IsInGrid = true;
                 SetChildColor(Color.red);  // TEMP
+            }
             else
+            {
+                IsInGrid = false;
                 SetChildColor(ChildColor);
+            }
         }
         else
+        {
+            IsInGrid = false;
             SetChildColor(ChildColor);
+        }
 
         Debug.Log($"{this.name} : InGrid {isEnter}");
     }

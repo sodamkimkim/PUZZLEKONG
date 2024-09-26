@@ -33,22 +33,24 @@ public class PuzzlePlaceManager : MonoBehaviour
     /// </summary>
     public void CheckPlacable_AllRemaingPuzzles()
     {
-        _puzzlePlacableChecker.CheckPlacable_AllRemainingPuzzles(_gridManager.Grid.Data, _puzzleManager.PuzzleGoArr);
+        _puzzlePlacableChecker.CheckPlacable_AllRemainingPuzzles(_gridManager.Grid, _puzzleManager.PuzzleGoArr);
     }
-    public bool CheckPlacable_TouchingGo(GameObject touchingGo)
+    public bool CheckPlacable_TouchingPZ(Puzzle touchingPZ)
     {
-        if (touchingGo == null) return false;
-
-        Puzzle puzzle = touchingGo.GetComponent<Puzzle>();
-        if (puzzle == null) return false; 
+        if (touchingPZ == null) return false;
 
         // 1. Grid에 있는지 체크
-        if (_puzzlePlacableChecker.CheckPuzzleInGrid() == false) return false;
+        if (!touchingPZ.IsInGrid) return false;
 
-        // 2. 그리드 내에 해당 퍼즐을 놓을 공간이 있는지 체크 
-        if (_puzzlePlacableChecker.CheckPlacable(_gridManager.Grid.Data, puzzle) == false) return false;
+        // 2. 그리드 내에서 현재 Placable한 위치에 Puzzle이 위치하고 있는지 확인
+        if (_puzzlePlacableChecker.CheckPlacable(_gridManager.Grid, touchingPZ) == true)
+        {// 현재 퍼즐이  그리드 내의 Placable한 위치에 존재
+         // TODO
+            return true;
+        }
+        else // 현재 퍼즐이  그리드 내의 Placable한 위치에 있지 않음
+            return false;
 
-        return true;
     }
     /// <summary>
     /// Touching Go가 CheckPlacable == true 된 후 Drop했을 때의 로직 작성
