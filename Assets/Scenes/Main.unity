@@ -460,7 +460,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 623607de6930b0d4c974a03b1dc3723a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _gridParentTr: {fileID: 723105367}
+  _gridSpawner: {fileID: 540252146}
 --- !u!114 &540252146
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -473,6 +473,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbb8d442c329be44db5c7acbde010d61, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _gridParentTr: {fileID: 723105367}
 --- !u!1 &550452981
 GameObject:
   m_ObjectHideFlags: 0
@@ -632,6 +633,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c487ed47df7e1fa42800e91c614338f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _puzzleSpawner: {fileID: 699796260}
 --- !u!114 &699796260
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -644,7 +646,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2c04ceb82336fe419490a0dd3fae90f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _puzzleParentTr: {fileID: 0}
+  _puzzleParentTr: {fileID: 1208679615}
   PuzzlePrefabArr:
   - {fileID: 8756528013708828700, guid: 15766ca892e02084491f7fdf7dc6568a, type: 3}
   - {fileID: 8648001831617187974, guid: 0198e02beeadbb74498c50f30a502641, type: 3}

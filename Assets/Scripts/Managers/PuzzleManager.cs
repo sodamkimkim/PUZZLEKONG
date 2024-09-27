@@ -2,20 +2,14 @@ using UnityEngine;
 [DefaultExecutionOrder(-8)]
 public class PuzzleManager : MonoBehaviour
 {
-
-    private PuzzleSpawner _puzzleSpawner = null;
-
-
-
+    #region Hidden Private Variables
     private GameObject[] _puzzleGoArr = new GameObject[3];
+    #endregion
 
+    [SerializeField]
+    private PuzzleSpawner _puzzleSpawner = null; 
     public GameObject[] PuzzleGoArr { get => _puzzleGoArr; private set => _puzzleGoArr = value; }
-
-    private void Awake()
-    {
-        _puzzleSpawner = this.GetComponent<PuzzleSpawner>();
-    }
-
+ 
     private void Start()
     {
         LazyStart();
