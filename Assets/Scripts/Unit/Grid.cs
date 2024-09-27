@@ -2,10 +2,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Grid : MonoBehaviour
-{ 
+{
     #region Hidden Private Variables
     private Dictionary<string, GridPart> _childGridPartDic = new Dictionary<string, GridPart>();
     private int[,] _data;
+    private int[,] _backupData;
     #endregion
     #region Grid Color
     public Color Color_HasNoPuzzle { get; private set; }
@@ -19,8 +20,12 @@ public class Grid : MonoBehaviour
         {
             _data = value;
             InitializeGridColor();
-            SetGridPartData(Data);
+            InitializeGridPartData(Data);
         }
+    }
+    public int[,] BackupData
+    {
+        get => _backupData; set => _backupData = value;
     }
     public Dictionary<string, GridPart> ChildGridPartDic { get => _childGridPartDic; private set => _childGridPartDic = value; } // GridPart_{r}_{c}
 
@@ -60,7 +65,7 @@ public class Grid : MonoBehaviour
                 break;
         }
     }
-    private void SetGridPartData(int[,] data)
+    private void InitializeGridPartData(int[,] data)
     {
         int rowCnt = data.GetLength(0);
         int colCnt = data.GetLength(1);
@@ -75,5 +80,39 @@ public class Grid : MonoBehaviour
                 gridPart.IdxCol = c;
             }
         }
-    } 
+    }
+
+    public void SetGridPartDataRange(int startIdxR, int startIdxC, int endIdxR, int endIdxC, int gridPartOriginData, int gridPartAfterData)
+    {
+        if (endIdxR > Data.GetLength(0) - 1) return;
+        if (endIdxC > Data.GetLength(1) - 1) return;
+
+        for (int i = startIdxR; i <= endIdxR; i++)
+        {
+            for (int j = startIdxC; j <= endIdxC; j++)
+            {
+
+                if (Data[i, j] == gridPartOriginData)
+                    if (ChildGridPartDic.ContainsKey($"GridPart_{i}_{j}"))
+                        ChildGridPartDic[$"GridPart_{i}_{j}"].Data = gridPartAfterData;
+            }
+        }
+    }
+    public bool CheckPlacable(int startIdxR, int startIdxC, int endIdxR, int endIdxC)
+    {
+        bool isPlacable = true;
+        if (endIdxR > Data.GetLength(0) - 1) return false;
+        if (endIdxC > Data.GetLength(1) - 1) return false;
+
+        for (int i = startIdxR; i <= endIdxR; i++)
+        {
+            for (int j = startIdxC; j <= endIdxC; j++)
+            {
+                if (Data[i, j] != 1) isPlacable &= true;
+                else isPlacable &= false;
+            }
+        }
+
+        return isPlacable;
+    }
 } // end of class

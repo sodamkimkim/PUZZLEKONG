@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
@@ -27,11 +25,11 @@ public class PuzzlePlacableChecker : MonoBehaviour
     /// </summary>
     /// <param name="puzzleGoArr"></param>
     public void CheckPlacable_AllRemainingPuzzles(Grid grid, GameObject[] puzzleGoArr)
-    {
+    {// TODO 
         if (IsCheckGameOver(grid, puzzleGoArr))
-            GameOver();
+            Debug.Log("GameOver");
     }
- 
+
     /// <summary>
     ///  - 배열내 모든 Puzzle Go Placable == false => GameOver
     /// </summary>
@@ -49,8 +47,8 @@ public class PuzzlePlacableChecker : MonoBehaviour
             if (puzzle != null)
             {
                 puzzleCnt++;
-                
-                if (CheckPlacable(grid, puzzle))
+
+                if (CheckPlacableInThisGrid(grid, puzzle))
                     gameOverCheckNum++;
             }
             else // 해당 배열 내 Puzzle Go 없음
@@ -59,7 +57,8 @@ public class PuzzlePlacableChecker : MonoBehaviour
 
         if (puzzleCnt == 0)
         {
-            StageComplete();
+            // TODO
+            Debug.Log("StageComplete");
             return false;
         }
         else if (puzzleCnt != 0 && puzzleCnt == gameOverCheckNum)
@@ -68,35 +67,75 @@ public class PuzzlePlacableChecker : MonoBehaviour
             return false; //GameOver는 아님 
     }
 
-  
+
     /// <summary>
-    /// 해당 Grid배열위치에 PUZZLE을 넣을 수 있는지 확인
+    /// 해당 Grid에 PUZZLE을 넣을 수 있는지 확인
     /// </summary>
     /// <param name="grid"></param>
     /// <param name="puzzle"></param>
     /// <returns></returns>
-    public bool CheckPlacable(Grid grid, Puzzle puzzle)
+    private bool CheckPlacableInThisGrid(Grid grid, Puzzle puzzle)
     {
-        // TODO
-        bool temp = false;
-        Debug.Log($"CheckPlacable {temp}");
-        return temp;
+        if (!puzzle.IsInGrid) return false;
+        // TODO 
+
+        return false;
     }
     /// <summary>
-    /// Stage Complete Process
+    /// puzzle의 현재 위치가 placable한지 판별하고 mark
     /// </summary>
-    private void StageComplete()
+    /// <param name="isPZMoving"></param>
+    /// <param name="grid"></param>
+    /// <param name="puzzle"></param>
+    public void MarkPlacable(bool isPZMoving, Grid grid, Puzzle puzzle)
     {
-        // TODO -  Stage Complete Process
-        Debug.LogError("StageComplete");
+        if (isPZMoving)
+        {
+            grid.BackupData = grid.Data;
+
+            // 퍼즐이 다른 퍼즐과 겹치는지 확인
+            for (int grIdxR = 0; grIdxR < grid.Data.GetLength(0); grIdxR++)
+            {
+                for (int grIdxC = 0; grIdxC < grid.Data.GetLength(1); grIdxC++)
+                {
+                    // Grid안인지 check
+                    int lastRowIdx = grIdxR + puzzle.LastIdx_rc[0];
+                    int lastColIdx = grIdxC + puzzle.LastIdx_rc[1];
+                    if (lastRowIdx > grid.Data.GetLength(0) - 1 || lastColIdx > grid.Data.GetLength(1) - 1)
+                    {
+                        Debug.Log($"CheckIdx : {lastRowIdx}, {lastColIdx}");
+                        continue;
+                    }
+                    else
+                    {
+                        if (grid.Data[grIdxR, grIdxC] == 0)
+                        {
+                            grid.SetGridPartDataRange(grIdxR, grIdxC, grIdxR, grIdxC, 0, 2); // 그리드 내부면 idx 색상변경
+                            CanPlacePuzzle(grid, grIdxR, grIdxC, puzzle);
+                        }
+                    }
+                }
+            }
+        }
+        else
+            grid.Data = grid.BackupData;
+
     }
 
     /// <summary>
-    /// GameOver Process
+    /// Grid 영역 내 Placable한 Idx && puzzle == 1이면서 grid[r,c] !=1 찾는 매서드
     /// </summary>
-    private void GameOver()
+    /// <param name="grid"></param>
+    /// <param name="gridIdxR"></param>
+    /// <param name="gridIdxC"></param>
+    /// <param name="puzzle"></param>
+    private void CanPlacePuzzle(Grid grid, int gridIdxR, int gridIdxC, Puzzle puzzle)
     {
-        // TODO - GameOverProcess
-        Debug.LogError("GameOver");
+        //int endIdxR = gridIdxR + puzzle.GetRealLength_rc[0];
+        //int endIdxC = gridIdxC + puzzle.GetRealLength_rc[1];
+
+        //// grid[r,c] + 퍼즐 영역 내 모든 데이터가 0이여야함
+        //if (grid.CheckPlacable(gridIdxR, gridIdxC, endIdxR, endIdxC))
+        //    grid.SetGridPartDataRange(gridIdxR, gridIdxC, endIdxR, endIdxC, 2, 3);
     }
-} // end of class
+} // end of class 

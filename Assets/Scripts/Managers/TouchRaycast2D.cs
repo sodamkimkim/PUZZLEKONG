@@ -32,10 +32,14 @@ public class TouchRaycast2D : MonoBehaviour
         } 
 
         if (Input.GetMouseButton(0))
+        {
             SetTouchMoved(hit2);
+            _puzzlePlaceManager.MarkPlacable(true, TouchingPuzzle);
+        }
         else if (Input.GetMouseButtonUp(0))
         {
-            if (_puzzlePlaceManager.CheckPlacable_TouchingPZ(TouchingPuzzle))
+            _puzzlePlaceManager.MarkPlacable(false, TouchingPuzzle);
+            if (_puzzlePlaceManager.CheckPlacableToDrop_TouchingPZ(TouchingPuzzle))
                 _puzzlePlaceManager.PlacePuzzle();
             else
                 SetTouchEnd_PuzzleReturn();
@@ -94,7 +98,7 @@ public class TouchRaycast2D : MonoBehaviour
         TouchingPuzzle.transform.position = pos;
 
         // TODO
-        // placable check & mark
+        // placable check & mark 
         // completable check & mark
     }
     public void SetTouchEnd_PuzzleReturn()

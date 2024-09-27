@@ -11,7 +11,11 @@ public class GridPart : MonoBehaviour
     #endregion
 
     public Grid ParentGrid { get => _parentGrid; set => _parentGrid = value; }
-    public int Data
+
+    /// <summary>
+    /// NoPZ : 0, HasPZ: 1, Placable : 2, Test_Red : 3
+    /// </summary>
+    public int Data 
     {
         get => _data;
         set
@@ -45,9 +49,8 @@ public class GridPart : MonoBehaviour
         else if (Data == 2)
             Spr.color = ParentGrid.Color_Placable;
         else
-        {
-            Debug.LogError("???");
-            Spr.color = ParentGrid.Color_HasNoPuzzle;
+        { 
+            Spr.color = Color.blue;
         }
     }
 } // end of class

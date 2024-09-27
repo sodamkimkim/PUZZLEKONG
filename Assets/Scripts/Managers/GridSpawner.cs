@@ -6,8 +6,8 @@ public class GridSpawner : MonoBehaviour
 {
     [SerializeField]
     private Transform _gridParentTr = null;
-    public bool SpawnGridGo(int[,] gridArr,  Grid grid)
-    { 
+    public bool SpawnGridGo(int[,] gridArr, ref Grid grid)
+    {
         GameObject pzPartPrefab = Resources.Load<GameObject>(Path.PuzzlePartPrefab);
 
         int rowCnt = gridArr.GetLength(0);
@@ -15,7 +15,7 @@ public class GridSpawner : MonoBehaviour
         GameObject gridGo = new GameObject("Grid");
         gridGo.transform.parent = _gridParentTr;
 
-        grid = Util.CheckAndAddComponent<Grid>(gridGo); 
+        grid = Util.CheckAndAddComponent<Grid>(gridGo);
 
         for (int r = 0; r < rowCnt; r++)
         {

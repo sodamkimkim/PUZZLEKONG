@@ -6,7 +6,9 @@ public class Puzzle : MonoBehaviour
 {
     #region Hidden Private Variables
     private int[,] _data;
-    private int[] _lastIdx;
+    private int[] _lastIdx_rc;
+    private int[] _getRealLength_rc= new int[2] { 0, 0 };
+
     private Vector3 _spawnPos;
     private List<PZPart> _childPZPartList = new List<PZPart>();
     private List<SpriteRenderer> _childSpr = new List<SpriteRenderer>();
@@ -20,16 +22,22 @@ public class Puzzle : MonoBehaviour
         set
         {
             _data = value;
-            LastIdx = GetLastIdx(_data);
+            LastIdx_rc = GetLastIdx(_data);
+            _getRealLength_rc[0] = LastIdx_rc[0] + 1;
+            _getRealLength_rc[1] = LastIdx_rc[1] + 1;
         }
     }
 
-    public int[] LastIdx { get => _lastIdx; private set => _lastIdx = value; }
-    public Vector3 SpawnPos { get => _spawnPos; set => _spawnPos = value; }
-    public List<PZPart> ChildPZPartList { get => _childPZPartList; private set => _childPZPartList = value; }
-    public List<SpriteRenderer> ChildSprList { get => _childSpr; private set => _childSpr = value; }
-    public Color ChildColor { get => _childColor; set => _childColor = value; }
     public bool IsInGrid { get => _isInGrid; set => _isInGrid = value; }
+    public Vector3 SpawnPos { get => _spawnPos; set => _spawnPos = value; }
+    public Color ChildColor { get => _childColor; set => _childColor = value; }
+    public int[] LastIdx_rc { get => _lastIdx_rc; private set => _lastIdx_rc = value; }
+
+    /// <summary>
+    /// Puzzle이 가진 배열 데이터가 아닌 실제로 1값이 들어가있는 영역 length
+    /// </summary>
+    public int[] GetRealLength_rc { get => _getRealLength_rc; set => _getRealLength_rc = value; }
+    public List<PZPart> ChildPZPartList { get => _childPZPartList; private set => _childPZPartList = value; }
     private int[] GetLastIdx(int[,] dbArr)
     {
         int[] rcIdxArr = new int[2] { 0, 0 };
@@ -53,9 +61,8 @@ public class Puzzle : MonoBehaviour
             }
         }
         return rcIdxArr;
-    }
-
-    public void HandleCallbackChildPuzzlePartCollision(bool isEnter)
+    } 
+    public void CallbackChildPuzzlePartCollision(bool isEnter)
     {
         if (isEnter)
         {
@@ -75,8 +82,7 @@ public class Puzzle : MonoBehaviour
             IsInGrid = false;
             SetChildColor(ChildColor);
         }
-
-        Debug.Log($"{this.name} : InGrid {isEnter}");
+   //     Debug.Log($"{this.name} : InGrid {isEnter}");
     }
     private bool CheckAllChildInGrid()
     {
@@ -89,10 +95,10 @@ public class Puzzle : MonoBehaviour
     }
     private void SetChildColor(Color color)
     {
-        foreach (SpriteRenderer spr in ChildSprList)
+        foreach (PZPart pzPart in ChildPZPartList)
         {
-            if (spr.color == color) return;
-            spr.color = color;
+            if (pzPart.Spr.color == color) return;
+            pzPart.Spr.color = color;
         }
     }
 } // end of class

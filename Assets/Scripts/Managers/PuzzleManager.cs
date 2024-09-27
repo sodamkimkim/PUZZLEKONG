@@ -1,4 +1,6 @@
 using UnityEngine;
+using UnityEngine.UI;
+
 [DefaultExecutionOrder(-8)]
 public class PuzzleManager : MonoBehaviour
 {
@@ -7,20 +9,26 @@ public class PuzzleManager : MonoBehaviour
     #endregion
 
     [SerializeField]
-    private PuzzleSpawner _puzzleSpawner = null; 
+    private PuzzleSpawner _puzzleSpawner = null;
     public GameObject[] PuzzleGoArr { get => _puzzleGoArr; private set => _puzzleGoArr = value; }
- 
+    [SerializeField]
+    private Button _btnReset = null;
+    private void Awake()
+    {
+        _btnReset.onClick.AddListener(() => LazyStart());
+    }
     private void Start()
     {
         LazyStart();
     }
-
     private void LazyStart()
-    { 
+    {
         InstantiatePuzzleGos(ref _puzzleGoArr);
     }
     private void InstantiatePuzzleGos(ref GameObject[] puzzleGoArr)
     {
+        _puzzleSpawner.DestroyChilds();
+
         for (int i = 0; i < _puzzleGoArr.Length; i++)
             puzzleGoArr[i] = _puzzleSpawner.SpawnPuzzle(i);
 

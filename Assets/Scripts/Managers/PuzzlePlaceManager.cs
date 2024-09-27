@@ -35,23 +35,25 @@ public class PuzzlePlaceManager : MonoBehaviour
     {
         _puzzlePlacableChecker.CheckPlacable_AllRemainingPuzzles(_gridManager.Grid, _puzzleManager.PuzzleGoArr);
     }
-    public bool CheckPlacable_TouchingPZ(Puzzle touchingPZ)
+    public bool CheckPlacableToDrop_TouchingPZ(Puzzle touchingPZ)
     {
         if (touchingPZ == null) return false;
 
         // 1. Grid에 있는지 체크
         if (!touchingPZ.IsInGrid) return false;
+         
+        // 2. Placable에 있는지 체크 
 
-        // 2. 그리드 내에서 현재 Placable한 위치에 Puzzle이 위치하고 있는지 확인
-        if (_puzzlePlacableChecker.CheckPlacable(_gridManager.Grid, touchingPZ))
-        {// 현재 퍼즐이  그리드 내의 Placable한 위치에 존재
-         // TODO
-            return true;
-        }
-        else // 현재 퍼즐이  그리드 내의 Placable한 위치에 있지 않음
-            return false;
+        return false;
 
     }
+
+    public void MarkPlacable(bool isPZMoving, Puzzle puzzle)
+    {
+        if (puzzle == null) return;
+        _puzzlePlacableChecker.MarkPlacable(isPZMoving, _gridManager.Grid, puzzle);
+    }
+
     /// <summary>
     /// Touching Go가 CheckPlacable == true 된 후 Drop했을 때의 로직 작성
     /// (TODO) 6. completeManager 호출 - complete => grid update해주는 클래스 호출
@@ -61,44 +63,4 @@ public class PuzzlePlaceManager : MonoBehaviour
         // TODO 
         Debug.Log("Puzzle Place Process");
     }
-    //public bool CanPlacePuzzle(int[,] puzzle)
-    //{
-    //    int puzzleRows = puzzle.GetLength(0); //4
-    //    int puzzleCols = puzzle.GetLength(1); //4
-    //                                          // 퍼즐이 그리드를 벗어나는지 확인
-    //    if (row + puzzleRows > grid.GetLength(0) || col + puzzleCols > grid.GetLength(1))
-    //        return false;
-    //    // 퍼즐이 다른 퍼즐과 겹치는지 확인
-    //    for (int i = 0; i < puzzleRows; i++)
-    //    {
-    //        for (int j = 0; j < puzzleCols; j++)
-    //        {
-    //            if (puzzle[i, j] == 1 && grid[row + i, col + j] != 0)
-    //                return false;
-    //        }
-    //    }
-
-    //    return false;
-    //}
-
-    ///// <summary>
-    ///// 퍼즐을 그리드에 배치
-    ///// </summary>
-    ///// <param name=""></param>
-    ///// <returns></returns>
-    //public void PlacePuzzle(int[,] grid, int[,] puzzle, int row, int col)
-    //{
-    //    int puzzleRows = puzzle.GetLength(0);
-    //    int puzzleCols = puzzle.GetLength(1);
-    //    for (int i = 0; i < puzzleRows; i++)
-    //    {
-    //        for (int j = 0; j < puzzleCols; j++)
-    //        {
-    //            if (puzzle[i, j] == 1)
-    //                grid[row + i, col + j] = 1;
-    //        }
-    //    }
-    //    Debug.Log("퍼즐이 성공적으로 배치되었습니다.");
-    //}
-
 } // end of class

@@ -7,10 +7,21 @@ public class PuzzleSpawner : MonoBehaviour
     [SerializeField]
     private GameObject[] PuzzlePrefabArr = new GameObject[13];
 
+    public void DestroyChilds()
+    {
+        if (_puzzleParentTr.childCount > 0 && _puzzleParentTr.GetComponentInChildren<Puzzle>())
+        {
+            foreach (Puzzle child in _puzzleParentTr.GetComponentsInChildren<Puzzle>())
+            {
+                DestroyImmediate(child.gameObject);
+            }
+        }
+    }
     public GameObject SpawnPuzzle(int puzzleGoIdx)
     {
         if (PuzzlePrefabArr == null || PuzzlePrefabArr.Length == 0)
         { Debug.Log("No Prefabs"); return null; }
+
 
         int puzzlePrefabArrIdx = Random.Range(0, PuzzlePrefabArr.Length);
         GameObject puzzleGo = Instantiate(PuzzlePrefabArr[puzzlePrefabArrIdx], _puzzleParentTr);
@@ -65,11 +76,12 @@ public class PuzzleSpawner : MonoBehaviour
             }
             Util.CheckAndAddComponent<PZPart>(spr.gameObject);
 
+            PZPart pzPart = spr.gameObject.GetComponent<PZPart>();
+            pzPart.ParentPuzzle = puzzle;
+            pzPart.Spr = spr;
+
+            puzzle.ChildPZPartList.Add(pzPart);
             puzzle.ChildColor = spr.color;
-            PZPart pZPart = spr.gameObject.GetComponent<PZPart>();
-            pZPart.ParentPuzzle = puzzle;
-            puzzle.ChildPZPartList.Add(pZPart);
-            puzzle.ChildSprList.Add(spr);
         }
 
 
