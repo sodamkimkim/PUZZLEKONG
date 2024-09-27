@@ -425,6 +425,7 @@ GameObject:
   m_Component:
   - component: {fileID: 540252144}
   - component: {fileID: 540252145}
+  - component: {fileID: 540252146}
   m_Layer: 0
   m_Name: GridManager
   m_TagString: Untagged
@@ -460,6 +461,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _gridParentTr: {fileID: 723105367}
+--- !u!114 &540252146
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 540252143}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb8d442c329be44db5c7acbde010d61, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &550452981
 GameObject:
   m_ObjectHideFlags: 0
@@ -584,6 +597,7 @@ GameObject:
   m_Component:
   - component: {fileID: 699796258}
   - component: {fileID: 699796259}
+  - component: {fileID: 699796260}
   m_Layer: 0
   m_Name: PuzzleManager
   m_TagString: Untagged
@@ -618,7 +632,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c487ed47df7e1fa42800e91c614338f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _puzzleParentTr: {fileID: 1208679615}
+--- !u!114 &699796260
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 699796257}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d2c04ceb82336fe419490a0dd3fae90f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _puzzleParentTr: {fileID: 0}
   PuzzlePrefabArr:
   - {fileID: 8756528013708828700, guid: 15766ca892e02084491f7fdf7dc6568a, type: 3}
   - {fileID: 8648001831617187974, guid: 0198e02beeadbb74498c50f30a502641, type: 3}

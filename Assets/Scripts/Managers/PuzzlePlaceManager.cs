@@ -43,7 +43,7 @@ public class PuzzlePlaceManager : MonoBehaviour
         if (!touchingPZ.IsInGrid) return false;
 
         // 2. 그리드 내에서 현재 Placable한 위치에 Puzzle이 위치하고 있는지 확인
-        if (_puzzlePlacableChecker.CheckPlacable(_gridManager.Grid, touchingPZ) == true)
+        if (_puzzlePlacableChecker.CheckPlacable(_gridManager.Grid, touchingPZ))
         {// 현재 퍼즐이  그리드 내의 Placable한 위치에 존재
          // TODO
             return true;

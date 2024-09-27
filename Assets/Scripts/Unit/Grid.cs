@@ -2,10 +2,15 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Grid : MonoBehaviour
-{
+{ 
     #region Hidden Private Variables
     private Dictionary<string, GridPart> _childGridPartDic = new Dictionary<string, GridPart>();
     private int[,] _data;
+    #endregion
+    #region Grid Color
+    public Color Color_HasNoPuzzle { get; private set; }
+    public Color Color_HasPuzzle { get; private set; }
+    public Color Color_Placable { get; private set; }
     #endregion
     public int[,] Data
     {
@@ -13,16 +18,12 @@ public class Grid : MonoBehaviour
         set
         {
             _data = value;
-            RefreshGrid(_data);
+            InitializeGridColor();
+            SetGridPartData(Data);
         }
     }
     public Dictionary<string, GridPart> ChildGridPartDic { get => _childGridPartDic; private set => _childGridPartDic = value; } // GridPart_{r}_{c}
 
-    #region Grid Color
-    public Color Color_HasNoPuzzle { get; private set; }
-    public Color Color_HasPuzzle { get; private set; }
-    public Color Color_Placable { get; private set; }
-    #endregion
     private void InitializeGridColor()
     {
         switch (ThemeManager.ETheme)
@@ -74,10 +75,5 @@ public class Grid : MonoBehaviour
                 gridPart.IdxCol = c;
             }
         }
-    }
-    private void RefreshGrid(int[,] data)
-    {
-        InitializeGridColor();
-        SetGridPartData(data);
-    }
+    } 
 } // end of class
