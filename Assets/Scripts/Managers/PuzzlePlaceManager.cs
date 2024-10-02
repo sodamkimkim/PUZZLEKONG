@@ -35,7 +35,12 @@ public class PuzzlePlaceManager : MonoBehaviour
     {
         _puzzlePlacableChecker.CheckPlacable_AllRemainingPuzzles(_gridManager.Grid, _puzzleManager.PuzzleGoArr);
     }
-    public bool CheckPlacableToDrop_TouchingPZ(Puzzle touchingPZ)
+    public void MarkPlacable(bool isPZMoving, Puzzle puzzle)
+    {
+        if (puzzle == null) return;
+        _puzzlePlacableChecker.MarkPlacable(isPZMoving, _gridManager.Grid, puzzle);
+    }
+    public bool CheckPlacable_TouchingPZ(Puzzle touchingPZ)
     {
         if (touchingPZ == null) return false;
 
@@ -48,11 +53,6 @@ public class PuzzlePlaceManager : MonoBehaviour
 
     }
 
-    public void MarkPlacable(bool isPZMoving, Puzzle puzzle)
-    {
-        if (puzzle == null) return;
-        _puzzlePlacableChecker.MarkPlacable(isPZMoving, _gridManager.Grid, puzzle);
-    }
 
     /// <summary>
     /// Touching Go가 CheckPlacable == true 된 후 Drop했을 때의 로직 작성

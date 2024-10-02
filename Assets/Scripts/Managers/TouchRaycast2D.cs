@@ -39,7 +39,7 @@ public class TouchRaycast2D : MonoBehaviour
         else if (Input.GetMouseButtonUp(0))
         {
             _puzzlePlaceManager.MarkPlacable(false, TouchingPuzzle);
-            if (_puzzlePlaceManager.CheckPlacableToDrop_TouchingPZ(TouchingPuzzle))
+            if (_puzzlePlaceManager.CheckPlacable_TouchingPZ(TouchingPuzzle))
                 _puzzlePlaceManager.PlacePuzzle();
             else
                 SetTouchEnd_PuzzleReturn();

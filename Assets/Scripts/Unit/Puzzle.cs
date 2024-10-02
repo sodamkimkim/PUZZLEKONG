@@ -23,8 +23,8 @@ public class Puzzle : MonoBehaviour
         {
             _data = value;
             LastIdx_rc = GetLastIdx(_data);
-            _getRealLength_rc[0] = LastIdx_rc[0] + 1;
-            _getRealLength_rc[1] = LastIdx_rc[1] + 1;
+            GetRealLength_rc[0] = LastIdx_rc[0] + 1;
+            GetRealLength_rc[1] = LastIdx_rc[1] + 1;
         }
     }
 

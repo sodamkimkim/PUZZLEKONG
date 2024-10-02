@@ -82,37 +82,22 @@ public class Grid : MonoBehaviour
         }
     }
 
-    public void SetGridPartDataRange(int startIdxR, int startIdxC, int endIdxR, int endIdxC, int gridPartOriginData, int gridPartAfterData)
+    public void SetGridPartDataRange(int startIdxR, int startIdxC, int endIdxR, int endIdxC, int gridPartAfterData)
     {
         if (endIdxR > Data.GetLength(0) - 1) return;
         if (endIdxC > Data.GetLength(1) - 1) return;
 
         for (int i = startIdxR; i <= endIdxR; i++)
-        {
             for (int j = startIdxC; j <= endIdxC; j++)
-            {
-
-                if (Data[i, j] == gridPartOriginData)
-                    if (ChildGridPartDic.ContainsKey($"GridPart_{i}_{j}"))
-                        ChildGridPartDic[$"GridPart_{i}_{j}"].Data = gridPartAfterData;
-            }
-        }
+                if (Data[i, j] != 1 && ChildGridPartDic.ContainsKey($"GridPart_{i}_{j}"))
+                    ChildGridPartDic[$"GridPart_{i}_{j}"].Data = gridPartAfterData;
     }
-    public bool CheckPlacable(int startIdxR, int startIdxC, int endIdxR, int endIdxC)
+    public void SetGridPartData(int idxR, int idxC, int gridPartAfterData)
     {
-        bool isPlacable = true;
-        if (endIdxR > Data.GetLength(0) - 1) return false;
-        if (endIdxC > Data.GetLength(1) - 1) return false;
+        if (idxR > Data.GetLength(0) - 1) return;
+        if (idxC > Data.GetLength(1) - 1) return;
 
-        for (int i = startIdxR; i <= endIdxR; i++)
-        {
-            for (int j = startIdxC; j <= endIdxC; j++)
-            {
-                if (Data[i, j] != 1) isPlacable &= true;
-                else isPlacable &= false;
-            }
-        }
-
-        return isPlacable;
+        if (Data[idxR, idxC] != 1 && Data[idxR, idxC] != gridPartAfterData && ChildGridPartDic.ContainsKey($"GridPart_{idxR}_{idxC}"))
+            ChildGridPartDic[$"GridPart_{idxR}_{idxC}"].Data = gridPartAfterData;
     }
 } // end of class
