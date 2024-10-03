@@ -23,6 +23,13 @@ using System.Collections.Generic;
 public class PuzzlePlacableChecker : MonoBehaviour
 {
     private string _pzNameBackupStr = string.Empty;
+    public delegate void GameOver();
+    private GameOver _gameOverCallback;
+
+    public void Init(GameOver gameOverCallback)
+    {
+        _gameOverCallback = gameOverCallback;
+    }
     /// <summary>
     /// Callback 매서드
     ///   1. puzzle 3개 새로 생성됐을 때(PuzzleManager),
@@ -33,8 +40,8 @@ public class PuzzlePlacableChecker : MonoBehaviour
     {// TODO 
         if (grid == null || puzzleGoArr[0] == null) return;
 
-        if (IsGameOver(grid, puzzleGoArr))
-            Debug.Log("GameOver");
+        if (!CheckPlacableAllPuzzle(grid, puzzleGoArr))
+            _gameOverCallback?.Invoke();
     }
 
     /// <summary>
@@ -42,7 +49,7 @@ public class PuzzlePlacableChecker : MonoBehaviour
     /// </summary>
     /// <param name="puzzleGoArr"></param>
     /// <returns> T: GameOver, F: NotGameOver </returns>
-    private bool IsGameOver(Grid grid, GameObject[] puzzleGoArr)
+    private bool CheckPlacableAllPuzzle(Grid grid, GameObject[] puzzleGoArr)
     {
         int puzzleCnt = 0;
         int gameOverCheckNum = 0;
@@ -66,12 +73,12 @@ public class PuzzlePlacableChecker : MonoBehaviour
         {
             // TODO
             Debug.Log("StageComplete");
-            return false;
+            return true;
         }
         else if (puzzleCnt != 0 && puzzleCnt == gameOverCheckNum)
-            return true; // GameOver 
+            return false; // GameOver 
         else
-            return false; //GameOver는 아님 
+            return true; //GameOver는 아님 
     }
 
     /// <summary>
