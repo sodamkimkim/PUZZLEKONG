@@ -34,8 +34,7 @@ public class PuzzlePlacableChecker : MonoBehaviour
         public override string ToString() => $"{IdxR},{IdxC}";
         // end of structure
     }
-
-    // private List<IdxRCStruct> _gridInspectionAreaUpperLeftIdxRcList = new List<IdxRCStruct>();
+     
     private Dictionary<string, List<IdxRCStruct>> _placableGridPartsListDic = new Dictionary<string, List<IdxRCStruct>>();// key - rowIdx,colIdx
     private string tempPzNameStr = string.Empty;
     /// <summary>
@@ -186,16 +185,11 @@ public class PuzzlePlacableChecker : MonoBehaviour
         // # Grid-Puzzle영역 Puzzle매핑 검사 완료 후 true라면 1. 해당 Grid영역가장초기 인덱스 List에 담기, 2. 퍼즐매핑영역 색상 변경!
         if (isPlacable)
         {
-            //      IdxRCStruct gridStartIdx = ;
-            //      _gridInspectionAreaUpperLeftIdxRcList.Add(gridStartIdx);
-
             Util.CheckAndAddDictionary(_placableGridPartsListDic, new IdxRCStruct(grIdxR, grIdxC).ToString(), gridPartIdxList);
 
             foreach (KeyValuePair<string, List<IdxRCStruct>> kvp in _placableGridPartsListDic)
-            {
                 foreach (IdxRCStruct idx in kvp.Value)
                     grid.SetGridPartData(idx.IdxR, idx.IdxC, 2);
-            }
         }
     }
 } // end of class 
