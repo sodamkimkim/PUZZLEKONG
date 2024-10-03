@@ -36,7 +36,7 @@ public class PuzzlePlacableChecker : MonoBehaviour
     }
      
     private Dictionary<string, List<IdxRCStruct>> _placableGridPartsListDic = new Dictionary<string, List<IdxRCStruct>>();// key - rowIdx,colIdx
-    private string tempPzNameStr = string.Empty;
+    private string _pzNameBackupStr = string.Empty;
     /// <summary>
     /// Callback 매서드
     ///   1. puzzle 3개 새로 생성됐을 때(PuzzleManager),
@@ -113,10 +113,10 @@ public class PuzzlePlacableChecker : MonoBehaviour
     {
         if (isPZMoving)
         {
-            if (tempPzNameStr == puzzle.name) return;
+            if (_pzNameBackupStr == puzzle.name) return;
 
             _placableGridPartsListDic.Clear();
-            tempPzNameStr = puzzle.name;
+            _pzNameBackupStr = puzzle.name;
             grid.BackupData = grid.Data;
 
             // # 그리드 모든 idx 체크
@@ -127,7 +127,7 @@ public class PuzzlePlacableChecker : MonoBehaviour
         else
         {
             _placableGridPartsListDic.Clear();
-            tempPzNameStr = string.Empty;
+            _pzNameBackupStr = string.Empty;
             grid.Data = grid.BackupData;
         }
     }
