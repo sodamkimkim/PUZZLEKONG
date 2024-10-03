@@ -1,4 +1,4 @@
-using UnityEngine; 
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 /// <summary>
@@ -13,7 +13,7 @@ using System.Collections.Generic;
 /// (TODO) 6. completeManager 호출 - complete => grid update해주는 클래스 호출
 /// </summary>
 public class PuzzlePlaceManager : MonoBehaviour
-{ 
+{
     private PuzzlePlacableChecker _puzzlePlacableChecker = null;
     private GridManager _gridManager = null;
     private PuzzleManager _puzzleManager = null;
@@ -23,9 +23,7 @@ public class PuzzlePlaceManager : MonoBehaviour
         _puzzlePlacableChecker = this.GetComponent<PuzzlePlacableChecker>();
         _gridManager = this.GetComponentInChildren<GridManager>();
         _puzzleManager = this.GetComponentInChildren<PuzzleManager>();
-    }
-    private void Start()
-    {
+
         _gridManager.Iniit(CheckPlacable_AllRemaingPuzzles);
         _puzzleManager.Iniit(CheckPlacable_AllRemaingPuzzles);
     }
@@ -39,7 +37,8 @@ public class PuzzlePlaceManager : MonoBehaviour
     public void MarkPlacable(bool isPZMoving, Puzzle puzzle)
     {
         if (puzzle == null) return;
-        _puzzlePlacableChecker.MarkPlacable(ref PlacableGridPartsListDic, isPZMoving, _gridManager.Grid, puzzle);
+
+        _puzzlePlacableChecker.GetPlacableIdx(ref PlacableGridPartsListDic, isPZMoving, _gridManager.Grid, puzzle);
     }
     public bool CheckPlacable_TouchingPZ(Puzzle touchingPZ)
     {
@@ -47,12 +46,12 @@ public class PuzzlePlaceManager : MonoBehaviour
 
         // 1. Grid에 있는지 체크
         if (!touchingPZ.IsInGrid) return false;
-         
+
         // 2. Placable에 있는지 체크 
 
         return false;
 
-    } 
+    }
 
     /// <summary>
     /// Touching Go가 CheckPlacable == true 된 후 Drop했을 때의 로직 작성

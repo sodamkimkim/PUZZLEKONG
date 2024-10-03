@@ -1,7 +1,8 @@
+#define DEBUGING
+
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-using System.Text;
 
 /// <summary>
 /// : 퍼즐 세개 중 남은 것 & 현재 선택한 퍼즐 Placable Check 
@@ -21,7 +22,6 @@ using System.Text;
 /// </summary>
 public class PuzzlePlacableChecker : MonoBehaviour
 {
-
     private string _pzNameBackupStr = string.Empty;
     /// <summary>
     /// Callback 매서드
@@ -31,6 +31,8 @@ public class PuzzlePlacableChecker : MonoBehaviour
     /// <param name="puzzleGoArr"></param>
     public void CheckPlacable_AllRemainingPuzzles(Grid grid, GameObject[] puzzleGoArr)
     {// TODO 
+        if (grid == null || puzzleGoArr[0] == null) return;
+
         if (IsGameOver(grid, puzzleGoArr))
             Debug.Log("GameOver");
     }
@@ -53,7 +55,7 @@ public class PuzzlePlacableChecker : MonoBehaviour
             {
                 puzzleCnt++;
 
-                if (CheckPlacable_InThisGrid(grid, puzzle))
+                if (!CheckPlacable(grid, puzzle))
                     gameOverCheckNum++;
             }
             else // 해당 배열 내 Puzzle Go 없음
@@ -78,12 +80,15 @@ public class PuzzlePlacableChecker : MonoBehaviour
     /// <param name="grid"></param>
     /// <param name="puzzle"></param>
     /// <returns></returns>
-    private bool CheckPlacable_InThisGrid(Grid grid, Puzzle puzzle)
+    private bool CheckPlacable(Grid grid, Puzzle puzzle)
     {
         if (!puzzle.IsInGrid) return false;
-        // TODO 
 
-        return false;
+        Dictionary<string, List<IdxRCStruct>> tempDic = new Dictionary<string, List<IdxRCStruct>>();
+        GetPlacableIdx(ref tempDic, true, grid, puzzle);
+
+        if (tempDic.Count > 0) return true;
+        else return false;
     }
 
     /// <summary>
@@ -92,12 +97,12 @@ public class PuzzlePlacableChecker : MonoBehaviour
     /// 
     /// =>> 퍼즐이 placable한 모든 퍼즐 (0,0)이 닿는 grid 인덱스 List에 담기 및 퍼즐 매핑영역 색상변경
     /// </summary>
-    /// <param name="isPZMoving"></param>
+    /// <param name="needFunction"></param>
     /// <param name="grid"></param>
     /// <param name="puzzle"></param>
-    public void MarkPlacable(ref Dictionary<string, List<IdxRCStruct>> dic, bool isPZMoving, Grid grid, Puzzle puzzle)
+    public void GetPlacableIdx(ref Dictionary<string, List<IdxRCStruct>> dic, bool needFunction, Grid grid, Puzzle puzzle)
     {
-        if (isPZMoving)
+        if (needFunction)
         {
             if (_pzNameBackupStr == puzzle.name) return;
 
@@ -173,9 +178,11 @@ public class PuzzlePlacableChecker : MonoBehaviour
         {
             Util.CheckAndAddDictionary(dic, new IdxRCStruct(grIdxR, grIdxC).ToString(), gridPartIdxList);
 
+#if DEBUGING
             foreach (KeyValuePair<string, List<IdxRCStruct>> kvp in dic)
                 foreach (IdxRCStruct idx in kvp.Value)
                     grid.SetGridPartData(idx.IdxR, idx.IdxC, 2);
+#endif
         }
     }
 } // end of class 

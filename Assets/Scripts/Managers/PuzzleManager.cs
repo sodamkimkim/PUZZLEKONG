@@ -23,7 +23,7 @@ public class PuzzleManager : MonoBehaviour
     }
     private void LazyStart()
     {
-        InstantiatePuzzleGos(ref _puzzleGoArr);
+        InstantiatePuzzleGos(ref _puzzleGoArr); 
     }
     private void InstantiatePuzzleGos(ref GameObject[] puzzleGoArr)
     {
