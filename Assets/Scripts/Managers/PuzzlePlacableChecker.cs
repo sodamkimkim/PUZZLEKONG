@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 
 /// <summary>
 /// : 퍼즐 세개 중 남은 것 & 현재 선택한 퍼즐 Placable Check 
@@ -22,17 +23,21 @@ public class PuzzlePlacableChecker : MonoBehaviour
 {
     public struct IdxRCStruct
     {
-        public int idxR { get; set; }
-        public int idxC { get; set; }
+        public int IdxR { get; set; }
+        public int IdxC { get; set; }
 
         public IdxRCStruct(int idxR, int idxC)
         {
-            this.idxR = idxR;
-            this.idxC = idxC;
+            this.IdxR = idxR;
+            this.IdxC = idxC;
         }
+        public override string ToString() => $"{IdxR},{IdxC}";
+        // end of structure
     }
-    private List<IdxRCStruct> _idxRcStructList = new List<IdxRCStruct>();
-    private List<IdxRCStruct> _tempIdxRCList = new List<IdxRCStruct>();
+
+    // private List<IdxRCStruct> _gridInspectionAreaUpperLeftIdxRcList = new List<IdxRCStruct>();
+    private Dictionary<string, List<IdxRCStruct>> _placableGridPartsListDic = new Dictionary<string, List<IdxRCStruct>>();// key - rowIdx,colIdx
+    private string tempPzNameStr = string.Empty;
     /// <summary>
     /// Callback 매서드
     ///   1. puzzle 3개 새로 생성됐을 때(PuzzleManager),
@@ -82,7 +87,6 @@ public class PuzzlePlacableChecker : MonoBehaviour
             return false; //GameOver는 아님 
     }
 
-
     /// <summary>
     /// 해당 Grid에 PUZZLE을 넣을 수 있는지 확인
     /// </summary>
@@ -96,6 +100,7 @@ public class PuzzlePlacableChecker : MonoBehaviour
 
         return false;
     }
+
     /// <summary>
     /// 1. puzzle의 placable한 인덱스 모든 곳 찾기
     /// 2. 그 중 현재 퍼즐 위치와 가장 가까운 곳 색상표시 (타매서드 호출)
@@ -107,38 +112,38 @@ public class PuzzlePlacableChecker : MonoBehaviour
     /// <param name="puzzle"></param>
     public void MarkPlacable(bool isPZMoving, Grid grid, Puzzle puzzle)
     {
-        _idxRcStructList.Clear();
-        _tempIdxRCList.Clear();
-        Debug.Log($"MarkPlace");
         if (isPZMoving)
         {
+            if (tempPzNameStr == puzzle.name) return;
+
+            _placableGridPartsListDic.Clear();
+            tempPzNameStr = puzzle.name;
             grid.BackupData = grid.Data;
-            // 그리드 모든 idx 체크
+
+            // # 그리드 모든 idx 체크
             for (int grIdxR = 0; grIdxR < grid.Data.GetLength(0); grIdxR++)
-            {
                 for (int grIdxC = 0; grIdxC < grid.Data.GetLength(1); grIdxC++)
-                {
                     CheckMappingGridAndPuzzleIdx(grid, puzzle, grIdxR, grIdxC);
-                }
-            }
         }
         else
+        {
+            _placableGridPartsListDic.Clear();
+            tempPzNameStr = string.Empty;
             grid.Data = grid.BackupData;
+        }
     }
+
     /// <summary>
-    /// 해당 "grididx + 퍼즐 실질 idx 영역(이하 'Grid-Puzzle영역'이라 칭함)"에 퍼즐데이터가 1이고
-    /// 그리드데이터가 !=1 이면(이하 '퍼즐매핑검사'라 칭함)
-    /// 퍼즐 영역만큼  색상 변경 & Grid Idx List에 담기
-    /// </summary>
-    /// <param name="grIdxR"></param>
-    /// <param name="grIdxC"></param>
+    /// 해당 "grididx + 퍼즐 실질 idx 영역"(named "GridInspectionArea")에 
+    /// "퍼즐데이터가 1이고 그리드데이터가 !=1"(named "퍼즐매핑검사") 이면 
+    ///  1. GridInspectionArea Upper-left 인덱스 List에 담기
+    ///  2. 해당인덱스를 key값으로 하는 Dictionary에 gridPartIdx 저장
+    /// </summary> 
     private void CheckMappingGridAndPuzzleIdx(Grid grid, Puzzle puzzle, int grIdxR, int grIdxC)
     {
-        // # 검사할 grid영역 설정
+        // # 검사할 Grid영역 설정 (GridInspectionArea)
         int[] idxRangeR = new int[2] { grIdxR, grIdxR + puzzle.LastIdx_rc[0] };
         int[] idxRangeC = new int[2] { grIdxC, grIdxC + puzzle.LastIdx_rc[1] };
-
-        Debug.Log(grid.Data.GetLength(0));
 
         // # grid idx가 퍼즐 영역을 담지 못하면 return
         if (idxRangeR[1] > grid.Data.GetLength(0) - 1) return;
@@ -147,39 +152,32 @@ public class PuzzlePlacableChecker : MonoBehaviour
         // # 해당 Grid영역에 퍼즐 매핑 가능한지 검사
         bool isPlacable = true;
 
-        _tempIdxRCList.Clear();
+        List<IdxRCStruct> gridPartIdxList = new List<IdxRCStruct>();
+        gridPartIdxList.Clear();
         int puzzleIdxR = 0;
         for (int i = idxRangeR[0]; i <= idxRangeR[1]; i++)
         {
             int puzzleIdxC = 0;
             for (int j = idxRangeC[0]; j <= idxRangeC[1]; j++)
             {
-                // # 이 안에서 griddata !=1 && puzzledata ==1인 곳  퍼즐 영역만큼  색상 변경
+                // # 이 안에서 griddata !=1 && puzzledata ==1인 곳  퍼즐 영역만큼  List에 담음
                 if (grid.Data[i, j] == 1) // grid의 해당 인덱스에 퍼즐이 놓여있을 떄
                 {
-                    if (puzzle.Data[puzzleIdxR, puzzleIdxC] == 0) // => ok
-                    {
+                    if (puzzle.Data[puzzleIdxR, puzzleIdxC] == 0) // => ok 
                         isPlacable &= true;
-
-                    }
-                    else  // (puzzle.Data[puzzleIdxR, puzzleIdxC] == 1) => no
-                    {
+                    else  // (puzzle.Data[puzzleIdxR, puzzleIdxC] == 1) => no 
                         isPlacable &= false;
-                    }
                 }
                 else // grid.Data[i, j] == 0 || 2  // grid의 해당 인덱스에 퍼즐이 놓여있지 않을 때
                 {
                     if (puzzle.Data[puzzleIdxR, puzzleIdxC] == 1) // => ok
                     {
                         isPlacable &= true;
-                        _tempIdxRCList.Add(new IdxRCStruct(i, j));
+                        gridPartIdxList.Add(new IdxRCStruct(i, j));
                     }
-                    else // (puzzle.Data[puzzleIdxR, puzzleIdxC] == 0) => ok
-                    {
+                    else // (puzzle.Data[puzzleIdxR, puzzleIdxC] == 0) => ok 
                         isPlacable &= true;
-                    }
                 }
-
                 puzzleIdxC++;
             }
             puzzleIdxR++;
@@ -188,11 +186,16 @@ public class PuzzlePlacableChecker : MonoBehaviour
         // # Grid-Puzzle영역 Puzzle매핑 검사 완료 후 true라면 1. 해당 Grid영역가장초기 인덱스 List에 담기, 2. 퍼즐매핑영역 색상 변경!
         if (isPlacable)
         {
-            _idxRcStructList.Add(new IdxRCStruct(grIdxR, grIdxC));
-            foreach (IdxRCStruct idxRC in _tempIdxRCList)
+            //      IdxRCStruct gridStartIdx = ;
+            //      _gridInspectionAreaUpperLeftIdxRcList.Add(gridStartIdx);
+
+            Util.CheckAndAddDictionary(_placableGridPartsListDic, new IdxRCStruct(grIdxR, grIdxC).ToString(), gridPartIdxList);
+
+            foreach (KeyValuePair<string, List<IdxRCStruct>> kvp in _placableGridPartsListDic)
             {
-                grid.SetGridPartData(idxRC.idxR, idxRC.idxC, 2);
+                foreach (IdxRCStruct idx in kvp.Value)
+                    grid.SetGridPartData(idx.IdxR, idx.IdxC, 2);
             }
         }
-    } 
+    }
 } // end of class 

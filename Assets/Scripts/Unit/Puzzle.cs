@@ -81,8 +81,7 @@ public class Puzzle : MonoBehaviour
         {
             IsInGrid = false;
             SetChildColor(ChildColor);
-        }
-   //     Debug.Log($"{this.name} : InGrid {isEnter}");
+        } 
     }
     private bool CheckAllChildInGrid()
     {

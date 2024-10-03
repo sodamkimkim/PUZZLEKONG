@@ -51,8 +51,7 @@ public class PuzzlePlaceManager : MonoBehaviour
 
         return false;
 
-    }
-
+    } 
 
     /// <summary>
     /// Touching Go가 CheckPlacable == true 된 후 Drop했을 때의 로직 작성

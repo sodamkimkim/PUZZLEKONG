@@ -30,7 +30,7 @@ public class GridSpawner : MonoBehaviour
                 GridPart gridPart = Util.CheckAndAddComponent<GridPart>(gridPartGo);
                 gridPart.ParentGrid = grid;
                 gridPart.Spr = gridPart.GetComponent<SpriteRenderer>();
-                Util.AddDictionary<GridPart>(grid.ChildGridPartDic, gridPart.name, gridPart);
+                Util.CheckAndAddDictionary<GridPart>(grid.ChildGridPartDic, gridPart.name, gridPart);
 
             }
         }
