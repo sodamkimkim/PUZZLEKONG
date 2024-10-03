@@ -21,21 +21,7 @@ using System.Text;
 /// </summary>
 public class PuzzlePlacableChecker : MonoBehaviour
 {
-    public struct IdxRCStruct
-    {
-        public int IdxR { get; set; }
-        public int IdxC { get; set; }
 
-        public IdxRCStruct(int idxR, int idxC)
-        {
-            this.IdxR = idxR;
-            this.IdxC = idxC;
-        }
-        public override string ToString() => $"{IdxR},{IdxC}";
-        // end of structure
-    }
-     
-    private Dictionary<string, List<IdxRCStruct>> _placableGridPartsListDic = new Dictionary<string, List<IdxRCStruct>>();// key - rowIdx,colIdx
     private string _pzNameBackupStr = string.Empty;
     /// <summary>
     /// Callback 매서드
@@ -109,24 +95,24 @@ public class PuzzlePlacableChecker : MonoBehaviour
     /// <param name="isPZMoving"></param>
     /// <param name="grid"></param>
     /// <param name="puzzle"></param>
-    public void MarkPlacable(bool isPZMoving, Grid grid, Puzzle puzzle)
+    public void MarkPlacable(ref Dictionary<string, List<IdxRCStruct>> dic, bool isPZMoving, Grid grid, Puzzle puzzle)
     {
         if (isPZMoving)
         {
             if (_pzNameBackupStr == puzzle.name) return;
 
-            _placableGridPartsListDic.Clear();
+            dic.Clear();
             _pzNameBackupStr = puzzle.name;
             grid.BackupData = grid.Data;
 
             // # 그리드 모든 idx 체크
             for (int grIdxR = 0; grIdxR < grid.Data.GetLength(0); grIdxR++)
                 for (int grIdxC = 0; grIdxC < grid.Data.GetLength(1); grIdxC++)
-                    CheckMappingGridAndPuzzleIdx(grid, puzzle, grIdxR, grIdxC);
+                    CheckMappingGridAndPuzzleIdx(ref dic, grid, puzzle, grIdxR, grIdxC);
         }
         else
         {
-            _placableGridPartsListDic.Clear();
+            dic.Clear();
             _pzNameBackupStr = string.Empty;
             grid.Data = grid.BackupData;
         }
@@ -138,7 +124,7 @@ public class PuzzlePlacableChecker : MonoBehaviour
     ///  1. GridInspectionArea Upper-left 인덱스 List에 담기
     ///  2. 해당인덱스를 key값으로 하는 Dictionary에 gridPartIdx 저장
     /// </summary> 
-    private void CheckMappingGridAndPuzzleIdx(Grid grid, Puzzle puzzle, int grIdxR, int grIdxC)
+    private void CheckMappingGridAndPuzzleIdx(ref Dictionary<string, List<IdxRCStruct>> dic, Grid grid, Puzzle puzzle, int grIdxR, int grIdxC)
     {
         // # 검사할 Grid영역 설정 (GridInspectionArea)
         int[] idxRangeR = new int[2] { grIdxR, grIdxR + puzzle.LastIdx_rc[0] };
@@ -185,9 +171,9 @@ public class PuzzlePlacableChecker : MonoBehaviour
         // # Grid-Puzzle영역 Puzzle매핑 검사 완료 후 true라면 1. 해당 Grid영역가장초기 인덱스 List에 담기, 2. 퍼즐매핑영역 색상 변경!
         if (isPlacable)
         {
-            Util.CheckAndAddDictionary(_placableGridPartsListDic, new IdxRCStruct(grIdxR, grIdxC).ToString(), gridPartIdxList);
+            Util.CheckAndAddDictionary(dic, new IdxRCStruct(grIdxR, grIdxC).ToString(), gridPartIdxList);
 
-            foreach (KeyValuePair<string, List<IdxRCStruct>> kvp in _placableGridPartsListDic)
+            foreach (KeyValuePair<string, List<IdxRCStruct>> kvp in dic)
                 foreach (IdxRCStruct idx in kvp.Value)
                     grid.SetGridPartData(idx.IdxR, idx.IdxC, 2);
         }

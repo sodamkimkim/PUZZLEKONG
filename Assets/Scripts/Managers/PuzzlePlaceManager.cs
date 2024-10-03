@@ -1,5 +1,6 @@
-using UnityEngine;
-
+using UnityEngine; 
+using System.Collections;
+using System.Collections.Generic;
 /// <summary>
 /// : 플레이어가 선택한 퍼즐 Place 해주는 클래스
 /// - Placable check 값 가져와서 조건 맞을 떄 Place 
@@ -12,11 +13,11 @@ using UnityEngine;
 /// (TODO) 6. completeManager 호출 - complete => grid update해주는 클래스 호출
 /// </summary>
 public class PuzzlePlaceManager : MonoBehaviour
-{
+{ 
     private PuzzlePlacableChecker _puzzlePlacableChecker = null;
     private GridManager _gridManager = null;
     private PuzzleManager _puzzleManager = null;
-
+    public Dictionary<string, List<IdxRCStruct>> PlacableGridPartsListDic = new Dictionary<string, List<IdxRCStruct>>();// key - rowIdx,colIdx
     private void Awake()
     {
         _puzzlePlacableChecker = this.GetComponent<PuzzlePlacableChecker>();
@@ -38,7 +39,7 @@ public class PuzzlePlaceManager : MonoBehaviour
     public void MarkPlacable(bool isPZMoving, Puzzle puzzle)
     {
         if (puzzle == null) return;
-        _puzzlePlacableChecker.MarkPlacable(isPZMoving, _gridManager.Grid, puzzle);
+        _puzzlePlacableChecker.MarkPlacable(ref PlacableGridPartsListDic, isPZMoving, _gridManager.Grid, puzzle);
     }
     public bool CheckPlacable_TouchingPZ(Puzzle touchingPZ)
     {
