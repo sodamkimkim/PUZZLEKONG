@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Puzzle
   - Grid
+  - GridPart
   layers:
   - Default
   - TransparentFX

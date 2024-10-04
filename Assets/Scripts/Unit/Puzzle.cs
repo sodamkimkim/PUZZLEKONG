@@ -7,13 +7,14 @@ public class Puzzle : MonoBehaviour
     #region Hidden Private Variables
     private int[,] _data;
     private int[] _lastIdx_rc;
-    private int[] _getRealLength_rc= new int[2] { 0, 0 };
+    private int[] _getRealLength_rc = new int[2] { 0, 0 };
 
     private Vector3 _spawnPos;
     private List<PZPart> _childPZPartList = new List<PZPart>();
     private List<SpriteRenderer> _childSpr = new List<SpriteRenderer>();
     private Color _childColor = Color.clear;
     private bool _isInGrid = false;
+    private string _firstTriggeredGridPartNameStr;
     #endregion
 
     public int[,] Data
@@ -22,17 +23,17 @@ public class Puzzle : MonoBehaviour
         set
         {
             _data = value;
-            LastIdx_rc = GetLastIdx(_data); 
+            LastIdx_rc = GetLastIdx(_data);
         }
     }
-    public int[] LastIdx_rc { get => _lastIdx_rc; private set => _lastIdx_rc = value; } 
+    public int[] LastIdx_rc { get => _lastIdx_rc; private set => _lastIdx_rc = value; }
 
     public List<PZPart> ChildPZPartList { get => _childPZPartList; private set => _childPZPartList = value; }
     public Vector3 SpawnPos { get => _spawnPos; set => _spawnPos = value; }
     public Color ChildColor { get => _childColor; set => _childColor = value; }
 
     public bool IsInGrid { get => _isInGrid; set => _isInGrid = value; }
-
+    public string FirstTriggeredGridPartNameStr { get => _firstTriggeredGridPartNameStr; set => _firstTriggeredGridPartNameStr = value; }
     private int[] GetLastIdx(int[,] dbArr)
     {
         int[] rcIdxArr = new int[2] { 0, 0 };
@@ -56,7 +57,7 @@ public class Puzzle : MonoBehaviour
             }
         }
         return rcIdxArr;
-    } 
+    }
     private void SetChildColor(Color color)
     {
         foreach (PZPart pzPart in ChildPZPartList)
@@ -64,27 +65,6 @@ public class Puzzle : MonoBehaviour
             if (pzPart.Spr.color == color) return;
             pzPart.Spr.color = color;
         }
-    }
-    public void CallbackChildPuzzlePartCollision(bool isEnter)
-    {
-        if (isEnter)
-        {
-            if (CheckAllChildInGrid())
-            {
-                IsInGrid = true;
-                SetChildColor(Color.red);  // TEMP
-            }
-            else
-            {
-                IsInGrid = false;
-                SetChildColor(ChildColor);
-            }
-        }
-        else
-        {
-            IsInGrid = false;
-            SetChildColor(ChildColor);
-        } 
     }
     private bool CheckAllChildInGrid()
     {
@@ -95,4 +75,25 @@ public class Puzzle : MonoBehaviour
         }
         return isAllInGrid;
     }
+    public void CallbackChildPuzzlePartCollision(bool isEnter)
+    {
+        if (isEnter)
+        {
+            if (CheckAllChildInGrid())
+            {
+                IsInGrid = true;
+                SetChildColor(Color.red);  // DEBUGGING  
+            }
+            else
+            {
+                IsInGrid = false;
+                SetChildColor(ChildColor); // DEBUGGING
+            }
+        }
+        else
+        {
+            IsInGrid = false;
+            SetChildColor(ChildColor); // DEBUGGING
+        }
+    }  
 } // end of class

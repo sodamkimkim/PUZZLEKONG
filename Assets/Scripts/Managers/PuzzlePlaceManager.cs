@@ -17,7 +17,8 @@ public class PuzzlePlaceManager : MonoBehaviour
     private PuzzlePlacableChecker _puzzlePlacableChecker = null;
     private GridManager _gridManager = null;
     private PuzzleManager _puzzleManager = null;
-    public Dictionary<string, List<IdxRCStruct>> PlacableGridPartsListDic = new Dictionary<string, List<IdxRCStruct>>();// key - rowIdx,colIdx
+    public Dictionary<string, Dictionary<string, IdxRCStruct>> PlacableGridPartsListDic = new Dictionary<string, Dictionary<string, IdxRCStruct>>();// key - rowIdx,colIdx
+    public Dictionary<string, IdxRCStruct> NearestPlacableIdxDic = new Dictionary<string, IdxRCStruct>(); // key - rowIdx,colIdx
     private void Awake()
     {
         _puzzlePlacableChecker = this.GetComponent<PuzzlePlacableChecker>();
@@ -34,11 +35,12 @@ public class PuzzlePlaceManager : MonoBehaviour
     {
         _puzzlePlacableChecker.CheckPlacableAllRemainingPuzzles(_gridManager.Grid, _puzzleManager.PuzzleGoArr);
     }
-    public void MarkPlacable(bool isPZMoving, Puzzle puzzle)
+    public void MarkPlacable(bool exitInitializeNow, Puzzle puzzle)
     {
         if (puzzle == null) return;
 
-        _puzzlePlacableChecker.GetPlacableIdxs(ref PlacableGridPartsListDic, isPZMoving, _gridManager.Grid, puzzle);
+        _puzzlePlacableChecker.GetPlacableIdxs(ref PlacableGridPartsListDic, exitInitializeNow, _gridManager.Grid, puzzle);
+        _puzzlePlacableChecker.GetNearestPlacableIdx(PlacableGridPartsListDic, ref NearestPlacableIdxDic, exitInitializeNow, _gridManager.Grid, puzzle);
     }
     public bool CheckPlacable(Puzzle touchingPZ)
     {

@@ -4,7 +4,7 @@ using UnityEngine;
 public class Grid : MonoBehaviour
 {
     #region Hidden Private Variables
-    private Dictionary<string, GridPart> _childGridPartDic = new Dictionary<string, GridPart>(); // GridPart_{r}_{c}
+    private Dictionary<string, GridPart> _childGridPartDic = new Dictionary<string, GridPart>(); // GridPart_{r},{c}
     private int[,] _data;
     private int[,] _backupData;
     #endregion
@@ -27,7 +27,7 @@ public class Grid : MonoBehaviour
     {
         get => _backupData; set => _backupData = value;
     }
-    public Dictionary<string, GridPart> ChildGridPartDic { get => _childGridPartDic; private set => _childGridPartDic = value; } // GridPart_{r}_{c}
+    public Dictionary<string, GridPart> ChildGridPartDic { get => _childGridPartDic; private set => _childGridPartDic = value; } // GridPart_{r},{c}
 
     private void InitializeGridColor()
     {
@@ -74,7 +74,7 @@ public class Grid : MonoBehaviour
         {
             for (int c = 0; c < colCnt; c++)
             {
-                GridPart gridPart = ChildGridPartDic[$"GridPart_{r}_{c}"];
+                GridPart gridPart = ChildGridPartDic[$"GridPart_{r},{c}"];
                 gridPart.Data = data[r, c];
                 gridPart.IdxRow = r;
                 gridPart.IdxCol = c;
@@ -89,15 +89,15 @@ public class Grid : MonoBehaviour
 
         for (int i = startIdxR; i <= endIdxR; i++)
             for (int j = startIdxC; j <= endIdxC; j++)
-                if (Data[i, j] != 1 && ChildGridPartDic.ContainsKey($"GridPart_{i}_{j}"))
-                    ChildGridPartDic[$"GridPart_{i}_{j}"].Data = gridPartAfterData;
+                if (Data[i, j] != 1 && ChildGridPartDic.ContainsKey($"GridPart_{i},{j}"))
+                    ChildGridPartDic[$"GridPart_{i},{j}"].Data = gridPartAfterData;
     }
     public void SetGridPartData(int idxR, int idxC, int gridPartAfterData)
     {
         if (idxR > Data.GetLength(0) - 1) return;
         if (idxC > Data.GetLength(1) - 1) return;
 
-        if (Data[idxR, idxC] != 1 && Data[idxR, idxC] != gridPartAfterData && ChildGridPartDic.ContainsKey($"GridPart_{idxR}_{idxC}"))
-            ChildGridPartDic[$"GridPart_{idxR}_{idxC}"].Data = gridPartAfterData;
+        if (Data[idxR, idxC] != 1 && Data[idxR, idxC] != gridPartAfterData && ChildGridPartDic.ContainsKey($"GridPart_{idxR},{idxC}"))
+            ChildGridPartDic[$"GridPart_{idxR},{idxC}"].Data = gridPartAfterData;
     }
 } // end of class

@@ -5,6 +5,16 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         this.GetComponentInChildren<PuzzlePlacableChecker>().Init(GameOver, StageComplete);
+
+    }
+    private void OnEnable()
+    {
+        LazyStart();
+    }
+    private void LazyStart()
+    {
+        this.GetComponentInChildren<GridManager>().LazyStart();
+        this.GetComponentInChildren<PuzzleManager>().LazyStart();
     }
     private void GameOver()
     {

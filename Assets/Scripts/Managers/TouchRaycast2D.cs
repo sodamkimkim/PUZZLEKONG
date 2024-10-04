@@ -8,8 +8,9 @@ public class TouchRaycast2D : MonoBehaviour
 
     [SerializeField]
     private PuzzlePlaceManager _puzzlePlaceManager = null;
-    public Puzzle TouchingPuzzle { get =>_touchingPZ; set => _touchingPZ = value; }
+    public Puzzle TouchingPuzzle { get => _touchingPZ; set => _touchingPZ = value; }
     private Vector3 _selectedGoInitialPos = Vector3.zero;
+    private Vector3 _mousePosBackUp = Vector3.zero;
     //private void Start()
     //{
     //    InvokeRepeating(nameof(ShotRay), 0f, 0.1f);
@@ -32,16 +33,15 @@ public class TouchRaycast2D : MonoBehaviour
 
             if (Input.GetMouseButtonDown(0))
                 SetTouchBegin(puzzle, hit2);
-        } 
+        }
 
         if (Input.GetMouseButton(0))
         {
             SetTouchMoved(hit2);
-            _puzzlePlaceManager.MarkPlacable(true, TouchingPuzzle);
         }
         else if (Input.GetMouseButtonUp(0))
         {
-            _puzzlePlaceManager.MarkPlacable(false, TouchingPuzzle);
+            _puzzlePlaceManager.MarkPlacable(true, TouchingPuzzle);
 
             if (_puzzlePlaceManager.CheckPlacable(TouchingPuzzle))
                 _puzzlePlaceManager.PuzzlePlace();
@@ -86,24 +86,37 @@ public class TouchRaycast2D : MonoBehaviour
     private void SetTouchBegin(Puzzle puzzle, RaycastHit2D hit)
     {
         if (TouchingPuzzle == puzzle) return;
+
+        Vector3 mousePos = Input.mousePosition;
+        _mousePosBackUp = mousePos;
+
         TouchingPuzzle = puzzle;
         _selectedGoInitialPos = puzzle.SpawnPos;
         TouchingPuzzle.transform.localScale = Factor.ScalePuzzleNormal;
 
-        Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector3 pos = Camera.main.ScreenToWorldPoint(mousePos);
         pos.z = 0;
         TouchingPuzzle.transform.position = pos;
     }
     private void SetTouchMoved(RaycastHit2D hit)
     {
         if (TouchingPuzzle == null) return;
-        Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        pos.z = 0;
-        TouchingPuzzle.transform.position = pos;
+
+        // _puzzlePlaceManager.MarkPlacable(true, TouchingPuzzle);
+
+        Vector3 mousePos = Input.mousePosition;
+        //      if (mousePos == _mousePosBackUp) return;
+        //    else
+        {
+            Vector3 pos = Camera.main.ScreenToWorldPoint(mousePos);
+            pos.z = 0;
+            TouchingPuzzle.transform.position = pos;
+        }
 
         // TODO
         // placable check & mark 
         // completable check & mark
+        _puzzlePlaceManager.MarkPlacable(false, TouchingPuzzle);
     }
     public void SetTouchEnd_PuzzleReturn()
     {

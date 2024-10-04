@@ -44,7 +44,7 @@ public class BuildPuzzlePrefab : MonoBehaviour
                         }
 
                         GameObject puzzlePartGo = Instantiate(_puzzlePrefab_NoLine, puzzlePrefab.transform);
-                        puzzlePartGo.name = $"PuzzlePart";
+                        puzzlePartGo.name = $"PuzzlePart_{r},{c}";
                         puzzlePartGo.transform.rotation = Quaternion.identity;
                         puzzlePartGo.transform.localPosition = new Vector3(puzzlePartGo.transform.localScale.x * c + (isLeftOffset ? 0.1f * c : 0), -(puzzlePartGo.transform.localScale.y * r + (isUpperOffset ? 0.1f * r : 0)), 0);
 

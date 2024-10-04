@@ -17,11 +17,8 @@ public class PuzzleManager : MonoBehaviour
     {
         _btnReset.onClick.AddListener(() => LazyStart());
     }
-    private void Start()
-    {
-        LazyStart();
-    }
-    private void LazyStart()
+ 
+    public void LazyStart()
     {
         InstantiatePuzzleGos(ref _puzzleGoArr); 
     }
