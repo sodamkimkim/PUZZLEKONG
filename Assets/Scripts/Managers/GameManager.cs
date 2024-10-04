@@ -4,11 +4,15 @@ public class GameManager : MonoBehaviour
 {
     private void Awake()
     {
-        this.GetComponentInChildren<PuzzlePlacableChecker>().Init(GameOver);    
+        this.GetComponentInChildren<PuzzlePlacableChecker>().Init(GameOver, StageComplete);
     }
-    public void GameOver()
+    private void GameOver()
     {
-        // GameOver Process
+        // TODO - GameOver Process
         Debug.Log("GameOver");
+    }
+    private void StageComplete()
+    {
+        Debug.Log("StageComplete");
     }
 } // end of class

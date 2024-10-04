@@ -23,12 +23,16 @@ using System.Collections.Generic;
 public class PuzzlePlacableChecker : MonoBehaviour
 {
     private string _pzNameBackupStr = string.Empty;
+
     public delegate void GameOver();
     private GameOver _gameOverCallback;
+    public delegate void StageComplete();
+    private StageComplete _stageCompleteCallback;
 
-    public void Init(GameOver gameOverCallback)
+    public void Init(GameOver gameOverCallback, StageComplete stageComplete)
     {
         _gameOverCallback = gameOverCallback;
+        _stageCompleteCallback = stageComplete;
     }
     /// <summary>
     /// Callback 매서드
@@ -72,7 +76,7 @@ public class PuzzlePlacableChecker : MonoBehaviour
         if (puzzleCnt == 0)
         {
             // TODO
-            Debug.Log("StageComplete");
+            _stageCompleteCallback?.Invoke();
             return true;
         }
         else if (puzzleCnt != 0 && puzzleCnt == gameOverCheckNum)
@@ -82,7 +86,7 @@ public class PuzzlePlacableChecker : MonoBehaviour
     }
 
     /// <summary>
-    /// 해당 Grid에 PUZZLE을 넣을 수 있는지 확인
+    /// 해당 Grid에 해당 PUZZLE을 넣을 수 있는지 확인
     /// </summary>
     /// <param name="grid"></param>
     /// <param name="puzzle"></param>
@@ -146,9 +150,9 @@ public class PuzzlePlacableChecker : MonoBehaviour
         if (idxRangeR[1] > grid.Data.GetLength(0) - 1) return;
         if (idxRangeC[1] > grid.Data.GetLength(1) - 1) return;
 
+
         // # 해당 Grid영역에 퍼즐 매핑 가능한지 검사
         bool isPlacable = true;
-
         List<IdxRCStruct> gridPartIdxList = new List<IdxRCStruct>();
         gridPartIdxList.Clear();
         int puzzleIdxR = 0;
