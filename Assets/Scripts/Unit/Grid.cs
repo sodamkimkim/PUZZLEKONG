@@ -4,7 +4,7 @@ using UnityEngine;
 public class Grid : MonoBehaviour
 {
     #region Hidden Private Variables
-    private Dictionary<string, GridPart> _childGridPartDic = new Dictionary<string, GridPart>();
+    private Dictionary<string, GridPart> _childGridPartDic = new Dictionary<string, GridPart>(); // GridPart_{r}_{c}
     private int[,] _data;
     private int[,] _backupData;
     #endregion

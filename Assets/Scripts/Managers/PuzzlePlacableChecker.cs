@@ -22,67 +22,61 @@ using System.Collections.Generic;
 /// </summary>
 public class PuzzlePlacableChecker : MonoBehaviour
 {
-    private string _pzNameBackupStr = string.Empty;
-
+    #region delegate
     public delegate void GameOver();
     private GameOver _gameOverCallback;
     public delegate void StageComplete();
     private StageComplete _stageCompleteCallback;
+    #endregion
 
+    private string _pzNameBackupStr = string.Empty;
+    private Dictionary<string, List<IdxRCStruct>> _cntTempDic = new Dictionary<string, List<IdxRCStruct>>();
     public void Init(GameOver gameOverCallback, StageComplete stageComplete)
     {
         _gameOverCallback = gameOverCallback;
         _stageCompleteCallback = stageComplete;
     }
+
     /// <summary>
     /// Callback 매서드
     ///   1. puzzle 3개 새로 생성됐을 때(PuzzleManager),
     ///   2. 퍼즐 그리드에 드랍 됐을 때 (complete되거나 안되거나 어쩄뜬 gridArr는 refresh 됨 ) (GridManager) 
     /// </summary>
     /// <param name="puzzleGoArr"></param>
-    public void CheckPlacable_AllRemainingPuzzles(Grid grid, GameObject[] puzzleGoArr)
-    {// TODO 
+    public void CheckPlacableAllRemainingPuzzles(Grid grid, GameObject[] puzzleGoArr)
+    {
         if (grid == null || puzzleGoArr[0] == null) return;
 
-        if (!CheckPlacableAllPuzzle(grid, puzzleGoArr))
-            _gameOverCallback?.Invoke();
-    }
-
-    /// <summary>
-    ///  - 배열내 모든 Puzzle Go Placable == false => GameOver
-    /// </summary>
-    /// <param name="puzzleGoArr"></param>
-    /// <returns> T: GameOver, F: NotGameOver </returns>
-    private bool CheckPlacableAllPuzzle(Grid grid, GameObject[] puzzleGoArr)
-    {
-        int puzzleCnt = 0;
+        bool isGameOver = true;
+        int remainingPuzzleCnt = 0;
         int gameOverCheckNum = 0;
-
         foreach (GameObject go in puzzleGoArr)
         {
-            // 해당 배열 내 Puzzle Go가 있고 Placable이면 true반환
+            // # 해당 배열 내 Puzzle Go가 있고 Placable이면 true반환
             Puzzle puzzle = go.GetComponent<Puzzle>();
             if (puzzle != null)
             {
-                puzzleCnt++;
+                remainingPuzzleCnt++;
 
                 if (!CheckPlacable(grid, puzzle))
                     gameOverCheckNum++;
             }
-            else // 해당 배열 내 Puzzle Go 없음
+            else // # 해당 배열 내 Puzzle Go 없음
                 continue;
         }
 
-        if (puzzleCnt == 0)
+        if (remainingPuzzleCnt == 0)
         {
-            // TODO
             _stageCompleteCallback?.Invoke();
-            return true;
+            isGameOver = false;
         }
-        else if (puzzleCnt != 0 && puzzleCnt == gameOverCheckNum)
-            return false; // GameOver 
+        else if (remainingPuzzleCnt != 0 && remainingPuzzleCnt == gameOverCheckNum)
+            isGameOver = true; // # GameOver 
         else
-            return true; //GameOver는 아님 
+            isGameOver = false; // # GameOver는 아님 
+
+        if (!isGameOver)
+            _gameOverCallback?.Invoke();
     }
 
     /// <summary>
@@ -95,40 +89,50 @@ public class PuzzlePlacableChecker : MonoBehaviour
     {
         if (!puzzle.IsInGrid) return false;
 
-        Dictionary<string, List<IdxRCStruct>> tempDic = new Dictionary<string, List<IdxRCStruct>>();
-        GetPlacableIdx(ref tempDic, true, grid, puzzle);
+        _cntTempDic.Clear();
+        GetPlacableIdxs(ref _cntTempDic, true, grid, puzzle);
 
-        if (tempDic.Count > 0) return true;
+        if (_cntTempDic.Count > 0) return true;
         else return false;
     }
 
-    /// <summary>
-    /// 1. puzzle의 placable한 인덱스 모든 곳 찾기
-    /// 2. 그 중 현재 퍼즐 위치와 가장 가까운 곳 색상표시 (타매서드 호출)
-    /// 
-    /// =>> 퍼즐이 placable한 모든 퍼즐 (0,0)이 닿는 grid 인덱스 List에 담기 및 퍼즐 매핑영역 색상변경
+    /// <summary> 
+    /// 퍼즐이 placable한 모든 퍼즐 (0,0)이 닿는 grid 인덱스 Dic에 담기 
     /// </summary>
     /// <param name="needFunction"></param>
     /// <param name="grid"></param>
     /// <param name="puzzle"></param>
-    public void GetPlacableIdx(ref Dictionary<string, List<IdxRCStruct>> dic, bool needFunction, Grid grid, Puzzle puzzle)
+    public void GetPlacableIdxs(ref Dictionary<string, List<IdxRCStruct>> idxDic, bool needFunction, Grid grid, Puzzle puzzle)
     {
         if (needFunction)
         {
             if (_pzNameBackupStr == puzzle.name) return;
 
-            dic.Clear();
+            idxDic.Clear();
             _pzNameBackupStr = puzzle.name;
             grid.BackupData = grid.Data;
 
             // # 그리드 모든 idx 체크
             for (int grIdxR = 0; grIdxR < grid.Data.GetLength(0); grIdxR++)
                 for (int grIdxC = 0; grIdxC < grid.Data.GetLength(1); grIdxC++)
-                    CheckMappingGridAndPuzzleIdx(ref dic, grid, puzzle, grIdxR, grIdxC);
+                {
+                    List<IdxRCStruct> gridPartsIdxList = new List<IdxRCStruct>();
+                    gridPartsIdxList.Clear();
+                    bool isPlacable = CheckMappingGridInspectionAreaAndPuzzle(grid, puzzle, grIdxR, grIdxC, ref gridPartsIdxList);
+                    // # Grid-Puzzle영역 Puzzle매핑 검사 완료 후 true라면 => 해당 Grid영역가장초기 인덱스 List에 담기
+                    if (isPlacable)
+                    {
+                        Util.CheckAndAddDictionary(idxDic, new IdxRCStruct(grIdxR, grIdxC).ToString(), gridPartsIdxList);
+
+#if DEBUGING
+                        MarkAllPlacableIdx(idxDic, grid);
+#endif
+                    }
+                }
         }
         else
         {
-            dic.Clear();
+            idxDic.Clear();
             _pzNameBackupStr = string.Empty;
             grid.Data = grid.BackupData;
         }
@@ -140,21 +144,20 @@ public class PuzzlePlacableChecker : MonoBehaviour
     ///  1. GridInspectionArea Upper-left 인덱스 List에 담기
     ///  2. 해당인덱스를 key값으로 하는 Dictionary에 gridPartIdx 저장
     /// </summary> 
-    private void CheckMappingGridAndPuzzleIdx(ref Dictionary<string, List<IdxRCStruct>> dic, Grid grid, Puzzle puzzle, int grIdxR, int grIdxC)
+    private bool CheckMappingGridInspectionAreaAndPuzzle(Grid grid, Puzzle puzzle, int grIdxR, int grIdxC, ref List<IdxRCStruct> gridPartsIdxList)
     {
         // # 검사할 Grid영역 설정 (GridInspectionArea)
         int[] idxRangeR = new int[2] { grIdxR, grIdxR + puzzle.LastIdx_rc[0] };
         int[] idxRangeC = new int[2] { grIdxC, grIdxC + puzzle.LastIdx_rc[1] };
 
         // # grid idx가 퍼즐 영역을 담지 못하면 return
-        if (idxRangeR[1] > grid.Data.GetLength(0) - 1) return;
-        if (idxRangeC[1] > grid.Data.GetLength(1) - 1) return;
+        if (idxRangeR[1] > grid.Data.GetLength(0) - 1) return false;
+        if (idxRangeC[1] > grid.Data.GetLength(1) - 1) return false;
 
 
         // # 해당 Grid영역에 퍼즐 매핑 가능한지 검사
         bool isPlacable = true;
-        List<IdxRCStruct> gridPartIdxList = new List<IdxRCStruct>();
-        gridPartIdxList.Clear();
+
         int puzzleIdxR = 0;
         for (int i = idxRangeR[0]; i <= idxRangeR[1]; i++)
         {
@@ -174,7 +177,7 @@ public class PuzzlePlacableChecker : MonoBehaviour
                     if (puzzle.Data[puzzleIdxR, puzzleIdxC] == 1) // => ok
                     {
                         isPlacable &= true;
-                        gridPartIdxList.Add(new IdxRCStruct(i, j));
+                        gridPartsIdxList.Add(new IdxRCStruct(i, j));
                     }
                     else // (puzzle.Data[puzzleIdxR, puzzleIdxC] == 0) => ok 
                         isPlacable &= true;
@@ -183,17 +186,35 @@ public class PuzzlePlacableChecker : MonoBehaviour
             }
             puzzleIdxR++;
         }
-
-        // # Grid-Puzzle영역 Puzzle매핑 검사 완료 후 true라면 1. 해당 Grid영역가장초기 인덱스 List에 담기, 2. 퍼즐매핑영역 색상 변경!
-        if (isPlacable)
-        {
-            Util.CheckAndAddDictionary(dic, new IdxRCStruct(grIdxR, grIdxC).ToString(), gridPartIdxList);
-
-#if DEBUGING
-            foreach (KeyValuePair<string, List<IdxRCStruct>> kvp in dic)
-                foreach (IdxRCStruct idx in kvp.Value)
-                    grid.SetGridPartData(idx.IdxR, idx.IdxC, 2);
-#endif
-        }
+        return isPlacable;
     }
+
+    /// <summary>
+    /// - PuzzleTouchingGo 충돌 검사 결과를 받아서
+    /// - 동시에 여러군데 부딪혔다면 제일 처음 부딪힌 한 곳의 소속 GridPart를 자료구조에 담아줌
+    /// </summary>
+    private void GetNearestPlacableIdx(ref Dictionary<string, List<IdxRCStruct>> idxDic, Puzzle touchingPZ)
+    {
+
+        // MarkPlacableIdx()
+    }
+
+    /// <summary>
+    /// Placable한 영역 중 TouchingGo와 가장 가까운 영역 색상 변경
+    /// </summary>
+    private void MarkPlacableIdx()
+    {
+
+    }
+    /// <summary>
+    /// Placable한 모든 영역 색상 변경
+    /// </summary>
+    private void MarkAllPlacableIdx(Dictionary<string, List<IdxRCStruct>> dic, Grid grid)
+    {
+        // # Placable한 모든 영역 색상 변경
+        foreach (KeyValuePair<string, List<IdxRCStruct>> kvp in dic)
+            foreach (IdxRCStruct idx in kvp.Value)
+                grid.SetGridPartData(idx.IdxR, idx.IdxC, 2);
+    }
+
 } // end of class 

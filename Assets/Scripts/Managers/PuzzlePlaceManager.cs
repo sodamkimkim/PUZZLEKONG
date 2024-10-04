@@ -24,23 +24,23 @@ public class PuzzlePlaceManager : MonoBehaviour
         _gridManager = this.GetComponentInChildren<GridManager>();
         _puzzleManager = this.GetComponentInChildren<PuzzleManager>();
 
-        _gridManager.Iniit(CheckPlacable_AllRemaingPuzzles);
-        _puzzleManager.Iniit(CheckPlacable_AllRemaingPuzzles);
+        _gridManager.Iniit(CheckPlacableAllRemaingPuzzles);
+        _puzzleManager.Iniit(CheckPlacableAllRemaingPuzzles);
     }
     /// <summary>
     /// PuzzlePlacableChecker 호출하여 전체 남은 퍼즐 CheckPlacable 검사
     /// </summary>
-    public void CheckPlacable_AllRemaingPuzzles()
+    public void CheckPlacableAllRemaingPuzzles()
     {
-        _puzzlePlacableChecker.CheckPlacable_AllRemainingPuzzles(_gridManager.Grid, _puzzleManager.PuzzleGoArr);
+        _puzzlePlacableChecker.CheckPlacableAllRemainingPuzzles(_gridManager.Grid, _puzzleManager.PuzzleGoArr);
     }
     public void MarkPlacable(bool isPZMoving, Puzzle puzzle)
     {
         if (puzzle == null) return;
 
-        _puzzlePlacableChecker.GetPlacableIdx(ref PlacableGridPartsListDic, isPZMoving, _gridManager.Grid, puzzle);
+        _puzzlePlacableChecker.GetPlacableIdxs(ref PlacableGridPartsListDic, isPZMoving, _gridManager.Grid, puzzle);
     }
-    public bool CheckPlacable_TouchingPZ(Puzzle touchingPZ)
+    public bool CheckPlacable(Puzzle touchingPZ)
     {
         if (touchingPZ == null) return false;
 
@@ -57,7 +57,7 @@ public class PuzzlePlaceManager : MonoBehaviour
     /// Touching Go가 CheckPlacable == true 된 후 Drop했을 때의 로직 작성
     /// (TODO) 6. completeManager 호출 - complete => grid update해주는 클래스 호출
     /// </summary>
-    public void PlacePuzzle()
+    public void PuzzlePlace()
     {
         // TODO 
         Debug.Log("Puzzle Place Process");

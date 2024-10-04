@@ -2,9 +2,12 @@ using UnityEngine;
 
 public class TouchRaycast2D : MonoBehaviour
 {
+    #region Hidden Private Variables
+    private Puzzle _touchingPZ = null;
+    #endregion
+
     [SerializeField]
     private PuzzlePlaceManager _puzzlePlaceManager = null;
-    private Puzzle _touchingPZ = null;
     public Puzzle TouchingPuzzle { get =>_touchingPZ; set => _touchingPZ = value; }
     private Vector3 _selectedGoInitialPos = Vector3.zero;
     //private void Start()
@@ -39,8 +42,9 @@ public class TouchRaycast2D : MonoBehaviour
         else if (Input.GetMouseButtonUp(0))
         {
             _puzzlePlaceManager.MarkPlacable(false, TouchingPuzzle);
-            if (_puzzlePlaceManager.CheckPlacable_TouchingPZ(TouchingPuzzle))
-                _puzzlePlaceManager.PlacePuzzle();
+
+            if (_puzzlePlaceManager.CheckPlacable(TouchingPuzzle))
+                _puzzlePlaceManager.PuzzlePlace();
             else
                 SetTouchEnd_PuzzleReturn();
         }

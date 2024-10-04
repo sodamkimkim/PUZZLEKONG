@@ -22,22 +22,17 @@ public class Puzzle : MonoBehaviour
         set
         {
             _data = value;
-            LastIdx_rc = GetLastIdx(_data);
-            GetRealLength_rc[0] = LastIdx_rc[0] + 1;
-            GetRealLength_rc[1] = LastIdx_rc[1] + 1;
+            LastIdx_rc = GetLastIdx(_data); 
         }
     }
+    public int[] LastIdx_rc { get => _lastIdx_rc; private set => _lastIdx_rc = value; } 
 
-    public bool IsInGrid { get => _isInGrid; set => _isInGrid = value; }
+    public List<PZPart> ChildPZPartList { get => _childPZPartList; private set => _childPZPartList = value; }
     public Vector3 SpawnPos { get => _spawnPos; set => _spawnPos = value; }
     public Color ChildColor { get => _childColor; set => _childColor = value; }
-    public int[] LastIdx_rc { get => _lastIdx_rc; private set => _lastIdx_rc = value; }
 
-    /// <summary>
-    /// Puzzle이 가진 배열 데이터가 아닌 실제로 1값이 들어가있는 영역 length
-    /// </summary>
-    public int[] GetRealLength_rc { get => _getRealLength_rc; set => _getRealLength_rc = value; }
-    public List<PZPart> ChildPZPartList { get => _childPZPartList; private set => _childPZPartList = value; }
+    public bool IsInGrid { get => _isInGrid; set => _isInGrid = value; }
+
     private int[] GetLastIdx(int[,] dbArr)
     {
         int[] rcIdxArr = new int[2] { 0, 0 };
@@ -62,6 +57,14 @@ public class Puzzle : MonoBehaviour
         }
         return rcIdxArr;
     } 
+    private void SetChildColor(Color color)
+    {
+        foreach (PZPart pzPart in ChildPZPartList)
+        {
+            if (pzPart.Spr.color == color) return;
+            pzPart.Spr.color = color;
+        }
+    }
     public void CallbackChildPuzzlePartCollision(bool isEnter)
     {
         if (isEnter)
@@ -91,13 +94,5 @@ public class Puzzle : MonoBehaviour
             isAllInGrid &= pzPart.IsInGrid;
         }
         return isAllInGrid;
-    }
-    private void SetChildColor(Color color)
-    {
-        foreach (PZPart pzPart in ChildPZPartList)
-        {
-            if (pzPart.Spr.color == color) return;
-            pzPart.Spr.color = color;
-        }
     }
 } // end of class
