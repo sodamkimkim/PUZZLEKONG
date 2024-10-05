@@ -86,14 +86,12 @@ public class Puzzle : MonoBehaviour
             }
             else
             {
-                Debug.Log("?");
                 IsInGrid = false;
                 SetChildColor(ChildColor); // DEBUGGING
             }
         }
         else
         {
-            Debug.Log("??");
             IsInGrid = false;
             SetChildColor(ChildColor); // DEBUGGING
         }

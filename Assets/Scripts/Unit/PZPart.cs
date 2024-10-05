@@ -8,7 +8,6 @@ public class PZPart : MonoBehaviour
     private SpriteRenderer _spr;
     #endregion
 
-
     public bool IsInGrid { get => _isInGrid; private set => _isInGrid = value; }
     public Puzzle ParentPuzzle { get => _parentPuzzle; set => _parentPuzzle = value; }
     public SpriteRenderer Spr { get => _spr; set => _spr = value; }
@@ -23,7 +22,7 @@ public class PZPart : MonoBehaviour
         if (collision.tag == "GridPart")
         {
             if (TriggeredGridPartIdxStr == collision.name) return;
-            TriggeredGridPartIdxStr = collision.name.Split('_')[1] ;  
+            TriggeredGridPartIdxStr = collision.name.Split('_')[1];
         }
     }
     private void OnTriggerExit2D(Collider2D collision)

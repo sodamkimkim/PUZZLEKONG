@@ -37,6 +37,7 @@ public class GridSpawner : MonoBehaviour
         }
 
         grid.Data = gridArr;
+        grid.BackupData = gridArr;
         Util.SetPivotToChildCenter(gridGo.transform);
         gridGo.tag = "Grid";
         gridGo.transform.position = Factor.PosGridSpawn;

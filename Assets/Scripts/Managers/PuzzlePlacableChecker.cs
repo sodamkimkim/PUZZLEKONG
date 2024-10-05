@@ -32,6 +32,7 @@ public class PuzzlePlacableChecker : MonoBehaviour
     private string _pzNameBackupStr1 = string.Empty;
     private string _pzNameBackupStr2 = string.Empty;
     private Dictionary<string, Dictionary<string, IdxRCStruct>> _cntTempDic = new Dictionary<string, Dictionary<string, IdxRCStruct>>();
+    private Dictionary<string, IdxRCStruct> _triggeredIdxDicBackup = new Dictionary<string, IdxRCStruct>();
     public void Init(GameOver gameOverCallback, StageComplete stageComplete)
     {
         _gameOverCallback = gameOverCallback;
@@ -190,17 +191,30 @@ public class PuzzlePlacableChecker : MonoBehaviour
     /// - PuzzleTouchingGo 충돌 검사 결과를 받아서
     /// - 동시에 여러군데 부딪혔다면 제일 처음 부딪힌 한 곳의 소속 GridPart를 자료구조에 담아줌
     /// </summary>
-    public void GetNearestPlacableIdx(Dictionary<string, Dictionary<string, IdxRCStruct>> idxsDic,
+    public void GetTriggeredPlacableIdx(Dictionary<string, Dictionary<string, IdxRCStruct>> idxsDic,
        ref Dictionary<string, IdxRCStruct> triggeredIdxDic, bool exitInitializeNow,
        Grid grid, Puzzle touchingPZ)
     {
+        if (idxsDic == null || idxsDic.Count == 0)
+        {
+            Debug.Log(idxsDic);
+        }
+        if (grid == null || touchingPZ == null)
+        {
+            Debug.Log(grid.ToString());
+            Debug.Log(touchingPZ.ToString());
+            return;
+        }
+
         if (!exitInitializeNow)
         {
+            //        Debug.Log(Util.ConvertDoubleArrayToString(grid.Data));
             if (_pzNameBackupStr2 == touchingPZ.name) return;
 
-            _pzNameBackupStr1 = touchingPZ.name;
             grid.BackupData = grid.Data;
+            _pzNameBackupStr1 = touchingPZ.name;
             triggeredIdxDic.Clear();
+
 
             // # puzzle로 부터 충돌 정보 가져오기  
             foreach (PZPart pzPart in touchingPZ.ChildPZPartList)
@@ -212,18 +226,28 @@ public class PuzzlePlacableChecker : MonoBehaviour
                     if (kvp.Value.ContainsKey(pzPart.TriggeredGridPartIdxStr))
                     {
                         triggeredIdxDic = kvp.Value;
+
                         goto outerLoopEnd;
                     }
+
                 }
             }
         outerLoopEnd:
-            MarkPlacableIdx(triggeredIdxDic, grid);
+            if (_triggeredIdxDicBackup != triggeredIdxDic)
+            {
+                MarkPlacableIdx(triggeredIdxDic, grid);
+                _triggeredIdxDicBackup = triggeredIdxDic;
+            }
         }
-        else // exitInitializeNow == true
+
+        else if (exitInitializeNow)// exitInitializeNow == true
         {
-            triggeredIdxDic.Clear();
+            //if (triggeredIdxDic != null)
+            //    triggeredIdxDic.Clear();
             _pzNameBackupStr2 = string.Empty;
-            grid.Data = grid.BackupData; 
+            if (grid.BackupData == null) grid.BackupData = grid.Data;
+            grid.Data = grid.BackupData;
+            Debug.Log(Util.ConvertDoubleArrayToString(grid.Data));
 
         }
         // MarkPlacableIdx()

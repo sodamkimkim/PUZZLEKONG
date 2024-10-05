@@ -18,7 +18,7 @@ public class PuzzlePlaceManager : MonoBehaviour
     private GridManager _gridManager = null;
     private PuzzleManager _puzzleManager = null;
     public Dictionary<string, Dictionary<string, IdxRCStruct>> PlacableGridPartsListDic = new Dictionary<string, Dictionary<string, IdxRCStruct>>();// key - rowIdx,colIdx
-    public Dictionary<string, IdxRCStruct> NearestPlacableIdxDic = new Dictionary<string, IdxRCStruct>(); // key - rowIdx,colIdx
+    public Dictionary<string, IdxRCStruct> TriggeredIdxDic = new Dictionary<string, IdxRCStruct>(); // key - rowIdx,colIdx
     private void Awake()
     {
         _puzzlePlacableChecker = this.GetComponent<PuzzlePlacableChecker>();
@@ -40,7 +40,7 @@ public class PuzzlePlaceManager : MonoBehaviour
         if (puzzle == null) return;
 
         _puzzlePlacableChecker.GetPlacableIdxs(ref PlacableGridPartsListDic, exitInitializeNow, _gridManager.Grid, puzzle);
-        _puzzlePlacableChecker.GetNearestPlacableIdx(PlacableGridPartsListDic, ref NearestPlacableIdxDic, exitInitializeNow, _gridManager.Grid, puzzle);
+        _puzzlePlacableChecker.GetTriggeredPlacableIdx(PlacableGridPartsListDic, ref TriggeredIdxDic, exitInitializeNow, _gridManager.Grid, puzzle);
     }
     public bool CheckPlacable(Puzzle touchingPZ)
     {
