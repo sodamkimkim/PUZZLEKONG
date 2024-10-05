@@ -123,12 +123,7 @@ public class PuzzlePlacableChecker : MonoBehaviour
 
                     // # Grid-Puzzle영역 Puzzle매핑 검사 완료 후 true라면 => 해당 Grid영역가장초기 인덱스 List에 담기
                     if (isPlacable)
-                    {
                         Util.CheckAndAddDictionary(idxDic, new IdxRCStruct(grIdxR, grIdxC).ToString(), gridPartsIdxList);
-#if DEBUGING
-                    //    MarkAllPlacableIdx(idxDic, grid);
-#endif
-                    }
                 }
         }
         else // ExitInitialize == true
@@ -228,7 +223,8 @@ public class PuzzlePlacableChecker : MonoBehaviour
         {
             triggeredIdxDic.Clear();
             _pzNameBackupStr2 = string.Empty;
-            grid.Data = grid.BackupData;
+            grid.Data = grid.BackupData; 
+
         }
         // MarkPlacableIdx()
     }
@@ -238,7 +234,7 @@ public class PuzzlePlacableChecker : MonoBehaviour
     /// </summary>
     private void MarkPlacableIdx(Dictionary<string, IdxRCStruct> dic, Grid grid)
     {
-        foreach (KeyValuePair<string, IdxRCStruct> kvp in  dic)
+        foreach (KeyValuePair<string, IdxRCStruct> kvp in dic)
             grid.SetGridPartData(kvp.Value.IdxR, kvp.Value.IdxC, 2);
     }
     /// <summary>

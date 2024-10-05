@@ -102,21 +102,22 @@ public class TouchRaycast2D : MonoBehaviour
     {
         if (TouchingPuzzle == null) return;
 
-        // _puzzlePlaceManager.MarkPlacable(true, TouchingPuzzle);
 
         Vector3 mousePos = Input.mousePosition;
-        //      if (mousePos == _mousePosBackUp) return;
-        //    else
+        if (mousePos == _mousePosBackUp) return;
+        else
         {
+            _mousePosBackUp = mousePos;
             Vector3 pos = Camera.main.ScreenToWorldPoint(mousePos);
             pos.z = 0;
-            TouchingPuzzle.transform.position = pos;
+
+            TouchingPuzzle.transform.position = pos; 
+            _puzzlePlaceManager.MarkPlacable(false, TouchingPuzzle);
         }
 
         // TODO
         // placable check & mark 
         // completable check & mark
-        _puzzlePlaceManager.MarkPlacable(false, TouchingPuzzle);
     }
     public void SetTouchEnd_PuzzleReturn()
     {

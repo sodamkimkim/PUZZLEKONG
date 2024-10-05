@@ -5,13 +5,13 @@ public class PZPart : MonoBehaviour
     #region Hidden Private Variables
     private bool _isInGrid;
     private Puzzle _parentPuzzle;
-    private SpriteRenderer _spr; 
+    private SpriteRenderer _spr;
     #endregion
 
 
     public bool IsInGrid { get => _isInGrid; private set => _isInGrid = value; }
     public Puzzle ParentPuzzle { get => _parentPuzzle; set => _parentPuzzle = value; }
-    public SpriteRenderer Spr { get => _spr; set => _spr = value; }  
+    public SpriteRenderer Spr { get => _spr; set => _spr = value; }
     public string TriggeredGridPartIdxStr = string.Empty; // r,c 형태로 저장
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -32,6 +32,7 @@ public class PZPart : MonoBehaviour
         {
             IsInGrid = false;
             TriggeredGridPartIdxStr = string.Empty;
+            ParentPuzzle.CallbackChildPuzzlePartCollision(IsInGrid);
         }
 
         if (collision.tag == "GridPart")
