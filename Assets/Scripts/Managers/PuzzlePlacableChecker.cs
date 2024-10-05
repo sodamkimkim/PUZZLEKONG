@@ -216,23 +216,24 @@ public class PuzzlePlacableChecker : MonoBehaviour
             triggeredIdxDic.Clear();
 
 
-            // # puzzle로 부터 충돌 정보 가져오기  
-            foreach (PZPart pzPart in touchingPZ.ChildPZPartList)
-            {
-                // # puzzlePart랑 충돌한 GridPart를 Dictionary의 valueList에서 찾기  
-                foreach (KeyValuePair<string, Dictionary<string, IdxRCStruct>> kvp in idxsDic)
-                {
-                    string gpIdxStr = pzPart.TriggeredGridPartIdxStr;
-                    if (kvp.Value.ContainsKey(pzPart.TriggeredGridPartIdxStr))
-                    {
-                        triggeredIdxDic = kvp.Value;
+            //// # puzzle로 부터 충돌 정보 가져오기  
+            //foreach (PZPart pzPart in touchingPZ.ChildPZPartList)
+            //{
+            //    // # puzzlePart랑 충돌한 GridPart를 Dictionary의 valueList에서 찾기  
+            //    foreach (KeyValuePair<string, Dictionary<string, IdxRCStruct>> kvp in idxsDic)
+            //    {
+            //        string gpIdxStr = pzPart.TriggeredGridPartIdxStr;
+            //        if (kvp.Value.ContainsKey(pzPart.TriggeredGridPartIdxStr))
+            //        {
+            //            triggeredIdxDic = kvp.Value;
 
-                        goto outerLoopEnd;
-                    }
+            //            goto outerLoopEnd;
+            //        }
+            //    }
+            //}
 
-                }
-            }
-        outerLoopEnd:
+        //outerLoopEnd:
+
             if (_triggeredIdxDicBackup != triggeredIdxDic)
             {
                 MarkPlacableIdx(triggeredIdxDic, grid);

@@ -80,7 +80,8 @@ public class PuzzleSpawner : MonoBehaviour
             pzPart.ParentPuzzle = puzzle;
             pzPart.Spr = spr;
 
-            puzzle.ChildPZPartList.Add(pzPart);
+            Util.CheckAndAddDictionary(puzzle.ChildPZPartDic, pzPart.idxStruct.ToString(), pzPart);
+            Debug.Log(pzPart.idxStruct.ToString());
             puzzle.ChildColor = spr.color;
         }
 
