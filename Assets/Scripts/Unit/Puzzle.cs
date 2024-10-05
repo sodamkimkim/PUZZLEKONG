@@ -32,8 +32,9 @@ public class Puzzle : MonoBehaviour
     public Vector3 SpawnPos { get => _spawnPos; set => _spawnPos = value; }
     public Color ChildColor { get => _childColor; set => _childColor = value; }
 
-    public bool IsInGrid { get => _isInGrid; set => _isInGrid = value; }
+//    public bool IsInGrid { get => _isInGrid; set => _isInGrid = value; }
     public string FirstTriggeredGridPartNameStr { get => _firstTriggeredGridPartNameStr; set => _firstTriggeredGridPartNameStr = value; }
+    private Vector3 _mousePosBackUP = Vector3.zero;
     private int[] GetLastIdx(int[,] dbArr)
     {
         int[] rcIdxArr = new int[2] { 0, 0 };
@@ -60,40 +61,40 @@ public class Puzzle : MonoBehaviour
     }
     private void SetChildColor(Color color)
     {
-        foreach ( PZPart pZPart in ChildPZPartList)
+        foreach (PZPart pZPart in ChildPZPartList)
         {
             if (pZPart.Spr.color == color) return;
             pZPart.Spr.color = color;
         }
     }
-    private bool CheckAllChildInGrid()
-    {
-        bool isAllInGrid = true;
-        foreach (PZPart pZPart in ChildPZPartList)
-        {
-            isAllInGrid &= pZPart.IsInGrid;
-        }
-        return isAllInGrid;
-    }
-    public void CallbackChildPuzzlePartCollision(bool isEnter)
-    {
-        if (isEnter)
-        {
-            if (CheckAllChildInGrid())
-            {
-                IsInGrid = true;
-                SetChildColor(Color.red);  // DEBUGGING  
-            }
-            else
-            {
-                IsInGrid = false;
-                SetChildColor(ChildColor); // DEBUGGING
-            }
-        }
-        else
-        {
-            IsInGrid = false;
-            SetChildColor(ChildColor); // DEBUGGING
-        }
-    }
+    //private bool CheckAllChildInGrid()
+    //{
+    //    bool isAllInGrid = true;
+    //    foreach (PZPart pZPart in ChildPZPartList)
+    //    {
+    //        isAllInGrid &= pZPart.IsInGrid;
+    //    }
+    //    return isAllInGrid;
+    //}
+    //public void CallbackChildPuzzlePartCollision(bool isEnter)
+    //{
+    //    if (isEnter)
+    //    {
+    //        if (CheckAllChildInGrid())
+    //        {
+    //            IsInGrid = true;
+    //            SetChildColor(Color.red);  // DEBUGGING  
+    //        }
+    //        else
+    //        {
+    //            IsInGrid = false;
+    //            SetChildColor(ChildColor); // DEBUGGING
+    //        }
+    //    }
+    //    else
+    //    {
+    //        IsInGrid = false;
+    //        SetChildColor(ChildColor); // DEBUGGING
+    //    }
+    //} 
 } // end of class

@@ -89,7 +89,7 @@ public class PuzzlePlacableChecker : MonoBehaviour
     /// <returns></returns>
     private bool CheckPlacableThisPuzzle(Grid grid, Puzzle puzzle)
     {
-        if (!puzzle.IsInGrid) return false;
+        //  if (!puzzle.IsInGrid) return false;
 
         _cntTempDic.Clear();
         GetPlacableIdxs(ref _cntTempDic, false, grid, puzzle);
@@ -216,24 +216,35 @@ public class PuzzlePlacableChecker : MonoBehaviour
             triggeredIdxDic.Clear();
 
             // # puzzlePart랑 충돌한 GridPart를 Dictionary의 valueList에서 찾기  
-            //   string firstPZ = touchingPZ.ChildPZPartList[0].TriggeredGridPartIdxStr;
+            int cnt = 0;
             foreach (PZPart pzPart in touchingPZ.ChildPZPartList)
             {
-                if (idxsDic.ContainsKey(pzPart.TriggeredGridPartIdxStr))
+                foreach (KeyValuePair<string, Dictionary<string, IdxRCStruct>> kvp in idxsDic)
                 {
-                    Debug.Log($"? {pzPart.TriggeredGridPartIdxStr}");
-                    triggeredIdxDic = idxsDic[pzPart.TriggeredGridPartIdxStr];
-                    isFound = true;
-                    break;
+                    if (kvp.Value.ContainsKey(pzPart.TriggeredGridPartIdxStr))
+                    {
+                        Debug.Log($"TriggeredPlacableIdx: {pzPart.TriggeredGridPartIdxStr}");
+                        if (cnt == 0)
+                            triggeredIdxDic = kvp.Value;
+                        isFound = true;
+                        break;
+                    }
+                }
+                if (isFound)
+                {
+                    cnt++;
+                    if (cnt >= 3)
+                        break;
                 }
             }
 
-            if (isFound)
+            if (cnt >= 3)
                 MarkPlacableIdx(triggeredIdxDic, grid);
         }
 
         if (exitInitializeNow)// exitInitializeNow == true
         {
+            triggeredIdxDic.Clear();
             _pzNameBackupStr2 = string.Empty;
             if (grid.BackupData == null) grid.BackupData = grid.Data;
             grid.Data = grid.BackupData;

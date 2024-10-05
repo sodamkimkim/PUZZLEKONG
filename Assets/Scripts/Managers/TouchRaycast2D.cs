@@ -100,21 +100,20 @@ public class TouchRaycast2D : MonoBehaviour
     }
     private void SetTouchMoved(RaycastHit2D hit)
     {
-
         if (TouchingPuzzle == null) return;
-
-
         Vector3 mousePos = Input.mousePosition;
-        if (mousePos == _mousePosBackUp)
+        Vector3 deffer = mousePos - _mousePosBackUp;
+        Vector3 pos = Camera.main.ScreenToWorldPoint(mousePos);
+        pos.z = 0;
+        if (mousePos == _mousePosBackUp /*|| Mathf.Abs(deffer.x) < 3f || Mathf.Abs(deffer.y) < 3f*/)
         {
+            TouchingPuzzle.transform.position = pos;
             return;
         }
         else
         {
             _puzzlePlaceManager.MarkPlacable(true, TouchingPuzzle);
             _mousePosBackUp = mousePos;
-            Vector3 pos = Camera.main.ScreenToWorldPoint(mousePos);
-            pos.z = 0;
             TouchingPuzzle.transform.position = pos;
 
             _puzzlePlaceManager.MarkPlacable(false, TouchingPuzzle);

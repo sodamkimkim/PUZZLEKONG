@@ -22,10 +22,10 @@ public class GridSpawner : MonoBehaviour
             for (int c = 0; c < colCnt; c++)
             {
                 GameObject gridPartGo = Instantiate(pzPartPrefab, Vector3.zero, Quaternion.identity, gridGo.transform);
-                gridPartGo.name = $"GridPart_{r},{c}"; // GridPart_{r},{c}
+                gridPartGo.name = $"{r},{c}"; // GridPart_{r},{c}
                 gridPartGo.tag = "GridPart";
                 gridPartGo.transform.localPosition = new Vector3(c + c * 0.1f, -(r + r * 0.1f), 0f);
-                gridPartGo.GetComponent<BoxCollider2D>().size = new Vector2(1f, 1f);
+                gridPartGo.GetComponent<BoxCollider2D>().size = new Vector2(0.8f, 0.8f);
 
                 // GridPart
                 GridPart gridPart = Util.CheckAndAddComponent<GridPart>(gridPartGo);

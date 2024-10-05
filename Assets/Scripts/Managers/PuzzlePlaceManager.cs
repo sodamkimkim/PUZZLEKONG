@@ -19,6 +19,7 @@ public class PuzzlePlaceManager : MonoBehaviour
     private PuzzleManager _puzzleManager = null;
     public Dictionary<string, Dictionary<string, IdxRCStruct>> PlacableGridPartsListDic = new Dictionary<string, Dictionary<string, IdxRCStruct>>();// key - rowIdx,colIdx
     public Dictionary<string, IdxRCStruct> TriggeredIdxDic = new Dictionary<string, IdxRCStruct>(); // key - rowIdx,colIdx
+    private Puzzle _puzzleBackup = null;
     private void Awake()
     {
         _puzzlePlacableChecker = this.GetComponent<PuzzlePlacableChecker>();
@@ -37,7 +38,8 @@ public class PuzzlePlaceManager : MonoBehaviour
     }
     public void MarkPlacable(bool exitInitializeNow, Puzzle puzzle)
     {
-        if (puzzle == null) return;
+
+        if (puzzle == null) return; 
 
         _puzzlePlacableChecker.GetPlacableIdxs(ref PlacableGridPartsListDic, exitInitializeNow, _gridManager.Grid, puzzle);
         _puzzlePlacableChecker.GetTriggeredPlacableIdx(PlacableGridPartsListDic, ref TriggeredIdxDic, exitInitializeNow, _gridManager.Grid, puzzle);
@@ -47,7 +49,7 @@ public class PuzzlePlaceManager : MonoBehaviour
         if (touchingPZ == null) return false;
 
         // 1. Grid에 있는지 체크
-        if (!touchingPZ.IsInGrid) return false;
+     //   if (!touchingPZ.IsInGrid) return false;
 
         // 2. Placable에 있는지 체크 
 
