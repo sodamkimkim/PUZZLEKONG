@@ -111,7 +111,7 @@ public class TouchRaycast2D : MonoBehaviour
         }
         else
         {
-          _puzzlePlaceManager.MarkPlacable(true, TouchingPuzzle);
+            _puzzlePlaceManager.MarkPlacable(true, TouchingPuzzle);
             _mousePosBackUp = mousePos;
             Vector3 pos = Camera.main.ScreenToWorldPoint(mousePos);
             pos.z = 0;

@@ -199,10 +199,7 @@ public class PuzzlePlacableChecker : MonoBehaviour
        ref Dictionary<string, IdxRCStruct> triggeredIdxDic, bool exitInitializeNow,
        Grid grid, Puzzle touchingPZ)
     {
-        //if (idxsDic == null || idxsDic.Count == 0)
-        //{
-        //    Debug.Log(idxsDic);
-        //}
+        bool isFound = false;
         if (grid == null || touchingPZ == null)
         {
             Debug.Log(grid.ToString());
@@ -212,7 +209,6 @@ public class PuzzlePlacableChecker : MonoBehaviour
 
         if (!exitInitializeNow)
         {
-            //        Debug.Log(Util.ConvertDoubleArrayToString(grid.Data));
             if (_pzNameBackupStr2 == touchingPZ.name) return;
 
             grid.BackupData = grid.Data;
@@ -220,89 +216,24 @@ public class PuzzlePlacableChecker : MonoBehaviour
             triggeredIdxDic.Clear();
 
             // # puzzlePart랑 충돌한 GridPart를 Dictionary의 valueList에서 찾기  
-            string firstPZ = touchingPZ.ChildPZPartList[0].TriggeredGridPartIdxStr;
-
-            //PZPart lastRPZ = null;
-            //foreach (PZPart pzPart in touchingPZ.ChildPZPartList)
-            //{
-            //    if (pzPart.idxStruct.IdxR == touchingPZ.LastIdx_rc[0])
-            //    {
-            //        lastRPZ = pzPart;
-            //        Debug.Log("??????????");
-            //        break;
-            //    }
-            //}
-
-            //PZPart lastCPZ = null;
-            //foreach (PZPart pzPart in touchingPZ.ChildPZPartList)
-            //{
-            //    if (pzPart.idxStruct.IdxC == touchingPZ.LastIdx_rc[1])
-            //    {
-            //        lastCPZ = pzPart;
-            //        Debug.Log("??????????");
-            //        break;
-            //    }
-            //}
-
-            // # first PZ
-            if (idxsDic.ContainsKey(firstPZ))
+            //   string firstPZ = touchingPZ.ChildPZPartList[0].TriggeredGridPartIdxStr;
+            foreach (PZPart pzPart in touchingPZ.ChildPZPartList)
             {
-                Debug.Log($"? {firstPZ}");
-                triggeredIdxDic = idxsDic[firstPZ];
+                if (idxsDic.ContainsKey(pzPart.TriggeredGridPartIdxStr))
+                {
+                    Debug.Log($"? {pzPart.TriggeredGridPartIdxStr}");
+                    triggeredIdxDic = idxsDic[pzPart.TriggeredGridPartIdxStr];
+                    isFound = true;
+                    break;
+                }
             }
 
-            //foreach (KeyValuePair<string, Dictionary<string, IdxRCStruct>> kvp in idxsDic)
-            //{
-
-            //    // # lastRow Pz
-            //    else if (lastRPZ != null && kvp.Value.ContainsKey(lastRPZ.TriggeredGridPartIdxStr))
-            //    {
-            //        Debug.Log($"?? {lastRPZ.name}");
-            //        triggeredIdxDic = kvp.Value;
-            //        break;
-            //    }
-
-            //    // #leftCol Pz
-            //    else if (lastCPZ != null && kvp.Value.ContainsKey(lastCPZ.TriggeredGridPartIdxStr))
-            //    {
-            //        Debug.Log($"??? {lastCPZ.name}");
-            //        triggeredIdxDic = kvp.Value;
-            //        break;
-            //    }
-            //    else
-            //    {
-            //        Debug.Log("???? false");
-            //    }
-            //}
-
-            // # puzzle로 부터 충돌 정보 가져오기  
-            //foreach (PZPart pzPart in touchingPZ.ChildPZPartDic)
-            //{
-            //    // # puzzlePart랑 충돌한 GridPart를 Dictionary의 valueList에서 찾기  
-            //    foreach (KeyValuePair<string, Dictionary<string, IdxRCStruct>> kvp in idxsDic)
-            //    {
-            //        string gpIdxStr = pzPart.TriggeredGridPartIdxStr;
-            //        if (kvp.Value.ContainsKey(pzPart.TriggeredGridPartIdxStr))
-            //        {
-            //            triggeredIdxDic = kvp.Value;
-
-            //            goto outerLoopEnd;
-            //        }
-            //    }
-            //}
-
-
-            if (_triggeredIdxDicBackup != triggeredIdxDic)
-            {
+            if (isFound)
                 MarkPlacableIdx(triggeredIdxDic, grid);
-                _triggeredIdxDicBackup = triggeredIdxDic;
-            }
         }
 
-        else if (exitInitializeNow)// exitInitializeNow == true
+        if (exitInitializeNow)// exitInitializeNow == true
         {
-            //if (triggeredIdxDic != null)
-            //    triggeredIdxDic.Clear();
             _pzNameBackupStr2 = string.Empty;
             if (grid.BackupData == null) grid.BackupData = grid.Data;
             grid.Data = grid.BackupData;
