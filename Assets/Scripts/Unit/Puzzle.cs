@@ -10,7 +10,7 @@ public class Puzzle : MonoBehaviour
     private int[] _getRealLength_rc = new int[2] { 0, 0 };
 
     private Vector3 _spawnPos;
-    private Dictionary<string, PZPart> _childPZPartDic = new Dictionary<string, PZPart>();
+    private List<PZPart> _childPZPartList = new List<PZPart>();
     private List<SpriteRenderer> _childSpr = new List<SpriteRenderer>();
     private Color _childColor = Color.clear;
     private bool _isInGrid = false;
@@ -28,7 +28,7 @@ public class Puzzle : MonoBehaviour
     }
     public int[] LastIdx_rc { get => _lastIdx_rc; private set => _lastIdx_rc = value; }
 
-    public Dictionary<string, PZPart> ChildPZPartDic { get => _childPZPartDic; private set => _childPZPartDic = value; }
+    public List<PZPart> ChildPZPartList { get => _childPZPartList; private set => _childPZPartList = value; }
     public Vector3 SpawnPos { get => _spawnPos; set => _spawnPos = value; }
     public Color ChildColor { get => _childColor; set => _childColor = value; }
 
@@ -60,18 +60,18 @@ public class Puzzle : MonoBehaviour
     }
     private void SetChildColor(Color color)
     {
-        foreach (KeyValuePair<string, PZPart> kvp in ChildPZPartDic)
+        foreach ( PZPart pZPart in ChildPZPartList)
         {
-            if (kvp.Value.Spr.color == color) return;
-            kvp.Value.Spr.color = color;
+            if (pZPart.Spr.color == color) return;
+            pZPart.Spr.color = color;
         }
     }
     private bool CheckAllChildInGrid()
     {
         bool isAllInGrid = true;
-        foreach (KeyValuePair<string, PZPart> kvp in ChildPZPartDic)
+        foreach (PZPart pZPart in ChildPZPartList)
         {
-            isAllInGrid &= kvp.Value.IsInGrid;
+            isAllInGrid &= pZPart.IsInGrid;
         }
         return isAllInGrid;
     }

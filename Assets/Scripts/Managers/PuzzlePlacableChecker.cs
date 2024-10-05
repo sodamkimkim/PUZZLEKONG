@@ -118,13 +118,14 @@ public class PuzzlePlacableChecker : MonoBehaviour
             for (int grIdxR = 0; grIdxR < grid.Data.GetLength(0); grIdxR++)
                 for (int grIdxC = 0; grIdxC < grid.Data.GetLength(1); grIdxC++)
                 {
-                    Dictionary<string, IdxRCStruct> gridPartsIdxList = new Dictionary<string, IdxRCStruct>();
-                    gridPartsIdxList.Clear();
-                    bool isPlacable = CheckMappingGridInspectionAreaAndPuzzle(grid, puzzle, grIdxR, grIdxC, ref gridPartsIdxList);
+                    Dictionary<string, IdxRCStruct> gridPartsIdxDic = new Dictionary<string, IdxRCStruct>();
+                    gridPartsIdxDic.Clear();
 
                     // # Grid-Puzzle영역 Puzzle매핑 검사 완료 후 true라면 => 해당 Grid영역가장초기 인덱스 List에 담기
+                    string firstIdxStr = string.Empty;
+                    bool isPlacable = CheckMappingGridInspectionAreaAndPuzzle(grid, puzzle, grIdxR, grIdxC, ref gridPartsIdxDic, ref firstIdxStr);
                     if (isPlacable)
-                        Util.CheckAndAddDictionary(idxDic, new IdxRCStruct(grIdxR, grIdxC).ToString(), gridPartsIdxList);
+                        Util.CheckAndAddDictionary(idxDic, firstIdxStr, gridPartsIdxDic);
                 }
         }
         else // ExitInitialize == true
@@ -141,7 +142,7 @@ public class PuzzlePlacableChecker : MonoBehaviour
     ///  1. GridInspectionArea Upper-left 인덱스 List에 담기
     ///  2. 해당인덱스를 key값으로 하는 Dictionary에 gridPartIdx 저장
     /// </summary> 
-    private bool CheckMappingGridInspectionAreaAndPuzzle(Grid grid, Puzzle puzzle, int grIdxR, int grIdxC, ref Dictionary<string, IdxRCStruct> gridPartsIdxDic)
+    private bool CheckMappingGridInspectionAreaAndPuzzle(Grid grid, Puzzle puzzle, int grIdxR, int grIdxC, ref Dictionary<string, IdxRCStruct> gridPartsIdxDic, ref string firstIdxStr)
     {
         // # 검사할 Grid영역 설정 (GridInspectionArea)
         int[] idxRangeR = new int[2] { grIdxR, grIdxR + puzzle.LastIdx_rc[0] };
@@ -154,15 +155,14 @@ public class PuzzlePlacableChecker : MonoBehaviour
 
         // # 해당 Grid영역에 퍼즐 매핑 가능한지 검사
         bool isPlacable = true;
-
         int puzzleIdxR = 0;
-        for (int i = idxRangeR[0]; i <= idxRangeR[1]; i++)
+        for (int r = idxRangeR[0]; r <= idxRangeR[1]; r++)
         {
             int puzzleIdxC = 0;
-            for (int j = idxRangeC[0]; j <= idxRangeC[1]; j++)
+            for (int c = idxRangeC[0]; c <= idxRangeC[1]; c++)
             {
                 // # 이 안에서 griddata !=1 && puzzledata ==1인 곳  퍼즐 영역만큼  List에 담음
-                if (grid.Data[i, j] == 1) // grid의 해당 인덱스에 퍼즐이 놓여있을 떄
+                if (grid.Data[r, c] == 1) // grid의 해당 인덱스에 퍼즐이 놓여있을 떄
                 {
                     if (puzzle.Data[puzzleIdxR, puzzleIdxC] == 0) // => ok 
                         isPlacable &= true;
@@ -174,7 +174,11 @@ public class PuzzlePlacableChecker : MonoBehaviour
                     if (puzzle.Data[puzzleIdxR, puzzleIdxC] == 1) // => ok
                     {
                         isPlacable &= true;
-                        IdxRCStruct idxRCStruct = new IdxRCStruct(i, j);
+                        IdxRCStruct idxRCStruct = new IdxRCStruct(r, c);
+
+                        if (firstIdxStr == string.Empty)
+                            firstIdxStr = idxRCStruct.ToString();
+
                         Util.CheckAndAddDictionary<IdxRCStruct>(gridPartsIdxDic, idxRCStruct.ToString(), idxRCStruct);
                     }
                     else // (puzzle.Data[puzzleIdxR, puzzleIdxC] == 0) => ok 
@@ -195,10 +199,10 @@ public class PuzzlePlacableChecker : MonoBehaviour
        ref Dictionary<string, IdxRCStruct> triggeredIdxDic, bool exitInitializeNow,
        Grid grid, Puzzle touchingPZ)
     {
-        if (idxsDic == null || idxsDic.Count == 0)
-        {
-            Debug.Log(idxsDic);
-        }
+        //if (idxsDic == null || idxsDic.Count == 0)
+        //{
+        //    Debug.Log(idxsDic);
+        //}
         if (grid == null || touchingPZ == null)
         {
             Debug.Log(grid.ToString());
@@ -215,9 +219,64 @@ public class PuzzlePlacableChecker : MonoBehaviour
             _pzNameBackupStr1 = touchingPZ.name;
             triggeredIdxDic.Clear();
 
+            // # puzzlePart랑 충돌한 GridPart를 Dictionary의 valueList에서 찾기  
+            string firstPZ = touchingPZ.ChildPZPartList[0].TriggeredGridPartIdxStr;
 
-            //// # puzzle로 부터 충돌 정보 가져오기  
+            //PZPart lastRPZ = null;
             //foreach (PZPart pzPart in touchingPZ.ChildPZPartList)
+            //{
+            //    if (pzPart.idxStruct.IdxR == touchingPZ.LastIdx_rc[0])
+            //    {
+            //        lastRPZ = pzPart;
+            //        Debug.Log("??????????");
+            //        break;
+            //    }
+            //}
+
+            //PZPart lastCPZ = null;
+            //foreach (PZPart pzPart in touchingPZ.ChildPZPartList)
+            //{
+            //    if (pzPart.idxStruct.IdxC == touchingPZ.LastIdx_rc[1])
+            //    {
+            //        lastCPZ = pzPart;
+            //        Debug.Log("??????????");
+            //        break;
+            //    }
+            //}
+
+            // # first PZ
+            if (idxsDic.ContainsKey(firstPZ))
+            {
+                Debug.Log($"? {firstPZ}");
+                triggeredIdxDic = idxsDic[firstPZ];
+            }
+
+            //foreach (KeyValuePair<string, Dictionary<string, IdxRCStruct>> kvp in idxsDic)
+            //{
+
+            //    // # lastRow Pz
+            //    else if (lastRPZ != null && kvp.Value.ContainsKey(lastRPZ.TriggeredGridPartIdxStr))
+            //    {
+            //        Debug.Log($"?? {lastRPZ.name}");
+            //        triggeredIdxDic = kvp.Value;
+            //        break;
+            //    }
+
+            //    // #leftCol Pz
+            //    else if (lastCPZ != null && kvp.Value.ContainsKey(lastCPZ.TriggeredGridPartIdxStr))
+            //    {
+            //        Debug.Log($"??? {lastCPZ.name}");
+            //        triggeredIdxDic = kvp.Value;
+            //        break;
+            //    }
+            //    else
+            //    {
+            //        Debug.Log("???? false");
+            //    }
+            //}
+
+            // # puzzle로 부터 충돌 정보 가져오기  
+            //foreach (PZPart pzPart in touchingPZ.ChildPZPartDic)
             //{
             //    // # puzzlePart랑 충돌한 GridPart를 Dictionary의 valueList에서 찾기  
             //    foreach (KeyValuePair<string, Dictionary<string, IdxRCStruct>> kvp in idxsDic)
@@ -232,7 +291,6 @@ public class PuzzlePlacableChecker : MonoBehaviour
             //    }
             //}
 
-        //outerLoopEnd:
 
             if (_triggeredIdxDicBackup != triggeredIdxDic)
             {
@@ -248,10 +306,8 @@ public class PuzzlePlacableChecker : MonoBehaviour
             _pzNameBackupStr2 = string.Empty;
             if (grid.BackupData == null) grid.BackupData = grid.Data;
             grid.Data = grid.BackupData;
-            Debug.Log(Util.ConvertDoubleArrayToString(grid.Data));
 
         }
-        // MarkPlacableIdx()
     }
 
     /// <summary>
