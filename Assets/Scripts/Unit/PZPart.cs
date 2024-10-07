@@ -26,7 +26,7 @@ public class PZPart : MonoBehaviour
     private void ShotRay()
     {
         TriggeredGridPartIdxStr = string.Empty;
-        if (ParentPuzzle != TouchRaycast2D.TouchingPuzzle || this != ParentPuzzle.ChildPZPartList[0])
+        if (ParentPuzzle != TouchRaycast2D.TouchingPuzzle)
         {
             return;
         }

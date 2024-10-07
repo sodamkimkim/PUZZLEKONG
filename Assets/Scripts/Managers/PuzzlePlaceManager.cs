@@ -18,8 +18,6 @@ public class PuzzlePlaceManager : MonoBehaviour
     private GridManager _gridManager = null;
     private PuzzleManager _puzzleManager = null;
     public Dictionary<string, Dictionary<string, IdxRCStruct>> PlacableGridPartsListDic = new Dictionary<string, Dictionary<string, IdxRCStruct>>();// key - rowIdx,colIdx
-    public Dictionary<string, IdxRCStruct> TriggeredIdxDic = new Dictionary<string, IdxRCStruct>(); // key - rowIdx,colIdx
-    private Puzzle _puzzleBackup = null;
     private void Awake()
     {
         _puzzlePlacableChecker = this.GetComponent<PuzzlePlacableChecker>();
@@ -43,16 +41,12 @@ public class PuzzlePlaceManager : MonoBehaviour
     }
     public void GetTriggeredPlacableIdx( Puzzle puzzle)
     {
-        _puzzlePlacableChecker.GetTriggeredPlacableIdx(PlacableGridPartsListDic, ref TriggeredIdxDic, _gridManager.Grid, puzzle);
+        _puzzlePlacableChecker.GetTriggeredPlacableIdx(_gridManager.Grid, puzzle);
     }
     public void MarkPlacableIdxReset()
     {
-        _puzzlePlacableChecker.MarkPlacableIdxReset(ref TriggeredIdxDic, _gridManager.Grid);
-    }
-    public void MarkPlacableIdxReset2()
-    {
-        _puzzlePlacableChecker.MarkPlacableIdxReset2(ref TriggeredIdxDic, _gridManager.Grid);
-    }
+        _puzzlePlacableChecker.MarkPlacableIdxReset(_gridManager.Grid);
+    } 
     public bool CheckPlacable(Puzzle touchingPZ)
     {
         if (touchingPZ == null) return false;

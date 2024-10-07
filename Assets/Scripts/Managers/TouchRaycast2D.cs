@@ -104,10 +104,9 @@ public class TouchRaycast2D : MonoBehaviour
     {
         if (TouchingPuzzle == null) return;
         Vector3 mousePos = Input.mousePosition;
-        //  Vector3 deffer = mousePos - _mousePosBackUp;
         Vector3 pos = Camera.main.ScreenToWorldPoint(mousePos);
         pos.z = Factor.PosPuzzleSpawn0.z;
-        if (pos == _mousePosBackUp /*|| Mathf.Abs(deffer.x) < 3f || Mathf.Abs(deffer.y) < 3f*/)
+        if (pos == _mousePosBackUp)
         {
             TouchingPuzzle.transform.position = pos;
             return;
@@ -117,12 +116,7 @@ public class TouchRaycast2D : MonoBehaviour
             _mousePosBackUp = pos;
             TouchingPuzzle.transform.position = pos;
 
-            //    _puzzlePlaceManager.GetTriggeredPlacableIdxReset();
-            if (PuzzlePlacableChecker.KeyBackup != TouchingPuzzle.ChildPZPartList[0].TriggeredGridPartIdxStr)
-            {
-                _puzzlePlaceManager.MarkPlacableIdxReset2();
-                _puzzlePlaceManager.GetTriggeredPlacableIdx(TouchingPuzzle);
-            }
+            _puzzlePlaceManager.GetTriggeredPlacableIdx(TouchingPuzzle);
         }
 
         // TODO
