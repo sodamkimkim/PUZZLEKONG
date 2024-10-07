@@ -25,7 +25,7 @@ public class GridSpawner : MonoBehaviour
                 gridPartGo.name = $"{r},{c}";
                 gridPartGo.tag = "GridPart";
                 gridPartGo.transform.localPosition = new Vector3(c + c * 0.1f, -(r + r * 0.1f), 0f);
-                gridPartGo.GetComponent<BoxCollider>().size = new Vector3(1.1f, 1.1f, 0.5f);
+                gridPartGo.GetComponent<BoxCollider>().size = new Vector3(1.1f, 1.1f, 0.1f);
 
                 // GridPart
                 GridPart gridPart = Util.CheckAndAddComponent<GridPart>(gridPartGo);
