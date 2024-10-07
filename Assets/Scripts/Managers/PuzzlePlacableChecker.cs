@@ -30,9 +30,9 @@ public class PuzzlePlacableChecker : MonoBehaviour
     #endregion
 
     private string _pzNameBackupStr1 = string.Empty;
-    private string _pzNameBackupStr2 = string.Empty;
     private Dictionary<string, Dictionary<string, IdxRCStruct>> _cntTempDic = new Dictionary<string, Dictionary<string, IdxRCStruct>>();
-    private Dictionary<string, IdxRCStruct> _triggeredIdxDicBackup = new Dictionary<string, IdxRCStruct>();
+    private Dictionary<string, string> _foundGridPartCntDic = new Dictionary<string, string>();
+    private string _keyBackup = string.Empty;
     public void Init(GameOver gameOverCallback, StageComplete stageComplete)
     {
         _gameOverCallback = gameOverCallback;
@@ -101,12 +101,12 @@ public class PuzzlePlacableChecker : MonoBehaviour
     /// <summary> 
     /// 퍼즐이 placable한 모든 퍼즐 (0,0)이 닿는 grid 인덱스 Dic에 담기 
     /// </summary>
-    /// <param name="exitInitializeNow"></param>
+    /// <param name="needFunction"></param>
     /// <param name="grid"></param>
     /// <param name="puzzle"></param>
-    public void GetPlacableIdxs(ref Dictionary<string, Dictionary<string, IdxRCStruct>> idxDic, bool exitInitializeNow, Grid grid, Puzzle puzzle)
+    public void GetPlacableIdxs(ref Dictionary<string, Dictionary<string, IdxRCStruct>> idxDic, bool needFunction, Grid grid, Puzzle puzzle)
     {
-        if (!exitInitializeNow)
+        if (needFunction)
         {
             if (_pzNameBackupStr1 == puzzle.name) return;
 
@@ -128,12 +128,13 @@ public class PuzzlePlacableChecker : MonoBehaviour
                         Util.CheckAndAddDictionary(idxDic, firstIdxStr, gridPartsIdxDic);
                 }
         }
-        else // ExitInitialize == true
+        else
         {
             idxDic.Clear();
             _pzNameBackupStr1 = string.Empty;
             //  grid.Data = grid.BackupData;
         }
+        Debug.Log($"idxDic: {idxDic.Count}");
     }
 
     /// <summary>
@@ -196,69 +197,79 @@ public class PuzzlePlacableChecker : MonoBehaviour
     /// - 동시에 여러군데 부딪혔다면 제일 처음 부딪힌 한 곳의 소속 GridPart를 자료구조에 담아줌
     /// </summary>
     public void GetTriggeredPlacableIdx(Dictionary<string, Dictionary<string, IdxRCStruct>> idxsDic,
-       ref Dictionary<string, IdxRCStruct> triggeredIdxDic, bool exitInitializeNow,
+       ref Dictionary<string, IdxRCStruct> triggeredIdxDic,
        Grid grid, Puzzle touchingPZ)
     {
         bool isFound = false;
         if (grid == null || touchingPZ == null)
-        {
-            Debug.Log(grid.ToString());
-            Debug.Log(touchingPZ.ToString());
             return;
-        }
+        // MarkPlacableIdxReset(grid);
 
-        if (!exitInitializeNow)
+        //    grid.BackupData = grid.Data;
+        triggeredIdxDic.Clear();
+
+        // 여기 안에서 puzzle이랑 일치하는 것 3개 이상 찾아야함
+        string key = string.Empty;
+
+        foreach (KeyValuePair<string, Dictionary<string, IdxRCStruct>> kvp in idxsDic)
         {
-            if (_pzNameBackupStr2 == touchingPZ.name) return;
-
-            grid.BackupData = grid.Data;
-            _pzNameBackupStr1 = touchingPZ.name;
-            triggeredIdxDic.Clear();
-
+            _foundGridPartCntDic.Clear();
+            key = kvp.Key;
             // # puzzlePart랑 충돌한 GridPart를 Dictionary의 valueList에서 찾기  
-            int cnt = 0;
             foreach (PZPart pzPart in touchingPZ.ChildPZPartList)
             {
-                foreach (KeyValuePair<string, Dictionary<string, IdxRCStruct>> kvp in idxsDic)
+                string triggeredGpStr = pzPart.TriggeredGridPartIdxStr;
+                if (kvp.Value.ContainsKey(triggeredGpStr) /*&& kvp.Key == key*/)
                 {
-                    if (kvp.Value.ContainsKey(pzPart.TriggeredGridPartIdxStr))
-                    {
-                        Debug.Log($"TriggeredPlacableIdx: {pzPart.TriggeredGridPartIdxStr}");
-                        if (cnt == 0)
-                            triggeredIdxDic = kvp.Value;
-                        isFound = true;
-                        break;
-                    }
+                    Util.CheckAndAddDictionary(_foundGridPartCntDic, triggeredGpStr, pzPart.name);
                 }
-                if (isFound)
+                if (_foundGridPartCntDic.Count >= 3)
                 {
-                    cnt++;
-                    if (cnt >= 3)
-                        break;
+                    isFound = true;
+                    triggeredIdxDic = kvp.Value;
+                    Debug.Log($"Contains key: {key}, cnt: {_foundGridPartCntDic.Count}");
+                    break;
                 }
             }
-
-            if (cnt >= 3)
-                MarkPlacableIdx(triggeredIdxDic, grid);
+            if (isFound)
+                break;
         }
 
-        if (exitInitializeNow)// exitInitializeNow == true
+        if (isFound)
         {
-            triggeredIdxDic.Clear();
-            _pzNameBackupStr2 = string.Empty;
-            if (grid.BackupData == null) grid.BackupData = grid.Data;
-            grid.Data = grid.BackupData;
-
+            if (_keyBackup != key)
+            {
+                _keyBackup = key;
+                MarkPlacableIdxReset(grid);
+                MarkPlacableIdx(triggeredIdxDic, grid);
+            }
         }
     }
-
+    public void GetTriggeredPlacableIdxReset(ref Dictionary<string, IdxRCStruct> triggeredIdxDic, Grid grid)
+    {
+        if (triggeredIdxDic.Count > 0)
+            triggeredIdxDic.Clear();
+        //   grid.Data = grid.BackupData;
+        MarkPlacableIdxReset(grid);
+    }
     /// <summary>
     /// Placable한 영역 중 TouchingGo가 충돌한 곳 색상 변경
     /// </summary>
     private void MarkPlacableIdx(Dictionary<string, IdxRCStruct> dic, Grid grid)
     {
+        if (dic.Count == 0 || dic == null) return;
         foreach (KeyValuePair<string, IdxRCStruct> kvp in dic)
-            grid.SetGridPartData(kvp.Value.IdxR, kvp.Value.IdxC, 2);
+        { 
+                grid.SetGridPartData(kvp.Value.IdxR, kvp.Value.IdxC, 2);
+        }
+    }
+    private void MarkPlacableIdxReset(Grid grid)
+    {
+        foreach (KeyValuePair<string, GridPart> kvp in grid.ChildGridPartDic)
+        {
+            if (kvp.Value.Data == 2)
+                kvp.Value.Data = 0;
+        }
     }
     /// <summary>
     /// Placable한 모든 영역 색상 변경

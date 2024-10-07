@@ -36,20 +36,25 @@ public class PuzzlePlaceManager : MonoBehaviour
     {
         _puzzlePlacableChecker.CheckPlacableAllRemainingPuzzles(_gridManager.Grid, _puzzleManager.PuzzleGoArr);
     }
-    public void MarkPlacable(bool exitInitializeNow, Puzzle puzzle)
+    public void GetIdxDic(bool needFunction, Puzzle puzzle)
     {
-
-        if (puzzle == null) return; 
-
-        _puzzlePlacableChecker.GetPlacableIdxs(ref PlacableGridPartsListDic, exitInitializeNow, _gridManager.Grid, puzzle);
-        _puzzlePlacableChecker.GetTriggeredPlacableIdx(PlacableGridPartsListDic, ref TriggeredIdxDic, exitInitializeNow, _gridManager.Grid, puzzle);
+        if (puzzle == null) return;
+        _puzzlePlacableChecker.GetPlacableIdxs(ref PlacableGridPartsListDic, needFunction, _gridManager.Grid, puzzle);
+    }
+    public void GetTriggeredPlacableIdx( Puzzle puzzle)
+    {
+        _puzzlePlacableChecker.GetTriggeredPlacableIdx(PlacableGridPartsListDic, ref TriggeredIdxDic, _gridManager.Grid, puzzle);
+    }
+    public void GetTriggeredPlacableIdxReset()
+    {
+        _puzzlePlacableChecker.GetTriggeredPlacableIdxReset(ref TriggeredIdxDic, _gridManager.Grid);
     }
     public bool CheckPlacable(Puzzle touchingPZ)
     {
         if (touchingPZ == null) return false;
 
         // 1. Grid에 있는지 체크
-     //   if (!touchingPZ.IsInGrid) return false;
+        //   if (!touchingPZ.IsInGrid) return false;
 
         // 2. Placable에 있는지 체크 
 

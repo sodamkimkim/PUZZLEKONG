@@ -41,7 +41,8 @@ public class TouchRaycast2D : MonoBehaviour
         }
         else if (Input.GetMouseButtonUp(0))
         {
-            _puzzlePlaceManager.MarkPlacable(true, TouchingPuzzle);
+            _puzzlePlaceManager.GetIdxDic(false, TouchingPuzzle);
+            _puzzlePlaceManager.GetTriggeredPlacableIdxReset();
 
             if (_puzzlePlaceManager.CheckPlacable(TouchingPuzzle))
                 _puzzlePlaceManager.PuzzlePlace();
@@ -97,27 +98,28 @@ public class TouchRaycast2D : MonoBehaviour
         Vector3 pos = Camera.main.ScreenToWorldPoint(mousePos);
         pos.z = 0;
         TouchingPuzzle.transform.position = pos;
+        _puzzlePlaceManager.GetIdxDic(true, TouchingPuzzle);
     }
     private void SetTouchMoved(RaycastHit2D hit)
     {
         if (TouchingPuzzle == null) return;
         Vector3 mousePos = Input.mousePosition;
-        Vector3 deffer = mousePos - _mousePosBackUp;
+        //  Vector3 deffer = mousePos - _mousePosBackUp;
         Vector3 pos = Camera.main.ScreenToWorldPoint(mousePos);
         pos.z = 0;
-        if (mousePos == _mousePosBackUp /*|| Mathf.Abs(deffer.x) < 3f || Mathf.Abs(deffer.y) < 3f*/)
-        {
-            TouchingPuzzle.transform.position = pos;
-            return;
-        }
-        else
-        {
-            _puzzlePlaceManager.MarkPlacable(true, TouchingPuzzle);
-            _mousePosBackUp = mousePos;
+        //if (pos == _mousePosBackUp /*|| Mathf.Abs(deffer.x) < 3f || Mathf.Abs(deffer.y) < 3f*/)
+        //{
+        //    TouchingPuzzle.transform.position = pos;
+        //    return;
+        //}
+        //if (pos != _mousePosBackUp)
+        //{
+        //    _mousePosBackUp = pos;
             TouchingPuzzle.transform.position = pos;
 
-            _puzzlePlaceManager.MarkPlacable(false, TouchingPuzzle);
-        }
+            //  _puzzlePlaceManager.GetTriggeredPlacableIdxReset();
+            _puzzlePlaceManager.GetTriggeredPlacableIdx(TouchingPuzzle);
+        //}
 
         // TODO
         // placable check & mark 

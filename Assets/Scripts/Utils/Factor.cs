@@ -4,7 +4,7 @@ public class Factor:MonoBehaviour
 {
     #region Transform
     public static Vector3 PosBG { get => new Vector3(0f, 0f, 10f); }
-    public static Vector3 PosGridSpawn { get => new Vector3(0f, 1f, 2f); }
+    public static Vector3 PosGridSpawn { get => new Vector3(0f, 1f, 0f); }
 
     public static Vector3 PosPuzzleSpawn0 { get => new Vector3(-1.5f, -3.22f, 0f); }
     public static Vector3 PosPuzzleSpawn1 { get => new Vector3(0f, -3.22f, 0f); }
