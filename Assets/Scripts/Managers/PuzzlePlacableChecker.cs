@@ -32,7 +32,7 @@ public class PuzzlePlacableChecker : MonoBehaviour
     private string _pzNameBackupStr1 = string.Empty;
     private Dictionary<string, Dictionary<string, IdxRCStruct>> _cntTempDic = new Dictionary<string, Dictionary<string, IdxRCStruct>>();
     private Dictionary<string, string> _foundGridPartCntDic = new Dictionary<string, string>();
-    private string _keyBackup = string.Empty;
+    public static string KeyBackup = string.Empty;
     public void Init(GameOver gameOverCallback, StageComplete stageComplete)
     {
         _gameOverCallback = gameOverCallback;
@@ -204,54 +204,67 @@ public class PuzzlePlacableChecker : MonoBehaviour
             return;
         bool isFound = false;
         triggeredIdxDic.Clear();
-        string key = string.Empty;
-
-        foreach (KeyValuePair<string, Dictionary<string, IdxRCStruct>> kvp in idxsDic)
+        //  string key = string.Empty;
+        string firstpzTriggered = touchingPZ.ChildPZPartList[0].TriggeredGridPartIdxStr;
+        //if (!idxsDic.ContainsKey(firstpzTriggered) && KeyBackup != firstpzTriggered)
+        //{
+        //    foreach (KeyValuePair<string, GridPart> kvp in grid.ChildGridPartDic)
+        //    {
+        //        if (kvp.Value.Data == 2)
+        //            kvp.Value.Data = 0;
+        //    }
+        //}
+        if (idxsDic.ContainsKey(firstpzTriggered))
         {
-            _foundGridPartCntDic.Clear();
-            key = kvp.Key;
-
-            foreach (PZPart pzPart in touchingPZ.ChildPZPartList)
-            {
-                string triggeredGpStr = pzPart.TriggeredGridPartIdxStr;
-                if (kvp.Value.ContainsKey(triggeredGpStr))
-                {
-                    Util.CheckAndAddDictionary(_foundGridPartCntDic, triggeredGpStr, pzPart.name);
-                }
-                if (_foundGridPartCntDic.Count >= 2)
-                {
-                    isFound = true;
-                    triggeredIdxDic = kvp.Value;
-                    Debug.Log($"Contains key: {key}, cnt: {_foundGridPartCntDic.Count}");
-                    break;
-                }
-            }
-            if (isFound)
-                break;
+            isFound = true;
+            //     key = firstpzTriggered;
+            triggeredIdxDic = idxsDic[firstpzTriggered];
+            //  Debug.Log($"Contains key: {key}, cnt: {_foundGridPartCntDic.Count}");
         }
+        #region backup
+        //foreach (KeyValuePair<string, Dictionary<string, IdxRCStruct>> kvp in idxsDic)
+        //{
+        //    _foundGridPartCntDic.Clear();
+        //    key = kvp.Key;
 
+        //    foreach (PZPart pzPart in touchingPZ.ChildPZPartList)
+        //    {
+        //        string triggeredGpStr = pzPart.TriggeredGridPartIdxStr;
+        //        if (kvp.Value.ContainsKey(triggeredGpStr))
+        //        {
+        //            Util.CheckAndAddDictionary(_foundGridPartCntDic, triggeredGpStr, pzPart.name);
+        //        }
+        //        if (_foundGridPartCntDic.Count >= 2)
+        //        {
+        //            isFound = true;
+        //            triggeredIdxDic = kvp.Value;
+        //            Debug.Log($"Contains key: {key}, cnt: {_foundGridPartCntDic.Count}");
+        //            break;
+        //        }
+        //    }
+        //    if (isFound)
+        //        break;
+        //}
+        #endregion
 
-        if (isFound)
+        if (isFound && KeyBackup != firstpzTriggered)
         {
-            if (_keyBackup != key)
-            {
-                _keyBackup = key;
-                foreach (KeyValuePair<string, GridPart> kvp in grid.ChildGridPartDic)
-                {
-                    if (!triggeredIdxDic.ContainsKey(kvp.Key) && kvp.Value.Data == 2)
-                        kvp.Value.Data = 0;
-                }
-                MarkPlacableIdx(triggeredIdxDic, grid);
-            }
+            //if (_keyBackup != key)
+            //{
+            //    _keyBackup = key;
+            MarkPlacableIdx(ref triggeredIdxDic, grid);
+            KeyBackup = firstpzTriggered;
+            Debug.Log("?????????????");
+            //}
         }
+        triggeredIdxDic.Clear();
 
     }
     /// <summary>
     /// Placable한 영역 중 TouchingGo가 충돌한 곳 색상 변경
     /// </summary>
-    private void MarkPlacableIdx(Dictionary<string, IdxRCStruct> dic, Grid grid)
-    {
-        if (dic.Count == 0 || dic == null) return;
+    private void MarkPlacableIdx(ref Dictionary<string, IdxRCStruct> dic, Grid grid)
+    { 
         foreach (KeyValuePair<string, IdxRCStruct> kvp in dic)
         {
             grid.SetGridPartData(kvp.Value.IdxR, kvp.Value.IdxC, 2);
@@ -260,11 +273,19 @@ public class PuzzlePlacableChecker : MonoBehaviour
     public void MarkPlacableIdxReset(ref Dictionary<string, IdxRCStruct> triggeredIdxDic, Grid grid)
     {
         triggeredIdxDic.Clear();
-        _keyBackup = string.Empty;
+        KeyBackup = string.Empty;
 
         foreach (KeyValuePair<string, GridPart> kvp in grid.ChildGridPartDic)
         {
             if (kvp.Value.Data == 2)
+                kvp.Value.Data = 0;
+        }
+    }
+    public void MarkPlacableIdxReset2(ref Dictionary<string, IdxRCStruct> triggeredIdxDic, Grid grid)
+    { 
+        foreach (KeyValuePair<string, GridPart> kvp in grid.ChildGridPartDic)
+        {
+            if (!triggeredIdxDic.ContainsKey(kvp.Key) && kvp.Value.Data == 2)
                 kvp.Value.Data = 0;
         }
     }

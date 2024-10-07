@@ -49,6 +49,10 @@ public class PuzzlePlaceManager : MonoBehaviour
     {
         _puzzlePlacableChecker.MarkPlacableIdxReset(ref TriggeredIdxDic, _gridManager.Grid);
     }
+    public void MarkPlacableIdxReset2()
+    {
+        _puzzlePlacableChecker.MarkPlacableIdxReset2(ref TriggeredIdxDic, _gridManager.Grid);
+    }
     public bool CheckPlacable(Puzzle touchingPZ)
     {
         if (touchingPZ == null) return false;

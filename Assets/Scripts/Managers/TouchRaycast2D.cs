@@ -113,12 +113,16 @@ public class TouchRaycast2D : MonoBehaviour
             return;
         }
         if (pos != _mousePosBackUp)
-        { 
+        {
             _mousePosBackUp = pos;
             TouchingPuzzle.transform.position = pos;
 
-        //    _puzzlePlaceManager.GetTriggeredPlacableIdxReset();
-            _puzzlePlaceManager.GetTriggeredPlacableIdx(TouchingPuzzle);
+            //    _puzzlePlaceManager.GetTriggeredPlacableIdxReset();
+            if (PuzzlePlacableChecker.KeyBackup != TouchingPuzzle.ChildPZPartList[0].TriggeredGridPartIdxStr)
+            {
+                _puzzlePlaceManager.MarkPlacableIdxReset2();
+                _puzzlePlaceManager.GetTriggeredPlacableIdx(TouchingPuzzle);
+            }
         }
 
         // TODO

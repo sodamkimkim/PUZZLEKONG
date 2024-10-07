@@ -21,16 +21,13 @@ public class PZPart : MonoBehaviour
     }
     private void Update()
     {
-
         ShotRay();
-        //if (this.ParentPuzzle == TouchRaycast2D.TouchingPuzzle && this == ParentPuzzle.ChildPZPartList[0])
-        //    Debug.Log(TriggeredGridPartIdxStr);
     }
     private void ShotRay()
     {
-        if (ParentPuzzle != TouchRaycast2D.TouchingPuzzle)
+        TriggeredGridPartIdxStr = string.Empty;
+        if (ParentPuzzle != TouchRaycast2D.TouchingPuzzle || this != ParentPuzzle.ChildPZPartList[0])
         {
-            TriggeredGridPartIdxStr = string.Empty;
             return;
         }
         RaycastHit hit;
@@ -47,34 +44,13 @@ public class PZPart : MonoBehaviour
                 }
             }
             else TriggeredGridPartIdxStr = string.Empty;
-            Debug.Log(TriggeredGridPartIdxStr);
         }
         else
         {
             TriggeredGridPartIdxStr = string.Empty;
         }
+        Debug.Log($"Triggered GridPart : {TriggeredGridPartIdxStr}");
     }
-
-    //private void OnTriggerEnter2D(Collider2D collision)
-    //{
-    //    if (collision.tag == "GridPart")
-    //    {
-    //        if (TriggeredGridPartIdxStr != collision.name)
-    //        {
-    //            TriggeredGridPartIdxStr = collision.name;
-    //        }
-    //    }
-    //}
-    //private void OnTriggerExit2D(Collider2D collision)
-    //{
-    //    if (collision.tag == "GridPart")
-    //    {
-    //        if (TriggeredGridPartIdxStr == collision.name)
-    //        {
-    //            TriggeredGridPartIdxStr = string.Empty;
-    //        }
-    //    }
-    //}
-
+     
 
 } // end of class
