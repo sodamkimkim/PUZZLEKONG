@@ -8,7 +8,7 @@ public class GridSpawner : MonoBehaviour
     private Transform _gridParentTr = null;
     public bool SpawnGridGo(int[,] gridArr, ref Grid grid)
     {
-        GameObject pzPartPrefab = Resources.Load<GameObject>(Path.PuzzlePartPrefab);
+        GameObject pzPartPrefab = Resources.Load<GameObject>(Path.GridePartPrefab);
 
         int rowCnt = gridArr.GetLength(0);
         int colCnt = gridArr.GetLength(1);
@@ -25,7 +25,7 @@ public class GridSpawner : MonoBehaviour
                 gridPartGo.name = $"{r},{c}";
                 gridPartGo.tag = "GridPart";
                 gridPartGo.transform.localPosition = new Vector3(c + c * 0.1f, -(r + r * 0.1f), 0f);
-                gridPartGo.GetComponent<BoxCollider2D>().size = new Vector2(1f, 1f);
+                gridPartGo.GetComponent<BoxCollider>().size = new Vector3(1.1f, 1.1f, 0.5f);
 
                 // GridPart
                 GridPart gridPart = Util.CheckAndAddComponent<GridPart>(gridPartGo);

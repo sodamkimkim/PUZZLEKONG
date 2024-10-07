@@ -61,14 +61,11 @@ public class BuildPuzzlePrefab : MonoBehaviour
 
             Util.SetPivotToChildCenter(puzzlePrefab.transform);
 
-            puzzlePrefab.transform.position = new Vector3(i * puzzlePrefab.transform.localScale.x * 4f, -3f, 0f);
+            puzzlePrefab.transform.position = new Vector3(i * puzzlePrefab.transform.localScale.x * 4f, -3f, 1f);
 
             Rigidbody2D rigidbody2D = Util.CheckAndAddComponent<Rigidbody2D>(puzzlePrefab);
             rigidbody2D.constraints = RigidbodyConstraints2D.FreezeAll;
             puzzlePrefab.tag = "Puzzle";
-        }
-
-
-    }
-
+        } 
+    } 
 } // end of class

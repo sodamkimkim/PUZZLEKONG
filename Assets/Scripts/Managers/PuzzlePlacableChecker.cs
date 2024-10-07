@@ -200,50 +200,19 @@ public class PuzzlePlacableChecker : MonoBehaviour
        ref Dictionary<string, IdxRCStruct> triggeredIdxDic,
        Grid grid, Puzzle touchingPZ)
     {
-        bool isFound = false;
         if (grid == null || touchingPZ == null)
             return;
-        // MarkPlacableIdxReset(grid);
+        if (triggeredIdxDic.Count > 0)
+            triggeredIdxDic.Clear();
+        string triggeredGP = touchingPZ.ChildPZPartList[0].TriggeredGridPartIdxStr;
 
-        //    grid.BackupData = grid.Data;
-        triggeredIdxDic.Clear();
-
-        // 여기 안에서 puzzle이랑 일치하는 것 3개 이상 찾아야함
-        string key = string.Empty;
-
-        foreach (KeyValuePair<string, Dictionary<string, IdxRCStruct>> kvp in idxsDic)
+      //  MarkPlacableIdxReset(grid);
+        if (triggeredGP != string.Empty && idxsDic.ContainsKey(triggeredGP))
         {
-            _foundGridPartCntDic.Clear();
-            key = kvp.Key;
-            // # puzzlePart랑 충돌한 GridPart를 Dictionary의 valueList에서 찾기  
-            foreach (PZPart pzPart in touchingPZ.ChildPZPartList)
-            {
-                string triggeredGpStr = pzPart.TriggeredGridPartIdxStr;
-                if (kvp.Value.ContainsKey(triggeredGpStr) /*&& kvp.Key == key*/)
-                {
-                    Util.CheckAndAddDictionary(_foundGridPartCntDic, triggeredGpStr, pzPart.name);
-                }
-                if (_foundGridPartCntDic.Count >= 3)
-                {
-                    isFound = true;
-                    triggeredIdxDic = kvp.Value;
-                    Debug.Log($"Contains key: {key}, cnt: {_foundGridPartCntDic.Count}");
-                    break;
-                }
-            }
-            if (isFound)
-                break;
+            triggeredIdxDic = idxsDic[triggeredGP];
+            MarkPlacableIdx(triggeredIdxDic, grid);
         }
 
-        if (isFound)
-        {
-            if (_keyBackup != key)
-            {
-                _keyBackup = key;
-                MarkPlacableIdxReset(grid);
-                MarkPlacableIdx(triggeredIdxDic, grid);
-            }
-        }
     }
     public void GetTriggeredPlacableIdxReset(ref Dictionary<string, IdxRCStruct> triggeredIdxDic, Grid grid)
     {
@@ -259,8 +228,8 @@ public class PuzzlePlacableChecker : MonoBehaviour
     {
         if (dic.Count == 0 || dic == null) return;
         foreach (KeyValuePair<string, IdxRCStruct> kvp in dic)
-        { 
-                grid.SetGridPartData(kvp.Value.IdxR, kvp.Value.IdxC, 2);
+        {
+            grid.SetGridPartData(kvp.Value.IdxR, kvp.Value.IdxC, 2);
         }
     }
     private void MarkPlacableIdxReset(Grid grid)

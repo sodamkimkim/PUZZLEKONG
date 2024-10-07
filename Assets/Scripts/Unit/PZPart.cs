@@ -11,27 +11,62 @@ public class PZPart : MonoBehaviour
     public IdxRCStruct idxStruct = new IdxRCStruct(0, 0);
     public Puzzle ParentPuzzle { get => _parentPuzzle; set => _parentPuzzle = value; }
     public SpriteRenderer Spr { get => _spr; set => _spr = value; }
-    public string TriggeredGridPartIdxStr = string.Empty; // r,c 형태로 저장  
+    public string TriggeredGridPartIdxStr = string.Empty; // r,c 형태로 저장
+
     private void Awake()
     {
         string[] idxStr = this.name.Split(',');
         idxStruct.IdxR = int.Parse(idxStr[0]);
         idxStruct.IdxC = int.Parse(idxStr[1]);
     }
-
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void Update()
     {
-        if (collision.tag == "GridPart")
-        {
-            if (TriggeredGridPartIdxStr != collision.name)
+
+        ShotRay();
+        //if (this.ParentPuzzle == TouchRaycast2D.TouchingPuzzle && this == ParentPuzzle.ChildPZPartList[0])
+        //    Debug.Log(TriggeredGridPartIdxStr);
+    }
+    private void ShotRay()
+    {
+        if (ParentPuzzle != TouchRaycast2D.TouchingPuzzle) return;
+        RaycastHit hit;
+        // Z축 방향으로 레이 쏘기 (transform.forward는 Z축 방향)
+        if (Physics.Raycast(this.gameObject.transform.position, transform.forward, out hit, 100f))
+        { 
+            // Physics.Raycast는 out 키워드를 통해 hit 변수에 충돌 정보를 넣어줍니다. 
+            Debug.DrawRay(this.gameObject.transform.position, transform.forward, Color.green, 10f);
+            if (hit.collider != null && hit.transform.gameObject.tag == "GridPart")
             {
-                TriggeredGridPartIdxStr = collision.name;
+                if (TriggeredGridPartIdxStr != hit.transform.gameObject.name)
+                {
+                    TriggeredGridPartIdxStr = hit.transform.gameObject.name;
+                }
+                Debug.Log(TriggeredGridPartIdxStr);
             }
+            else TriggeredGridPartIdxStr = string.Empty;
         }
     }
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.tag == "GridPart")
-            TriggeredGridPartIdxStr = string.Empty; 
-    }
+
+    //private void OnTriggerEnter2D(Collider2D collision)
+    //{
+    //    if (collision.tag == "GridPart")
+    //    {
+    //        if (TriggeredGridPartIdxStr != collision.name)
+    //        {
+    //            TriggeredGridPartIdxStr = collision.name;
+    //        }
+    //    }
+    //}
+    //private void OnTriggerExit2D(Collider2D collision)
+    //{
+    //    if (collision.tag == "GridPart")
+    //    {
+    //        if (TriggeredGridPartIdxStr == collision.name)
+    //        {
+    //            TriggeredGridPartIdxStr = string.Empty;
+    //        }
+    //    }
+    //}
+
+
 } // end of class

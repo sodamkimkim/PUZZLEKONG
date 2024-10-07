@@ -10,10 +10,8 @@ public class Puzzle : MonoBehaviour
     private int[] _getRealLength_rc = new int[2] { 0, 0 };
 
     private Vector3 _spawnPos;
-    private List<PZPart> _childPZPartList = new List<PZPart>();
-    private List<SpriteRenderer> _childSpr = new List<SpriteRenderer>();
-    private Color _childColor = Color.clear;
-    private bool _isInGrid = false;
+    private List<PZPart> _childPZPartList = new List<PZPart>(); 
+    private Color _childColor = Color.clear; 
     private string _firstTriggeredGridPartNameStr;
     #endregion
 

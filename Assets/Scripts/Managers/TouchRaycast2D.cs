@@ -2,13 +2,12 @@ using UnityEngine;
 
 public class TouchRaycast2D : MonoBehaviour
 {
-    #region Hidden Private Variables
-    private Puzzle _touchingPZ = null;
+    #region Hidden Private Variables 
     #endregion
 
     [SerializeField]
     private PuzzlePlaceManager _puzzlePlaceManager = null;
-    public Puzzle TouchingPuzzle { get => _touchingPZ; set => _touchingPZ = value; }
+    public static Puzzle TouchingPuzzle = null;
     private Vector3 _selectedGoInitialPos = Vector3.zero;
     private Vector3 _mousePosBackUp = Vector3.zero;
     //private void Start()
@@ -96,7 +95,7 @@ public class TouchRaycast2D : MonoBehaviour
         TouchingPuzzle.transform.localScale = Factor.ScalePuzzleNormal;
 
         Vector3 pos = Camera.main.ScreenToWorldPoint(mousePos);
-        pos.z = 0;
+        pos.z = Factor.PosPuzzleSpawn0.z;
         TouchingPuzzle.transform.position = pos;
         _puzzlePlaceManager.GetIdxDic(true, TouchingPuzzle);
     }
@@ -106,7 +105,7 @@ public class TouchRaycast2D : MonoBehaviour
         Vector3 mousePos = Input.mousePosition;
         //  Vector3 deffer = mousePos - _mousePosBackUp;
         Vector3 pos = Camera.main.ScreenToWorldPoint(mousePos);
-        pos.z = 0;
+        pos.z = Factor.PosPuzzleSpawn0.z;
         //if (pos == _mousePosBackUp /*|| Mathf.Abs(deffer.x) < 3f || Mathf.Abs(deffer.y) < 3f*/)
         //{
         //    TouchingPuzzle.transform.position = pos;
