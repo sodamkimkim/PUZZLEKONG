@@ -20,16 +20,16 @@ public class PuzzleManager : MonoBehaviour
  
     public void LazyStart()
     {
-        InstantiatePuzzleGos(ref _puzzleGoArr); 
+        InstantiatePuzzleGos(ref _puzzleGoArr);
+        _checkPlacableCallback?.Invoke();
+        //  Debug.Log(_checkPlacableCallback);
     }
     private void InstantiatePuzzleGos(ref GameObject[] puzzleGoArr)
     {
         _puzzleSpawner.DestroyChilds();
 
         for (int i = 0; i < _puzzleGoArr.Length; i++)
-            puzzleGoArr[i] = _puzzleSpawner.SpawnPuzzle(i);
-
-        _checkPlacableCallback?.Invoke();
+            puzzleGoArr[i] = _puzzleSpawner.SpawnPuzzle(i); 
     }
     public delegate void CheckPlacable();
     private CheckPlacable _checkPlacableCallback { get; set; }

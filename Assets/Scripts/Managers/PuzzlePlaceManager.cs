@@ -17,7 +17,6 @@ public class PuzzlePlaceManager : MonoBehaviour
     private PuzzlePlacableChecker _puzzlePlacableChecker = null;
     private GridManager _gridManager = null;
     private PuzzleManager _puzzleManager = null;
-    public Dictionary<string, Dictionary<string, IdxRCStruct>> PlacableGridPartsListDic = new Dictionary<string, Dictionary<string, IdxRCStruct>>();// key - rowIdx,colIdx
     private void Awake()
     {
         _puzzlePlacableChecker = this.GetComponent<PuzzlePlacableChecker>();
@@ -34,10 +33,10 @@ public class PuzzlePlaceManager : MonoBehaviour
     {
         _puzzlePlacableChecker.CheckPlacableAllRemainingPuzzles(_gridManager.Grid, _puzzleManager.PuzzleGoArr);
     }
-    public void GetIdxDic(bool needFunction, Puzzle puzzle)
+    public int CheckPlacable(Puzzle puzzle)
     {
-        if (puzzle == null) return;
-        _puzzlePlacableChecker.GetPlacableIdxs(ref PlacableGridPartsListDic, needFunction, _gridManager.Grid, puzzle);
+        if (puzzle == null) return 0;
+        return _puzzlePlacableChecker.CheckPlacable(_gridManager.Grid, puzzle);
     }
     public void GetTriggeredPlacableIdx( Puzzle puzzle)
     {
@@ -47,17 +46,10 @@ public class PuzzlePlaceManager : MonoBehaviour
     {
         _puzzlePlacableChecker.MarkPlacableIdxReset(_gridManager.Grid);
     } 
-    public bool CheckPlacable(Puzzle touchingPZ)
+    public bool CheckPlaceNow(Puzzle puzzle)
     {
-        if (touchingPZ == null) return false;
-
-        // 1. Grid에 있는지 체크
-        //   if (!touchingPZ.IsInGrid) return false;
-
-        // 2. Placable에 있는지 체크 
-
-        return false;
-
+        // TODO
+        return false ;
     }
 
     /// <summary>

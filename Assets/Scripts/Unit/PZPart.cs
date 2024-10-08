@@ -49,7 +49,7 @@ public class PZPart : MonoBehaviour
         {
             TriggeredGridPartIdxStr = string.Empty;
         }
-        Debug.Log($"Triggered GridPart : {TriggeredGridPartIdxStr}");
+      //  Debug.Log($"Triggered GridPart : {TriggeredGridPartIdxStr}");
     }
      
 

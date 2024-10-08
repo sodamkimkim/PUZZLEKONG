@@ -7,7 +7,7 @@ public class GameManager : MonoBehaviour
         this.GetComponentInChildren<PuzzlePlacableChecker>().Init(GameOver, StageComplete);
 
     }
-    private void OnEnable()
+    private void Start()
     {
         LazyStart();
     }
