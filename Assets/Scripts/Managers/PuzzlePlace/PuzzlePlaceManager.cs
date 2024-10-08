@@ -15,11 +15,15 @@ using System.Collections.Generic;
 public class PuzzlePlaceManager : MonoBehaviour
 {
     [SerializeField]
-    public PuzzlePlacableChecker PuzzlePlacableChecker = null;
-    [SerializeField]
     private GridManager _gridManager = null;
     [SerializeField]
     private PuzzleManager _puzzleManager = null;
+    [SerializeField]
+    private CompleteManager _completeManager = null;
+
+    [SerializeField]
+    public PuzzlePlacableChecker PuzzlePlacableChecker = null;
+
     private void Awake()
     {
         _gridManager.Iniit(CheckPlacableAllRemaingPuzzles);
@@ -32,13 +36,13 @@ public class PuzzlePlaceManager : MonoBehaviour
     {
         PuzzlePlacableChecker.CheckPlacableAllRemainingPuzzles(_gridManager.Grid, _puzzleManager.PuzzleGoArr);
     }
-    public void GetTriggeredPlacableIdx(Puzzle touchingPZ)
+    public void MarkPlacable(Puzzle touchingPZ)
     {
         PuzzlePlacableChecker.MarkPlacable(_gridManager.Grid, touchingPZ);
     }
-    public void MarkPlacableIdxReset()
+    public void MarkPlacableReset()
     {
-        PuzzlePlacableChecker.MarkPlacableIdxReset(_gridManager.Grid);
+        PuzzlePlacableChecker.MarkPlacableReset(_gridManager.Grid);
     }
 
     public delegate void SetTouchEndPuzzleReturn();
@@ -52,6 +56,9 @@ public class PuzzlePlaceManager : MonoBehaviour
         if (!isPlacePzSuccess)
             SetTouchEndPuzzleReturnCallback?.Invoke();
         else
-           PuzzlePlacableChecker.CheckPlacableAllRemainingPuzzles(_gridManager.Grid, _puzzleManager.PuzzleGoArr);
-    } 
+        {
+            _completeManager.Complete();
+            PuzzlePlacableChecker.CheckPlacableAllRemainingPuzzles(_gridManager.Grid, _puzzleManager.PuzzleGoArr);
+        }
+    }
 } // end of class

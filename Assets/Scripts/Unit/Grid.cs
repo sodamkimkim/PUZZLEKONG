@@ -67,8 +67,7 @@ public class Grid : MonoBehaviour
     }
     private void InitializeGridPartData(int[,] data)
     {
-        if (data == null)
-            Debug.Log("???????????");
+        if (data == null) return;
         int rowCnt = data.GetLength(0);
         int colCnt = data.GetLength(1);
 

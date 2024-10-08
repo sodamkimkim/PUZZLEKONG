@@ -9,13 +9,9 @@ public class PuzzleSpawner : MonoBehaviour
 
     public void DestroyChilds()
     {
-        if (_puzzleParentTr.childCount > 0 && _puzzleParentTr.GetComponentInChildren<Puzzle>())
-        {
+        if (_puzzleParentTr.childCount > 0 && _puzzleParentTr.childCount > 0)
             foreach (Puzzle child in _puzzleParentTr.GetComponentsInChildren<Puzzle>())
-            {
                 DestroyImmediate(child.gameObject);
-            }
-        }
     }
     public GameObject SpawnPuzzle(int puzzleGoIdx)
     {
@@ -80,14 +76,10 @@ public class PuzzleSpawner : MonoBehaviour
             pzPart.ParentPuzzle = puzzle;
             pzPart.Spr = spr;
 
-            puzzle.ChildPZPartList.Add(pzPart);
-       //     Debug.Log(pzPart.idxStruct.ToString());
+            puzzle.ChildPZPartList.Add(pzPart); 
             puzzle.ChildColor = spr.color;
         }
-
-
         puzzle.SpawnPos = pos;
-        //  Debug.Log($"idx:{instantiateIdx}: puzzleArrIdx_{puzzleArrIdx}: {Util.ConvertDoubleArrayToString(puzzle.Data)}");
         return puzzleGo;
     }
 } // end of class

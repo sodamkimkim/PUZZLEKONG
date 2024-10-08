@@ -10,8 +10,8 @@ public class BackgroundManager : MonoBehaviour
     private void Awake()
     {
         Path path = new Path();
-        BGArr[0] = Resources.Load<GameObject>($"{Path.Backgrounds}BG_Default");
-        BGArr[1] = Resources.Load<GameObject>($"{Path.Backgrounds}BG_MintChoco");
+        BGArr[0] = Resources.Load<GameObject>($"{Path.Backgrounds}/BG_Default");
+        BGArr[1] = Resources.Load<GameObject>($"{Path.Backgrounds}/BG_MintChoco");
     }
     private void Start()
     {

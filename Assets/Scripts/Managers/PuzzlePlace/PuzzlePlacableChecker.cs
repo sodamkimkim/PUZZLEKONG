@@ -62,9 +62,7 @@ public class PuzzlePlacableChecker : MonoBehaviour
                     gameOverCheckCnt++;
                 }
                 else
-                {
                     puzzle.ActiveSelf = true;
-                }
 
                 remainingPuzzleCnt++;
             }
@@ -151,7 +149,7 @@ public class PuzzlePlacableChecker : MonoBehaviour
         if (grid == null || touchingPZ == null)
             return;
 
-        MarkPlacableIdxReset(grid);
+        MarkPlacableReset(grid);
         bool placable = true;
         // 모든 Pzpart triggered Gridpart ==0 이면 placable on
         foreach (PZPart pzpart in touchingPZ.ChildPZPartList)
@@ -171,7 +169,7 @@ public class PuzzlePlacableChecker : MonoBehaviour
         if (placable)
             SetPlacableGridData(grid, touchingPZ, 0, 2);
     }
-    public void MarkPlacableIdxReset(Grid grid)
+    public void MarkPlacableReset(Grid grid)
     {
         foreach (KeyValuePair<string, GridPart> kvp in grid.ChildGridPartDic)
         {
@@ -220,6 +218,7 @@ public class PuzzlePlacableChecker : MonoBehaviour
             SetPlacableGridData(grid, touchingPZ, 2, 1);
             DestroyImmediate(touchingPZ.gameObject);
         }
+
         return isPlacePZSucess;
     }
 } // end of class 

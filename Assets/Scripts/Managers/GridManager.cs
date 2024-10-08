@@ -8,11 +8,9 @@ public class GridManager : MonoBehaviour
     private Grid _grid;
     private static bool _isGridReady = false;
     #endregion
-     
-    [SerializeField]
-    private GridSpawner _gridSpawner = null;
+    #region Properties
     public Grid Grid { get => _grid; private set => _grid = value; }
-    public bool IsGridGoReady
+    public static bool IsGridGoReady
     {
         get => _isGridReady;
         private set
@@ -20,12 +18,16 @@ public class GridManager : MonoBehaviour
             _isGridReady = value;
         }
     }
- 
+    #endregion
+
+    [SerializeField]
+    private GridSpawner _gridSpawner = null;
     public void LazyStart()
     {
         IsGridGoReady = _gridSpawner.SpawnGridGo(GridArrayRepository.GridArrArr[1], ref _grid);
         _checkPlacableCallback?.Invoke();
     }
+
     #region delegate
     public delegate void CheckPlacable();
     private CheckPlacable _checkPlacableCallback { get; set; }

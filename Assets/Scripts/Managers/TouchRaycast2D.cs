@@ -2,8 +2,13 @@ using UnityEngine;
 
 public class TouchRaycast2D : MonoBehaviour
 {
+    #region Dependency Injection
     [SerializeField]
     private PuzzlePlaceManager _puzzlePlaceManager = null;
+    [SerializeField]
+    private CompleteManager _completeManager = null;
+    #endregion
+
     public static Puzzle TouchingPuzzle = null;
     private Vector3 _selectedGoInitialPos = Vector3.zero;
     private Vector3 _mousePosBackUp = Vector3.zero;
@@ -83,7 +88,7 @@ public class TouchRaycast2D : MonoBehaviour
         Vector3 pos = Camera.main.ScreenToWorldPoint(mousePos);
         pos.z = Factor.PosPuzzleSpawn0.z;
         TouchingPuzzle.transform.position = pos;
-        _puzzlePlaceManager.MarkPlacableIdxReset();
+        _puzzlePlaceManager.MarkPlacableReset();
     }
     private void SetTouchMoved(RaycastHit2D hit)
     {
@@ -101,7 +106,9 @@ public class TouchRaycast2D : MonoBehaviour
             _mousePosBackUp = pos;
             TouchingPuzzle.transform.position = pos;
 
-            _puzzlePlaceManager.GetTriggeredPlacableIdx(TouchingPuzzle);
+            _puzzlePlaceManager.MarkPlacable(TouchingPuzzle);
+            // Todo MarkCompletable
+            _completeManager.MarkCompletable(TouchingPuzzle);
         }
 
         // TODO
