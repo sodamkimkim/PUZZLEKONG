@@ -16,11 +16,11 @@ public class Factor:MonoBehaviour
 
     #region Color
     public static Color BGColorDefault { get => new Color(215f / 255f, 210f / 255f, 210f / 255f); }
-
-    public static Color Grey1 { get => new Color(204f / 255f, 204f / 255f, 204f / 255f); }
-    public static Color Grey2 { get => new Color(0f / 255f, 0f / 255f, 0f / 255f, 45f / 255f); }
-    public static Color Grey3 { get => new Color(102f / 255f, 102f / 255f, 102f / 255f); }
-    public static Color Grey4 { get => new Color(51f / 255f, 51f / 255f, 51f / 255f); }
+    public static Color NotActiveColor { get => new Color(3f/255f, 3f / 255f, 3f/255f, 0.07f); }
+    public static Color Grey1 { get => new Color(204f / 255f, 204f / 255f, 204f / 255f); } // BG
+    public static Color Grey2 { get => new Color(0f / 255f, 0f / 255f, 0f / 255f, 45f / 255f); } // HasNoPuzzle
+    public static Color Grey3 { get => new Color(102f / 255f, 102f / 255f, 102f / 255f); } // Placable
+    public static Color Grey4 { get => new Color(51f / 255f, 51f / 255f, 51f / 255f); } // HasPuzzle
 
     public static Color Green1 { get => new Color(207f / 255f, 227f / 255f, 155f / 255f); }
     public static Color Green2 { get => new Color(167f / 255f, 198f / 255f, 101f / 255f); }

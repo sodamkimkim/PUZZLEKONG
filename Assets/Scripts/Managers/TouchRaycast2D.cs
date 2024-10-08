@@ -24,7 +24,10 @@ public class TouchRaycast2D : MonoBehaviour
             Puzzle puzzle = hit2.transform.GetComponentInParent<Puzzle>();
 
             if (Input.GetMouseButtonDown(0))
-                SetTouchBegin(puzzle, hit2);
+            {
+                if (puzzle.ActiveSelf == true)
+                    SetTouchBegin(puzzle, hit2);
+            }
         }
 
         if (Input.GetMouseButton(0))
@@ -32,7 +35,7 @@ public class TouchRaycast2D : MonoBehaviour
             SetTouchMoved(hit2);
         }
         else if (Input.GetMouseButtonUp(0))
-        { 
+        {
             _puzzlePlaceManager.MarkPlacableIdxReset();
 
             if (_puzzlePlaceManager.CheckPlaceNow(TouchingPuzzle))

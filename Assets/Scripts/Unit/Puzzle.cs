@@ -7,14 +7,12 @@ public class Puzzle : MonoBehaviour
     #region Hidden Private Variables
     private int[,] _data;
     private int[] _lastIdx_rc;
-    private int[] _getRealLength_rc = new int[2] { 0, 0 };
-
     private Vector3 _spawnPos;
-    private List<PZPart> _childPZPartList = new List<PZPart>(); 
-    private Color _childColor = Color.clear; 
-    private string _firstTriggeredGridPartNameStr;
+    private List<PZPart> _childPZPartList = new List<PZPart>();
+    private Color _childColor = Color.clear;
+    private bool _activeSelf = true;
     #endregion
-
+    #region Properties
     public int[,] Data
     {
         get => _data;
@@ -22,6 +20,7 @@ public class Puzzle : MonoBehaviour
         {
             _data = value;
             LastIdx_rc = GetLastIdx(_data);
+            SetChildColor(ChildColor);
         }
     }
     public int[] LastIdx_rc { get => _lastIdx_rc; private set => _lastIdx_rc = value; }
@@ -29,10 +28,19 @@ public class Puzzle : MonoBehaviour
     public List<PZPart> ChildPZPartList { get => _childPZPartList; private set => _childPZPartList = value; }
     public Vector3 SpawnPos { get => _spawnPos; set => _spawnPos = value; }
     public Color ChildColor { get => _childColor; set => _childColor = value; }
+    public bool ActiveSelf
+    {
+        get => _activeSelf; set
+        {
+            _activeSelf = value;
+            if (ActiveSelf) 
+                SetChildColor(ChildColor); 
+            else 
+                SetChildColor(Factor.NotActiveColor); 
+        }
+    }
+    #endregion
 
-//    public bool IsInGrid { get => _isInGrid; set => _isInGrid = value; }
-    public string FirstTriggeredGridPartNameStr { get => _firstTriggeredGridPartNameStr; set => _firstTriggeredGridPartNameStr = value; }
-    private Vector3 _mousePosBackUP = Vector3.zero;
     private int[] GetLastIdx(int[,] dbArr)
     {
         int[] rcIdxArr = new int[2] { 0, 0 };
@@ -65,34 +73,4 @@ public class Puzzle : MonoBehaviour
             pZPart.Spr.color = color;
         }
     }
-    //private bool CheckAllChildInGrid()
-    //{
-    //    bool isAllInGrid = true;
-    //    foreach (PZPart pZPart in ChildPZPartList)
-    //    {
-    //        isAllInGrid &= pZPart.IsInGrid;
-    //    }
-    //    return isAllInGrid;
-    //}
-    //public void CallbackChildPuzzlePartCollision(bool isEnter)
-    //{
-    //    if (isEnter)
-    //    {
-    //        if (CheckAllChildInGrid())
-    //        {
-    //            IsInGrid = true;
-    //            SetChildColor(Color.red);  // DEBUGGING  
-    //        }
-    //        else
-    //        {
-    //            IsInGrid = false;
-    //            SetChildColor(ChildColor); // DEBUGGING
-    //        }
-    //    }
-    //    else
-    //    {
-    //        IsInGrid = false;
-    //        SetChildColor(ChildColor); // DEBUGGING
-    //    }
-    //} 
 } // end of class

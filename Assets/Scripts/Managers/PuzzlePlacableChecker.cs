@@ -28,7 +28,7 @@ public class PuzzlePlacableChecker : MonoBehaviour
     public delegate void StageComplete();
     private StageComplete _stageCompleteCallback;
     #endregion
-     
+
     public void Init(GameOver gameOverCallback, StageComplete stageComplete)
     {
         _gameOverCallback = gameOverCallback;
@@ -43,7 +43,7 @@ public class PuzzlePlacableChecker : MonoBehaviour
     /// <param name="puzzleGoArr"></param>
     public void CheckPlacableAllRemainingPuzzles(Grid grid, GameObject[] puzzleGoArr)
     {
-        if (grid == null || puzzleGoArr[0] == null|| puzzleGoArr[1] == null || puzzleGoArr[2] == null) return;
+        if (grid == null || puzzleGoArr[0] == null || puzzleGoArr[1] == null || puzzleGoArr[2] == null) return;
 
         bool isGameOver = true;
         int remainingPuzzleCnt = 0;
@@ -56,8 +56,11 @@ public class PuzzlePlacableChecker : MonoBehaviour
             {
                 remainingPuzzleCnt++;
 
-                if (CheckPlacable(grid, puzzle) == 0)
+                if (CheckPlacableThisPuzzle(grid, puzzle) == 0)
+                {
+                    puzzle.ActiveSelf = false;
                     gameOverCheckCnt++;
+                }
             }
             else // # 해당 배열 내 Puzzle Go 없음
                 continue;
@@ -74,21 +77,12 @@ public class PuzzlePlacableChecker : MonoBehaviour
             isGameOver = false; // # GameOver는 아님 
 
         if (isGameOver)
-        {
-            _gameOverCallback?.Invoke(); 
-        }
+            _gameOverCallback?.Invoke();
     }
- 
 
-    /// <summary> 
-    /// 퍼즐이 placable한 모든 퍼즐 (0,0)이 닿는 grid 인덱스 Dic에 담기 
-    /// </summary>
-    /// <param name="needFunction"></param>
-    /// <param name="grid"></param>
-    /// <param name="puzzle"></param>
-    public int CheckPlacable(Grid grid, Puzzle puzzle)
+    public int CheckPlacableThisPuzzle(Grid grid, Puzzle puzzle)
     {
-      int  cnt = 0;
+        int cnt = 0;
         // # 그리드 모든 idx 체크
         for (int grIdxR = 0; grIdxR < grid.Data.GetLength(0); grIdxR++)
             for (int grIdxC = 0; grIdxC < grid.Data.GetLength(1); grIdxC++)
@@ -101,12 +95,6 @@ public class PuzzlePlacableChecker : MonoBehaviour
         return cnt;
     }
 
-    /// <summary>
-    /// 해당 "grididx + 퍼즐 실질 idx 영역"(named "GridInspectionArea")에 
-    /// "퍼즐데이터가 1이고 그리드데이터가 !=1"(named "퍼즐매g핑검사") 이면 
-    ///  1. GridInspectionArea Upper-left 인덱스 List에 담기
-    ///  2. 해당인덱스를 key값으로 하는 Dictionary에 gridPartIdx 저장
-    /// </summary> 
     private bool CheckMappingGridInspectionAreaAndPuzzle(Grid grid, Puzzle puzzle, int grIdxR, int grIdxC)
     {
         // # 검사할 Grid영역 설정 (GridInspectionArea)
@@ -126,7 +114,7 @@ public class PuzzlePlacableChecker : MonoBehaviour
             int puzzleIdxC = 0;
             for (int c = idxRangeC[0]; c <= idxRangeC[1]; c++)
             {
-                // # 이 안에서 griddata !=1 && puzzledata ==1인 곳  퍼즐 영역만큼  List에 담음
+                // #  
                 if (grid.Data[r, c] == 1) // grid의 해당 인덱스에 퍼즐이 놓여있을 떄
                 {
                     if (puzzle.Data[puzzleIdxR, puzzleIdxC] == 0) // => ok 
@@ -148,10 +136,7 @@ public class PuzzlePlacableChecker : MonoBehaviour
         return isPlacable;
     }
 
-    /// <summary>
-    /// - PuzzleTouchingGo 충돌 검사 결과를 받아서
-    /// - 동시에 여러군데 부딪혔다면 제일 처음 부딪힌 한 곳의 소속 GridPart를 자료구조에 담아줌
-    /// </summary>
+
     public void GetTriggeredPlacableIdx(Grid grid, Puzzle touchingPZ)
     {
         if (grid == null || touchingPZ == null)

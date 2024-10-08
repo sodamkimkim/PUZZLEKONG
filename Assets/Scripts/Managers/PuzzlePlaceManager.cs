@@ -36,7 +36,7 @@ public class PuzzlePlaceManager : MonoBehaviour
     public int CheckPlacable(Puzzle puzzle)
     {
         if (puzzle == null) return 0;
-        return _puzzlePlacableChecker.CheckPlacable(_gridManager.Grid, puzzle);
+        return _puzzlePlacableChecker.CheckPlacableThisPuzzle(_gridManager.Grid, puzzle);
     }
     public void GetTriggeredPlacableIdx( Puzzle puzzle)
     {
