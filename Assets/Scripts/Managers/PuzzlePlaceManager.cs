@@ -14,15 +14,14 @@ using System.Collections.Generic;
 /// </summary>
 public class PuzzlePlaceManager : MonoBehaviour
 {
-    private PuzzlePlacableChecker _puzzlePlacableChecker = null;
+    [SerializeField]
+    public PuzzlePlacableChecker PuzzlePlacableChecker = null;
+    [SerializeField]
     private GridManager _gridManager = null;
+    [SerializeField]
     private PuzzleManager _puzzleManager = null;
     private void Awake()
     {
-        _puzzlePlacableChecker = this.GetComponent<PuzzlePlacableChecker>();
-        _gridManager = this.GetComponentInChildren<GridManager>();
-        _puzzleManager = this.GetComponentInChildren<PuzzleManager>();
-
         _gridManager.Iniit(CheckPlacableAllRemaingPuzzles);
         _puzzleManager.Iniit(CheckPlacableAllRemaingPuzzles);
     }
@@ -31,15 +30,15 @@ public class PuzzlePlaceManager : MonoBehaviour
     /// </summary>
     public void CheckPlacableAllRemaingPuzzles()
     {
-        _puzzlePlacableChecker.CheckPlacableAllRemainingPuzzles(_gridManager.Grid, _puzzleManager.PuzzleGoArr);
+        PuzzlePlacableChecker.CheckPlacableAllRemainingPuzzles(_gridManager.Grid, _puzzleManager.PuzzleGoArr);
     }
     public void GetTriggeredPlacableIdx(Puzzle touchingPZ)
     {
-        _puzzlePlacableChecker.MarkPlacable(_gridManager.Grid, touchingPZ);
+        PuzzlePlacableChecker.MarkPlacable(_gridManager.Grid, touchingPZ);
     }
     public void MarkPlacableIdxReset()
     {
-        _puzzlePlacableChecker.MarkPlacableIdxReset(_gridManager.Grid);
+        PuzzlePlacableChecker.MarkPlacableIdxReset(_gridManager.Grid);
     }
 
     public delegate void SetTouchEndPuzzleReturn();
@@ -49,8 +48,10 @@ public class PuzzlePlaceManager : MonoBehaviour
         if (touchingPZ == null || _gridManager.Grid == null) isPlacePzSuccess = false;
 
         // #
-        isPlacePzSuccess = _puzzlePlacableChecker.PuzzlePlace(_gridManager.Grid, touchingPZ);
+        isPlacePzSuccess = PuzzlePlacableChecker.PuzzlePlace(_gridManager.Grid, touchingPZ);
         if (!isPlacePzSuccess)
             SetTouchEndPuzzleReturnCallback?.Invoke();
+        else
+           PuzzlePlacableChecker.CheckPlacableAllRemainingPuzzles(_gridManager.Grid, _puzzleManager.PuzzleGoArr);
     } 
 } // end of class

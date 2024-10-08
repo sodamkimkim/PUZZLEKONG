@@ -2,9 +2,15 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    [SerializeField]
+    private GridManager _gridManager= null;
+    [SerializeField]
+    private PuzzleManager _puzzleManager = null;
+    [SerializeField]
+    private PuzzlePlaceManager _puzzlePlaceManager = null;
     private void Awake()
     {
-        this.GetComponentInChildren<PuzzlePlacableChecker>().Init(GameOver, StageComplete);
+        _puzzlePlaceManager.PuzzlePlacableChecker.Init(GameOver, StageComplete);
 
     }
     private void Start()
@@ -13,8 +19,8 @@ public class GameManager : MonoBehaviour
     }
     private void LazyStart()
     {
-        this.GetComponentInChildren<GridManager>().LazyStart();
-        this.GetComponentInChildren<PuzzleManager>().LazyStart();
+        _gridManager.LazyStart();
+        _puzzleManager.LazyStart();
     }
     private void GameOver()
     {
@@ -23,6 +29,6 @@ public class GameManager : MonoBehaviour
     }
     private void StageComplete()
     {
-        Debug.Log("StageComplete");
+        this.GetComponentInChildren<PuzzleManager>().LazyStart();
     }
 } // end of class

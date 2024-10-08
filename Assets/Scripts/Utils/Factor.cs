@@ -1,7 +1,11 @@
 using UnityEngine;
 
-public class Factor:MonoBehaviour
+public class Factor : MonoBehaviour
 {
+    #region Common Factor
+    public static int IntInitialized { get => -99; }
+    #endregion
+
     #region Transform
     public static Vector3 PosBG { get => new Vector3(0f, 0f, 10f); }
     public static Vector3 PosGridSpawn { get => new Vector3(0f, 1f, 0.5f); }

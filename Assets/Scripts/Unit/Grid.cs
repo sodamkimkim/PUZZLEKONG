@@ -70,8 +70,6 @@ public class Grid : MonoBehaviour
         if (data == null)
             Debug.Log("???????????");
         int rowCnt = data.GetLength(0);
-
-
         int colCnt = data.GetLength(1);
 
         for (int r = 0; r < rowCnt; r++)
@@ -79,29 +77,27 @@ public class Grid : MonoBehaviour
             for (int c = 0; c < colCnt; c++)
             {
                 GridPart gridPart = ChildGridPartDic[$"{r},{c}"];
-                gridPart.Data = data[r, c];
-                gridPart.IdxRow = r;
-                gridPart.IdxCol = c;
+                if (gridPart.Data != data[r, c])
+                    gridPart.Data = data[r, c];
+                if (gridPart.IdxRow == Factor.IntInitialized)
+                    gridPart.IdxRow = r;
+                if (gridPart.IdxCol == Factor.IntInitialized)
+                    gridPart.IdxCol = c;
             }
         }
     }
 
-    public void SetGridPartDataRange(int startIdxR, int startIdxC, int endIdxR, int endIdxC, int gridPartAfterData)
-    {
-        if (endIdxR > Data.GetLength(0) - 1) return;
-        if (endIdxC > Data.GetLength(1) - 1) return;
-
-        for (int i = startIdxR; i <= endIdxR; i++)
-            for (int j = startIdxC; j <= endIdxC; j++)
-                if (Data[i, j] != 1 && ChildGridPartDic.ContainsKey($"{i},{j}"))
-                    ChildGridPartDic[$"{i},{j}"].Data = gridPartAfterData;
-    }
-    public void SetGridPartData(int idxR, int idxC, int gridPartAfterData)
+    /// <summary>
+    /// GridPart 데이터가 변했을 때 Grid의 Data에 반영해주는 함수
+    /// </summary>
+    /// <param name="idxR"></param>
+    /// <param name="idxC"></param>
+    /// <param name="afterData"></param>
+    public void SetChildData(int idxR, int idxC, int afterData)
     {
         if (idxR > Data.GetLength(0) - 1) return;
         if (idxC > Data.GetLength(1) - 1) return;
 
-        if (Data[idxR, idxC] != 1 && Data[idxR, idxC] != gridPartAfterData && ChildGridPartDic.ContainsKey($"{idxR},{idxC}"))
-            ChildGridPartDic[$"{idxR},{idxC}"].Data = gridPartAfterData;
+        Data[idxR, idxC] = afterData;
     }
 } // end of class

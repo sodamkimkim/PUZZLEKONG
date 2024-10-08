@@ -43,24 +43,30 @@ public class PuzzlePlacableChecker : MonoBehaviour
     /// <param name="puzzleGoArr"></param>
     public void CheckPlacableAllRemainingPuzzles(Grid grid, GameObject[] puzzleGoArr)
     {
-        if (grid == null || puzzleGoArr[0] == null || puzzleGoArr[1] == null || puzzleGoArr[2] == null) return;
+        if (grid == null || puzzleGoArr == null) return;
 
         bool isGameOver = true;
         int remainingPuzzleCnt = 0;
         int gameOverCheckCnt = 0;
         foreach (GameObject go in puzzleGoArr)
         {
-            // # 해당 배열 내 Puzzle Go가 있고 Placable이면 true반환
+            if (go == null) continue;
+            // # 해당 배열 내 Puzzle Go가 있고 Placable이면 true반환 
+
             Puzzle puzzle = go.GetComponent<Puzzle>();
             if (puzzle != null)
             {
-                remainingPuzzleCnt++;
-
                 if (CheckPlacableThisPuzzle(grid, puzzle) == 0)
                 {
                     puzzle.ActiveSelf = false;
                     gameOverCheckCnt++;
                 }
+                else
+                {
+                    puzzle.ActiveSelf = true;
+                }
+
+                remainingPuzzleCnt++;
             }
             else // # 해당 배열 내 Puzzle Go 없음
                 continue;
@@ -78,6 +84,8 @@ public class PuzzlePlacableChecker : MonoBehaviour
 
         if (isGameOver)
             _gameOverCallback?.Invoke();
+        else
+            return;
     }
 
     public int CheckPlacableThisPuzzle(Grid grid, Puzzle puzzle)
@@ -97,6 +105,8 @@ public class PuzzlePlacableChecker : MonoBehaviour
 
     private bool CheckMappingGridInspectionAreaAndPuzzle(Grid grid, Puzzle puzzle, int grIdxR, int grIdxC)
     {
+        if (puzzle == false) return false;
+
         // # 검사할 Grid영역 설정 (GridInspectionArea)
         int[] idxRangeR = new int[2] { grIdxR, grIdxR + puzzle.LastIdx_rc[0] };
         int[] idxRangeC = new int[2] { grIdxC, grIdxC + puzzle.LastIdx_rc[1] };
@@ -190,7 +200,7 @@ public class PuzzlePlacableChecker : MonoBehaviour
         if (grid == null || touchingPZ == null) return false;
 
         bool isPlacePZSucess = true;
-     
+
         foreach (PZPart pzpart in touchingPZ.ChildPZPartList)
         {
             string triggered = pzpart.TriggeredGridPartIdxStr;

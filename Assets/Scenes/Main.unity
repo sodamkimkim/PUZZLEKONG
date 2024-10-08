@@ -134,9 +134,6 @@ GameObject:
   - component: {fileID: 40165679}
   - component: {fileID: 40165678}
   - component: {fileID: 40165680}
-  - component: {fileID: 40165681}
-  - component: {fileID: 40165682}
-  - component: {fileID: 40165683}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -160,6 +157,8 @@ Transform:
   - {fileID: 824247289}
   - {fileID: 540252144}
   - {fileID: 699796258}
+  - {fileID: 2125980419}
+  - {fileID: 1000968075}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &40165678
@@ -174,6 +173,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 116d1836764410e408037d5710c3196e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _gridManager: {fileID: 540252145}
+  _puzzleManager: {fileID: 699796259}
+  _puzzlePlaceManager: {fileID: 2125980420}
 --- !u!114 &40165679
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -196,42 +198,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c68a18dac02eaaa4fa90900331d99a4a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &40165681
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 40165672}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 95d12868cbee9a24e93ce3cfb4c24c9e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &40165682
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 40165672}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 66fd20cc32a981c49a88f656bcb31462, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &40165683
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 40165672}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 796227d60ca0a0e40a9c2815e37bb1f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &116086849
@@ -414,7 +380,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39327abe8d04b854dafa70fc4bab1bab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _puzzlePlaceManager: {fileID: 40165682}
+  _puzzlePlaceManager: {fileID: 2125980420}
 --- !u!1 &540252143
 GameObject:
   m_ObjectHideFlags: 0
@@ -1062,6 +1028,50 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _bgParentTr: {fileID: 316545523}
+--- !u!1 &1000968074
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1000968075}
+  - component: {fileID: 1000968076}
+  m_Layer: 0
+  m_Name: CompleteManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1000968075
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1000968074}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 40165673}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1000968076
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1000968074}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 796227d60ca0a0e40a9c2815e37bb1f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1208679614
 GameObject:
   m_ObjectHideFlags: 0
@@ -1093,6 +1103,66 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2125980418
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2125980419}
+  - component: {fileID: 2125980420}
+  - component: {fileID: 2125980421}
+  m_Layer: 0
+  m_Name: PuzzlePlaceManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2125980419
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2125980418}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 40165673}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2125980420
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2125980418}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 66fd20cc32a981c49a88f656bcb31462, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PuzzlePlacableChecker: {fileID: 2125980421}
+  _gridManager: {fileID: 540252145}
+  _puzzleManager: {fileID: 699796259}
+--- !u!114 &2125980421
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2125980418}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95d12868cbee9a24e93ce3cfb4c24c9e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

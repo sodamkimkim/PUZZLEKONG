@@ -4,9 +4,9 @@ public class GridPart : MonoBehaviour
 {
     #region Hidden Private Valiables
     private Grid _parentGrid = null;
-    private int _data = -99;
-    private int _idxRow = -99;
-    private int _idxCol = -99;
+    private int _data = Factor.IntInitialized;
+    private int _idxRow = Factor.IntInitialized;
+    private int _idxCol = Factor.IntInitialized;
     private SpriteRenderer _spr = null;
     #endregion
 
@@ -15,12 +15,15 @@ public class GridPart : MonoBehaviour
     /// <summary>
     /// NoPZ : 0, HasPZ: 1, Placable : 2, Test_Red : 3
     /// </summary>
-    public int Data 
+    public int Data
     {
         get => _data;
         set
         {
-            _data = value; 
+
+            _data = value;
+            if (ParentGrid.ChildGridPartDic.ContainsKey(this.gameObject.name) && IdxRow != Factor.IntInitialized && IdxCol != Factor.IntInitialized && Data != Factor.IntInitialized)
+                ParentGrid.SetChildData(IdxRow, IdxCol, Data);
             SetGridPartColor();
         }
     }
@@ -49,7 +52,7 @@ public class GridPart : MonoBehaviour
         else if (Data == 2)
             Spr.color = ParentGrid.Color_Placable;
         else
-        { 
+        {
             Spr.color = Color.blue;
         }
     }
