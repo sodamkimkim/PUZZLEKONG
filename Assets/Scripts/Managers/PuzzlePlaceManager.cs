@@ -33,32 +33,24 @@ public class PuzzlePlaceManager : MonoBehaviour
     {
         _puzzlePlacableChecker.CheckPlacableAllRemainingPuzzles(_gridManager.Grid, _puzzleManager.PuzzleGoArr);
     }
-    public int CheckPlacable(Puzzle puzzle)
+    public void GetTriggeredPlacableIdx(Puzzle touchingPZ)
     {
-        if (puzzle == null) return 0;
-        return _puzzlePlacableChecker.CheckPlacableThisPuzzle(_gridManager.Grid, puzzle);
-    }
-    public void GetTriggeredPlacableIdx( Puzzle puzzle)
-    {
-        _puzzlePlacableChecker.GetTriggeredPlacableIdx(_gridManager.Grid, puzzle);
+        _puzzlePlacableChecker.MarkPlacable(_gridManager.Grid, touchingPZ);
     }
     public void MarkPlacableIdxReset()
     {
         _puzzlePlacableChecker.MarkPlacableIdxReset(_gridManager.Grid);
-    } 
-    public bool CheckPlaceNow(Puzzle puzzle)
-    {
-        // TODO
-        return false ;
     }
 
-    /// <summary>
-    /// Touching Go가 CheckPlacable == true 된 후 Drop했을 때의 로직 작성
-    /// (TODO) 6. completeManager 호출 - complete => grid update해주는 클래스 호출
-    /// </summary>
-    public void PuzzlePlace()
+    public delegate void SetTouchEndPuzzleReturn();
+    public void PlacePuzzle(Puzzle touchingPZ, SetTouchEndPuzzleReturn SetTouchEndPuzzleReturnCallback)
     {
-        // TODO 
-        Debug.Log("Puzzle Place Process");
-    }
+        bool isPlacePzSuccess = false;
+        if (touchingPZ == null || _gridManager.Grid == null) isPlacePzSuccess = false;
+
+        // #
+        isPlacePzSuccess = _puzzlePlacableChecker.PuzzlePlace(_gridManager.Grid, touchingPZ);
+        if (!isPlacePzSuccess)
+            SetTouchEndPuzzleReturnCallback?.Invoke();
+    } 
 } // end of class

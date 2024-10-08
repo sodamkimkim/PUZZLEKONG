@@ -31,18 +31,9 @@ public class TouchRaycast2D : MonoBehaviour
         }
 
         if (Input.GetMouseButton(0))
-        {
             SetTouchMoved(hit2);
-        }
         else if (Input.GetMouseButtonUp(0))
-        {
-            _puzzlePlaceManager.MarkPlacableIdxReset();
-
-            if (_puzzlePlaceManager.CheckPlaceNow(TouchingPuzzle))
-                _puzzlePlaceManager.PuzzlePlace();
-            else
-                SetTouchEnd_PuzzleReturn();
-        }
+            _puzzlePlaceManager.PlacePuzzle(TouchingPuzzle, SetTouchEndPuzzleReturn);
 #endif
         //#region Mobile Touch
         //if (Input.touchCount > 0)
@@ -117,7 +108,7 @@ public class TouchRaycast2D : MonoBehaviour
         // placable check & mark 
         // completable check & mark
     }
-    public void SetTouchEnd_PuzzleReturn()
+    public void SetTouchEndPuzzleReturn()
     {
         // TODO 
         // Puzzle Grid에 할당되지 않았다면

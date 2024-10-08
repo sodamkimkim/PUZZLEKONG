@@ -136,8 +136,7 @@ public class PuzzlePlacableChecker : MonoBehaviour
         return isPlacable;
     }
 
-
-    public void GetTriggeredPlacableIdx(Grid grid, Puzzle touchingPZ)
+    public void MarkPlacable(Grid grid, Puzzle touchingPZ)
     {
         if (grid == null || touchingPZ == null)
             return;
@@ -160,14 +159,7 @@ public class PuzzlePlacableChecker : MonoBehaviour
                 placable &= false;
         }
         if (placable)
-        {
-            foreach (PZPart pzpart in touchingPZ.ChildPZPartList)
-            {
-                string triggered = pzpart.TriggeredGridPartIdxStr;
-                if (grid.ChildGridPartDic.ContainsKey(triggered))
-                    grid.ChildGridPartDic[triggered].Data = 2;
-            }
-        }
+            SetPlacableGridData(grid, touchingPZ, 0, 2);
     }
     public void MarkPlacableIdxReset(Grid grid)
     {
@@ -176,5 +168,48 @@ public class PuzzlePlacableChecker : MonoBehaviour
             if (kvp.Value.Data == 2)
                 kvp.Value.Data = 0;
         }
+    }
+    private void SetPlacableGridData(Grid grid, Puzzle touchingPZ, int beforeData, int toData)
+    {
+        if (grid == null || touchingPZ == null) return;
+        foreach (PZPart pzpart in touchingPZ.ChildPZPartList)
+        {
+            string triggered = pzpart.TriggeredGridPartIdxStr;
+            if (grid.ChildGridPartDic.ContainsKey(triggered))
+                if (grid.ChildGridPartDic[triggered].Data == beforeData)
+                    grid.ChildGridPartDic[triggered].Data = toData;
+        }
+    }
+
+    /// <summary>
+    /// Pz place를 시도하고, place되면 return isPlacePzSuccess = true;
+    /// </summary>
+    /// <returns></returns>
+    public bool PuzzlePlace(Grid grid, Puzzle touchingPZ)
+    {
+        if (grid == null || touchingPZ == null) return false;
+
+        bool isPlacePZSucess = true;
+     
+        foreach (PZPart pzpart in touchingPZ.ChildPZPartList)
+        {
+            string triggered = pzpart.TriggeredGridPartIdxStr;
+            if (triggered != string.Empty && grid.ChildGridPartDic.ContainsKey(triggered))
+            {
+                GridPart gp = grid.ChildGridPartDic[triggered];
+                if (gp.Data == 2)
+                    isPlacePZSucess &= true;
+                else
+                    isPlacePZSucess &= false;
+            }
+            else
+                isPlacePZSucess &= false;
+        }
+        if (isPlacePZSucess)
+        {
+            SetPlacableGridData(grid, touchingPZ, 2, 1);
+            DestroyImmediate(touchingPZ.gameObject);
+        }
+        return isPlacePZSucess;
     }
 } // end of class 
