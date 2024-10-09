@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class GridPart : MonoBehaviour
+public class GridPart : Grid
 {
     #region Hidden Private Valiables
     private Grid _parentGrid = null;
@@ -15,14 +15,14 @@ public class GridPart : MonoBehaviour
     /// <summary>
     /// NoPZ : 0, HasPZ: 1, Placable : 2, Test_Red : 3
     /// </summary>
-    public int Data
+    protected new int Data
     {
         get => _data;
         set
-        { 
+        {
             _data = value;
-            if (ParentGrid.ChildGridPartDic.ContainsKey(this.gameObject.name) && IdxRow != Factor.IntInitialized && IdxCol != Factor.IntInitialized && Data != Factor.IntInitialized)
-                ParentGrid.SetChildData(IdxRow, IdxCol, Data);
+            if (ParentGrid.ChildGridPartDic.ContainsKey(this.gameObject.name))
+                ParentGrid.SetData(IdxRow, IdxCol, Data);
             SetGridPartColor();
         }
     }
@@ -31,14 +31,14 @@ public class GridPart : MonoBehaviour
     public SpriteRenderer Spr { get => _spr; set => _spr = value; }
 
     public void SetGridPartColor()
-    { 
+    {
         if (Data == 0)
             Spr.color = ParentGrid.Color_HasNoPuzzle;
         else if (Data == 1)
             Spr.color = ParentGrid.Color_HasPuzzle;
         else if (Data == 2)
             Spr.color = ParentGrid.Color_Placable;
-        else 
-            Spr.color = Color.blue; 
+        else
+            Spr.color = Color.blue;
     }
 } // end of class

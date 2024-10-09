@@ -28,7 +28,7 @@ public class Grid : MonoBehaviour
         get => _backupData; set => _backupData = value;
     }
     public Dictionary<string, GridPart> ChildGridPartDic { get => _childGridPartDic; private set => _childGridPartDic = value; } // {r},{c}
-
+ 
     private void InitializeGridColor()
     {
         switch (ThemeManager.ETheme)
@@ -68,6 +68,7 @@ public class Grid : MonoBehaviour
     private void InitializeGridPartData(int[,] data)
     {
         if (data == null) return;
+
         int rowCnt = data.GetLength(0);
         int colCnt = data.GetLength(1);
 
@@ -78,9 +79,10 @@ public class Grid : MonoBehaviour
                 GridPart gridPart = ChildGridPartDic[$"{r},{c}"];
                 if (gridPart.Data != data[r, c])
                     gridPart.Data = data[r, c];
+
                 if (gridPart.IdxRow == Factor.IntInitialized)
                     gridPart.IdxRow = r;
-                if (gridPart.IdxCol == Factor.IntInitialized)
+                if (gridPart.IdxRow == Factor.IntInitialized)
                     gridPart.IdxCol = c;
             }
         }
@@ -92,11 +94,13 @@ public class Grid : MonoBehaviour
     /// <param name="idxR"></param>
     /// <param name="idxC"></param>
     /// <param name="afterData"></param>
-    public void SetChildData(int idxR, int idxC, int afterData)
+    public void SetData(int idxR, int idxC, int afterData)
     {
-        if (idxR > Data.GetLength(0) - 1) return;
-        if (idxC > Data.GetLength(1) - 1) return;
+        if (idxR > Data.GetLength(0) - 1 || idxR < 0) return;
+        if (idxC > Data.GetLength(1) - 1 || idxC < 0) return;
+        if (afterData == Factor.IntInitialized) return;
 
-        Data[idxR, idxC] = afterData;
+        if (Data[idxR, idxC] != afterData)
+            Data[idxR, idxC] = afterData;
     }
 } // end of class
