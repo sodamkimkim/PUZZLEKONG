@@ -4,6 +4,7 @@ public class Factor : MonoBehaviour
 {
     #region Common Factor
     public static int IntInitialized { get => -99; }
+    public static float CompleteCoroutineInterval { get => 0.03f; }
     #endregion
 
     #region Transform

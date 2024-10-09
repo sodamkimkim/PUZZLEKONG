@@ -24,7 +24,7 @@ public class GridManager : MonoBehaviour
     private GridSpawner _gridSpawner = null;
     public void LazyStart()
     {
-        IsGridGoReady = _gridSpawner.SpawnGridGo(GridArrayRepository.GridArrArr[1], ref _grid);
+        IsGridGoReady = _gridSpawner.SpawnGridGo(GridArrayRepository.GridArrArr[2], ref _grid);
         _checkPlacableCallback?.Invoke();
     }
 
