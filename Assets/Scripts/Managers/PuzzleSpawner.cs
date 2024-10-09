@@ -4,9 +4,21 @@ public class PuzzleSpawner : MonoBehaviour
 {
     [SerializeField]
     private Transform _puzzleParentTr = null;
-    [SerializeField]
-    private GameObject[] PuzzlePrefabArr = new GameObject[13];
+    private GameObject[] PuzzlePrefabArr = null;
 
+    private void Awake()
+    {
+        GameObject[] tempPuzzlePrefabArr = Resources.LoadAll<GameObject>($"{Path.Puzzles}");
+        PuzzlePrefabArr = new GameObject[tempPuzzlePrefabArr.Length];
+        for (int i = 0; i < PuzzlePrefabArr.Length; i++)
+        {
+            foreach (GameObject go in tempPuzzlePrefabArr)
+            {
+                if (go.name == $"Puzzle_{i}")
+                    PuzzlePrefabArr[i] = go;
+            }
+        }
+    }
     public void DestroyChilds()
     {
         if (_puzzleParentTr.childCount > 0 && _puzzleParentTr.childCount > 0)
@@ -76,7 +88,7 @@ public class PuzzleSpawner : MonoBehaviour
             pzPart.ParentPuzzle = puzzle;
             pzPart.Spr = spr;
 
-            puzzle.ChildPZPartList.Add(pzPart); 
+            puzzle.ChildPZPartList.Add(pzPart);
             puzzle.ChildColor = spr.color;
         }
         puzzle.SpawnPos = pos;

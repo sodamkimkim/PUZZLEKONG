@@ -572,20 +572,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _puzzleParentTr: {fileID: 1208679615}
-  PuzzlePrefabArr:
-  - {fileID: 3412408332997377289, guid: 15766ca892e02084491f7fdf7dc6568a, type: 3}
-  - {fileID: 1563412050774721055, guid: 0198e02beeadbb74498c50f30a502641, type: 3}
-  - {fileID: 2876114948873142592, guid: 69294d4cd6076b746b12224558a23cfe, type: 3}
-  - {fileID: 8065686596623152992, guid: 97e98a884f8be8b4cb82a7278fa62bdf, type: 3}
-  - {fileID: 1990129694183650820, guid: 9b66ff672f311584b99343f894f20611, type: 3}
-  - {fileID: 1942509394117678225, guid: f9ec21160a718c442b9fcf99c5a4dcd6, type: 3}
-  - {fileID: 5930459985375077346, guid: 100bed63bed2e714e923e72370a69b98, type: 3}
-  - {fileID: 4883306052536642096, guid: cb23a647bd7c3ff48bb2acc6140e1be4, type: 3}
-  - {fileID: 8025923826865018634, guid: 845984da2b3595a49a06a76beab9ef3a, type: 3}
-  - {fileID: 8354795329580310983, guid: 50adf192a9fb08841ae8e7ba112d642c, type: 3}
-  - {fileID: 7784947125272384354, guid: 8799aa4202affba41ad31383a6702d42, type: 3}
-  - {fileID: 5394474861241491475, guid: d09e88a08f50ed64b9b42bbfe4bdb571, type: 3}
-  - {fileID: 288672515424446129, guid: 7b8df693fc55f664f97fa39da47d5214, type: 3}
 --- !u!1 &705336741
 GameObject:
   m_ObjectHideFlags: 0
@@ -1032,6 +1018,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 796227d60ca0a0e40a9c2815e37bb1f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _gridManager: {fileID: 540252145}
   _completeHorizontal: {fileID: 1000968079}
   _completeVertical: {fileID: 1000968078}
   _completeArea: {fileID: 1000968077}
@@ -1149,7 +1136,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _gridManager: {fileID: 540252145}
   _puzzleManager: {fileID: 699796259}
-  _completeManager: {fileID: 0}
+  _completeManager: {fileID: 1000968076}
   PuzzlePlacableChecker: {fileID: 2125980421}
 --- !u!114 &2125980421
 MonoBehaviour:

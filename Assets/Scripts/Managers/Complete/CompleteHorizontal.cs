@@ -21,7 +21,7 @@ public class CompleteHorizontal : MonoBehaviour
             for (int idxC = 0; idxC < colLen; idxC++)
             {
                 if (grid.Data[idxR, idxC] == 1)
-                    grid.SetChildData(idxR, idxC, 0);
+                    grid.SetData(idxR, idxC, 0);
             } 
         }
     }
