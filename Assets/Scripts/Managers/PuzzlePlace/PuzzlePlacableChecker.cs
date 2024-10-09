@@ -172,7 +172,7 @@ public class PuzzlePlacableChecker : MonoBehaviour
     public void MarkPlacableReset(Grid grid)
     {
         foreach (KeyValuePair<string, GridPart> kvp in grid.ChildGridPartDic)
-        {
+        { 
             if (kvp.Value.Data == 2)
                 kvp.Value.Data = 0;
         }

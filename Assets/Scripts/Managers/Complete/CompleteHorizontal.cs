@@ -13,16 +13,16 @@ public class CompleteHorizontal : MonoBehaviour
     }
     public void Complete(Grid grid, int[,] gridDataSync)
     {
-        int rowLen = grid.Data.GetLength(0);
-        int colLen = grid.Data.GetLength(1);
+        //int rowLen = grid.Data.GetLength(0);
+        //int colLen = grid.Data.GetLength(1);
 
-        for(int idxR=0; idxR < rowLen; idxR++)
-        {
-            for (int idxC = 0; idxC < colLen; idxC++)
-            {
-                if (grid.Data[idxR, idxC] == 1)
-                    grid.SetData(idxR, idxC, 0);
-            } 
-        }
+        //for(int idxR=0; idxR < rowLen; idxR++)
+        //{
+        //    for (int idxC = 0; idxC < colLen; idxC++)
+        //    {
+        //        if (grid.Data[idxR, idxC] == 1)
+        //            grid.SetDataIdx(idxR, idxC, 0);
+        //    } 
+        //}
     }
 } // end of class

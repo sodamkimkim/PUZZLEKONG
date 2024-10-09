@@ -15,20 +15,24 @@ public class Grid : MonoBehaviour
     #endregion
     public int[,] Data
     {
-        get => _data;
+        get
+        {
+            return _data;
+        }
         set
         {
             _data = value;
             InitializeGridColor();
             InitializeGridPartData(Data);
+            Debug.Log($"GridData : {Util.ConvertDoubleArrayToString(Data)}"); 
         }
     }
     public int[,] BackupData
     {
         get => _backupData; set => _backupData = value;
     }
-    public Dictionary<string, GridPart> ChildGridPartDic { get => _childGridPartDic; private set => _childGridPartDic = value; } // {r},{c}
- 
+    public Dictionary<string, GridPart> ChildGridPartDic { get => _childGridPartDic; set => _childGridPartDic = value; } // {r},{c}
+
     private void InitializeGridColor()
     {
         switch (ThemeManager.ETheme)
@@ -77,15 +81,21 @@ public class Grid : MonoBehaviour
             for (int c = 0; c < colCnt; c++)
             {
                 GridPart gridPart = ChildGridPartDic[$"{r},{c}"];
-                if (gridPart.Data != data[r, c])
-                    gridPart.Data = data[r, c];
-
                 if (gridPart.IdxRow == Factor.IntInitialized)
                     gridPart.IdxRow = r;
-                if (gridPart.IdxRow == Factor.IntInitialized)
+                if (gridPart.IdxCol == Factor.IntInitialized)
                     gridPart.IdxCol = c;
+                if (gridPart.Data != data[r, c])
+                    gridPart.Data = data[r, c]; 
             }
         }
+    }
+    public int GetDataIdx(int idxR, int idxC)
+    {
+        if (idxR > Data.GetLength(0) - 1 || idxR < 0) ;
+        if (idxC > Data.GetLength(1) - 1 || idxC < 0) ;
+
+        return Data[idxR, idxC];
     }
 
     /// <summary>
@@ -94,7 +104,7 @@ public class Grid : MonoBehaviour
     /// <param name="idxR"></param>
     /// <param name="idxC"></param>
     /// <param name="afterData"></param>
-    public void SetData(int idxR, int idxC, int afterData)
+    public void SetDataIdx(int idxR, int idxC, int afterData)
     {
         if (idxR > Data.GetLength(0) - 1 || idxR < 0) return;
         if (idxC > Data.GetLength(1) - 1 || idxC < 0) return;
@@ -102,5 +112,6 @@ public class Grid : MonoBehaviour
 
         if (Data[idxR, idxC] != afterData)
             Data[idxR, idxC] = afterData;
+        ChildGridPartDic[$"{idxR},{idxC}"].Data = afterData;
     }
 } // end of class

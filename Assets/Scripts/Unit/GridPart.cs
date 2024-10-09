@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class GridPart : Grid
+public class GridPart : MonoBehaviour
 {
     #region Hidden Private Valiables
     private Grid _parentGrid = null;
@@ -15,15 +15,20 @@ public class GridPart : Grid
     /// <summary>
     /// NoPZ : 0, HasPZ: 1, Placable : 2, Test_Red : 3
     /// </summary>
-    protected new int Data
+    public int Data
     {
         get => _data;
         set
         {
             _data = value;
-            if (ParentGrid.ChildGridPartDic.ContainsKey(this.gameObject.name))
-                ParentGrid.SetData(IdxRow, IdxCol, Data);
             SetGridPartColor();
+
+            if (Data != Factor.IntInitialized && IdxRow != Factor.IntInitialized && IdxCol != Factor.IntInitialized)
+            {
+                if (ParentGrid.GetDataIdx(IdxRow, IdxCol) != Data)
+                    ParentGrid.SetDataIdx(IdxRow, IdxCol, Data);
+            }
+            Debug.Log($"GridPart: {IdxRow},{IdxCol} - {Data}");
         }
     }
     public int IdxRow { get => _idxRow; set => _idxRow = value; }
