@@ -219,6 +219,7 @@ public class PuzzlePlacableChecker : MonoBehaviour
             DestroyImmediate(touchingPZ.gameObject);
         }
 
+        MarkPlacableReset(grid);
         return isPlacePZSucess;
     }
 } // end of class 
