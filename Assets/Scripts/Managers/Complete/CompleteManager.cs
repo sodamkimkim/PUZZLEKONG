@@ -57,7 +57,7 @@ public class CompleteManager : MonoBehaviour
         IsProcessing = true;
         int[,] gridDataSync = _gridManager.Grid.Data;
         _completeHorizontal.Complete(_gridManager.Grid, gridDataSync, () => checkPlacableAllRemainingPzCallback());
-        //  _completeVertical.Complete(_gridManager.Grid, gridDataSync);
+        _completeVertical.Complete(_gridManager.Grid, gridDataSync, () => checkPlacableAllRemainingPzCallback());
         //  _completeArea.Complete(_gridManager.Grid, gridDataSync);
 
         IsProcessing = false;

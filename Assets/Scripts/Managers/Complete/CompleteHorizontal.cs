@@ -36,7 +36,7 @@ public class CompleteHorizontal : MonoBehaviour
         for (int i = 0; i < colLen; i++)
         {
             grid.SetDataIdx(idxR, i, 0);
-            yield return new WaitForSeconds(0.05f);
+            yield return new WaitForSeconds(Factor.CompleteCoroutineInterval);
         }
         onComplete?.Invoke();
     }

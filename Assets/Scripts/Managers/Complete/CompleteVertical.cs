@@ -11,9 +11,32 @@ public class CompleteVertical : MonoBehaviour
     {
         // TODO 
     }
-    public void Complete(Grid grid, int[,] gridDataSync)
+    public void Complete(Grid grid, int[,] gridDataSync, System.Action onCompleteCallback)
     {
-        // TODO 
-    
+        int rowLen = grid.Data.GetLength(0);
+        int colLen = grid.Data.GetLength(1);
+        for (int idxC = 0; idxC < colLen; idxC++)
+        {
+            bool isComplete = true;
+            for (int idxR = 0; idxR < rowLen; idxR++)
+            {
+                if (grid.Data[idxR, idxC] == 1)
+                    isComplete &= true;
+                else
+                    isComplete &= false;
+            }
+
+            if (isComplete)
+                StartCoroutine(CompleteCoroutine(grid, idxC, rowLen, onCompleteCallback));
+        }
+    }
+    private IEnumerator CompleteCoroutine(Grid grid, int idxC, int rowLen, System.Action onCompleteCallback)
+    {
+        for (int i = 0; i < rowLen; i++)
+        {
+            grid.SetDataIdx(i, idxC, 0);
+            yield return new WaitForSeconds(Factor.CompleteCoroutineInterval);
+        }
+        onCompleteCallback?.Invoke();
     }
 } // end of class
