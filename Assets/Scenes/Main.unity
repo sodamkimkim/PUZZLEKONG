@@ -176,6 +176,7 @@ MonoBehaviour:
   _gridManager: {fileID: 540252145}
   _puzzleManager: {fileID: 699796259}
   _puzzlePlaceManager: {fileID: 2125980420}
+  _completeManager: {fileID: 1000968076}
 --- !u!114 &40165679
 MonoBehaviour:
   m_ObjectHideFlags: 0

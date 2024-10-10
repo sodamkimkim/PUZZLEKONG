@@ -8,6 +8,8 @@ public class GameManager : MonoBehaviour
     private PuzzleManager _puzzleManager = null;
     [SerializeField]
     private PuzzlePlaceManager _puzzlePlaceManager = null;
+    [SerializeField]
+    private CompleteManager _completeManager = null;
     private void Awake()
     {
         _puzzlePlaceManager.PuzzlePlacableChecker.Init(GameOver, StageComplete);
@@ -20,6 +22,7 @@ public class GameManager : MonoBehaviour
     {
         _gridManager.LazyStart();
         _puzzleManager.LazyStart();
+        _completeManager.Complete(_puzzlePlaceManager.CheckPlacableAllRemainingPuzzles);
     }
     private void GameOver()
     {
