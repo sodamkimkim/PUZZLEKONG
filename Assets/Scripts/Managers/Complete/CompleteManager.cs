@@ -9,7 +9,7 @@ using UnityEngine;
 public class CompleteManager : MonoBehaviour
 {
     #region Hidden Private Variables
-    private static bool _isProcessing = false;
+    private static bool _isAllComplete = false;
     #endregion
 
     #region Properties
@@ -17,7 +17,14 @@ public class CompleteManager : MonoBehaviour
     /// Complete 코루틴/Effect 처리 중일 떄 Puzzle Touching 안되게 해줘야함 =><- Shot Ray(x) 
     /// 
     /// </summary>
-    public static bool IsProcessing { get => _isProcessing; set => _isProcessing = value; }
+    public static bool IsProcessing
+    {
+        get => _isAllComplete;
+        set
+        {
+            _isAllComplete = value;
+        }
+    }
     #endregion
 
     #region Dependency Injection
@@ -31,7 +38,7 @@ public class CompleteManager : MonoBehaviour
     [SerializeField]
     private CompleteArea _completeArea = null;
     #endregion
-
+    public delegate void CheckPlacableAllRemaingPuzzles();
     /// <summary>
     /// 해당 퍼즐을 그리드에 두려고 할 때 Complete여부도 표시
     /// </summary>
@@ -39,17 +46,22 @@ public class CompleteManager : MonoBehaviour
     public void MarkCompletable(Puzzle touchingPZ)
     {
         // TODO
-        int[,] gridDataSync = _gridManager.Grid.Data;
-        _completeHorizontal.MarkCompletable(_gridManager.Grid, gridDataSync);
-        _completeVertical.MarkCompletable(_gridManager.Grid, gridDataSync);
-        _completeArea.MarkCompletable(_gridManager.Grid, gridDataSync);
+        //int[,] gridDataSync = _gridManager.Grid.Data;
+        //_completeHorizontal.MarkCompletable(_gridManager.Grid, gridDataSync);
+        //_completeVertical.MarkCompletable(_gridManager.Grid, gridDataSync);
+        //_completeArea.MarkCompletable(_gridManager.Grid, gridDataSync);
     }
-    public void Complete()
+    public void Complete(CheckPlacableAllRemaingPuzzles checkPlacableAllRemainingPzCallback)
     {
         // TODO - Effect
+        IsProcessing = true;
         int[,] gridDataSync = _gridManager.Grid.Data;
-        _completeHorizontal.Complete(_gridManager.Grid, gridDataSync);
-        _completeVertical.Complete(_gridManager.Grid, gridDataSync);
-        _completeArea.Complete(_gridManager.Grid, gridDataSync);
+        _completeHorizontal.Complete(_gridManager.Grid, gridDataSync, () => checkPlacableAllRemainingPzCallback());
+        //  _completeVertical.Complete(_gridManager.Grid, gridDataSync);
+        //  _completeArea.Complete(_gridManager.Grid, gridDataSync);
+
+        IsProcessing = false;
+        checkPlacableAllRemainingPzCallback();
     }
+
 } // end of class

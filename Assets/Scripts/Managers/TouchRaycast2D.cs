@@ -18,6 +18,8 @@ public class TouchRaycast2D : MonoBehaviour
     }
     public void ShotRay()
     {
+        if (CompleteManager.IsProcessing) return;
+
 #if UNITY_EDITOR || UNITY_STANDALONE 
         Vector3 mouseWorldPos2 = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector2 rayOrigin2 = new Vector2(mouseWorldPos2.x, mouseWorldPos2.y);

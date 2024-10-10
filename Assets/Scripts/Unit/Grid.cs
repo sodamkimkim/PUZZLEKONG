@@ -24,7 +24,7 @@ public class Grid : MonoBehaviour
             _data = value;
             InitializeGridColor();
             InitializeGridPartData(Data);
-            Debug.Log($"GridData : {Util.ConvertDoubleArrayToString(Data)}"); 
+            //  Debug.Log($"GridData : {Util.ConvertDoubleArrayToString(Data)}"); 
         }
     }
     public int[,] BackupData
@@ -86,7 +86,7 @@ public class Grid : MonoBehaviour
                 if (gridPart.IdxCol == Factor.IntInitialized)
                     gridPart.IdxCol = c;
                 if (gridPart.Data != data[r, c])
-                    gridPart.Data = data[r, c]; 
+                    gridPart.Data = data[r, c];
             }
         }
     }

@@ -26,13 +26,13 @@ public class PuzzlePlaceManager : MonoBehaviour
 
     private void Awake()
     {
-        _gridManager.Iniit(CheckPlacableAllRemaingPuzzles);
-        _puzzleManager.Iniit(CheckPlacableAllRemaingPuzzles);
+        _gridManager.Iniit(CheckPlacableAllRemainingPuzzles);
+        _puzzleManager.Iniit(CheckPlacableAllRemainingPuzzles);
     }
     /// <summary>
     /// PuzzlePlacableChecker 호출하여 전체 남은 퍼즐 CheckPlacable 검사
     /// </summary>
-    public void CheckPlacableAllRemaingPuzzles()
+    public void CheckPlacableAllRemainingPuzzles()
     {
         PuzzlePlacableChecker.CheckPlacableAllRemainingPuzzles(_gridManager.Grid, _puzzleManager.PuzzleGoArr);
     }
@@ -57,8 +57,8 @@ public class PuzzlePlaceManager : MonoBehaviour
             SetTouchEndPuzzleReturnCallback?.Invoke();
         else
         {
-            _completeManager.Complete();
-            PuzzlePlacableChecker.CheckPlacableAllRemainingPuzzles(_gridManager.Grid, _puzzleManager.PuzzleGoArr);
+            _completeManager.Complete(CheckPlacableAllRemainingPuzzles);
+            //PuzzlePlacableChecker.CheckPlacableAllRemainingPuzzles(_gridManager.Grid, _puzzleManager.PuzzleGoArr);
         }
     }
 } // end of class

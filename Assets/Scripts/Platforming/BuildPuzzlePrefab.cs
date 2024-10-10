@@ -49,7 +49,7 @@ public class BuildPuzzlePrefab : MonoBehaviour
                         puzzlePartGo.transform.localPosition = new Vector3(puzzlePartGo.transform.localScale.x * c + (isLeftOffset ? 0.1f * c : 0), -(puzzlePartGo.transform.localScale.y * r + (isUpperOffset ? 0.1f * r : 0)), 0);
 
                         BoxCollider2D boxCollider2D = Util.CheckAndAddComponent<BoxCollider2D>(puzzlePartGo);
-                        boxCollider2D.size = new Vector2(1f, 1f);
+                        boxCollider2D.size = new Vector2(1.1f, 1.1f);
 
                         Util.CheckAndAddComponent<PZPart>(puzzlePartGo);
                     }

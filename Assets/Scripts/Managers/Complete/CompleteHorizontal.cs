@@ -7,15 +7,15 @@ using UnityEngine;
 /// </summary>
 public class CompleteHorizontal : MonoBehaviour
 {
+    public bool IsProcessing = false;
     public void MarkCompletable(Grid grid, int[,] gridDataSync)
     {
         // TODO 
     }
-    public void Complete(Grid grid, int[,] gridDataSync)
+    public void Complete(Grid grid, int[,] gridDataSync, System.Action onComplete)
     {
         int rowLen = grid.Data.GetLength(0);
         int colLen = grid.Data.GetLength(1);
-
         for (int idxR = 0; idxR < rowLen; idxR++)
         {
             bool isComplete = true;
@@ -28,16 +28,19 @@ public class CompleteHorizontal : MonoBehaviour
             }
 
             if (isComplete)
-                StartCoroutine(CompleteCoroutine(grid, idxR, colLen));
+                StartCoroutine(CompleteCoroutine(grid, idxR, colLen, onComplete)); 
         }
     }
 
-    private IEnumerator CompleteCoroutine(Grid grid, int idxR, int colLen)
+    private IEnumerator CompleteCoroutine(Grid grid, int idxR, int colLen, System.Action onComplete)
     {
+        IsProcessing = true;
         for (int i = 0; i < colLen; i++)
         {
             grid.SetDataIdx(idxR, i, 0);
-            yield return new WaitForSeconds(Factor.CompleteCoroutineInterval); 
+            yield return new WaitForSeconds(0.05f);
         }
+        IsProcessing = false;
+        onComplete?.Invoke();
     }
 } // end of class

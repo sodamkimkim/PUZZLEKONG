@@ -14,5 +14,6 @@ public class CompleteVertical : MonoBehaviour
     public void Complete(Grid grid, int[,] gridDataSync)
     {
         // TODO 
+    
     }
 } // end of class

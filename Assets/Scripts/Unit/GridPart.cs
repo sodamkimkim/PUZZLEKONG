@@ -28,7 +28,7 @@ public class GridPart : MonoBehaviour
                 if (ParentGrid.GetDataIdx(IdxRow, IdxCol) != Data)
                     ParentGrid.SetDataIdx(IdxRow, IdxCol, Data);
             }
-            Debug.Log($"GridPart: {IdxRow},{IdxCol} - {Data}");
+         //   Debug.Log($"GridPart: {IdxRow},{IdxCol} - {Data}");
         }
     }
     public int IdxRow { get => _idxRow; set => _idxRow = value; }
