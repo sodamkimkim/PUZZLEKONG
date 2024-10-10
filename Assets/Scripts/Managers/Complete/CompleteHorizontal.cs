@@ -11,7 +11,7 @@ public class CompleteHorizontal : MonoBehaviour
     {
         // TODO 
     }
-    public void Complete(Grid grid, int[,] gridDataSync, System.Action onComplete)
+    public void Complete(Grid grid, int[,] gridDataSync, System.Action onCompleteCallback)
     {
         int rowLen = grid.Data.GetLength(0);
         int colLen = grid.Data.GetLength(1);
@@ -20,24 +20,24 @@ public class CompleteHorizontal : MonoBehaviour
             bool isComplete = true;
             for (int idxC = 0; idxC < colLen; idxC++)
             {
-                if (grid.Data[idxR, idxC] == 1)
+                if (gridDataSync[idxR, idxC] == 1)
                     isComplete &= true;
                 else
                     isComplete &= false;
             }
 
             if (isComplete)
-                StartCoroutine(CompleteCoroutine(grid, idxR, colLen, onComplete));
+                StartCoroutine(CompleteCoroutine(grid, idxR, colLen, onCompleteCallback));
         }
     }
 
-    private IEnumerator CompleteCoroutine(Grid grid, int idxR, int colLen, System.Action onComplete)
+    private IEnumerator CompleteCoroutine(Grid grid, int idxR, int colLen, System.Action onCompleteCallback)
     {
         for (int i = 0; i < colLen; i++)
         {
             grid.SetDataIdx(idxR, i, 0);
             yield return new WaitForSeconds(Factor.CompleteCoroutineInterval);
         }
-        onComplete?.Invoke();
+        onCompleteCallback?.Invoke();
     }
 } // end of class

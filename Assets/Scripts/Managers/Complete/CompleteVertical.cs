@@ -20,7 +20,7 @@ public class CompleteVertical : MonoBehaviour
             bool isComplete = true;
             for (int idxR = 0; idxR < rowLen; idxR++)
             {
-                if (grid.Data[idxR, idxC] == 1)
+                if (gridDataSync[idxR, idxC] == 1)
                     isComplete &= true;
                 else
                     isComplete &= false;
