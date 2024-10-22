@@ -11,7 +11,9 @@ public class CompleteVertical : MonoBehaviour
     {
         // TODO 
     }
-    public void Complete(Grid grid, int[,] gridDataSync, System.Action onCompleteCallback)
+    public delegate void CompleteEffect(Vector3 worldPos);
+    //  private  CompleteEffect1 completeEffect1Callback;
+    public void Complete(Grid grid, int[,] gridDataSync, System.Action onCompleteCallback, CompleteEffect completeEffectCallback)
     {
         int rowLen = grid.Data.GetLength(0);
         int colLen = grid.Data.GetLength(1);
@@ -27,14 +29,15 @@ public class CompleteVertical : MonoBehaviour
             }
 
             if (isComplete)
-                StartCoroutine(CompleteCoroutine(grid, idxC, rowLen, onCompleteCallback));
+                StartCoroutine(CompleteCoroutine(grid, idxC, rowLen, onCompleteCallback, completeEffectCallback));
         }
     }
-    private IEnumerator CompleteCoroutine(Grid grid, int idxC, int rowLen, System.Action onCompleteCallback)
+    private IEnumerator CompleteCoroutine(Grid grid, int idxC, int rowLen, System.Action onCompleteCallback, CompleteEffect completeEffectCallback)
     {
         for (int i = 0; i < rowLen; i++)
         {
             grid.SetDataIdx(i, idxC, 0);
+            completeEffectCallback?.Invoke(grid.ChildGridPartDic[$"{i},{idxC}"].transform.position);
             yield return new WaitForSeconds(Factor.CompleteCoroutineInterval);
         }
         onCompleteCallback?.Invoke();

@@ -61,7 +61,7 @@ public class PuzzleSpawner : MonoBehaviour
         puzzle.Data = PuzzleArrayRepository.PZArrArr[puzzlePrefabArrIdx];
         foreach (SpriteRenderer spr in puzzleGo.GetComponentsInChildren<SpriteRenderer>())
         {
-            switch (ThemeManager.ETheme)
+            switch (ThemaManager.ETheme)
             {
                 case Enum.eTheme.Grey:
                     spr.color = Factor.Grey4;
@@ -77,6 +77,9 @@ public class PuzzleSpawner : MonoBehaviour
                     break;
                 case Enum.eTheme.Pink:
                     spr.color = Factor.Pink4;
+                    break;
+                case Enum.eTheme.Yellow:
+                    spr.color = Factor.Yellow4;
                     break;
                 case Enum.eTheme.Mint:
                     spr.color = Factor.Grey4;

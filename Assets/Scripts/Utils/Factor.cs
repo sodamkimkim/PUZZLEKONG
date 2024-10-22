@@ -14,6 +14,7 @@ public class Factor : MonoBehaviour
     public static Vector3 PosPuzzleSpawn0 { get => new Vector3(-1.5f, -3.22f, 0f); }
     public static Vector3 PosPuzzleSpawn1 { get => new Vector3(0f, -3.22f, 0f); }
     public static Vector3 PosPuzzleSpawn2 { get => new Vector3(1.5f, -3.22f, 0f); }
+    public static float PosEffectSpawnZ { get => -2f; }
 
     public static Vector3 ScalePuzzleSmall { get => new Vector3(0.2f, 0.2f, 1f); }
     public static Vector3 ScalePuzzleNormal { get => new Vector3(0.5f, 0.5f, 1f); }
@@ -46,6 +47,12 @@ public class Factor : MonoBehaviour
     public  static Color Pink2 { get => new Color(247f / 255f, 190f / 255f, 247f / 255f); }
     public  static Color Pink3 { get => new Color(131f / 255f, 85f / 255f, 131f / 255f); }
     public static Color Pink4 { get => new Color(56f / 255f, 35f / 255f, 56f / 255f); }
+
+  public static Color Yellow1 { get => new Color(223f / 255f, 221f / 255f, 196f / 255f); }
+   // public static Color Yellow1 { get => new Color(244f / 255f, 241f / 255f, 217f / 255f); }
+    public static Color Yellow2 { get => new Color(239f / 255f, 235f / 255f, 180f / 255f); }
+    public static Color Yellow3 { get => new Color(252f / 255f, 205f / 255f, 126f / 255f); }
+    public static Color Yellow4 { get => new Color(252f / 255f, 170f / 255f, 12f / 255f); }
     #endregion
 
 } // end of class

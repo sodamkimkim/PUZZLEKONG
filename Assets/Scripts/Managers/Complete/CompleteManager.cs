@@ -37,6 +37,8 @@ public class CompleteManager : MonoBehaviour
     private CompleteVertical _completeVertical = null;
     [SerializeField]
     private CompleteArea _completeArea = null;
+    [SerializeField]
+    private EffectManager _effectManager = null;
     #endregion
     public delegate void CheckPlacableAllRemaingPuzzles();
     /// <summary>
@@ -56,12 +58,27 @@ public class CompleteManager : MonoBehaviour
         // TODO - Effect
         IsProcessing = true;
         int[,] gridDataSync = _gridManager.Grid.Data;
-        _completeHorizontal.Complete(_gridManager.Grid, gridDataSync, () => checkPlacableAllRemainingPzCallback());
-        _completeVertical.Complete(_gridManager.Grid, gridDataSync, () => checkPlacableAllRemainingPzCallback());
-        _completeArea.Complete(_gridManager.Grid, gridDataSync, () => checkPlacableAllRemainingPzCallback());
+        _completeHorizontal.Complete(_gridManager.Grid, gridDataSync, () => checkPlacableAllRemainingPzCallback(), CompleteEffect1);
+        _completeVertical.Complete(_gridManager.Grid, gridDataSync, () => checkPlacableAllRemainingPzCallback(), CompleteEffect2);
+        _completeArea.Complete(_gridManager.Grid, gridDataSync, () => checkPlacableAllRemainingPzCallback(), CompleteEffect3);
 
         IsProcessing = false;
         checkPlacableAllRemainingPzCallback();
     }
 
+    public void CompleteEffect1(Vector3 worldPos)
+    {
+        worldPos.z = Factor.PosEffectSpawnZ;
+        Instantiate(_effectManager.completeEffect1, worldPos, Quaternion.identity);
+    }
+    public void CompleteEffect2(Vector3 worldPos)
+    {
+        worldPos.z = Factor.PosEffectSpawnZ;
+        Instantiate(_effectManager.completeEffect2, worldPos, Quaternion.identity);
+    }
+    public void CompleteEffect3(Vector3 worldPos)
+    {
+        worldPos.z = Factor.PosEffectSpawnZ;
+        Instantiate(_effectManager.completeEffect3, worldPos, Quaternion.identity);
+    }
 } // end of class

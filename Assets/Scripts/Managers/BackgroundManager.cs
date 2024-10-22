@@ -15,7 +15,7 @@ public class BackgroundManager : MonoBehaviour
     }
     private void Start()
     {
-        BGgo = GetBGGo(ThemeManager.ETheme);  
+        BGgo = GetBGGo(ThemaManager.ETheme);  
     } 
     public GameObject GetBGGo(Enum.eTheme eTheme)
     {
@@ -45,6 +45,11 @@ public class BackgroundManager : MonoBehaviour
             case Enum.eTheme.Pink:
                 bgGo = Instantiate(BGArr[0], Vector3.zero, Quaternion.identity, _bgParentTr);
                 bgGo.GetComponent<SpriteRenderer>().color = Factor.Pink1;
+                bgGo.name = "BG_Default";
+                break;
+            case Enum.eTheme.Yellow:
+                bgGo = Instantiate(BGArr[0], Vector3.zero, Quaternion.identity, _bgParentTr);
+                bgGo.GetComponent<SpriteRenderer>().color = Factor.Yellow1;
                 bgGo.name = "BG_Default";
                 break;
             case Enum.eTheme.Mint:
