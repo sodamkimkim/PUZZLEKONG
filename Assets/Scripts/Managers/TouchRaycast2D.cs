@@ -91,6 +91,8 @@ public class TouchRaycast2D : MonoBehaviour
         pos.z = Factor.PosPuzzleSpawn0.z;
         TouchingPuzzle.transform.position = pos;
         _puzzlePlaceManager.MarkPlacableReset();
+        _completeManager.MarkCompletableReset();
+
     }
     private void SetTouchMoved(RaycastHit2D hit)
     {
@@ -108,14 +110,10 @@ public class TouchRaycast2D : MonoBehaviour
             _mousePosBackUp = pos;
             TouchingPuzzle.transform.position = pos;
 
-            _puzzlePlaceManager.MarkPlacable(TouchingPuzzle);
-            // Todo MarkCompletable
-            _completeManager.MarkCompletable(TouchingPuzzle);
+            _completeManager.MarkCompletableReset();
+            if (_puzzlePlaceManager.MarkPlacable(TouchingPuzzle))
+                _completeManager.MarkCompletable(TouchingPuzzle);
         }
-
-        // TODO
-        // placable check & mark 
-        // completable check & mark
     }
     public void SetTouchEndPuzzleReturn()
     {

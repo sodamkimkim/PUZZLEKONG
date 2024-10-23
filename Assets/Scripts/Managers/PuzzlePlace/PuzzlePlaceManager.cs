@@ -36,9 +36,9 @@ public class PuzzlePlaceManager : MonoBehaviour
     {
         PuzzlePlacableChecker.CheckPlacableAllRemainingPuzzles(_gridManager.Grid, _puzzleManager.PuzzleGoArr);
     }
-    public void MarkPlacable(Puzzle touchingPZ)
+    public bool MarkPlacable(Puzzle touchingPZ)
     {
-        PuzzlePlacableChecker.MarkPlacable(_gridManager.Grid, touchingPZ);
+        return PuzzlePlacableChecker.MarkPlacable(_gridManager.Grid, touchingPZ);
     }
     public void MarkPlacableReset()
     {

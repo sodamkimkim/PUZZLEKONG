@@ -7,7 +7,7 @@ using UnityEngine;
 /// </summary>
 public class CompleteVertical : MonoBehaviour
 {
-    public void MarkCompletable(Grid grid, int[,] gridDataSync)
+    public void MarkCompletable(Grid grid, int[,] gridDataSync, System.Action resetFunction)
     {
         // TODO 
     }

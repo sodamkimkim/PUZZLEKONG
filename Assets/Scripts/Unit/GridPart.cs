@@ -52,6 +52,8 @@ public class GridPart : MonoBehaviour
             Spr.color = ParentGrid.Color_HasPuzzle;
         else if (Data == Factor.Placable) // 2
             Spr.color = ParentGrid.Color_Placable;
+        else if (Data == Factor.Completable) // 3
+            Spr.color = ParentGrid.Color_Completable;
         else
             Spr.color = Color.blue;
     }

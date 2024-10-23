@@ -13,6 +13,7 @@ public class Factor : MonoBehaviour
 
     public static int IntInitialized { get => -99; }
     public static float CompleteCoroutineInterval { get => 0.03f; }
+    public static float CompletableOffset { get => 1.6f; }
     #endregion
 
     #region Transform

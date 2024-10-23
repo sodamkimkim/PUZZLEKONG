@@ -86,6 +86,12 @@ public class PuzzlePlacableChecker : MonoBehaviour
             return;
     }
 
+    /// <summary>
+    /// 모든 Grid Data 검사하여 이 퍼즐이 그리드에 놓을 자리가 있는지 여부 검사
+    /// </summary>
+    /// <param name="grid"></param>
+    /// <param name="puzzle"></param>
+    /// <returns></returns>
     public int CheckPlacableThisPuzzle(Grid grid, Puzzle puzzle)
     {
         int cnt = 0;
@@ -144,10 +150,10 @@ public class PuzzlePlacableChecker : MonoBehaviour
         return isPlacable;
     }
 
-    public void MarkPlacable(Grid grid, Puzzle touchingPZ)
+    public bool MarkPlacable(Grid grid, Puzzle touchingPZ)
     {
         if (grid == null || touchingPZ == null)
-            return;
+            return false;
 
         MarkPlacableReset(grid);
         bool placable = true;
@@ -167,7 +173,11 @@ public class PuzzlePlacableChecker : MonoBehaviour
                 placable &= false;
         }
         if (placable)
-            SetPlacableGridData(grid, touchingPZ, 0, 2);
+        {
+            SetPlacableGridData(grid, touchingPZ, Factor.HasNoPuzzle, Factor.Placable);
+            return true;
+        }
+        else return false;
     }
     public void MarkPlacableReset(Grid grid)
     {
@@ -215,7 +225,7 @@ public class PuzzlePlacableChecker : MonoBehaviour
         }
         if (isPlacePZSucess)
         {
-            SetPlacableGridData(grid, touchingPZ, 2, 1);
+            SetPlacableGridData(grid, touchingPZ, Factor.Placable, Factor.HasPuzzle);
             DestroyImmediate(touchingPZ.gameObject);
         }
 

@@ -47,15 +47,15 @@ public class CompleteManager : MonoBehaviour
     /// <param name="touchingPZ"></param>
     public void MarkCompletable(Puzzle touchingPZ)
     {
-        // TODO
-        //int[,] gridDataSync = _gridManager.Grid.Data;
-        //_completeHorizontal.MarkCompletable(_gridManager.Grid, gridDataSync);
-        //_completeVertical.MarkCompletable(_gridManager.Grid, gridDataSync);
-        //_completeArea.MarkCompletable(_gridManager.Grid, gridDataSync);
+        int[,] gridDataSync = _gridManager.Grid.Data;
+        _completeHorizontal.MarkCompletable(_gridManager.Grid, gridDataSync, MarkCompletableReset);
+        _completeVertical.MarkCompletable(_gridManager.Grid, gridDataSync, MarkCompletableReset);
+        _completeArea.MarkCompletable(_gridManager.Grid, gridDataSync, MarkCompletableReset);
     }
     public void Complete(CheckPlacableAllRemaingPuzzles checkPlacableAllRemainingPzCallback)
     {
         IsProcessing = true;
+        MarkCompletableReset();
         int[,] gridDataSync = _gridManager.Grid.Data;
         _completeHorizontal.Complete(_gridManager.Grid, gridDataSync,
             () => checkPlacableAllRemainingPzCallback(), CompleteEffect);
@@ -81,5 +81,12 @@ public class CompleteManager : MonoBehaviour
         else if (callerMono.GetType() == typeof(CompleteArea))
             Instantiate(_effectManager.EffectPrefab_Complete_Area, worldPos, Quaternion.identity);
     }
-
+    public void MarkCompletableReset()
+    {
+        foreach (KeyValuePair<string, GridPart> kvp in _gridManager.Grid.ChildGridPartDic)
+        {
+            if (kvp.Value.Data == 3)
+                kvp.Value.Data = 1;
+        }
+    }
 } // end of class
