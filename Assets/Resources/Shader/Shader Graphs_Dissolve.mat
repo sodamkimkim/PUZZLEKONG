@@ -32,7 +32,7 @@ Material:
   m_CustomRenderQueue: -1
   stringTagMap: {}
   disabledShaderPasses: []
-  m_LockedProperties: 
+  m_LockedProperties: _afterColor _color _outlineColor
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
@@ -54,8 +54,9 @@ Material:
     - _QueueOffset: 0
     - _dissolveHeight: 1
     - _noiseScale: 10
-    - _outlineWidth: 0.05
+    - _outlineWidth: 1
     m_Colors:
-    - _color: {r: 0.1764706, g: 0.20784315, b: 0.10588236, a: 0}
-    - _outlineColor: {r: 0.61049575, g: 0.75294244, b: 0.30946895, a: 1}
+    - _afterColor: {r: 1, g: 0.65594494, b: 0, a: 0}
+    - _color: {r: 0.021979094, g: 1, b: 0, a: 0}
+    - _outlineColor: {r: 1, g: 0.989954, b: 0, a: 1}
   m_BuildTextureStacks: []

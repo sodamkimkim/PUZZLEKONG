@@ -13,7 +13,7 @@ public class CompleteHorizontal : MonoBehaviour
     }
     public delegate void CompleteEffect(Vector3 worldPos, MonoBehaviour callerMono);
   //  private  CompleteEffect1 completeEffect1Callback;
-    public void Complete(Grid grid, int[,] gridDataSync, System.Action onCompleteCallback, CompleteEffect completeEffectCallback)
+    public void Complete(Grid grid, int[,] gridDataSync, System.Action completeCallback, CompleteEffect completeEffectCallback)
     {
         int rowLen = grid.Data.GetLength(0);
         int colLen = grid.Data.GetLength(1);
@@ -29,18 +29,18 @@ public class CompleteHorizontal : MonoBehaviour
             }
 
             if (isComplete)
-                StartCoroutine(CompleteCoroutine(grid, idxR, colLen, onCompleteCallback, completeEffectCallback));
+                StartCoroutine(CompleteCoroutine(grid, idxR, colLen, completeCallback, completeEffectCallback));
         }
     }
 
-    private IEnumerator CompleteCoroutine(Grid grid, int idxR, int colLen, System.Action onCompleteCallback, CompleteEffect completeEffectCallback)
+    private IEnumerator CompleteCoroutine(Grid grid, int idxR, int colLen, System.Action completeCallback, CompleteEffect completeEffectCallback)
     {
         for (int i = 0; i < colLen; i++)
-        {
+        { 
             grid.SetDataIdx(idxR, i, 0);
             completeEffectCallback?.Invoke(grid.ChildGridPartDic[$"{idxR},{i}"].transform.position, this);
             yield return new WaitForSeconds(Factor.CompleteCoroutineInterval);
         }
-        onCompleteCallback?.Invoke();
+        completeCallback?.Invoke();
     }
 } // end of class

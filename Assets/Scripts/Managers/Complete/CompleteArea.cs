@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
@@ -17,15 +16,15 @@ public class CompleteArea : MonoBehaviour
     /// </summary>
     /// <param name="grid"></param>
     /// <param name="gridDataSync"></param>
-    public void Complete(Grid grid, int[,] gridDataSync, System.Action onCompleteCallback, CompleteEffect completeEffectCallback)
+    public void Complete(Grid grid, int[,] gridDataSync, System.Action completeCallback, CompleteEffect completeEffectCallback)
     {
         int areaRLen = 3;
         int areaCLen = 3;
 
         for (int areaRIdx = 0; areaRIdx < areaRLen; areaRIdx++)
             for (int areaCIdx = 0; areaCIdx < areaCLen; areaCIdx++)
-                if (CheckArea(areaRIdx, areaCIdx, grid, gridDataSync, onCompleteCallback))
-                    StartCoroutine(CompleteCoroutine(areaRIdx, areaCIdx, grid, onCompleteCallback, completeEffectCallback));
+                if (CheckArea(areaRIdx, areaCIdx, grid, gridDataSync, completeCallback))
+                    StartCoroutine(CompleteCoroutine(areaRIdx, areaCIdx, grid, completeCallback, completeEffectCallback));
     }
     public bool CheckArea(int areaRIdx, int areaCIdx, Grid grid, int[,] gridDataSync, System.Action onCompleteCallback)
     { // areaRIdx : 0, 1, 2 & areaCIdx : 0, 1, 2  
@@ -45,18 +44,18 @@ public class CompleteArea : MonoBehaviour
     /// 영역 한개 complete
     /// </summary>
     /// <param name="grid"></param>
-    /// <param name="onCompleteCallback"></param>
+    /// <param name="completeCallback"></param>
     /// <returns></returns>
-    private IEnumerator CompleteCoroutine(int areaRIdx, int areaCIdx, Grid grid, System.Action onCompleteCallback, CompleteEffect completeEffectCallback)
+    private IEnumerator CompleteCoroutine(int areaRIdx, int areaCIdx, Grid grid, System.Action completeCallback, CompleteEffect completeEffectCallback)
     {
         for (int idxR = areaRIdx * 3; idxR < areaRIdx * 3 + 3; idxR++)
             for (int idxC = areaCIdx * 3; idxC < areaCIdx * 3 + 3; idxC++)
-            {
+            { 
                 grid.SetDataIdx(idxR, idxC, 0);
                 completeEffectCallback?.Invoke(grid.ChildGridPartDic[$"{idxR},{idxC}"].transform.position, this);
                 yield return new WaitForSeconds(Factor.CompleteCoroutineInterval);
             }
 
-        onCompleteCallback?.Invoke();
+        completeCallback?.Invoke();
     }
 } // end of class

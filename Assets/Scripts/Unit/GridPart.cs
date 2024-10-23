@@ -28,12 +28,21 @@ public class GridPart : MonoBehaviour
                 if (ParentGrid.GetDataIdx(IdxRow, IdxCol) != Data)
                     ParentGrid.SetDataIdx(IdxRow, IdxCol, Data);
             }
-         //   Debug.Log($"GridPart: {IdxRow},{IdxCol} - {Data}");
+            //   Debug.Log($"GridPart: {IdxRow},{IdxCol} - {Data}");
         }
     }
     public int IdxRow { get => _idxRow; set => _idxRow = value; }
     public int IdxCol { get => _idxCol; set => _idxCol = value; }
-    public SpriteRenderer Spr { get => _spr; set => _spr = value; }
+    public SpriteRenderer Spr
+    {
+        get
+        {
+            if (_spr == null)
+                _spr = GetComponent<SpriteRenderer>();
+            return _spr;
+        }
+        set => _spr = value;
+    }
 
     public void SetGridPartColor()
     {
