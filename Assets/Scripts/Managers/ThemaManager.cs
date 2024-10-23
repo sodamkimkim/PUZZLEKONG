@@ -22,8 +22,8 @@ public class ThemaManager : MonoBehaviour
     //public static Enum.eTheme ETheme = Enum.eTheme.Yellow;
     // public static Enum.eTheme ETheme = Enum.eTheme.Mint;
 
-    public static Enum.eEffect_Complete Eeffect1 = Enum.eEffect_Complete.C1_RoundStar2;
-    public static Enum.eEffect_Complete Eeffect2 = Enum.eEffect_Complete.C1_Dust_blue;
-    public static Enum.eEffect_Complete Eeffect3 = Enum.eEffect_Complete.C1_Water_blast_green;
+    public static Enum.eEffect_Complete Eeffect_Hori = Enum.eEffect_Complete.C1_RoundStar2;
+    public static Enum.eEffect_Complete Eeffect_Verti = Enum.eEffect_Complete.C1_Dust_blue;
+    public static Enum.eEffect_Complete Eeffect_Area = Enum.eEffect_Complete.C1_Water_blast_green;
 } // end of class
 

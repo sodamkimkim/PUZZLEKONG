@@ -11,7 +11,7 @@ public class CompleteArea : MonoBehaviour
     {
         // TODO 
     }
-    public delegate void CompleteEffect(Vector3 worldPos);
+    public delegate void CompleteEffect(Vector3 worldPos, MonoBehaviour callerMono);
     /// <summary>
     /// 모든 9개영역 조사
     /// </summary>
@@ -53,7 +53,7 @@ public class CompleteArea : MonoBehaviour
             for (int idxC = areaCIdx * 3; idxC < areaCIdx * 3 + 3; idxC++)
             {
                 grid.SetDataIdx(idxR, idxC, 0);
-                completeEffectCallback?.Invoke(grid.ChildGridPartDic[$"{idxR},{idxC}"].transform.position);
+                completeEffectCallback?.Invoke(grid.ChildGridPartDic[$"{idxR},{idxC}"].transform.position, this);
                 yield return new WaitForSeconds(Factor.CompleteCoroutineInterval);
             }
 

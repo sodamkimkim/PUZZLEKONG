@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class EffectManager : MonoBehaviour
 {
-    public GameObject completeEffect1 { get; private set; }
-    public GameObject completeEffect2 { get; private set; }
-    public GameObject completeEffect3 { get; private set; }
+    public GameObject EffectPrefab_Complete_Hori { get; private set; }
+    public GameObject EffectPrefab_Complete_Verti { get; private set; }
+    public GameObject EffectPrefab_Complete_Area { get; private set; }
  
     public void LazyStart()
     {
-        completeEffect1 = Resources.Load<GameObject>($"{Path.CompleteEffectPrefab}/{ThemaManager.Eeffect1.ToString()}");
-        completeEffect2 = Resources.Load<GameObject>($"{Path.CompleteEffectPrefab}/{ThemaManager.Eeffect2.ToString()}");
-        completeEffect3 = Resources.Load<GameObject>($"{Path.CompleteEffectPrefab}/{ThemaManager.Eeffect3.ToString()}");
+        EffectPrefab_Complete_Hori = Resources.Load<GameObject>($"{Path.CompleteEffectPrefab}/{ThemaManager.Eeffect_Hori.ToString()}");
+        EffectPrefab_Complete_Verti = Resources.Load<GameObject>($"{Path.CompleteEffectPrefab}/{ThemaManager.Eeffect_Verti.ToString()}");
+        EffectPrefab_Complete_Area = Resources.Load<GameObject>($"{Path.CompleteEffectPrefab}/{ThemaManager.Eeffect_Area.ToString()}");
     }
 } // end of class

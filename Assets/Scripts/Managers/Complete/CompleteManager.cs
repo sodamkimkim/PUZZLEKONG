@@ -55,30 +55,31 @@ public class CompleteManager : MonoBehaviour
     }
     public void Complete(CheckPlacableAllRemaingPuzzles checkPlacableAllRemainingPzCallback)
     {
-        // TODO - Effect
         IsProcessing = true;
         int[,] gridDataSync = _gridManager.Grid.Data;
-        _completeHorizontal.Complete(_gridManager.Grid, gridDataSync, () => checkPlacableAllRemainingPzCallback(), CompleteEffect1);
-        _completeVertical.Complete(_gridManager.Grid, gridDataSync, () => checkPlacableAllRemainingPzCallback(), CompleteEffect2);
-        _completeArea.Complete(_gridManager.Grid, gridDataSync, () => checkPlacableAllRemainingPzCallback(), CompleteEffect3);
+        _completeHorizontal.Complete(_gridManager.Grid, gridDataSync,
+            () => checkPlacableAllRemainingPzCallback(), CompleteEffect);
+        _completeVertical.Complete(_gridManager.Grid, gridDataSync,
+            () => checkPlacableAllRemainingPzCallback(), CompleteEffect);
+        _completeArea.Complete(_gridManager.Grid, gridDataSync,
+            () => checkPlacableAllRemainingPzCallback(), CompleteEffect);
 
         IsProcessing = false;
         checkPlacableAllRemainingPzCallback();
     }
 
-    public void CompleteEffect1(Vector3 worldPos)
+    public void CompleteEffect(Vector3 worldPos, MonoBehaviour callerMono)
     {
+        if (callerMono == null) return;
+
         worldPos.z = Factor.PosEffectSpawnZ;
-        Instantiate(_effectManager.completeEffect1, worldPos, Quaternion.identity);
+
+        if (callerMono.GetType() == typeof(CompleteHorizontal))
+            Instantiate(_effectManager.EffectPrefab_Complete_Hori, worldPos, Quaternion.identity);
+        else if (callerMono.GetType() == typeof(CompleteVertical))
+            Instantiate(_effectManager.EffectPrefab_Complete_Verti, worldPos, Quaternion.identity);
+        else if (callerMono.GetType() == typeof(CompleteArea))
+            Instantiate(_effectManager.EffectPrefab_Complete_Area, worldPos, Quaternion.identity);
     }
-    public void CompleteEffect2(Vector3 worldPos)
-    {
-        worldPos.z = Factor.PosEffectSpawnZ;
-        Instantiate(_effectManager.completeEffect2, worldPos, Quaternion.identity);
-    }
-    public void CompleteEffect3(Vector3 worldPos)
-    {
-        worldPos.z = Factor.PosEffectSpawnZ;
-        Instantiate(_effectManager.completeEffect3, worldPos, Quaternion.identity);
-    }
+
 } // end of class

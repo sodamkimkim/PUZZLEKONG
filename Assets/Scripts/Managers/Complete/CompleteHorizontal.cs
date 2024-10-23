@@ -11,7 +11,7 @@ public class CompleteHorizontal : MonoBehaviour
     {
         // TODO 
     }
-    public delegate void CompleteEffect(Vector3 worldPos);
+    public delegate void CompleteEffect(Vector3 worldPos, MonoBehaviour callerMono);
   //  private  CompleteEffect1 completeEffect1Callback;
     public void Complete(Grid grid, int[,] gridDataSync, System.Action onCompleteCallback, CompleteEffect completeEffectCallback)
     {
@@ -38,7 +38,7 @@ public class CompleteHorizontal : MonoBehaviour
         for (int i = 0; i < colLen; i++)
         {
             grid.SetDataIdx(idxR, i, 0);
-            completeEffectCallback?.Invoke(grid.ChildGridPartDic[$"{idxR},{i}"].transform.position);
+            completeEffectCallback?.Invoke(grid.ChildGridPartDic[$"{idxR},{i}"].transform.position, this);
             yield return new WaitForSeconds(Factor.CompleteCoroutineInterval);
         }
         onCompleteCallback?.Invoke();
