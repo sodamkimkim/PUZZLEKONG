@@ -11,8 +11,7 @@ public class CompleteHorizontal : MonoBehaviour
     {
         // TODO 
     }
-    public delegate void CompleteEffect(Vector3 worldPos, MonoBehaviour callerMono);
-  //  private  CompleteEffect1 completeEffect1Callback;
+    public delegate void CompleteEffect(Vector3 worldPos, MonoBehaviour callerMono); 
     public void Complete(Grid grid, int[,] gridDataSync, System.Action completeCallback, CompleteEffect completeEffectCallback)
     {
         int rowLen = grid.Data.GetLength(0);

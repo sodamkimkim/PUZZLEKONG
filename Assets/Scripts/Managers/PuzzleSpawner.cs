@@ -64,25 +64,25 @@ public class PuzzleSpawner : MonoBehaviour
             switch (ThemaManager.ETheme)
             {
                 case Enum.eTheme.Grey:
-                    spr.color = Factor.Grey4;
+                    spr.color = Factor.Grey3;
                     break;
                 case Enum.eTheme.Green:
-                    spr.color = Factor.Green4;
+                    spr.color = Factor.Green3;
                     break;
                 case Enum.eTheme.LightPurple:
-                    spr.color = Factor.LightPurple4;
+                    spr.color = Factor.LightPurple3;
                     break;
                 case Enum.eTheme.LightBlue:
-                    spr.color = Factor.LightBlue4;
+                    spr.color = Factor.LightBlue3;
                     break;
                 case Enum.eTheme.Pink:
-                    spr.color = Factor.Pink4;
+                    spr.color = Factor.Pink3;
                     break;
                 case Enum.eTheme.Yellow:
-                    spr.color = Factor.Yellow4;
+                    spr.color = Factor.Yellow3;
                     break;
                 case Enum.eTheme.Mint:
-                    spr.color = Factor.Grey4;
+                    spr.color = Factor.Green3;
                     break;
             }
             Util.CheckAndAddComponent<PZPart>(spr.gameObject);

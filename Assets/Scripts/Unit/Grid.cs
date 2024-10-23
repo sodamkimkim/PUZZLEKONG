@@ -38,39 +38,39 @@ public class Grid : MonoBehaviour
         switch (ThemaManager.ETheme)
         {
             case Enum.eTheme.Grey:
-                Color_HasNoPuzzle = Factor.Grey2;
-                Color_Placable = Factor.Grey3;
-                Color_HasPuzzle = Factor.Grey4;
+                Color_HasNoPuzzle = Factor.Grey1;
+                Color_Placable = Factor.Grey2;
+                Color_HasPuzzle = Factor.Grey3;
                 break;
             case Enum.eTheme.Green:
-                Color_HasNoPuzzle = Factor.Green2;
-                Color_Placable = Factor.Green3;
-                Color_HasPuzzle = Factor.Green4;
+                Color_HasNoPuzzle = Factor.Green1;
+                Color_Placable = Factor.Green2;
+                Color_HasPuzzle = Factor.Green3;
                 break;
             case Enum.eTheme.LightPurple:
-                Color_HasNoPuzzle = Factor.LightPurple2;
-                Color_Placable = Factor.LightPurple3;
-                Color_HasPuzzle = Factor.LightPurple4;
+                Color_HasNoPuzzle = Factor.LightPurple1;
+                Color_Placable = Factor.LightPurple2;
+                Color_HasPuzzle = Factor.LightPurple3;
                 break;
             case Enum.eTheme.LightBlue:
-                Color_HasNoPuzzle = Factor.LightBlue2;
-                Color_Placable = Factor.LightBlue3;
-                Color_HasPuzzle = Factor.LightBlue4;
+                Color_HasNoPuzzle = Factor.LightBlue1;
+                Color_Placable = Factor.LightBlue2;
+                Color_HasPuzzle = Factor.LightBlue3;
                 break;
             case Enum.eTheme.Pink:
-                Color_HasNoPuzzle = Factor.Pink2;
-                Color_Placable = Factor.Pink3;
-                Color_HasPuzzle = Factor.Pink4;
+                Color_HasNoPuzzle = Factor.Pink1;
+                Color_Placable = Factor.Pink2;
+                Color_HasPuzzle = Factor.Pink3;
                 break;
             case Enum.eTheme.Yellow:
-                Color_HasNoPuzzle = Factor.Yellow2;
-                Color_Placable = Factor.Yellow3;
-                Color_HasPuzzle = Factor.Yellow4;
+                Color_HasNoPuzzle = Factor.Yellow1;
+                Color_Placable = Factor.Yellow2;
+                Color_HasPuzzle = Factor.Yellow3;
                 break;
             case Enum.eTheme.Mint:
                 Color_HasNoPuzzle = Factor.BGColorDefault;
-                Color_Placable = Factor.Grey3;
-                Color_HasPuzzle = Factor.Grey4;
+                Color_Placable = Factor.Grey2;
+                Color_HasPuzzle = Factor.Green3;
                 break;
         }
     }

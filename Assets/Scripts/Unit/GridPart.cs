@@ -46,11 +46,11 @@ public class GridPart : MonoBehaviour
 
     public void SetGridPartColor()
     {
-        if (Data == 0)
+        if (Data == Factor.HasNoPuzzle) // 0
             Spr.color = ParentGrid.Color_HasNoPuzzle;
-        else if (Data == 1)
+        else if (Data == Factor.HasPuzzle) // 1
             Spr.color = ParentGrid.Color_HasPuzzle;
-        else if (Data == 2)
+        else if (Data == Factor.Placable) // 2
             Spr.color = ParentGrid.Color_Placable;
         else
             Spr.color = Color.blue;
