@@ -17,7 +17,8 @@ public static class Util
         Vector3 center = Vector3.zero;
         foreach (Transform child in parentTr)
         {
-            center += child.position;
+            if (child.tag != "Untagged")
+                center += child.position;
         }
         center /= parentTr.childCount;
 
@@ -31,7 +32,8 @@ public static class Util
         // 자식들의 위치를 새로운 부모 위치에 맞게 이동
         foreach (Transform child in parentTr)
         {
-            child.position += offset;
+            if (child.tag != "Untagged")
+                child.position += offset;
         }
     }
     public static void CheckAndAddDictionary<T>(Dictionary<string, T> dic, string key, T value)
@@ -46,8 +48,8 @@ public static class Util
     {
         T component = go.GetComponent<T>();
         if (component == null)
-            component =  go.AddComponent<T>();
-   
+            component = go.AddComponent<T>();
+
         return component;
     }
     /// <summary>

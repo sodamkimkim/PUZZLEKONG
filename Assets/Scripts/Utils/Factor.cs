@@ -44,7 +44,7 @@ public class Factor : MonoBehaviour
     public static Color Green3 { get => new Color(45f / 255f, 53f / 255f, 27f / 255f); }
 
     public static Color LightPurple0 { get => new Color(204f / 255f, 204f / 255f, 255f / 255f); }
-    public static Color LightPurple1 { get => new Color(204f / 255f, 153f / 255f, 204f / 255f); }
+    public static Color LightPurple1 { get => new Color(245f / 255f, 186f / 255f, 245f / 255f); }
     public static Color LightPurple2 { get => new Color(153f / 255f, 102f / 255f, 153f / 255f); }
     public static Color LightPurple3 { get => new Color(93f / 255f, 75f / 255f, 113f / 255f); }
 

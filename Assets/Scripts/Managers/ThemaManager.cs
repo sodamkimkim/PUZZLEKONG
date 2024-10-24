@@ -16,14 +16,14 @@ public class ThemaManager : MonoBehaviour
     //   public static Enum.eTheme ETheme = Enum.eTheme.Grey;
     //  public static Enum.eTheme ETheme = Enum.eTheme.Green;
     // public static Enum.eTheme ETheme = Enum.eTheme.LightBlue;
-    //   public static Enum.eTheme ETheme = Enum.eTheme.LightPurple;
-    public static Enum.eTheme ETheme = Enum.eTheme.Pink;
+      public static Enum.eTheme ETheme = Enum.eTheme.LightPurple;
+   // public static Enum.eTheme ETheme = Enum.eTheme.Pink;
     //
     //public static Enum.eTheme ETheme = Enum.eTheme.Yellow;
     // public static Enum.eTheme ETheme = Enum.eTheme.Mint;
 
     public static Enum.eEffect_Complete Eeffect_Hori = Enum.eEffect_Complete.C1_RoundStar2;
-    public static Enum.eEffect_Complete Eeffect_Verti = Enum.eEffect_Complete.C1_Dust_blue;
-    public static Enum.eEffect_Complete Eeffect_Area = Enum.eEffect_Complete.C1_Water_blast_green;
+    public static Enum.eEffect_Complete Eeffect_Verti = Enum.eEffect_Complete.C1_Spark1;
+    public static Enum.eEffect_Complete Eeffect_Area = Enum.eEffect_Complete.C2_Love;
 } // end of class
 

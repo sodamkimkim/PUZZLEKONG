@@ -59,8 +59,9 @@ public class PuzzleSpawner : MonoBehaviour
 
         Puzzle puzzle = puzzleGo.GetComponent<Puzzle>();
         puzzle.Data = PuzzleArrayRepository.PZArrArr[puzzlePrefabArrIdx];
-        foreach (SpriteRenderer spr in puzzleGo.GetComponentsInChildren<SpriteRenderer>())
+        foreach (PZPart pzPart in puzzleGo.GetComponentsInChildren<PZPart>())
         {
+            SpriteRenderer spr = pzPart.gameObject.GetComponent<SpriteRenderer>();
             switch (ThemaManager.ETheme)
             {
                 case Enum.eTheme.Grey:
@@ -84,10 +85,8 @@ public class PuzzleSpawner : MonoBehaviour
                 case Enum.eTheme.Mint:
                     spr.color = Factor.Green3;
                     break;
-            }
-            Util.CheckAndAddComponent<PZPart>(spr.gameObject);
-
-            PZPart pzPart = spr.gameObject.GetComponent<PZPart>();
+            } 
+             
             pzPart.ParentPuzzle = puzzle;
             pzPart.Spr = spr;
 
