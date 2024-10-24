@@ -8,7 +8,20 @@ public class CompleteArea : MonoBehaviour
 {
     public void MarkCompletable(Grid grid, int[,] gridDataSync, System.Action resetFunction)
     {
-        // TODO 
+        int areaRLen = 3;
+        int areaCLen = 3;
+
+        for (int areaRIdx = 0; areaRIdx < areaRLen; areaRIdx++)
+            for (int areaCIdx = 0; areaCIdx < areaCLen; areaCIdx++)
+                if (CheckArea(areaRIdx, areaCIdx, grid, gridDataSync, Factor.Placable))
+                {
+                    for (int idxR = areaRIdx * 3; idxR < areaRIdx * 3 + 3; idxR++)
+                        for (int idxC = areaCIdx * 3; idxC < areaCIdx * 3 + 3; idxC++)
+                        {
+                            if (gridDataSync[idxR, idxC] == Factor.HasPuzzle)
+                                grid.SetDataIdx(idxR, idxC, Factor.Completable);
+                        }
+                }
     }
     public delegate void CompleteEffect(Vector3 worldPos, MonoBehaviour callerMono);
     /// <summary>
@@ -23,16 +36,16 @@ public class CompleteArea : MonoBehaviour
 
         for (int areaRIdx = 0; areaRIdx < areaRLen; areaRIdx++)
             for (int areaCIdx = 0; areaCIdx < areaCLen; areaCIdx++)
-                if (CheckArea(areaRIdx, areaCIdx, grid, gridDataSync, completeCallback))
+                if (CheckArea(areaRIdx, areaCIdx, grid, gridDataSync, Factor.Completable))
                     StartCoroutine(CompleteCoroutine(areaRIdx, areaCIdx, grid, completeCallback, completeEffectCallback));
     }
-    public bool CheckArea(int areaRIdx, int areaCIdx, Grid grid, int[,] gridDataSync, System.Action onCompleteCallback)
+    public bool CheckArea(int areaRIdx, int areaCIdx, Grid grid, int[,] gridDataSync, int gridPartFactor)
     { // areaRIdx : 0, 1, 2 & areaCIdx : 0, 1, 2  
 
         bool isComplete = true;
         for (int idxR = areaRIdx * 3; idxR < areaRIdx * 3 + 3; idxR++)
             for (int idxC = areaCIdx * 3; idxC < areaCIdx * 3 + 3; idxC++)
-                if (gridDataSync[idxR, idxC] == 1)
+                if (gridDataSync[idxR, idxC] == Factor.HasPuzzle || gridDataSync[idxR, idxC] == gridPartFactor)
                     isComplete &= true;
                 else
                     isComplete &= false;
@@ -50,8 +63,8 @@ public class CompleteArea : MonoBehaviour
     {
         for (int idxR = areaRIdx * 3; idxR < areaRIdx * 3 + 3; idxR++)
             for (int idxC = areaCIdx * 3; idxC < areaCIdx * 3 + 3; idxC++)
-            { 
-                grid.SetDataIdx(idxR, idxC, 0);
+            {
+                grid.SetDataIdx(idxR, idxC, Factor.HasNoPuzzle);
                 completeEffectCallback?.Invoke(grid.ChildGridPartDic[$"{idxR},{idxC}"].transform.position, this);
                 yield return new WaitForSeconds(Factor.CompleteCoroutineInterval);
             }

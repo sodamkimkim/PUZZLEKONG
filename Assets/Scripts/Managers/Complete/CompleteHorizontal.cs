@@ -9,7 +9,6 @@ public class CompleteHorizontal : MonoBehaviour
 {
     public void MarkCompletable(Grid grid, int[,] gridDataSync, System.Action resetFunction)
     {
-        // TODO 
         if (grid == null) return;
         int rowLen = grid.Data.GetLength(0);
         int colLen = grid.Data.GetLength(1);
