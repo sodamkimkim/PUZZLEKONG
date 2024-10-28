@@ -10,7 +10,7 @@ public class Factor : MonoBehaviour
     #endregion
 
     #region Common Factor
-    public static int CompleteScore { get => 1; }
+    public static int CompleteScore { get => 5; }
     public static int IntInitialized { get => -99; }
     public static float CompleteCoroutineInterval { get => 0.03f; }
     public static float CompletableOffset { get => 0.8f; }
@@ -50,7 +50,7 @@ public class Factor : MonoBehaviour
     public static Color LightPurple3 { get => new Color(93f / 255f, 75f / 255f, 113f / 255f); }
 
     public static Color LightBlue0 { get => new Color(197f / 255f, 234f / 255f, 247f / 255f); }
-    public static Color LightBlue1 { get => new Color(138f / 255f, 187f / 255f, 203f / 255f); }
+    public static Color LightBlue1 { get => new Color(138f / 255f,  187f / 255f, 203f / 255f); }
     public static Color LightBlue2 { get => new Color(99f / 255f, 134f / 255f, 146f / 255f); }
     public static Color LightBlue3 { get => new Color(59f / 255f, 80f / 255f, 87f / 255f); }
 

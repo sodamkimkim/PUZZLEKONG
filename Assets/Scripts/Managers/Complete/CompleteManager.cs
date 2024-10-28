@@ -29,7 +29,7 @@ public class CompleteManager : MonoBehaviour
     public int ComboCnt { get => _comboCnt; set => _comboCnt = value; }
     #endregion
 
-    #region Dependency Injection
+    #region Dependency Injection 
     [SerializeField]
     private GridManager _gridManager = null;
 
@@ -45,11 +45,14 @@ public class CompleteManager : MonoBehaviour
     [SerializeField]
     private GameObject _uiTMP_COMBO = null;
     [SerializeField]
-    private GameObject _uiTMP_SCORE= null;
+    private GameObject _uiTMP_SCORE = null;
     #endregion
     public delegate void CheckPlacableAllRemaingPuzzles();
 
-
+    private void Awake()
+    {
+        _uiTMP_COMBO.SetActive(false);
+    }
     /// <summary>
     /// 해당 퍼즐을 그리드에 두려고 할 때 Complete여부도 표시
     /// </summary>
@@ -91,8 +94,8 @@ public class CompleteManager : MonoBehaviour
                 Invoke(nameof(UIComboSetActiveFalse), 1f);
             }
 
-            PlayerManager.Score += score;
-            Debug.Log($"Score : {score} | PlayerManager.Score == {PlayerManager.Score}");
+            PlayerDataManager.GameData.Score += score;
+            Debug.Log($"Score : {score} | PlayerManager.Score == {PlayerDataManager.GameData.Score}");
         }
         else
             _comboCnt = 0;
