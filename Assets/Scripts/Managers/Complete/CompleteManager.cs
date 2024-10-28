@@ -67,11 +67,20 @@ public class CompleteManager : MonoBehaviour
             () => checkPlacableAllRemainingPzCallback(), CompleteEffect);
         int comboCnt_area = _completeArea.Complete(_gridManager.Grid, gridDataSync,
             () => checkPlacableAllRemainingPzCallback(), CompleteEffect);
-
-        // ComboCnt++;
-
-        Debug.Log($"ComboCnt : h> {comboCnt_hori}, v> {comboCnt_verti}, area> {comboCnt_area}");
+ 
+       // Debug.Log($"ComboCnt : h> {comboCnt_hori}, v> {comboCnt_verti}, area> {comboCnt_area}");
         // TODO Combo Celebration
+        int totalCombo = comboCnt_hori + comboCnt_verti + comboCnt_area;
+        if (totalCombo > 0)
+        {
+            _comboCnt += totalCombo;
+        }
+        else
+        {
+            _comboCnt = 0; 
+        } 
+        Debug.Log("Combo : " + _comboCnt);
+
         IsProcessing = false;
         checkPlacableAllRemainingPzCallback();
     }
