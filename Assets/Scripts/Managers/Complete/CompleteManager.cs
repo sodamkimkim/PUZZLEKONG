@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using TMPro;
 /// <summary>
 /// 1. Comletable check & mark
 /// 2. Complete => Grid Update callback 호출
@@ -41,6 +41,9 @@ public class CompleteManager : MonoBehaviour
     private CompleteArea _completeArea = null;
     [SerializeField]
     private EffectManager _effectManager = null;
+
+    [SerializeField]
+    private GameObject _uiTMP_COMBO = null; 
     #endregion
     public delegate void CheckPlacableAllRemaingPuzzles();
 
@@ -67,24 +70,34 @@ public class CompleteManager : MonoBehaviour
             () => checkPlacableAllRemainingPzCallback(), CompleteEffect);
         int comboCnt_area = _completeArea.Complete(_gridManager.Grid, gridDataSync,
             () => checkPlacableAllRemainingPzCallback(), CompleteEffect);
- 
-       // Debug.Log($"ComboCnt : h> {comboCnt_hori}, v> {comboCnt_verti}, area> {comboCnt_area}");
-        // TODO Combo Celebration
+
         int totalCombo = comboCnt_hori + comboCnt_verti + comboCnt_area;
         if (totalCombo > 0)
         {
             _comboCnt += totalCombo;
+            // Combo Celebration
+            if (_comboCnt > 1)
+            {
+                // 숫자
+                Instantiate(_effectManager.EffectPrefab_Celebration_Combo, Factor.EffectPos_Celebration, Quaternion.identity);
+                _uiTMP_COMBO.SetActive(true);
+                _uiTMP_COMBO.GetComponent<TextMeshProUGUI>().text = $"{_comboCnt} C O M B O";
+                Invoke(nameof(UIComboSetActiveFalse), 1f);
+            }
         }
         else
-        {
-            _comboCnt = 0; 
-        } 
+            _comboCnt = 0;
+
+
         Debug.Log("Combo : " + _comboCnt);
 
         IsProcessing = false;
         checkPlacableAllRemainingPzCallback();
     }
-
+    private void UIComboSetActiveFalse()
+    {
+        _uiTMP_COMBO.SetActive(false);
+    }
     public void CompleteEffect(Vector3 worldPos, MonoBehaviour callerMono)
     {
         if (callerMono == null) return;

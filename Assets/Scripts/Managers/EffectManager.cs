@@ -15,7 +15,7 @@ public class EffectManager : MonoBehaviour
         EffectPrefab_Complete_Hori = Resources.Load<GameObject>($"{Path.CompleteEffectPrefab}/{ThemaManager.Eeffect_Hori.ToString()}");
         EffectPrefab_Complete_Verti = Resources.Load<GameObject>($"{Path.CompleteEffectPrefab}/{ThemaManager.Eeffect_Verti.ToString()}");
         EffectPrefab_Complete_Area = Resources.Load<GameObject>($"{Path.CompleteEffectPrefab}/{ThemaManager.Eeffect_Area.ToString()}");
-        EffectPrefab_Celebration_Combo = Resources.Load<GameObject>($"{Path.CompleteEffectPrefab}/{ThemaManager.Eeffect_Combo.ToString()}");
-        EffectPrefab_Celebration_Finish = Resources.Load<GameObject>($"{Path.CompleteEffectPrefab}/{ThemaManager.Eeffect_Finish.ToString()}");
+        EffectPrefab_Celebration_Combo = Resources.Load<GameObject>($"{Path.CelebrationEffectPrefab}/{ThemaManager.Eeffect_Combo.ToString()}");
+        EffectPrefab_Celebration_Finish = EffectPrefab_Celebration_Combo;
     }
 } // end of class

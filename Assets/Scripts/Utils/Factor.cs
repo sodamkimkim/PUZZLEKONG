@@ -14,6 +14,7 @@ public class Factor : MonoBehaviour
     public static int IntInitialized { get => -99; }
     public static float CompleteCoroutineInterval { get => 0.03f; }
     public static float CompletableOffset { get => 0.8f; }
+    public static Vector3 EffectPos_Celebration { get => new Vector3(0f, 1f, -0.2f); }
     #endregion
 
     #region Transform
