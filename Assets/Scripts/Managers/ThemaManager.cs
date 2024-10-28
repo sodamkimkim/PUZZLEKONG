@@ -24,6 +24,8 @@ public class ThemaManager : MonoBehaviour
 
     public static Enum.eEffect_Complete Eeffect_Hori = Enum.eEffect_Complete.C1_RoundStar2;
     public static Enum.eEffect_Complete Eeffect_Verti = Enum.eEffect_Complete.C1_Spark1;
-    public static Enum.eEffect_Complete Eeffect_Area = Enum.eEffect_Complete.C2_Love;
+    public static Enum.eEffect_Complete Eeffect_Area = Enum.eEffect_Complete.C2_Love1;
+    public static Enum.eEffect_Celebration Eeffect_Combo = Enum.eEffect_Celebration.Celebration1;
+    public static Enum.eEffect_Celebration Eeffect_Finish = Enum.eEffect_Celebration.Celebration2;
 } // end of class
 

@@ -9,6 +9,11 @@ public class Enum
      //   C1_Shine_Blue, C1_Shine_Green, C1_Shine_Grey, C1_Shine_LightPurple, C1_Shine_Mint, C1_Shine_Pink, C1_Shine_Yellow,
         C1_Spark1, C1_Spark2,
         C1_Water_blast_blue, C1_Water_blast_green,
-        C2_Fire, C2_Ice, C2_Lighting, C2_Love, C2_Mint
+        C2_Fire, C2_Ice, C2_Lighting, C2_Love, C2_Mint,
+        C2_Love1
     } 
+    public enum eEffect_Celebration
+    {
+        Celebration1, Celebration2
+    }
 } // end of class

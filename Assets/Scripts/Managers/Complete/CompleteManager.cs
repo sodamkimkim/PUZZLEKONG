@@ -9,7 +9,8 @@ using UnityEngine;
 public class CompleteManager : MonoBehaviour
 {
     #region Hidden Private Variables
-    private static bool _isAllComplete = false;
+    private static bool _isProcessiong = false;
+    private int _comboCnt = 0;
     #endregion
 
     #region Properties
@@ -19,12 +20,13 @@ public class CompleteManager : MonoBehaviour
     /// </summary>
     public static bool IsProcessing
     {
-        get => _isAllComplete;
+        get => _isProcessiong;
         set
         {
-            _isAllComplete = value;
+            _isProcessiong = value;
         }
     }
+    public int ComboCnt { get => _comboCnt; set => _comboCnt = value; }
     #endregion
 
     #region Dependency Injection
@@ -41,6 +43,8 @@ public class CompleteManager : MonoBehaviour
     private EffectManager _effectManager = null;
     #endregion
     public delegate void CheckPlacableAllRemaingPuzzles();
+
+
     /// <summary>
     /// 해당 퍼즐을 그리드에 두려고 할 때 Complete여부도 표시
     /// </summary>
@@ -57,13 +61,17 @@ public class CompleteManager : MonoBehaviour
         IsProcessing = true;
         MarkCompletableReset();
         int[,] gridDataSync = _gridManager.Grid.Data;
-        _completeHorizontal.Complete(_gridManager.Grid, gridDataSync,
+        int comboCnt_hori = _completeHorizontal.Complete(_gridManager.Grid, gridDataSync,
+               () => checkPlacableAllRemainingPzCallback(), CompleteEffect);
+        int comboCnt_verti = _completeVertical.Complete(_gridManager.Grid, gridDataSync,
             () => checkPlacableAllRemainingPzCallback(), CompleteEffect);
-        _completeVertical.Complete(_gridManager.Grid, gridDataSync,
-            () => checkPlacableAllRemainingPzCallback(), CompleteEffect);
-        _completeArea.Complete(_gridManager.Grid, gridDataSync,
+        int comboCnt_area = _completeArea.Complete(_gridManager.Grid, gridDataSync,
             () => checkPlacableAllRemainingPzCallback(), CompleteEffect);
 
+        // ComboCnt++;
+
+        Debug.Log($"ComboCnt : h> {comboCnt_hori}, v> {comboCnt_verti}, area> {comboCnt_area}");
+        // TODO Combo Celebration
         IsProcessing = false;
         checkPlacableAllRemainingPzCallback();
     }

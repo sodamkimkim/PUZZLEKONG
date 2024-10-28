@@ -7,4 +7,5 @@ public class Path
     public static string PuzzlePartPrefab { get => "Prefabs/BuildPuzzle/Puzzle_NoLine"; }
     public static string GridePartPrefab { get => "Prefabs/BuildPuzzle/GridPart"; }
     public static string CompleteEffectPrefab { get => "Prefabs/Effects/Complete"; }
+    public static string CelebrationEffectPrefab { get => "Prefabs/Effects/Celebration"; }
 } // end of class

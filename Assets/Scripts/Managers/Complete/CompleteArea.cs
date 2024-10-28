@@ -29,15 +29,21 @@ public class CompleteArea : MonoBehaviour
     /// </summary>
     /// <param name="grid"></param>
     /// <param name="gridDataSync"></param>
-    public void Complete(Grid grid, int[,] gridDataSync, System.Action completeCallback, CompleteEffect completeEffectCallback)
+    public int Complete(Grid grid, int[,] gridDataSync, System.Action completeCallback, CompleteEffect completeEffectCallback)
     {
         int areaRLen = 3;
         int areaCLen = 3;
+        int comboCnt = 0;
 
         for (int areaRIdx = 0; areaRIdx < areaRLen; areaRIdx++)
             for (int areaCIdx = 0; areaCIdx < areaCLen; areaCIdx++)
                 if (CheckArea(areaRIdx, areaCIdx, grid, gridDataSync, Factor.Completable))
+                {
+                    comboCnt++;
                     StartCoroutine(CompleteCoroutine(areaRIdx, areaCIdx, grid, completeCallback, completeEffectCallback));
+                }
+
+        return comboCnt;
     }
     public bool CheckArea(int areaRIdx, int areaCIdx, Grid grid, int[,] gridDataSync, int gridPartFactor)
     { // areaRIdx : 0, 1, 2 & areaCIdx : 0, 1, 2  

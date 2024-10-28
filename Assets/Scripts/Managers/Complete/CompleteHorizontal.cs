@@ -36,10 +36,12 @@ public class CompleteHorizontal : MonoBehaviour
     }
 
     public delegate void CompleteEffect(Vector3 worldPos, MonoBehaviour callerMono);
-    public void Complete(Grid grid, int[,] gridDataSync, System.Action completeCallback, CompleteEffect completeEffectCallback)
+    public int Complete(Grid grid, int[,] gridDataSync, System.Action completeCallback, CompleteEffect completeEffectCallback)
     {
         int rowLen = grid.Data.GetLength(0);
         int colLen = grid.Data.GetLength(1);
+        int comboCnt = 0;
+
         for (int idxR = 0; idxR < rowLen; idxR++)
         {
             bool isComplete = true;
@@ -52,8 +54,13 @@ public class CompleteHorizontal : MonoBehaviour
             }
 
             if (isComplete)
+            {
+                comboCnt++;
                 StartCoroutine(CompleteCoroutine(grid, idxR, colLen, completeCallback, completeEffectCallback));
+            }
         }
+
+        return comboCnt;
     }
 
     private IEnumerator CompleteCoroutine(Grid grid, int idxR, int colLen, System.Action completeCallback, CompleteEffect completeEffectCallback)
