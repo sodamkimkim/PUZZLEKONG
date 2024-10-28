@@ -43,7 +43,9 @@ public class CompleteManager : MonoBehaviour
     private EffectManager _effectManager = null;
 
     [SerializeField]
-    private GameObject _uiTMP_COMBO = null; 
+    private GameObject _uiTMP_COMBO = null;
+    [SerializeField]
+    private GameObject _uiTMP_SCORE= null;
     #endregion
     public delegate void CheckPlacableAllRemaingPuzzles();
 
@@ -74,16 +76,23 @@ public class CompleteManager : MonoBehaviour
         int totalCombo = comboCnt_hori + comboCnt_verti + comboCnt_area;
         if (totalCombo > 0)
         {
+            int score = Factor.CompleteScore;
             _comboCnt += totalCombo;
+
             // Combo Celebration
             if (_comboCnt > 1)
             {
-                // ¼ýÀÚ
                 Instantiate(_effectManager.EffectPrefab_Celebration_Combo, Factor.EffectPos_Celebration, Quaternion.identity);
                 _uiTMP_COMBO.SetActive(true);
                 _uiTMP_COMBO.GetComponent<TextMeshProUGUI>().text = $"{_comboCnt} C O M B O";
+
+                score *= _comboCnt;
+                _uiTMP_SCORE.GetComponent<TextMeshProUGUI>().text = $"+ {score}";
                 Invoke(nameof(UIComboSetActiveFalse), 1f);
             }
+
+            PlayerManager.Score += score;
+            Debug.Log($"Score : {score} | PlayerManager.Score == {PlayerManager.Score}");
         }
         else
             _comboCnt = 0;
