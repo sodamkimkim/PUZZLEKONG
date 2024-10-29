@@ -7,6 +7,7 @@ using UnityEngine;
 /// </summary>
 public class CompleteHorizontal : MonoBehaviour
 {
+    public bool IsProcessing = false;
     public void MarkCompletable(Grid grid, int[,] gridDataSync, System.Action resetFunction)
     {
         if (grid == null) return;
@@ -36,8 +37,9 @@ public class CompleteHorizontal : MonoBehaviour
     }
 
     public delegate void CompleteEffect(Vector3 worldPos, MonoBehaviour callerMono);
-    public int Complete(Grid grid, int[,] gridDataSync, System.Action completeCallback, CompleteEffect completeEffectCallback)
+    public int Complete(Grid grid, int[,] gridDataSync, System.Action SetPuzzlesActive, CompleteEffect completeEffectCallback)
     {
+        IsProcessing = true;
         int rowLen = grid.Data.GetLength(0);
         int colLen = grid.Data.GetLength(1);
         int comboCnt = 0;
@@ -56,21 +58,28 @@ public class CompleteHorizontal : MonoBehaviour
             if (isComplete)
             {
                 comboCnt++;
-                StartCoroutine(CompleteCoroutine(grid, idxR, colLen, completeCallback, completeEffectCallback));
+
+                CompleteData(grid, idxR, colLen, SetPuzzlesActive);
+                StartCoroutine(CompleteCoroutine(grid, idxR, colLen, completeEffectCallback));
             }
         }
 
         return comboCnt;
     }
-
-    private IEnumerator CompleteCoroutine(Grid grid, int idxR, int colLen, System.Action completeCallback, CompleteEffect completeEffectCallback)
+    private void CompleteData(Grid grid, int idxR, int colLen, System.Action SetPuzzleActive)
     {
         for (int i = 0; i < colLen; i++)
         {
             grid.SetDataIdx(idxR, i, Factor.HasNoPuzzle);
+        }
+        SetPuzzleActive?.Invoke();
+    }
+    private IEnumerator CompleteCoroutine(Grid grid, int idxR, int colLen, CompleteEffect completeEffectCallback)
+    {
+        for (int i = 0; i < colLen; i++)
+        { 
             completeEffectCallback?.Invoke(grid.ChildGridPartDic[$"{idxR},{i}"].transform.position, this);
             yield return new WaitForSeconds(Factor.CompleteCoroutineInterval);
         }
-      completeCallback?.Invoke();
     }
 } // end of class

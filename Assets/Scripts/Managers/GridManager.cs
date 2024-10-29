@@ -25,16 +25,24 @@ public class GridManager : MonoBehaviour
     public void LazyStart()
     {
         IsGridGoReady = _gridSpawner.SpawnGridGo(GridArrayRepository.GridArrArr[2], ref _grid);
-       _checkPlacableCallback?.Invoke();
+        //  _SetPuzzleActiveCallback?.Invoke();
+        //  _CheckStageCompleteCallback?.Invoke();
+        //  _checkGameOverCallback?.Invoke();
     }
 
     #region delegate
-    public delegate void CheckPlacable();
-    private CheckPlacable _checkPlacableCallback { get; set; }
+    public delegate int SetPuzzleActive();
+    public delegate void CheckStageComplete();
+    public delegate void CheckGameover();
+    private SetPuzzleActive _SetPuzzleActiveCallback { get; set; }
+    private CheckStageComplete _CheckStageCompleteCallback { get; set; }
+    private CheckGameover _checkGameOverCallback { get; set; }
 
-    public void Iniit(CheckPlacable checkPlacableCallback)
+    public void Iniit(SetPuzzleActive SetPuzzleActiveCallback, CheckStageComplete checkGameOverCallback, CheckGameover checkGameOVerCallback)
     {
-        _checkPlacableCallback = checkPlacableCallback;
+        _SetPuzzleActiveCallback = SetPuzzleActiveCallback;
+        _CheckStageCompleteCallback = checkGameOverCallback;
+        _checkGameOverCallback = checkGameOVerCallback;
     }
     #endregion 
 } // end of class

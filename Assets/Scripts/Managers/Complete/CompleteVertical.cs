@@ -7,6 +7,8 @@ using UnityEngine;
 /// </summary>
 public class CompleteVertical : MonoBehaviour
 {
+    public bool IsProcessing = false;
+
     public void MarkCompletable(Grid grid, int[,] gridDataSync, System.Action resetFunction)
     {
         if (grid == null) return;
@@ -36,9 +38,10 @@ public class CompleteVertical : MonoBehaviour
         }
     }
 
-    public delegate void CompleteEffect(Vector3 worldPos, MonoBehaviour callerMono); 
-    public int Complete(Grid grid, int[,] gridDataSync, System.Action completeCallback, CompleteEffect completeEffectCallback)
+    public delegate void CompleteEffect(Vector3 worldPos, MonoBehaviour callerMono);
+    public int Complete(Grid grid, int[,] gridDataSync, System.Action SetPuzzlesActive, CompleteEffect completeEffectCallback)
     {
+        IsProcessing = true;
         int rowLen = grid.Data.GetLength(0);
         int colLen = grid.Data.GetLength(1);
         int comboCnt = 0;
@@ -57,20 +60,28 @@ public class CompleteVertical : MonoBehaviour
             if (isComplete)
             {
                 comboCnt++;
-                StartCoroutine(CompleteCoroutine(grid, idxC, rowLen, completeCallback, completeEffectCallback));
+
+                CompleteData(grid, idxC, rowLen, SetPuzzlesActive);
+                StartCoroutine(CompleteCoroutine(grid, idxC, rowLen, completeEffectCallback));
             }
         }
 
         return comboCnt;
     }
-    private IEnumerator CompleteCoroutine(Grid grid, int idxC, int rowLen, System.Action completeCallback, CompleteEffect completeEffectCallback)
+    private void CompleteData(Grid grid, int idxC, int rowLen, System.Action SetPuzzlesActive)
     {
         for (int i = 0; i < rowLen; i++)
-        { 
+        {
             grid.SetDataIdx(i, idxC, 0);
+        }
+        SetPuzzlesActive?.Invoke();
+    }
+    private IEnumerator CompleteCoroutine(Grid grid, int idxC, int rowLen, CompleteEffect completeEffectCallback)
+    {
+        for (int i = 0; i < rowLen; i++)
+        {
             completeEffectCallback?.Invoke(grid.ChildGridPartDic[$"{i},{idxC}"].transform.position, this);
             yield return new WaitForSeconds(Factor.CompleteCoroutineInterval);
         }
-       completeCallback?.Invoke();
     }
 } // end of class

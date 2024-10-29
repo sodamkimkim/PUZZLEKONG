@@ -29,12 +29,13 @@ public class GameManager : MonoBehaviour
         _effectManager.LazyStart();
         _gridManager.LazyStart();
         _puzzleManager.LazyStart();
-        _completeManager.Complete(_puzzlePlaceManager.CheckPlacableAllRemainingPuzzles);
+        _completeManager.Complete(_puzzlePlaceManager.SetPuzzlesActive, _puzzlePlaceManager.CheckStageCompleteOrGameOver);
     }
     private void GameOverProcess()
     {
         // TODO - GameOver Process
         // 살아나면 gameover x
+ 
         _playerDataManager.UpdateData(_uiManager);
         _playerDataManager.SaveData();
         Debug.Log($"GameOver | {PlayerDataManager.GameData.ToString()}");

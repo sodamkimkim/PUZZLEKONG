@@ -85,7 +85,67 @@ public class PuzzlePlacableChecker : MonoBehaviour
         else
             return;
     }
+    public int SetPuzzlesActiveAndCountActive(Grid grid, GameObject[] puzzleGoArr)
+    {
+        if (grid == null || puzzleGoArr == null) return 0;
 
+        int activePuzzleCnt = 0;
+        foreach (GameObject go in puzzleGoArr)
+        {
+            if (go == null) continue;
+            // # 해당 배열 내 Puzzle Go가 있고 Placable이면 true반환 
+
+            Puzzle puzzle = go.GetComponent<Puzzle>();
+            if (puzzle != null)
+            {
+                if (CheckPlacableThisPuzzle(grid, puzzle) == 0)
+                {
+                    puzzle.ActiveSelf = false;
+                }
+                else
+                {
+                    puzzle.ActiveSelf = true;
+                    activePuzzleCnt++;
+                }
+            }
+            else // # 해당 배열 내 Puzzle Go 없음
+                continue;
+        }
+        return activePuzzleCnt;
+    }
+    public void CheckStageCompleteOrGameOver(Grid grid, GameObject[] puzzleGoArr)
+    {
+        if (grid == null || puzzleGoArr == null) return;
+
+        int remainingPuzzleCnt = 0;
+        int gameOverCheckCnt = 0;
+        foreach (GameObject go in puzzleGoArr)
+        {
+            if (go == null) continue;
+            // # 해당 배열 내 Puzzle Go가 있고 Placable이면 true반환 
+
+            Puzzle puzzle = go.GetComponent<Puzzle>();
+            if (puzzle != null)
+            {
+                if (CheckPlacableThisPuzzle(grid, puzzle) == 0)
+                    gameOverCheckCnt++;
+
+                remainingPuzzleCnt++;
+            }
+            else // # 해당 배열 내 Puzzle Go 없음
+                continue;
+        }
+
+        if (remainingPuzzleCnt == 0)
+        {
+            _stageCompleteCallback?.Invoke();
+        }
+        else if (remainingPuzzleCnt != 0 && remainingPuzzleCnt == gameOverCheckCnt)
+        {
+            _gameOverCallback?.Invoke();
+        }
+    }
+ 
     /// <summary>
     /// 모든 Grid Data 검사하여 이 퍼즐이 그리드에 놓을 자리가 있는지 여부 검사
     /// </summary>
@@ -103,7 +163,7 @@ public class PuzzlePlacableChecker : MonoBehaviour
                 if (CheckMappingGridInspectionAreaAndPuzzle(grid, puzzle, grIdxR, grIdxC))
                     cnt++;
             }
-     //   Debug.Log($"{puzzle.name} placable cnt: {cnt}");
+        //   Debug.Log($"{puzzle.name} placable cnt: {cnt}");
         return cnt;
     }
 

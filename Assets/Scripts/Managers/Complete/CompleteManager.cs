@@ -48,7 +48,8 @@ public class CompleteManager : MonoBehaviour
     #endregion
 
 
-    public delegate void CheckPlacableAllRemaingPuzzles();
+    public delegate void CheckGameOver();
+    public delegate int SetPuzzlesActive();
 
 
     /// <summary>
@@ -62,24 +63,30 @@ public class CompleteManager : MonoBehaviour
         _completeVertical.MarkCompletable(_gridManager.Grid, gridDataSync, MarkCompletableReset);
         _completeArea.MarkCompletable(_gridManager.Grid, gridDataSync, MarkCompletableReset);
     }
-    public void Complete(CheckPlacableAllRemaingPuzzles checkPlacableAllRemainingPzCallback)
+    public void Complete(SetPuzzlesActive SetPuzzlesActive, CheckGameOver CheckStageCompleteOrGameOver)
     {
         IsProcessing = true;
         MarkCompletableReset();
         int[,] gridDataSync = _gridManager.Grid.Data;
         int comboCnt_hori = _completeHorizontal.Complete(_gridManager.Grid, gridDataSync,
-               () => checkPlacableAllRemainingPzCallback(), CompleteEffect);
+            () => SetPuzzlesActive(), CompleteEffect);
         int comboCnt_verti = _completeVertical.Complete(_gridManager.Grid, gridDataSync,
-            () => checkPlacableAllRemainingPzCallback(), CompleteEffect);
+            () => SetPuzzlesActive(), CompleteEffect);
         int comboCnt_area = _completeArea.Complete(_gridManager.Grid, gridDataSync,
-            () => checkPlacableAllRemainingPzCallback(), CompleteEffect);
+            () => SetPuzzlesActive(), CompleteEffect);
+         
+        int completeCnt = comboCnt_hori + comboCnt_verti + comboCnt_area;
+        ComboAndSaveData(completeCnt);
 
-        ComboAndSave(comboCnt_hori + comboCnt_verti + comboCnt_area);
-
+        // Complete ´ÙµÆÀ¸¸é
         IsProcessing = false;
-        checkPlacableAllRemainingPzCallback();
+        int activeCnt = SetPuzzlesActive();
+        Debug.Log(activeCnt);
+
+        if (activeCnt == 0) 
+            CheckStageCompleteOrGameOver(); 
     }
-    private void ComboAndSave(int comboCnt)
+    private void ComboAndSaveData(int comboCnt)
     {
         if (comboCnt > 0)
         {
@@ -90,10 +97,10 @@ public class CompleteManager : MonoBehaviour
             if (_totalComboCnt > 1)
             {
                 Instantiate(_effectManager.EffectPrefab_Celebration_Combo, Factor.EffectPos_Celebration, Quaternion.identity);
-                _uiManager.SetTMPText(_uiManager.UITMP_TempText_Large, $"{_totalComboCnt} C O M B O", Color.white, true); 
+                _uiManager.SetTMPText(_uiManager.UITMP_TempText_Large, $"{_totalComboCnt} C O M B O", Color.white, true);
 
                 score *= _totalComboCnt;
-                _uiManager.SetTMPText(_uiManager.UITMP_TempText_Small, $"+ {score}", Color.red, true);   
+                _uiManager.SetTMPText(_uiManager.UITMP_TempText_Small, $"+ {score}", Color.red, true);
             }
 
             PlayerDataManager.GameData.NowScore += score;

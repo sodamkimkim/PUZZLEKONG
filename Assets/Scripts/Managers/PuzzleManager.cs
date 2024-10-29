@@ -19,26 +19,30 @@ public class PuzzleManager : MonoBehaviour
     {
         _btnReset.onClick.AddListener(() => LazyStart());
     }
- 
+
     public void LazyStart()
     {
         InstantiatePuzzleGos(ref _puzzleGoArr);
-     _checkPlacableCallback?.Invoke(); // 퍼즐 생성 후 checkPlacable하여 gameOver여부 확인 
+        _SetPuzzleActiveCallback?.Invoke();
+        _checkStageCompleteOrGameOverCallback?.Invoke();
     }
     private void InstantiatePuzzleGos(ref GameObject[] puzzleGoArr)
     {
         _puzzleSpawner.DestroyChilds();
 
         for (int i = 0; i < _puzzleGoArr.Length; i++)
-            puzzleGoArr[i] = _puzzleSpawner.SpawnPuzzle(i); 
+            puzzleGoArr[i] = _puzzleSpawner.SpawnPuzzle(i);
     }
 
     #region delegate
-    public delegate void CheckPlacable();
-    private CheckPlacable _checkPlacableCallback { get; set; }
-    public void Iniit(CheckPlacable checkPlacableCallback)
+    public delegate void CheckGameOver();
+    public delegate int SetPuzzleActive();
+    private CheckGameOver _checkStageCompleteOrGameOverCallback { get; set; }
+    private SetPuzzleActive _SetPuzzleActiveCallback { get; set; }
+    public void Iniit(SetPuzzleActive SetPuzzleActiveCallback, CheckGameOver checkStageCompleteOrGameOverCallback)
     {
-        _checkPlacableCallback = checkPlacableCallback;
+        _SetPuzzleActiveCallback = SetPuzzleActiveCallback;
+        _checkStageCompleteOrGameOverCallback = checkStageCompleteOrGameOverCallback;
     }
     #endregion
 } // end of class
