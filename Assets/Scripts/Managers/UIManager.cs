@@ -38,6 +38,8 @@ public class UIManager : MonoBehaviour
     }
     public void SetTMPText(GameObject uiGo, string text, Color color, bool lazyClose)
     {
+        StopCoroutine(nameof(UISetActiveFalse));
+
         TextMeshProUGUI tmpro = uiGo.GetComponent<TextMeshProUGUI>();
         if (tmpro == null) return;
 
@@ -46,8 +48,8 @@ public class UIManager : MonoBehaviour
         tmpro.text = text;
         tmpro.color = color;
 
-        if (lazyClose)
-            StartCoroutine(UISetActiveFalse(uiGo, 1f));
+        if (lazyClose) 
+            StartCoroutine(UISetActiveFalse(uiGo, 1f)); 
     }
     IEnumerator UISetActiveFalse(GameObject uiGo, float delay)
     {

@@ -79,11 +79,9 @@ public class CompleteManager : MonoBehaviour
         ComboAndSaveData(completeCnt);
 
         // Complete ´ÙµÆÀ¸¸é
-        IsProcessing = false;
-        int activeCnt = SetPuzzlesActive();
-        Debug.Log(activeCnt);
+        IsProcessing = false;  
 
-        if (activeCnt == 0) 
+        if (SetPuzzlesActive() == 0) 
             CheckStageCompleteOrGameOver(); 
     }
     private void ComboAndSaveData(int comboCnt)

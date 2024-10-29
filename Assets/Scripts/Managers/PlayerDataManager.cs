@@ -53,7 +53,7 @@ public class PlayerDataManager : MonoBehaviour
         if(GameData.MyBestScore<GameData.NowScore)
         {
             Debug.Log("BestScore °»½Å");
-            uiManager.SetTMPText(uiManager.UITMP_TempText_Large, "YOUR\nBEST SCORE!", Color.blue, true);
+            uiManager.SetTMPText(uiManager.UITMP_TempText_Large, "YOUR\nBEST SCORE!", Color.white, false);
             Instantiate(_effectManager.EffectPrefab_Celebration_Finish, Factor.EffectPos_Celebration, Quaternion.identity);
             GameData.MyBestScore = GameData.NowScore;
         }
