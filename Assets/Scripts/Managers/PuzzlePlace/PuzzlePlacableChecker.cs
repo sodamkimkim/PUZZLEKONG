@@ -103,7 +103,7 @@ public class PuzzlePlacableChecker : MonoBehaviour
                 if (CheckMappingGridInspectionAreaAndPuzzle(grid, puzzle, grIdxR, grIdxC))
                     cnt++;
             }
-        Debug.Log($"{puzzle.name} placable cnt: {cnt}");
+     //   Debug.Log($"{puzzle.name} placable cnt: {cnt}");
         return cnt;
     }
 

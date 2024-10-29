@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
+
 /// <summary>
 /// 1. Comletable check & mark
 /// 2. Complete => Grid Update callback 호출
@@ -10,7 +10,7 @@ public class CompleteManager : MonoBehaviour
 {
     #region Hidden Private Variables
     private static bool _isProcessiong = false;
-    private int _comboCnt = 0;
+    private int _totalComboCnt = 0;
     #endregion
 
     #region Properties
@@ -26,10 +26,14 @@ public class CompleteManager : MonoBehaviour
             _isProcessiong = value;
         }
     }
-    public int ComboCnt { get => _comboCnt; set => _comboCnt = value; }
+    public int ComboCnt { get => _totalComboCnt; set => _totalComboCnt = value; }
     #endregion
 
     #region Dependency Injection 
+    [SerializeField]
+    private UIManager _uiManager = null;
+    [SerializeField]
+    private PlayerDataManager _playerDataManager = null;
     [SerializeField]
     private GridManager _gridManager = null;
 
@@ -41,18 +45,12 @@ public class CompleteManager : MonoBehaviour
     private CompleteArea _completeArea = null;
     [SerializeField]
     private EffectManager _effectManager = null;
-
-    [SerializeField]
-    private GameObject _uiTMP_COMBO = null;
-    [SerializeField]
-    private GameObject _uiTMP_SCORE = null;
     #endregion
+
+
     public delegate void CheckPlacableAllRemaingPuzzles();
 
-    private void Awake()
-    {
-        _uiTMP_COMBO.SetActive(false);
-    }
+
     /// <summary>
     /// 해당 퍼즐을 그리드에 두려고 할 때 Complete여부도 표시
     /// </summary>
@@ -76,40 +74,36 @@ public class CompleteManager : MonoBehaviour
         int comboCnt_area = _completeArea.Complete(_gridManager.Grid, gridDataSync,
             () => checkPlacableAllRemainingPzCallback(), CompleteEffect);
 
-        int totalCombo = comboCnt_hori + comboCnt_verti + comboCnt_area;
-        if (totalCombo > 0)
-        {
-            int score = Factor.CompleteScore;
-            _comboCnt += totalCombo;
-
-            // Combo Celebration
-            if (_comboCnt > 1)
-            {
-                Instantiate(_effectManager.EffectPrefab_Celebration_Combo, Factor.EffectPos_Celebration, Quaternion.identity);
-                _uiTMP_COMBO.SetActive(true);
-                _uiTMP_COMBO.GetComponent<TextMeshProUGUI>().text = $"{_comboCnt} C O M B O";
-
-                score *= _comboCnt;
-                _uiTMP_SCORE.GetComponent<TextMeshProUGUI>().text = $"+ {score}";
-                Invoke(nameof(UIComboSetActiveFalse), 1f);
-            }
-
-            PlayerDataManager.GameData.Score += score;
-            Debug.Log($"Score : {score} | PlayerManager.Score == {PlayerDataManager.GameData.Score}");
-        }
-        else
-            _comboCnt = 0;
-
-
-        Debug.Log("Combo : " + _comboCnt);
+        ComboAndSave(comboCnt_hori + comboCnt_verti + comboCnt_area);
 
         IsProcessing = false;
         checkPlacableAllRemainingPzCallback();
     }
-    private void UIComboSetActiveFalse()
+    private void ComboAndSave(int comboCnt)
     {
-        _uiTMP_COMBO.SetActive(false);
+        if (comboCnt > 0)
+        {
+            int score = Factor.CompleteScore;
+            _totalComboCnt += comboCnt;
+
+            // Combo Celebration
+            if (_totalComboCnt > 1)
+            {
+                Instantiate(_effectManager.EffectPrefab_Celebration_Combo, Factor.EffectPos_Celebration, Quaternion.identity);
+                _uiManager.SetText(_uiManager.UITMP_TempText_Large, $"{_totalComboCnt} C O M B O"); 
+
+                score *= _totalComboCnt;
+                _uiManager.SetText(_uiManager.UITMP_TempText_Small, $"+ {score}");   
+            }
+
+            PlayerDataManager.GameData.NowScore += score;
+            _playerDataManager.SaveData();
+            Debug.Log($"Score : {score} | {PlayerDataManager.GameData.ToString()}");
+        }
+        else
+            _totalComboCnt = 0;
     }
+
     public void CompleteEffect(Vector3 worldPos, MonoBehaviour callerMono)
     {
         if (callerMono == null) return;

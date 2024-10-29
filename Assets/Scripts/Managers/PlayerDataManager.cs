@@ -8,20 +8,37 @@ using UnityEngine.UI;
 [System.Serializable]
 public class GameData
 {
-    public int Score;
+    public int MyBestScore;
+    public int PlayerTotalScore;
+    public int NowScore;
 
-    public GameData(int score)
+    public GameData(int myBest, int playerTotalScore, int nowScore)
     {
-        Score = score;
+        MyBestScore = myBest;
+        PlayerTotalScore = playerTotalScore;
+        NowScore = nowScore;
+    }
+
+    public override string ToString()
+    {
+        return $"MyBest: {MyBestScore}, PlayerTotalScore: {PlayerTotalScore}, NowScore: {NowScore}";
     }
 }
 public class PlayerDataManager : MonoBehaviour
 {
+    #region Dependency Injection
+    [SerializeField]
+    private EffectManager _effectManager = null;
+    #endregion
+
+    #region UI
     [SerializeField]
     private Button Btn_save = null;
-    public static GameData GameData = new GameData(0);
+    #endregion
+
+    public static GameData GameData = new GameData(0, 0, 0);
     private string filePath = string.Empty;
-    private readonly string encryptionKey = "my_secret_key_1234";
+    private readonly string encryptionKey = "BBUNIKONG_PUZZLEKONG_0512";
 
     private void Awake()
     {
@@ -30,7 +47,18 @@ public class PlayerDataManager : MonoBehaviour
         LoadData();
     }
 
-    // 점수 저장
+    public void UpdateData()
+    {
+        GameData.PlayerTotalScore += GameData.NowScore;
+        if(GameData.MyBestScore<GameData.NowScore)
+        {
+            Debug.Log("BestScore 갱신");
+            Instantiate(_effectManager.EffectPrefab_Celebration_Finish, Factor.EffectPos_Celebration, Quaternion.identity);
+            GameData.MyBestScore = GameData.NowScore;
+        }
+        GameData.NowScore = 0;
+    }
+    // 데이터 저장
     public void SaveData()
     {
         string jsonData = JsonUtility.ToJson(GameData, true);
@@ -44,7 +72,7 @@ public class PlayerDataManager : MonoBehaviour
         File.WriteAllText(filePath, encryptedData);
     }
 
-    // 점수 불러오기
+    // 데이터 불러오기
     public void LoadData()
     {
         if (File.Exists(filePath))
@@ -53,6 +81,7 @@ public class PlayerDataManager : MonoBehaviour
             string jsonData = Decrypt(encryptedData, encryptionKey);
 
             GameData = JsonUtility.FromJson<GameData>(jsonData);
+            GameData.NowScore = 0;
         }
         else
         {

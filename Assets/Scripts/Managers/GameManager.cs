@@ -3,6 +3,8 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     [SerializeField]
+    private PlayerDataManager _playerDataManager = null;
+    [SerializeField]
     private GridManager _gridManager = null;
     [SerializeField]
     private PuzzleManager _puzzleManager = null;
@@ -14,7 +16,7 @@ public class GameManager : MonoBehaviour
     private EffectManager _effectManager = null;
     private void Awake()
     {
-        _puzzlePlaceManager.PuzzlePlacableChecker.Init(GameOver, StageComplete);
+        _puzzlePlaceManager.PuzzlePlacableChecker.Init(GameOverProcess, StageCompleteProcess);
     }
     private void Start()
     {
@@ -27,12 +29,14 @@ public class GameManager : MonoBehaviour
         _puzzleManager.LazyStart();
         _completeManager.Complete(_puzzlePlaceManager.CheckPlacableAllRemainingPuzzles);
     }
-    private void GameOver()
+    private void GameOverProcess()
     {
         // TODO - GameOver Process
-        Debug.Log("GameOver");
+        _playerDataManager.UpdateData();
+        _playerDataManager.SaveData();
+        Debug.Log($"GameOver | {PlayerDataManager.GameData.ToString()}");
     }
-    private void StageComplete()
+    private void StageCompleteProcess()
     {
         _puzzleManager.LazyStart();
     }
