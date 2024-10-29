@@ -71,6 +71,6 @@ public class CompleteVertical : MonoBehaviour
             completeEffectCallback?.Invoke(grid.ChildGridPartDic[$"{i},{idxC}"].transform.position, this);
             yield return new WaitForSeconds(Factor.CompleteCoroutineInterval);
         }
-        completeCallback?.Invoke();
+       completeCallback?.Invoke();
     }
 } // end of class

@@ -23,7 +23,7 @@ public class PuzzleManager : MonoBehaviour
     public void LazyStart()
     {
         InstantiatePuzzleGos(ref _puzzleGoArr);
-        _checkPlacableCallback?.Invoke(); // 퍼즐 생성 후 checkPlacable하여 gameOver여부 확인 
+     _checkPlacableCallback?.Invoke(); // 퍼즐 생성 후 checkPlacable하여 gameOver여부 확인 
     }
     private void InstantiatePuzzleGos(ref GameObject[] puzzleGoArr)
     {

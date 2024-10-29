@@ -71,6 +71,6 @@ public class CompleteHorizontal : MonoBehaviour
             completeEffectCallback?.Invoke(grid.ChildGridPartDic[$"{idxR},{i}"].transform.position, this);
             yield return new WaitForSeconds(Factor.CompleteCoroutineInterval);
         }
-        completeCallback?.Invoke();
+      completeCallback?.Invoke();
     }
 } // end of class

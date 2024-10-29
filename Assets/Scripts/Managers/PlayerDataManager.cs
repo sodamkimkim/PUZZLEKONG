@@ -47,15 +47,18 @@ public class PlayerDataManager : MonoBehaviour
         LoadData();
     }
 
-    public void UpdateData()
+    public void UpdateData(UIManager uiManager)
     {
         GameData.PlayerTotalScore += GameData.NowScore;
         if(GameData.MyBestScore<GameData.NowScore)
         {
             Debug.Log("BestScore 갱신");
+            uiManager.SetTMPText(uiManager.UITMP_TempText_Large, "YOUR\nBEST SCORE!", Color.blue, true);
             Instantiate(_effectManager.EffectPrefab_Celebration_Finish, Factor.EffectPos_Celebration, Quaternion.identity);
             GameData.MyBestScore = GameData.NowScore;
         }
+        uiManager.GameOver($"Score: {GameData.NowScore}\nTotal: {GameData.PlayerTotalScore}\nBest: {GameData.MyBestScore}");
+
         GameData.NowScore = 0;
     }
     // 데이터 저장

@@ -90,10 +90,10 @@ public class CompleteManager : MonoBehaviour
             if (_totalComboCnt > 1)
             {
                 Instantiate(_effectManager.EffectPrefab_Celebration_Combo, Factor.EffectPos_Celebration, Quaternion.identity);
-                _uiManager.SetText(_uiManager.UITMP_TempText_Large, $"{_totalComboCnt} C O M B O"); 
+                _uiManager.SetTMPText(_uiManager.UITMP_TempText_Large, $"{_totalComboCnt} C O M B O", Color.white, true); 
 
                 score *= _totalComboCnt;
-                _uiManager.SetText(_uiManager.UITMP_TempText_Small, $"+ {score}");   
+                _uiManager.SetTMPText(_uiManager.UITMP_TempText_Small, $"+ {score}", Color.red, true);   
             }
 
             PlayerDataManager.GameData.NowScore += score;

@@ -75,6 +75,6 @@ public class CompleteArea : MonoBehaviour
                 yield return new WaitForSeconds(Factor.CompleteCoroutineInterval);
             }
 
-        completeCallback?.Invoke();
+       completeCallback?.Invoke();
     }
 } // end of class

@@ -3,6 +3,8 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     [SerializeField]
+    private UIManager _uiManager = null;
+    [SerializeField]
     private PlayerDataManager _playerDataManager = null;
     [SerializeField]
     private GridManager _gridManager = null;
@@ -32,7 +34,8 @@ public class GameManager : MonoBehaviour
     private void GameOverProcess()
     {
         // TODO - GameOver Process
-        _playerDataManager.UpdateData();
+        // 살아나면 gameover x
+        _playerDataManager.UpdateData(_uiManager);
         _playerDataManager.SaveData();
         Debug.Log($"GameOver | {PlayerDataManager.GameData.ToString()}");
     }
