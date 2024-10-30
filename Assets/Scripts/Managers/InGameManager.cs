@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class GameManager : MonoBehaviour
+public class InGameManager : MonoBehaviour
 {
     [SerializeField]
     private UIManager _uiManager = null;
@@ -32,10 +32,7 @@ public class GameManager : MonoBehaviour
         _completeManager.Complete(_puzzlePlaceManager.SetPuzzlesActive, _puzzlePlaceManager.CheckStageCompleteOrGameOver);
     }
     private void GameOverProcess()
-    {
-        // TODO - GameOver Process
-        // 살아나면 gameover x
- 
+    { 
         _playerDataManager.UpdateData(_uiManager);
         _playerDataManager.SaveData();
         Debug.Log($"GameOver | {PlayerDataManager.GameData.ToString()}");
