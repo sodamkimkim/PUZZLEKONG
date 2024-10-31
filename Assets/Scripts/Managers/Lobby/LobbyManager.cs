@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class LobbyManager : MonoBehaviour
 {
@@ -11,8 +12,10 @@ public class LobbyManager : MonoBehaviour
     private void Start()
     {
         if (SceneTracker.Instance.IsFirstVisit("1.Lobby"))
-        {
-            // 해당씬 첫방문이면
+        { // 해당씬 첫방문이면
+            if (LobbyGo.activeSelf == true)
+                LobbyGo.SetActive(false);
+
             if (IntroGo.activeSelf == false)
                 IntroGo.SetActive(true);
 
@@ -22,7 +25,9 @@ public class LobbyManager : MonoBehaviour
         {
             if (IntroGo.activeSelf == true)
                 IntroGo.SetActive(false);
-            LobbyGo.SetActive(true);
+            if (LobbyGo.activeSelf == false)
+                LobbyGo.SetActive(true);
+
         }
     }
     private void SetActiveTrueLobbyGo()
@@ -31,5 +36,8 @@ public class LobbyManager : MonoBehaviour
             IntroGo.SetActive(false);
         LobbyGo.SetActive(true);
     }
-
+    public void SwitchSceneToInGame()
+    {
+        SceneManager.LoadScene("3.InGame");
+    }
 } // end of class
