@@ -6,38 +6,38 @@ using UnityEngine.SceneManagement;
 public class LobbyManager : MonoBehaviour
 {
     [SerializeField]
-    private GameObject IntroGo = null;
+    private GameObject _introGo = null;
     [SerializeField]
-    private GameObject LobbyGo = null;
+    private GameObject _lobbyGo = null;
+    [SerializeField]
+    private GameObject _canvasBottomBtns = null;
     private void Start()
     {
         if (SceneTracker.Instance.IsFirstVisit("1.Lobby"))
         { // 해당씬 첫방문이면
-            if (LobbyGo.activeSelf == true)
-                LobbyGo.SetActive(false);
-
-            if (IntroGo.activeSelf == false)
-                IntroGo.SetActive(true);
+            _lobbyGo.SetActive(false);
+            _canvasBottomBtns.SetActive(false);
+            _introGo.SetActive(true);
 
             Invoke(nameof(SetActiveTrueLobbyGo), 4f);
         }
         else
         {
-            if (IntroGo.activeSelf == true)
-                IntroGo.SetActive(false);
-            if (LobbyGo.activeSelf == false)
-                LobbyGo.SetActive(true);
+            _introGo.SetActive(false);
+            _canvasBottomBtns.SetActive(true);
+            _lobbyGo.SetActive(true);
 
         }
     }
     private void SetActiveTrueLobbyGo()
     {
-        if (IntroGo.activeSelf == true)
-            IntroGo.SetActive(false);
-        LobbyGo.SetActive(true);
+        _introGo.SetActive(false);
+
+        _canvasBottomBtns.SetActive(true);
+        _lobbyGo.SetActive(true);
     }
     public void SwitchSceneToInGame()
     {
-        SceneManager.LoadScene("3.InGame");
+        SceneManager.LoadScene("2.InGame");
     }
 } // end of class
