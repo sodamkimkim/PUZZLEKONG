@@ -6,7 +6,7 @@ public class TouchRaycast2D : MonoBehaviour
     [SerializeField]
     private PuzzlePlaceManager _puzzlePlaceManager = null;
     [SerializeField]
-    private CompleteManager _completeManager = null;
+    private CompleteManager _completeManager = null; 
     #endregion
 
     public static Puzzle TouchingPuzzle = null;
@@ -87,9 +87,9 @@ public class TouchRaycast2D : MonoBehaviour
         _selectedGoInitialPos = puzzle.SpawnPos;
         TouchingPuzzle.transform.localScale = Factor.ScalePuzzleNormal;
 
-        Vector3 pos = Camera.main.ScreenToWorldPoint(mousePos);
+        Vector3 pos = Camera.main.ScreenToWorldPoint(mousePos) + new Vector3(0f, 2f, 0f);
         pos.z = Factor.PosPuzzleSpawn0.z;
-        TouchingPuzzle.transform.position = pos;
+        TouchingPuzzle.transform.position = pos ;
         _puzzlePlaceManager.MarkPlacableReset();
         _completeManager.MarkCompletableReset();
 
@@ -98,7 +98,7 @@ public class TouchRaycast2D : MonoBehaviour
     {
         if (TouchingPuzzle == null) return;
         Vector3 mousePos = Input.mousePosition;
-        Vector3 pos = Camera.main.ScreenToWorldPoint(mousePos);
+        Vector3 pos = Camera.main.ScreenToWorldPoint(mousePos) + new Vector3(0f, 2f, 0f);
         pos.z = Factor.PosPuzzleSpawn0.z;
         if (pos == _mousePosBackUp)
         {

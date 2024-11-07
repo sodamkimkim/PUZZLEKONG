@@ -16,4 +16,8 @@ public class Enum
     {
         Celebration1, Celebration2
     }
+    public enum eItem
+    {
+        a_Mushroom, b_Wandoom, c_Reset, d_SwitchHori, e_SwitchVerti
+    }
 } // end of class
