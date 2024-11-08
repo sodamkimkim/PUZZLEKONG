@@ -6,7 +6,7 @@ public class TouchRaycast2D : MonoBehaviour
     [SerializeField]
     private PuzzlePlaceManager _puzzlePlaceManager = null;
     [SerializeField]
-    private CompleteManager _completeManager = null; 
+    private CompleteManager _completeManager = null;
     #endregion
 
     public static Puzzle TouchingPuzzle = null;
@@ -33,13 +33,13 @@ public class TouchRaycast2D : MonoBehaviour
             if (Input.GetMouseButtonDown(0))
             {
                 if (puzzle.ActiveSelf == true)
-                    SetTouchBegin(puzzle, hit2);
+                    SetTouchBegin(puzzle);
             }
         }
 
         if (Input.GetMouseButton(0))
-            SetTouchMoved(hit2);
-        else if (Input.GetMouseButtonUp(0))
+            SetTouchMoved();
+        if (Input.GetMouseButtonUp(0))
             _puzzlePlaceManager.PlacePuzzle(TouchingPuzzle, SetTouchEndPuzzleReturn);
 #endif
         //#region Mobile Touch
@@ -76,7 +76,7 @@ public class TouchRaycast2D : MonoBehaviour
     }
 
 
-    private void SetTouchBegin(Puzzle puzzle, RaycastHit2D hit)
+    private void SetTouchBegin(Puzzle puzzle)
     {
         if (TouchingPuzzle == puzzle) return;
 
@@ -87,18 +87,17 @@ public class TouchRaycast2D : MonoBehaviour
         _selectedGoInitialPos = puzzle.SpawnPos;
         TouchingPuzzle.transform.localScale = Factor.ScalePuzzleNormal;
 
-        Vector3 pos = Camera.main.ScreenToWorldPoint(mousePos) + new Vector3(0f, 2f, 0f);
+        Vector3 pos = Camera.main.ScreenToWorldPoint(mousePos) + Factor.TouchingObjOffset;
         pos.z = Factor.PosPuzzleSpawn0.z;
-        TouchingPuzzle.transform.position = pos ;
+        TouchingPuzzle.transform.position = pos;
         _puzzlePlaceManager.MarkPlacableReset();
         _completeManager.MarkCompletableReset();
 
     }
-    private void SetTouchMoved(RaycastHit2D hit)
+    private void SetTouchMoved()
     {
         if (TouchingPuzzle == null) return;
-        Vector3 mousePos = Input.mousePosition;
-        Vector3 pos = Camera.main.ScreenToWorldPoint(mousePos) + new Vector3(0f, 2f, 0f);
+        Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition) + Factor.TouchingObjOffset;
         pos.z = Factor.PosPuzzleSpawn0.z;
         if (pos == _mousePosBackUp)
         {
@@ -117,8 +116,6 @@ public class TouchRaycast2D : MonoBehaviour
     }
     public void SetTouchEndPuzzleReturn()
     {
-        // TODO 
-        // Puzzle Grid에 할당되지 않았다면
         if (TouchingPuzzle == null) return;
         TouchingPuzzle.transform.localScale = Factor.ScalePuzzleSmall;
         TouchingPuzzle.transform.position = _selectedGoInitialPos;

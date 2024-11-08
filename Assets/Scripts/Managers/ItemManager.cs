@@ -25,8 +25,8 @@ public class ItemManager : MonoBehaviour
         PlayerPrefs.SetString("ItemSlot0", "Item_b_Wandoo");
         PlayerPrefs.SetString("ItemSlot1", "Item_c_Reset");
         PlayerPrefs.SetString("ItemSlot2", "Item_a_Mushroom");
-       // PlayerPrefs.SetString("ItemSlot1", "Item_b_Wandoo");
-       // PlayerPrefs.SetString("ItemSlot2", "Item_c_Reset");
+        // PlayerPrefs.SetString("ItemSlot1", "Item_b_Wandoo");
+        // PlayerPrefs.SetString("ItemSlot2", "Item_c_Reset");
         PlayerPrefs.SetString("ItemSlot3", "Item_d_SwitchHori");
         PlayerPrefs.SetString("ItemSlot4", "Item_e_SwitchVerti");
         InstantiateItem();
@@ -73,7 +73,10 @@ public class ItemManager : MonoBehaviour
                 break;
         }
 
-        if (itemGo != null)
-            itemGo.transform.localPosition = Vector3.zero;
+        if (itemGo == null) return;
+
+        itemGo.transform.localPosition = Vector3.zero;
+        Item item = Util.CheckAndAddComponent<Item>(itemGo);
+        item.InitialITemSlotPos = _itemSlotPosArr[slotIdx];  
     } // end of class
 }

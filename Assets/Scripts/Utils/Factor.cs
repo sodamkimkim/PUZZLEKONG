@@ -28,6 +28,7 @@ public class Factor : MonoBehaviour
 
     public static Vector3 ScalePuzzleSmall { get => new Vector3(0.2f, 0.2f, 1f); }
     public static Vector3 ScalePuzzleNormal { get => new Vector3(0.5f, 0.5f, 1f); }
+    public static Vector3 TouchingObjOffset { get => new Vector3(0f, 3f, 0f); }
     #endregion
 
     #region Color
@@ -50,7 +51,7 @@ public class Factor : MonoBehaviour
     public static Color LightPurple3 { get => new Color(93f / 255f, 75f / 255f, 113f / 255f); }
 
     public static Color LightBlue0 { get => new Color(197f / 255f, 234f / 255f, 247f / 255f); }
-    public static Color LightBlue1 { get => new Color(138f / 255f,  187f / 255f, 203f / 255f); }
+    public static Color LightBlue1 { get => new Color(138f / 255f, 187f / 255f, 203f / 255f); }
     public static Color LightBlue2 { get => new Color(99f / 255f, 134f / 255f, 146f / 255f); }
     public static Color LightBlue3 { get => new Color(59f / 255f, 80f / 255f, 87f / 255f); }
 
