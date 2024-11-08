@@ -18,6 +18,6 @@ public class Enum
     }
     public enum eItem
     {
-        a_Mushroom, b_Wandoom, c_Reset, d_SwitchHori, e_SwitchVerti
+        Item_a_Mushroom, Item_b_Wandoo, Item_c_Reset, Item_d_SwitchHori, Item_e_SwitchVerti
     }
 } // end of class
