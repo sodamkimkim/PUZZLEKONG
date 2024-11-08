@@ -32,6 +32,7 @@ public class TouchRaycast2D_Item : MonoBehaviour
         if (Input.GetMouseButtonUp(0))
             SetTouchEndItemReturn();
 #endif
+        // TODO Mobile Touch case
     }
     private void SetTouchBegin(Item item)
     {
@@ -40,6 +41,7 @@ public class TouchRaycast2D_Item : MonoBehaviour
         Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition) + Factor.TouchingObjOffset;
         pos.z = 0;
         TouchingItem = item;
+        Anim("Anim1", true);
         TouchingItem.transform.position = pos;
         TouchingItem.transform.localScale = TouchingItem.LocalScaleSmall * 3f;
     }
@@ -54,8 +56,17 @@ public class TouchRaycast2D_Item : MonoBehaviour
     public void SetTouchEndItemReturn()
     {
         if (TouchingItem == null) return;
+        Anim("Anim1", false);
         TouchingItem.transform.localScale = TouchingItem.LocalScaleSmall;
         TouchingItem.transform.localPosition = Vector3.zero;
         TouchingItem = null;
+    }
+
+    private void Anim(string anim, bool isAnim)
+    {
+        if (TouchingItem == null) return;
+        if (TouchingItem.Animator == null) return;
+
+        TouchingItem.Animator.SetBool(anim, isAnim);
     }
 } // end of class
