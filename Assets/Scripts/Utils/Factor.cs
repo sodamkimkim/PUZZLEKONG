@@ -7,6 +7,7 @@ public class Factor : MonoBehaviour
     public static int HasPuzzle { get => 1; }
     public static int Placable { get => 2; }
     public static int Completable { get => 3; }
+    public static int Point { get => 4; }
     #endregion
 
     #region Common Factor

@@ -8,8 +8,15 @@ using UnityEngine;
 public class CompleteVertical : MonoBehaviour
 {
     public bool IsProcessing = false;
-
-    public void MarkCompletable(Grid grid, int[,] gridDataSync, System.Action resetFunction)
+    public delegate void CompleteEffect(Vector3 worldPos, MonoBehaviour callerMono);
+    public CompleteEffect CompleteEffectCallback;
+    public PuzzleManager.SetPuzzleActive SetPuzzlesActiveCallback;
+    public void Init(PuzzleManager.SetPuzzleActive setPuzzlesActiveCallback, CompleteEffect completeEffectCallback)
+    {
+        SetPuzzlesActiveCallback = setPuzzlesActiveCallback;
+        CompleteEffectCallback = completeEffectCallback;
+    }
+    public void MarkCompletable(Grid grid, int[,] gridDataSync)
     {
         if (grid == null) return;
         int rowLen = grid.Data.GetLength(0);
@@ -37,9 +44,8 @@ public class CompleteVertical : MonoBehaviour
             }
         }
     }
-
-    public delegate void CompleteEffect(Vector3 worldPos, MonoBehaviour callerMono);
-    public int Complete(Grid grid, int[,] gridDataSync, System.Action SetPuzzlesActive, CompleteEffect completeEffectCallback)
+     
+    public int Complete(Grid grid, int[,] gridDataSync)
     {
         IsProcessing = true;
         int rowLen = grid.Data.GetLength(0);
@@ -51,7 +57,7 @@ public class CompleteVertical : MonoBehaviour
             bool isComplete = true;
             for (int idxR = 0; idxR < rowLen; idxR++)
             {
-                if (gridDataSync[idxR, idxC] == 1)
+                if (gridDataSync[idxR, idxC] == Factor.HasPuzzle || gridDataSync[idxR, idxC] == Factor.Completable)
                     isComplete &= true;
                 else
                     isComplete &= false;
@@ -61,26 +67,26 @@ public class CompleteVertical : MonoBehaviour
             {
                 comboCnt++;
 
-                CompleteData(grid, idxC, rowLen, SetPuzzlesActive);
-                StartCoroutine(CompleteCoroutine(grid, idxC, rowLen, completeEffectCallback));
+                CompleteData(grid, idxC, rowLen);
+                StartCoroutine(CompleteCoroutine(grid, idxC, rowLen));
             }
         }
 
         return comboCnt;
     }
-    private void CompleteData(Grid grid, int idxC, int rowLen, System.Action SetPuzzlesActive)
+    private void CompleteData(Grid grid, int idxC, int rowLen)
     {
         for (int i = 0; i < rowLen; i++)
         {
             grid.SetDataIdx(i, idxC, 0);
         }
-        SetPuzzlesActive?.Invoke();
+        SetPuzzlesActiveCallback?.Invoke();
     }
-    private IEnumerator CompleteCoroutine(Grid grid, int idxC, int rowLen, CompleteEffect completeEffectCallback)
+    private IEnumerator CompleteCoroutine(Grid grid, int idxC, int rowLen)
     {
         for (int i = 0; i < rowLen; i++)
         {
-            completeEffectCallback?.Invoke(grid.ChildGridPartDic[$"{i},{idxC}"].transform.position, this);
+            CompleteEffectCallback?.Invoke(grid.ChildGridPartDic[$"{i},{idxC}"].transform.position, this);
             yield return new WaitForSeconds(Factor.CompleteCoroutineInterval);
         }
     }

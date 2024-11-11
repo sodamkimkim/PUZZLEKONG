@@ -25,14 +25,14 @@ public class PZPart : MonoBehaviour
     }
     private void ShotRay()
     {
-        TriggeredGridPartIdxStr = string.Empty;
+        if (TriggeredGridPartIdxStr != string.Empty)
+            TriggeredGridPartIdxStr = string.Empty;
         if (ParentPuzzle != TouchRaycast2D.TouchingPuzzle) return;
 
         RaycastHit hit;
         // Z축 방향으로 레이 쏘기 (transform.forward는 Z축 방향)
         if (Physics.Raycast(this.gameObject.transform.position, transform.forward, out hit, 100f))
-        {
-            // Physics.Raycast는 out 키워드를 통해 hit 변수에 충돌 정보를 넣어줍니다. 
+        { 
             Debug.DrawRay(this.gameObject.transform.position, transform.forward, Color.green, 0.01f);
             if (hit.collider != null && hit.transform.gameObject.tag == "GridPart")
             {

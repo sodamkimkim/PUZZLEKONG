@@ -19,6 +19,8 @@ public class InGameManager : MonoBehaviour
     private void Awake()
     {
         _puzzlePlaceManager.PuzzlePlacableChecker.Init(GameOverProcess, StageCompleteProcess);
+        _completeManager.Init(_puzzlePlaceManager.SetPuzzlesActive);
+            
     }
     private void Start()
     {
@@ -29,7 +31,7 @@ public class InGameManager : MonoBehaviour
         _effectManager.LazyStart();
         _gridManager.LazyStart();
         _puzzleManager.LazyStart();
-        _completeManager.Complete(_puzzlePlaceManager.SetPuzzlesActive, _puzzlePlaceManager.CheckStageCompleteOrGameOver);
+        _completeManager.Complete(_puzzlePlaceManager.CheckStageCompleteOrGameOver);
     }
     private void GameOverProcess()
     { 

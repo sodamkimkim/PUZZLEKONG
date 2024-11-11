@@ -276,7 +276,7 @@ GameObject:
   m_Component:
   - component: {fileID: 197068184}
   m_Layer: 0
-  m_Name: Pos1
+  m_Name: Pos0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -307,7 +307,7 @@ GameObject:
   m_Component:
   - component: {fileID: 220965294}
   m_Layer: 0
-  m_Name: Pos3
+  m_Name: Pos2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -974,6 +974,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a96ad32aa64a085478d48898d3d6f966, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _itemManager: {fileID: 2079459816}
 --- !u!1 &540252143
 GameObject:
   m_ObjectHideFlags: 0
@@ -2019,7 +2020,7 @@ GameObject:
   m_Component:
   - component: {fileID: 924643850}
   m_Layer: 0
-  m_Name: Pos4
+  m_Name: Pos3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2050,7 +2051,7 @@ GameObject:
   m_Component:
   - component: {fileID: 946958511}
   m_Layer: 0
-  m_Name: Pos5
+  m_Name: Pos4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2081,7 +2082,7 @@ GameObject:
   m_Component:
   - component: {fileID: 972438535}
   m_Layer: 0
-  m_Name: Pos2
+  m_Name: Pos1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3254,6 +3255,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2079459815}
   - component: {fileID: 2079459816}
+  - component: {fileID: 2079459817}
   m_Layer: 0
   m_Name: ItemManager
   m_TagString: Untagged
@@ -3288,6 +3290,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff63acbd7c87eb94aa7f97f6c1baa076, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _gridManager: {fileID: 540252145}
+  _itemUse: {fileID: 2079459817}
   _itemSlotPosArr:
   - {fileID: 197068183}
   - {fileID: 972438534}
@@ -3300,6 +3304,18 @@ MonoBehaviour:
   - {fileID: 7784242056927979044, guid: a957588a41ea7524db7621aa9f06a063, type: 3}
   - {fileID: 4778319885172669172, guid: b559811297eb6eb439e5d165f19edf6b, type: 3}
   - {fileID: 3727751609750839021, guid: 1b867eb6e683fff468e9da6d2511b637, type: 3}
+--- !u!114 &2079459817
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2079459814}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c65fc138cd6678347b9c3e5c796f743d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2125980418
 GameObject:
   m_ObjectHideFlags: 0

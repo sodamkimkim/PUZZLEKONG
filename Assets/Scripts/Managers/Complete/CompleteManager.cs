@@ -38,20 +38,26 @@ public class CompleteManager : MonoBehaviour
     private GridManager _gridManager = null;
 
     [SerializeField]
-    private CompleteHorizontal _completeHorizontal = null;
+    public CompleteHorizontal _completeHorizontal = null;
     [SerializeField]
-    private CompleteVertical _completeVertical = null;
+    public CompleteVertical _completeVertical = null;
     [SerializeField]
-    private CompleteArea _completeArea = null;
+    public CompleteArea _completeArea = null;
     [SerializeField]
     private EffectManager _effectManager = null;
     #endregion
 
-
+    public PuzzleManager.SetPuzzleActive SetPuzzlesActiveCallback;
     public delegate void CheckGameOver();
-    public delegate int SetPuzzlesActive();
 
+    public void Init(PuzzleManager.SetPuzzleActive setPuzzlesActiveCallback)
+    {
+        SetPuzzlesActiveCallback = setPuzzlesActiveCallback;
 
+        _completeHorizontal.Init(setPuzzlesActiveCallback, CompleteEffect);
+        _completeVertical.Init(setPuzzlesActiveCallback, CompleteEffect);
+        _completeArea.Init(setPuzzlesActiveCallback, CompleteEffect);
+    }
     /// <summary>
     /// 해당 퍼즐을 그리드에 두려고 할 때 Complete여부도 표시
     /// </summary>
@@ -59,30 +65,28 @@ public class CompleteManager : MonoBehaviour
     public void MarkCompletable(Puzzle touchingPZ)
     {
         int[,] gridDataSync = _gridManager.Grid.Data;
-        _completeHorizontal.MarkCompletable(_gridManager.Grid, gridDataSync, MarkCompletableReset);
-        _completeVertical.MarkCompletable(_gridManager.Grid, gridDataSync, MarkCompletableReset);
-        _completeArea.MarkCompletable(_gridManager.Grid, gridDataSync, MarkCompletableReset);
+        _completeHorizontal.MarkCompletable(_gridManager.Grid, gridDataSync);
+        _completeVertical.MarkCompletable(_gridManager.Grid, gridDataSync);
+        _completeArea.MarkCompletable(_gridManager.Grid, gridDataSync);
     }
-    public void Complete(SetPuzzlesActive SetPuzzlesActive, CheckGameOver CheckStageCompleteOrGameOver)
+    public void Complete(CheckGameOver CheckStageCompleteOrGameOver)
     {
         IsProcessing = true;
         MarkCompletableReset();
         int[,] gridDataSync = _gridManager.Grid.Data;
-        int comboCnt_hori = _completeHorizontal.Complete(_gridManager.Grid, gridDataSync,
-            () => SetPuzzlesActive(), CompleteEffect);
-        int comboCnt_verti = _completeVertical.Complete(_gridManager.Grid, gridDataSync,
-            () => SetPuzzlesActive(), CompleteEffect);
-        int comboCnt_area = _completeArea.Complete(_gridManager.Grid, gridDataSync,
-            () => SetPuzzlesActive(), CompleteEffect);
-         
+        int comboCnt_hori = _completeHorizontal.Complete(_gridManager.Grid, gridDataSync);
+        int comboCnt_verti = _completeVertical.Complete(_gridManager.Grid, gridDataSync);
+        int comboCnt_area = _completeArea.Complete(_gridManager.Grid, gridDataSync);
+
+
         int completeCnt = comboCnt_hori + comboCnt_verti + comboCnt_area;
         ComboAndSaveData(completeCnt);
 
         // Complete 다됐으면
-        IsProcessing = false;  
+        IsProcessing = false;
 
-        if (SetPuzzlesActive() == 0) 
-            CheckStageCompleteOrGameOver(); 
+        if (SetPuzzlesActiveCallback() == 0)
+            CheckStageCompleteOrGameOver();
     }
     private void ComboAndSaveData(int comboCnt)
     {
@@ -126,8 +130,8 @@ public class CompleteManager : MonoBehaviour
     {
         foreach (KeyValuePair<string, GridPart> kvp in _gridManager.Grid.ChildGridPartDic)
         {
-            if (kvp.Value.Data == 3)
-                kvp.Value.Data = 1;
+            if (kvp.Value.Data == Factor.Completable)
+                kvp.Value.Data = Factor.HasPuzzle;
         }
     }
 } // end of class

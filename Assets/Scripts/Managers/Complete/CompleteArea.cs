@@ -7,7 +7,15 @@ using UnityEngine;
 public class CompleteArea : MonoBehaviour
 {
     public bool IsProcessing = false;
-    public void MarkCompletable(Grid grid, int[,] gridDataSync, System.Action resetFunction)
+    public delegate void CompleteEffect(Vector3 worldPos, MonoBehaviour callerMono);
+    public CompleteEffect CompleteEffectCallback;
+    public PuzzleManager.SetPuzzleActive SetPuzzlesActiveCallback;
+    public void Init(PuzzleManager.SetPuzzleActive setPuzzlesActiveCallback, CompleteEffect completeEffectCallback)
+    {
+        SetPuzzlesActiveCallback = setPuzzlesActiveCallback;
+        CompleteEffectCallback = completeEffectCallback;
+    }
+    public void MarkCompletable(Grid grid, int[,] gridDataSync)
     {
         int areaRLen = 3;
         int areaCLen = 3;
@@ -23,14 +31,13 @@ public class CompleteArea : MonoBehaviour
                                 grid.SetDataIdx(idxR, idxC, Factor.Completable);
                         }
                 }
-    }
-    public delegate void CompleteEffect(Vector3 worldPos, MonoBehaviour callerMono);
+    } 
     /// <summary>
     /// 모든 9개영역 조사
     /// </summary>
     /// <param name="grid"></param>
     /// <param name="gridDataSync"></param>
-    public int Complete(Grid grid, int[,] gridDataSync, System.Action SetPuzzlesActive, CompleteEffect completeEffectCallback)
+    public int Complete(Grid grid, int[,] gridDataSync)
     {
         int areaRLen = 3;
         int areaCLen = 3;
@@ -41,8 +48,8 @@ public class CompleteArea : MonoBehaviour
                 if (CheckArea(areaRIdx, areaCIdx, grid, gridDataSync, Factor.Completable))
                 {
                     comboCnt++;
-                    CompleteData(areaRIdx, areaCIdx, grid, SetPuzzlesActive);
-                    StartCoroutine(CompleteCoroutine(areaRIdx, areaCIdx, grid, completeEffectCallback));
+                    CompleteData(areaRIdx, areaCIdx, grid);
+                    StartCoroutine(CompleteCoroutine(areaRIdx, areaCIdx, grid));
                 }
 
         return comboCnt;
@@ -60,7 +67,7 @@ public class CompleteArea : MonoBehaviour
 
         return isComplete;
     }
-    private void CompleteData(int areaRIdx, int areaCIdx, Grid grid, System.Action SetPuzzlesActive)
+    private void CompleteData(int areaRIdx, int areaCIdx, Grid grid)
     {
         for (int idxR = areaRIdx * 3; idxR < areaRIdx * 3 + 3; idxR++)
             for (int idxC = areaCIdx * 3; idxC < areaCIdx * 3 + 3; idxC++)
@@ -68,7 +75,7 @@ public class CompleteArea : MonoBehaviour
                 grid.SetDataIdx(idxR, idxC, Factor.HasNoPuzzle);
             }
 
-        SetPuzzlesActive();
+        SetPuzzlesActiveCallback();
     }
     /// <summary>
     /// 영역 한개 complete
@@ -76,12 +83,12 @@ public class CompleteArea : MonoBehaviour
     /// <param name="grid"></param>
     /// <param name="SetPuzzlesActive"></param>
     /// <returns></returns>
-    private IEnumerator CompleteCoroutine(int areaRIdx, int areaCIdx, Grid grid, CompleteEffect completeEffectCallback)
+    private IEnumerator CompleteCoroutine(int areaRIdx, int areaCIdx, Grid grid)
     {
         for (int idxR = areaRIdx * 3; idxR < areaRIdx * 3 + 3; idxR++)
             for (int idxC = areaCIdx * 3; idxC < areaCIdx * 3 + 3; idxC++)
             {
-                completeEffectCallback?.Invoke(grid.ChildGridPartDic[$"{idxR},{idxC}"].transform.position, this);
+                CompleteEffectCallback?.Invoke(grid.ChildGridPartDic[$"{idxR},{idxC}"].transform.position, this);
                 yield return new WaitForSeconds(Factor.CompleteCoroutineInterval);
             }
     }

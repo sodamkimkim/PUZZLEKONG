@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: -8479700187140647689}
   - component: {fileID: 6204328813120830910}
   m_Layer: 0
-  m_Name: "b.\uC644\uB450\uCF69"
+  m_Name: Item_b_Wandoo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -11,7 +11,7 @@ public class TouchRaycast2D : MonoBehaviour
 
     public static Puzzle TouchingPuzzle = null;
     private Vector3 _selectedGoInitialPos = Vector3.zero;
-    private Vector3 _mousePosBackUp = Vector3.zero;
+    private Vector3 _puzzlePosBackUp = Vector3.zero;
     private void Update()
     {
         ShotRay();
@@ -80,43 +80,39 @@ public class TouchRaycast2D : MonoBehaviour
     {
         if (TouchingPuzzle == puzzle) return;
 
-        Vector3 mousePos = Input.mousePosition;
-        _mousePosBackUp = mousePos;
-
         TouchingPuzzle = puzzle;
         _selectedGoInitialPos = puzzle.SpawnPos;
         TouchingPuzzle.transform.localScale = Factor.ScalePuzzleNormal;
 
-        Vector3 pos = Camera.main.ScreenToWorldPoint(mousePos) + Factor.TouchingObjOffset;
+        Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition) + Factor.TouchingObjOffset;
         pos.z = Factor.PosPuzzleSpawn0.z;
-        TouchingPuzzle.transform.position = pos;
-        _puzzlePlaceManager.MarkPlacableReset();
-        _completeManager.MarkCompletableReset();
+        _puzzlePosBackUp = pos;
 
+        TouchingPuzzle.transform.position = pos;
     }
     private void SetTouchMoved()
     {
         if (TouchingPuzzle == null) return;
         Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition) + Factor.TouchingObjOffset;
         pos.z = Factor.PosPuzzleSpawn0.z;
-        if (pos == _mousePosBackUp)
-        {
-            TouchingPuzzle.transform.position = pos;
-            return;
-        }
-        if (pos != _mousePosBackUp)
-        {
-            _mousePosBackUp = pos;
-            TouchingPuzzle.transform.position = pos;
+        TouchingPuzzle.transform.position = pos;
 
-            _completeManager.MarkCompletableReset();
-            if (_puzzlePlaceManager.MarkPlacable(TouchingPuzzle))
-                _completeManager.MarkCompletable(TouchingPuzzle);
-        }
+        if (pos == _puzzlePosBackUp) return;
+
+        _puzzlePosBackUp = pos;
+
+        _completeManager.MarkCompletableReset();
+        if (_puzzlePlaceManager.MarkPlacable(TouchingPuzzle))
+            _completeManager.MarkCompletable(TouchingPuzzle);
     }
+
+
     public void SetTouchEndPuzzleReturn()
     {
+        _puzzlePlaceManager.MarkPlacableReset();
+        _completeManager.MarkCompletableReset();
         if (TouchingPuzzle == null) return;
+
         TouchingPuzzle.transform.localScale = Factor.ScalePuzzleSmall;
         TouchingPuzzle.transform.position = _selectedGoInitialPos;
         TouchingPuzzle = null;

@@ -13,6 +13,7 @@ public class Grid : MonoBehaviour
     public Color Color_HasPuzzle { get; private set; }
     public Color Color_Placable { get; private set; }
     public Color Color_Completable { get; private set; }
+    public Color Color_Point { get; private set; }
     #endregion
     public int[,] Data
     {
@@ -75,6 +76,7 @@ public class Grid : MonoBehaviour
                 break;
         }
         Color_Completable = Color_HasPuzzle * Factor.CompletableOffset;
+        Color_Point = new Color(500f/ 255f, 500f / 255f, 500f / 255f) ;
     }
     private void InitializeGridPartData(int[,] data)
     {

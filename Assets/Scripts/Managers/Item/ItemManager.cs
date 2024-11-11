@@ -6,6 +6,14 @@ using UnityEngine.UI;
 public class ItemManager : MonoBehaviour
 {
     [SerializeField]
+    private GridManager _gridManager = null;
+    [SerializeField]
+    private CompleteManager _completeManager = null;
+
+    [SerializeField]
+    private ItemUse _itemUse = null;
+
+    [SerializeField]
     private GameObject[] _itemSlotPosArr = null;
 
     [SerializeField]
@@ -35,15 +43,7 @@ public class ItemManager : MonoBehaviour
     {
         for (int i = 0; i < _itemSlotPosArr.Length; i++)
             InstantiateItemInItemSlot(i, PlayerPrefs.GetString($"ItemSlot{i}"));
-    }
-    private void InstantiateItemPrefab(ref int slotIdx, int prefabIdx, int itemInt)
-    {
-        if (itemInt == 0) return;
-
-        GameObject go = Instantiate(_itemPrefabArr[prefabIdx], _itemSlotPosArr[slotIdx].transform);
-        go.transform.localPosition = Vector3.zero;
-        slotIdx++;
-    }
+    } 
     private void InstantiateItemInItemSlot(int slotIdx, string itemStr)
     {
         if (itemStr == string.Empty || itemStr == null) return;
@@ -75,8 +75,31 @@ public class ItemManager : MonoBehaviour
 
         if (itemGo == null) return;
 
+        itemGo.name = itemGo.name.Replace("(Clone)", "");
         itemGo.transform.localPosition = Vector3.zero;
         Item item = Util.CheckAndAddComponent<Item>(itemGo);
-        item.InitialITemSlotPos = _itemSlotPosArr[slotIdx];  
-    } // end of class
-}
+        item.InitialITemSlotPos = _itemSlotPosArr[slotIdx];
+    }
+
+    public void CheckUseable(Item touchingItem)
+    {
+        if (touchingItem.TriggeredGridPartIdxStr == string.Empty) return;
+        _itemUse.CheckUseable(_gridManager.Grid,touchingItem);
+    }
+    public delegate void SetTouchEndItemReturn();
+    // Item에 따른 로직 처리
+    // 조건에 맞지 않으면 SetTouchEndItemReturn
+    public void PlaceItem(Item dropItem, SetTouchEndItemReturn setTouchEndItemReturnCallback)
+    { 
+        if (!_itemUse.UseItem(_completeManager,_gridManager.Grid, dropItem))
+            setTouchEndItemReturnCallback?.Invoke(); 
+    }
+    public void CheckUseableReset()
+    {
+        foreach (KeyValuePair<string, GridPart> kvp in _gridManager.Grid.ChildGridPartDic)
+        {
+            if (kvp.Value.Data == Factor.Point)
+                kvp.Value.Data = Factor.HasPuzzle;
+        }
+    }
+} // end of class

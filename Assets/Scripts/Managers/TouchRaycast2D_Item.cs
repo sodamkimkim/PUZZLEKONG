@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class TouchRaycast2D_Item : MonoBehaviour
 {
+    [SerializeField]
+    private ItemManager _itemManager = null;
     public static Item TouchingItem = null;
-
+    private Vector3 _itemPosBackUp = Vector3.zero;
     private void Update()
     {
         ShotRay();
@@ -30,7 +32,7 @@ public class TouchRaycast2D_Item : MonoBehaviour
         if (Input.GetMouseButton(0))
             SetTouchMoved();
         if (Input.GetMouseButtonUp(0))
-            SetTouchEndItemReturn();
+            _itemManager.PlaceItem(TouchingItem, SetTouchEndItemReturn);
 #endif
         // TODO Mobile Touch case
     }
@@ -40,6 +42,8 @@ public class TouchRaycast2D_Item : MonoBehaviour
 
         Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition) + Factor.TouchingObjOffset;
         pos.z = 0;
+        _itemPosBackUp = pos;
+
         TouchingItem = item;
         Anim("Anim1", true);
         TouchingItem.transform.position = pos;
@@ -52,10 +56,22 @@ public class TouchRaycast2D_Item : MonoBehaviour
         Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition) + Factor.TouchingObjOffset;
         pos.z = 0;
         TouchingItem.transform.position = pos;
+
+        if (pos == _itemPosBackUp) return;
+
+        _itemPosBackUp = pos;
+
+        // TODO Item Useable 
+        _itemManager.CheckUseableReset();
+        _itemManager.CheckUseable(TouchingItem);
     }
+
+    // callback
     public void SetTouchEndItemReturn()
     {
+        _itemManager.CheckUseableReset();
         if (TouchingItem == null) return;
+         
         Anim("Anim1", false);
         TouchingItem.transform.localScale = TouchingItem.LocalScaleSmall;
         TouchingItem.transform.localPosition = Vector3.zero;
