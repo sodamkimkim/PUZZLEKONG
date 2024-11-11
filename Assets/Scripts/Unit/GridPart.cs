@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class GridPart : MonoBehaviour
@@ -21,7 +23,7 @@ public class GridPart : MonoBehaviour
         set
         {
             _data = value;
-            SetGridPartColor();
+                SetGridPartColor();
 
             if (Data != Factor.IntInitialized && IdxRow != Factor.IntInitialized && IdxCol != Factor.IntInitialized)
             {

@@ -25,13 +25,13 @@ public class TouchRaycast2D_Item : MonoBehaviour
         {
             Item item = hit2.transform.GetComponentInParent<Item>();
 
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetMouseButtonDown(0) && item.IsForEffect == false)
                 SetTouchBegin(item);
         }
 
-        if (Input.GetMouseButton(0))
+        if (Input.GetMouseButton(0) && TouchingItem != null && TouchingItem.IsForEffect == false)
             SetTouchMoved();
-        if (Input.GetMouseButtonUp(0))
+        if (Input.GetMouseButtonUp(0) && TouchingItem != null && TouchingItem.IsForEffect == false)
             _itemManager.PlaceItem(TouchingItem, SetTouchEndItemReturn);
 #endif
         // TODO Mobile Touch case
@@ -45,9 +45,9 @@ public class TouchRaycast2D_Item : MonoBehaviour
         _itemPosBackUp = pos;
 
         TouchingItem = item;
-        Anim("Anim1", true);
-        TouchingItem.transform.position = pos;
-        TouchingItem.transform.localScale = TouchingItem.LocalScaleSmall * 3f;
+        TouchingItem.Anim("Anim1", true);
+        TouchingItem.SetPos(true, pos);
+        TouchingItem.SetScale(Enum.eItemScale.Big, 1f);
     }
     private void SetTouchMoved()
     {
@@ -55,7 +55,7 @@ public class TouchRaycast2D_Item : MonoBehaviour
 
         Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition) + Factor.TouchingObjOffset;
         pos.z = 0;
-        TouchingItem.transform.position = pos;
+        TouchingItem.SetPos(true, pos);
 
         if (pos == _itemPosBackUp) return;
 
@@ -71,18 +71,10 @@ public class TouchRaycast2D_Item : MonoBehaviour
     {
         _itemManager.CheckUseableReset();
         if (TouchingItem == null) return;
-         
-        Anim("Anim1", false);
-        TouchingItem.transform.localScale = TouchingItem.LocalScaleSmall;
-        TouchingItem.transform.localPosition = Vector3.zero;
+
+        TouchingItem.Anim("Anim1", false);
+        TouchingItem.SetScale(Enum.eItemScale.Small, 1f);
+        TouchingItem.SetPos(false, Vector3.zero);
         TouchingItem = null;
-    }
-
-    private void Anim(string anim, bool isAnim)
-    {
-        if (TouchingItem == null) return;
-        if (TouchingItem.Animator == null) return;
-
-        TouchingItem.Animator.SetBool(anim, isAnim);
     }
 } // end of class

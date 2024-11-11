@@ -6,10 +6,7 @@ using UnityEngine.UI;
 public class ItemManager : MonoBehaviour
 {
     [SerializeField]
-    private GridManager _gridManager = null;
-    [SerializeField]
-    private CompleteManager _completeManager = null;
-
+    private GridManager _gridManager = null; 
     [SerializeField]
     private ItemUse _itemUse = null;
 
@@ -22,7 +19,7 @@ public class ItemManager : MonoBehaviour
     private void Start()
     {
         // Player가 가진 Item 갯수
-        PlayerPrefs.SetInt("Item_a_Mushroom", 1);
+        PlayerPrefs.SetInt("Item_a_Mushroom", 2);
         PlayerPrefs.SetInt("Item_b_Wandoo", 1);
         PlayerPrefs.SetInt("Item_c_Reset", 2);
         PlayerPrefs.SetInt("Item_d_SwitchHori", 4);
@@ -39,11 +36,18 @@ public class ItemManager : MonoBehaviour
         PlayerPrefs.SetString("ItemSlot4", "Item_e_SwitchVerti");
         InstantiateItem();
     }
+    public PuzzleManager.SetPuzzleActive SetPuzzlesActiveCallback;
+
+    public void Init(PuzzleManager.SetPuzzleActive setPuzzlesActiveCallback)
+    {
+        SetPuzzlesActiveCallback = setPuzzlesActiveCallback;
+        _itemUse.Init(setPuzzlesActiveCallback);
+    }
     private void InstantiateItem()
     {
         for (int i = 0; i < _itemSlotPosArr.Length; i++)
             InstantiateItemInItemSlot(i, PlayerPrefs.GetString($"ItemSlot{i}"));
-    } 
+    }
     private void InstantiateItemInItemSlot(int slotIdx, string itemStr)
     {
         if (itemStr == string.Empty || itemStr == null) return;
@@ -76,23 +80,36 @@ public class ItemManager : MonoBehaviour
         if (itemGo == null) return;
 
         itemGo.name = itemGo.name.Replace("(Clone)", "");
-        itemGo.transform.localPosition = Vector3.zero;
         Item item = Util.CheckAndAddComponent<Item>(itemGo);
-        item.InitialITemSlotPos = _itemSlotPosArr[slotIdx];
+        item.SetPos(false, Vector3.zero);
+        item.IsForEffect = false;
+        item.InitialItemSlotPos = _itemSlotPosArr[slotIdx];
     }
 
     public void CheckUseable(Item touchingItem)
     {
         if (touchingItem.TriggeredGridPartIdxStr == string.Empty) return;
-        _itemUse.CheckUseable(_gridManager.Grid,touchingItem);
+        _itemUse.CheckUseable(_gridManager.Grid, touchingItem);
     }
     public delegate void SetTouchEndItemReturn();
     // Item에 따른 로직 처리
     // 조건에 맞지 않으면 SetTouchEndItemReturn
     public void PlaceItem(Item dropItem, SetTouchEndItemReturn setTouchEndItemReturnCallback)
-    { 
-        if (!_itemUse.UseItem(_completeManager,_gridManager.Grid, dropItem))
-            setTouchEndItemReturnCallback?.Invoke(); 
+    {
+        if (TouchRaycast2D_Item.TouchingItem == null) return;
+
+        if (_itemUse.UseItem(_gridManager.Grid, dropItem))
+        {
+            // 아이템 갯수 반영, 남아있으면 돌려보내기
+            PlayerPrefs.SetInt(dropItem.name, PlayerPrefs.GetInt(dropItem.name) - 1);
+            if (PlayerPrefs.GetInt(dropItem.name) == 0)
+                DestroyImmediate(dropItem.gameObject);
+            else
+                setTouchEndItemReturnCallback?.Invoke();
+        }
+        else
+            setTouchEndItemReturnCallback?.Invoke();
+
     }
     public void CheckUseableReset()
     {

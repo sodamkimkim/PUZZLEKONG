@@ -20,4 +20,8 @@ public class Enum
     {
         Item_a_Mushroom, Item_b_Wandoo, Item_c_Reset, Item_d_SwitchHori, Item_e_SwitchVerti
     }
+    public enum eItemScale
+    {
+        Small, Big
+    }
 } // end of class

@@ -16,11 +16,13 @@ public class InGameManager : MonoBehaviour
     private CompleteManager _completeManager = null;
     [SerializeField]
     private EffectManager _effectManager = null;
+    [SerializeField]
+    private ItemManager _itemManager = null;
     private void Awake()
     {
         _puzzlePlaceManager.PuzzlePlacableChecker.Init(GameOverProcess, StageCompleteProcess);
         _completeManager.Init(_puzzlePlaceManager.SetPuzzlesActive);
-            
+        _itemManager.Init(_puzzlePlaceManager.SetPuzzlesActive); 
     }
     private void Start()
     {

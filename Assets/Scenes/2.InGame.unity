@@ -184,6 +184,7 @@ MonoBehaviour:
   _puzzlePlaceManager: {fileID: 2125980420}
   _completeManager: {fileID: 1000968076}
   _effectManager: {fileID: 90186538}
+  _itemManager: {fileID: 2079459816}
 --- !u!114 &40165679
 MonoBehaviour:
   m_ObjectHideFlags: 0

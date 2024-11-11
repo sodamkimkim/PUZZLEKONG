@@ -78,7 +78,7 @@ public class CompleteVertical : MonoBehaviour
     {
         for (int i = 0; i < rowLen; i++)
         {
-            grid.SetDataIdx(i, idxC, 0);
+            grid.SetDataIdx(i, idxC, Factor.HasNoPuzzle);
         }
         SetPuzzlesActiveCallback?.Invoke();
     }

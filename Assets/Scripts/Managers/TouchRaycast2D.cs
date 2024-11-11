@@ -37,9 +37,9 @@ public class TouchRaycast2D : MonoBehaviour
             }
         }
 
-        if (Input.GetMouseButton(0))
+        if (Input.GetMouseButton(0) && TouchingPuzzle != null)
             SetTouchMoved();
-        if (Input.GetMouseButtonUp(0))
+        if (Input.GetMouseButtonUp(0) && TouchingPuzzle != null)
             _puzzlePlaceManager.PlacePuzzle(TouchingPuzzle, SetTouchEndPuzzleReturn);
 #endif
         //#region Mobile Touch
