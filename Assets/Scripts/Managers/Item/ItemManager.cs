@@ -116,7 +116,10 @@ public class ItemManager : MonoBehaviour
         foreach (KeyValuePair<string, GridPart> kvp in _gridManager.Grid.ChildGridPartDic)
         {
             if (kvp.Value.Data == Factor.Point)
+            {
                 kvp.Value.Data = Factor.HasPuzzle;
+                kvp.Value.SetGridPartColor();
+            }
         }
     }
 } // end of class

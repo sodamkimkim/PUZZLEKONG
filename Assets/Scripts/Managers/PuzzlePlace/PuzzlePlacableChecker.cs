@@ -145,7 +145,7 @@ public class PuzzlePlacableChecker : MonoBehaviour
             _gameOverCallback?.Invoke();
         }
     }
- 
+
     /// <summary>
     /// 모든 Grid Data 검사하여 이 퍼즐이 그리드에 놓을 자리가 있는지 여부 검사
     /// </summary>
@@ -224,7 +224,7 @@ public class PuzzlePlacableChecker : MonoBehaviour
             if (triggered != string.Empty && grid.ChildGridPartDic.ContainsKey(triggered))
             {
                 GridPart gp = grid.ChildGridPartDic[triggered];
-                if (gp.Data != 1)
+                if (gp.Data != Factor.HasPuzzle)
                     placable &= true;
                 else
                     placable &= false;
@@ -243,8 +243,11 @@ public class PuzzlePlacableChecker : MonoBehaviour
     {
         foreach (KeyValuePair<string, GridPart> kvp in grid.ChildGridPartDic)
         {
-            if (kvp.Value.Data == 2)
-                kvp.Value.Data = 0;
+            if (kvp.Value.Data == Factor.Placable)
+            {
+                kvp.Value.Data = Factor.HasNoPuzzle;
+                kvp.Value.SetGridPartColor();
+            }
         }
     }
     private void SetPlacableGridData(Grid grid, Puzzle touchingPZ, int beforeData, int toData)
@@ -255,7 +258,10 @@ public class PuzzlePlacableChecker : MonoBehaviour
             string triggered = pzpart.TriggeredGridPartIdxStr;
             if (grid.ChildGridPartDic.ContainsKey(triggered))
                 if (grid.ChildGridPartDic[triggered].Data == beforeData)
+                {
                     grid.ChildGridPartDic[triggered].Data = toData;
+                    grid.ChildGridPartDic[triggered].SetGridPartColor();
+                }
         }
     }
 

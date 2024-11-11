@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,6 +11,7 @@ public class GridPart : MonoBehaviour
     private int _idxRow = Factor.IntInitialized;
     private int _idxCol = Factor.IntInitialized;
     private SpriteRenderer _spr = null;
+    //private bool _isGridInitialize = true;
     #endregion
 
     public Grid ParentGrid { get => _parentGrid; set => _parentGrid = value; }
@@ -23,7 +25,7 @@ public class GridPart : MonoBehaviour
         set
         {
             _data = value;
-                SetGridPartColor();
+            //SetGridPartColor();
 
             if (Data != Factor.IntInitialized && IdxRow != Factor.IntInitialized && IdxCol != Factor.IntInitialized)
             {
@@ -61,4 +63,5 @@ public class GridPart : MonoBehaviour
         else
             Spr.color = Color.blue;
     }
+
 } // end of class

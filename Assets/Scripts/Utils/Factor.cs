@@ -2,18 +2,33 @@ using UnityEngine;
 
 public class Factor : MonoBehaviour
 {
-    #region GridPartData
+    #region GridPartData 
+    /// <summary>
+    /// 0
+    /// </summary>
     public static int HasNoPuzzle { get => 0; }
-    public static int HasPuzzle { get => 1; }
+    /// <summary>
+    /// 1
+    /// </summary>
+    public static int HasPuzzle { get => 1; } 
+    /// <summary>
+    /// 2
+    /// </summary>
     public static int Placable { get => 2; }
+    /// <summary>
+    /// 3
+    /// </summary>
     public static int Completable { get => 3; }
+    /// <summary>
+    /// 4
+    /// </summary>
     public static int Point { get => 4; }
     #endregion
 
     #region Common Factor
     public static int CompleteScore { get => 5; }
     public static int IntInitialized { get => -99; }
-    public static float CompleteCoroutineInterval { get => 0.03f; }
+    public static float CompleteCoroutineInterval { get => 0.07f; }
     public static float CompletableOffset { get => 0.8f; }
     public static Vector3 EffectPos_Celebration { get => new Vector3(0f, 1f, -0.2f); }
     #endregion

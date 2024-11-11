@@ -10,13 +10,13 @@ public class ItemUseEffect : MonoBehaviour
 
         GameObject cloneItemGo = Instantiate(item.gameObject, null);
         Item itemClone = cloneItemGo.GetComponent<Item>();
-        itemClone.Anim("Anim1", true); // item에 Anim 만들기
+        itemClone.Anim("Anim1", true); // item에 Anim 만들기 
+        itemClone.SetScale(Enum.eItemScale.Small, 0.5f);
         StartCoroutine(EffectCoroutine_Item_a_Mushroom(grid, itemClone, col));
     }
     private IEnumerator EffectCoroutine_Item_a_Mushroom(Grid grid, Item itemClone, int col)
     {
         int rowLen = grid.Data.GetLength(0);
-        itemClone.SetScale(Enum.eItemScale.Small, 1f);
         for (int r = rowLen - 1; r >= 0; r--)
         {
             itemClone.SetPos(true, grid.ChildGridPartDic[$"{r},{col}"].transform.position);
@@ -30,13 +30,13 @@ public class ItemUseEffect : MonoBehaviour
 
         GameObject cloneItemGo = Instantiate(item.gameObject, null);
         Item itemClone = cloneItemGo.GetComponent<Item>();
-        itemClone.Anim("Anim2", true); // item에 Anim 만들기
+        itemClone.Anim("Anim2", true); // item에 Anim 만들기 
+        itemClone.SetScale(Enum.eItemScale.Small, 0.5f);
         StartCoroutine(EffectCoroutine_Item_b_Wandoo(grid, itemClone, row));
     }
     private IEnumerator EffectCoroutine_Item_b_Wandoo(Grid grid, Item itemClone, int row)
     {
         int colLen = grid.Data.GetLength(1);
-        itemClone.SetScale(Enum.eItemScale.Small, 1f);
         for (int c = 0; c < colLen; c++)
         {
             itemClone.SetPos(true, grid.ChildGridPartDic[$"{row},{c}"].transform.position);

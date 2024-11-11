@@ -77,8 +77,7 @@ public class CompleteManager : MonoBehaviour
         int comboCnt_hori = _completeHorizontal.Complete(_gridManager.Grid, gridDataSync);
         int comboCnt_verti = _completeVertical.Complete(_gridManager.Grid, gridDataSync);
         int comboCnt_area = _completeArea.Complete(_gridManager.Grid, gridDataSync);
-
-
+         
         int completeCnt = comboCnt_hori + comboCnt_verti + comboCnt_area;
         ComboAndSaveData(completeCnt);
 
@@ -131,7 +130,10 @@ public class CompleteManager : MonoBehaviour
         foreach (KeyValuePair<string, GridPart> kvp in _gridManager.Grid.ChildGridPartDic)
         {
             if (kvp.Value.Data == Factor.Completable)
+            {
                 kvp.Value.Data = Factor.HasPuzzle;
+                kvp.Value.SetGridPartColor();
+            }
         }
     }
 } // end of class

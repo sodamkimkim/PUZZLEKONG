@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -76,7 +77,7 @@ public class Grid : MonoBehaviour
                 break;
         }
         Color_Completable = Color_HasPuzzle * Factor.CompletableOffset;
-        Color_Point = new Color(500f/ 255f, 500f / 255f, 500f / 255f) ;
+        Color_Point = new Color(500f / 255f, 500f / 255f, 500f / 255f);
     }
     private void InitializeGridPartData(int[,] data)
     {
@@ -95,7 +96,10 @@ public class Grid : MonoBehaviour
                 if (gridPart.IdxCol == Factor.IntInitialized)
                     gridPart.IdxCol = c;
                 if (gridPart.Data != data[r, c])
+                {
                     gridPart.Data = data[r, c];
+                    gridPart.SetGridPartColor();
+                }
             }
         }
     }
@@ -109,6 +113,7 @@ public class Grid : MonoBehaviour
 
     /// <summary>
     /// GridPart 데이터가 변했을 때 Grid의 Data에 반영해주는 함수
+    /// 호출 시 gridpart 색상변경코드 추가 필요
     /// </summary>
     /// <param name="idxR"></param>
     /// <param name="idxC"></param>
@@ -122,5 +127,32 @@ public class Grid : MonoBehaviour
         if (Data[idxR, idxC] != afterData)
             Data[idxR, idxC] = afterData;
         ChildGridPartDic[$"{idxR},{idxC}"].Data = afterData;
+        //ChildGridPartDic[$"{idxR},{idxC}"].SetGridPartColor();
+
+    }
+    public IEnumerator SetGridPartColorCoroutine(int startR, int endR, int startC, int endC, bool dirR, float interval)
+    {
+        if (dirR)
+        {
+            for (int r = startR; r <= endR; r++)
+            {
+                for (int c = startC; c <= endC; c++)
+                {
+                    ChildGridPartDic[$"{r},{c}"].SetGridPartColor();
+                    yield return new WaitForSeconds(interval);
+                }
+            }
+        }
+        else
+        {
+            for (int r = startR; r >= endR; r--)
+            {
+                for (int c = startC; c <= endC; c++)
+                {
+                    ChildGridPartDic[$"{r},{c}"].SetGridPartColor();
+                    yield return new WaitForSeconds(interval);
+                }
+            }
+        }
     }
 } // end of class

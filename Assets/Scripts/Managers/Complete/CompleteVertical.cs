@@ -38,13 +38,16 @@ public class CompleteVertical : MonoBehaviour
                 for (int i = 0; i < rowLen; i++)
                 {
                     if (gridDataSync[i, idxC] == Factor.HasPuzzle)
+                    {
                         grid.SetDataIdx(i, idxC, Factor.Completable);
+                        grid.ChildGridPartDic[$"{i},{idxC}"].SetGridPartColor();
+                    }
                 }
 
             }
         }
     }
-     
+
     public int Complete(Grid grid, int[,] gridDataSync)
     {
         IsProcessing = true;
@@ -68,6 +71,7 @@ public class CompleteVertical : MonoBehaviour
                 comboCnt++;
 
                 CompleteData(grid, idxC, rowLen);
+                StartCoroutine(grid.SetGridPartColorCoroutine(0, grid.Data.GetLength(0) - 1, idxC, idxC, true, Factor.CompleteCoroutineInterval));
                 StartCoroutine(CompleteCoroutine(grid, idxC, rowLen));
             }
         }

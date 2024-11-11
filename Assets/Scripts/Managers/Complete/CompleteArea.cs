@@ -28,10 +28,13 @@ public class CompleteArea : MonoBehaviour
                         for (int idxC = areaCIdx * 3; idxC < areaCIdx * 3 + 3; idxC++)
                         {
                             if (gridDataSync[idxR, idxC] == Factor.HasPuzzle)
+                            {
                                 grid.SetDataIdx(idxR, idxC, Factor.Completable);
+                                grid.ChildGridPartDic[$"{idxR},{idxC}"].SetGridPartColor();
+                            }
                         }
                 }
-    } 
+    }
     /// <summary>
     /// 모든 9개영역 조사
     /// </summary>
@@ -49,6 +52,7 @@ public class CompleteArea : MonoBehaviour
                 {
                     comboCnt++;
                     CompleteData(areaRIdx, areaCIdx, grid);
+                    StartCoroutine(grid.SetGridPartColorCoroutine(areaRIdx * 3, areaRIdx * 3 + 2, areaCIdx * 3, areaCIdx * 3 + 2, true, Factor.CompleteCoroutineInterval));
                     StartCoroutine(CompleteCoroutine(areaRIdx, areaCIdx, grid));
                 }
 
