@@ -6,11 +6,14 @@ public class Puzzle : MonoBehaviour
 {
     #region Hidden Private Variables
     private int[,] _data;
-    private int _statusData = 0;
+    private int _itemStatusData = 0;
     private int[] _lastIdx_rc;
     private Vector3 _spawnPos;
     private List<PZPart> _childPZPartList = new List<PZPart>();
+     
     private Color _childColor = Color.clear;
+    private Color _ItemUse = new Color(500f / 255f, 500f / 255f, 500f / 255f);
+    private Color _notActiveColor = new Color(3f / 255f, 3f / 255f, 3f / 255f, 0.07f);
     private bool _activeSelf = true;
     #endregion
     #region Properties
@@ -24,14 +27,14 @@ public class Puzzle : MonoBehaviour
             SetChildColor(ChildColor);
         }
     }
-    public int StatusData
+    public int ItemStatusData
     {
-        get => _statusData;
+        get => _itemStatusData;
         set
         {
-            _statusData = value;
-            if (value == Factor.PuzzleStatus_ItemUse) SetChildColor(new Color(500f / 255f, 500f / 255f, 500f / 255f));
-            else if (value == Factor.PuzzleStatus_Normal) SetChildColor(ChildColor);
+            _itemStatusData = value;
+            if (value == Factor.PuzzleStatus_ItemUse) SetChildColor(ItemUseColor);
+            else if (value == Factor.PuzzleStatus_ItemNormal) SetChildColor(ChildColor); 
             else SetChildColor(ChildColor);
         }
 
@@ -40,7 +43,6 @@ public class Puzzle : MonoBehaviour
 
     public List<PZPart> ChildPZPartList { get => _childPZPartList; private set => _childPZPartList = value; }
     public Vector3 SpawnPos { get => _spawnPos; set => _spawnPos = value; }
-    public Color ChildColor { get => _childColor; set => _childColor = value; }
     public bool ActiveSelf
     {
         get => _activeSelf; set
@@ -49,9 +51,13 @@ public class Puzzle : MonoBehaviour
             if (ActiveSelf)
                 SetChildColor(ChildColor);
             else
-                SetChildColor(Factor.NotActiveColor);
+                SetChildColor(NotActiveColor);
         }
     }
+
+    public Color ChildColor { get => _childColor; set => _childColor = value; }
+    public Color ItemUseColor { get => _ItemUse; set => _ItemUse = value; }
+    public Color NotActiveColor { get => _notActiveColor; set => _notActiveColor = value; }
     #endregion
 
     private int[] GetLastIdx(int[,] dbArr)
@@ -78,7 +84,7 @@ public class Puzzle : MonoBehaviour
         }
         return rcIdxArr;
     }
-    private void SetChildColor(Color color)
+    public void SetChildColor(Color color)
     {
         foreach (PZPart pZPart in ChildPZPartList)
         {

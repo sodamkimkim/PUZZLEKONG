@@ -25,8 +25,14 @@ public class Factor : MonoBehaviour
     public static int UseItem1 { get => 4; }
     #endregion
     #region PuzzleStatusData
-    public static int PuzzleStatus_Normal { get => 0; }
-    public static int PuzzleStatus_ItemUse { get => 1; }
+    /// <summary>
+    /// 1
+    /// </summary>
+    public static int PuzzleStatus_ItemNormal { get => 0; }
+    /// <summary>
+    /// 1
+    /// </summary>
+    public static int PuzzleStatus_ItemUse { get => 1; }  
     #endregion
     #region Common Factor
     public static int CompleteScore { get => 5; }
@@ -52,7 +58,6 @@ public class Factor : MonoBehaviour
 
     #region Color
     public static Color BGColorDefault { get => new Color(215f / 255f, 210f / 255f, 210f / 255f); }
-    public static Color NotActiveColor { get => new Color(3f / 255f, 3f / 255f, 3f / 255f, 0.07f); }
 
     public static Color Grey0 { get => new Color(204f / 255f, 204f / 255f, 204f / 255f); } // BG
     public static Color Grey1 { get => new Color(0f / 255f, 0f / 255f, 0f / 255f, 45f / 255f); } // HasNoPuzzle

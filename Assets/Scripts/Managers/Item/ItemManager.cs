@@ -27,7 +27,7 @@ public class ItemManager : MonoBehaviour
         // Player°¡ °¡Áø Item °¹¼ö
         PlayerPrefs.SetInt("Item_a_Mushroom", 2);
         PlayerPrefs.SetInt("Item_b_Wandoo", 1);
-        PlayerPrefs.SetInt("Item_c_Reset", 2);
+        PlayerPrefs.SetInt("Item_c_Reset", 5);
         PlayerPrefs.SetInt("Item_d_SwitchHori", 4);
         PlayerPrefs.SetInt("Item_e_SwitchVerti", 2);
         PlayerPrefs.Save();
@@ -155,7 +155,7 @@ public class ItemManager : MonoBehaviour
                 kvp.Value.SetGridPartColor();
             }
         }
-        SetPuzzleStatusData(Factor.PuzzleStatus_Normal);
+        SetPuzzleStatusData(Factor.PuzzleStatus_ItemNormal);
     }
     public void SetPuzzleStatusData(int puzzleStatusFactor)
     {
@@ -164,8 +164,16 @@ public class ItemManager : MonoBehaviour
         {
             if (puzzleGo == null) continue;
             Puzzle puzzle = puzzleGo.GetComponent<Puzzle>();
-            if (puzzle == null || puzzle.ActiveSelf == false) continue;
-            puzzle.StatusData = puzzleStatusFactor;
+            if (puzzle == null /*|| puzzle.ActiveSelf == false*/) continue;
+
+            puzzle.ItemStatusData = puzzleStatusFactor; 
+            if(puzzle.ActiveSelf == false)
+            {
+                if (puzzleStatusFactor == Factor.PuzzleStatus_ItemUse)
+                    puzzle.SetChildColor(puzzle.ItemUseColor);
+                else
+                    puzzle.SetChildColor(puzzle.NotActiveColor);
+            } 
         }
     }
 } // end of class

@@ -178,7 +178,7 @@ public class ItemUse : MonoBehaviour
     {
         if (item.TriggeredPuzzle == null) return false;
 
-        if (item.TriggeredPuzzle.StatusData == Factor.PuzzleStatus_ItemUse)
+        if (item.TriggeredPuzzle.ItemStatusData == Factor.PuzzleStatus_ItemUse)
         { puzzleManager.LazyStart(); return true; }
         else return false;
     }
