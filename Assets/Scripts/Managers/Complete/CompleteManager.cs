@@ -64,7 +64,7 @@ public class CompleteManager : MonoBehaviour
     /// <param name="touchingPZ"></param>
     public void MarkCompletable(Puzzle touchingPZ)
     {
-        int[,] gridDataSync = _gridManager.Grid.Data;
+        int[,] gridDataSync = (int[,])_gridManager.Grid.Data.Clone();
         _completeHorizontal.MarkCompletable(_gridManager.Grid, gridDataSync);
         _completeVertical.MarkCompletable(_gridManager.Grid, gridDataSync);
         _completeArea.MarkCompletable(_gridManager.Grid, gridDataSync);
@@ -73,11 +73,12 @@ public class CompleteManager : MonoBehaviour
     {
         IsProcessing = true;
         MarkCompletableReset();
-        int[,] gridDataSync = _gridManager.Grid.Data;
+        int[,] gridDataSync = (int[,])_gridManager.Grid.Data.Clone();
         int comboCnt_hori = _completeHorizontal.Complete(_gridManager.Grid, gridDataSync);
         int comboCnt_verti = _completeVertical.Complete(_gridManager.Grid, gridDataSync);
         int comboCnt_area = _completeArea.Complete(_gridManager.Grid, gridDataSync);
-         
+        //    Debug.Log(Util.ConvertDoubleArrayToString(gridDataSync));
+ 
         int completeCnt = comboCnt_hori + comboCnt_verti + comboCnt_area;
         ComboAndSaveData(completeCnt);
 
