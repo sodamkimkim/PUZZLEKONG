@@ -22,7 +22,7 @@ public class InGameManager : MonoBehaviour
     {
         _puzzlePlaceManager.PuzzlePlacableChecker.Init(GameOverProcess, StageCompleteProcess);
         _completeManager.Init(_puzzlePlaceManager.SetPuzzlesActive);
-        _itemManager.Init(_puzzlePlaceManager.SetPuzzlesActive); 
+        _itemManager.Init(_puzzlePlaceManager.SetPuzzlesActive);
     }
     private void Start()
     {
@@ -36,7 +36,7 @@ public class InGameManager : MonoBehaviour
         _completeManager.Complete(_puzzlePlaceManager.CheckStageCompleteOrGameOver);
     }
     private void GameOverProcess()
-    { 
+    {
         _playerDataManager.UpdateData(_uiManager);
         _playerDataManager.SaveData();
         Debug.Log($"GameOver | {PlayerDataManager.GameData.ToString()}");

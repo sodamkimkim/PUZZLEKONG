@@ -8,12 +8,14 @@ public class ItemUse : MonoBehaviour
     [SerializeField]
     private ItemUseEffect _itemUseEffect = null;
     public PuzzleManager.SetPuzzleActive SetPuzzlesActiveCallback;
-
-    public void Init(PuzzleManager.SetPuzzleActive setPuzzlesActiveCallback)
+    public delegate void SetPuzzleStatusData(int puzzleStatusData);
+    private SetPuzzleStatusData SetPuzzleStatusDataCallback;
+    public void Init(SetPuzzleStatusData setPuzzleStatusData, PuzzleManager.SetPuzzleActive setPuzzlesActiveCallback)
     {
+        SetPuzzleStatusDataCallback = setPuzzleStatusData;
         SetPuzzlesActiveCallback = setPuzzlesActiveCallback;
     }
-    public void CheckUseable(Grid grid, Item item)
+    public void CheckUseable(PuzzleManager _puzzleManager, Grid grid, Item item)
     {
         if (grid == null || item == null) return;
         switch (item.name)
@@ -25,7 +27,7 @@ public class ItemUse : MonoBehaviour
                 CheckUseable_Item_b_Wandoo(grid, item);
                 break;
             case "Item_c_Reset":
-                CheckUseable_Item_c_Reset(grid, item);
+                CheckUseable_Item_c_Reset(_puzzleManager, grid, item);
                 break;
             case "Item_d_SwitchHori":
                 CheckUseable_Item_d_SwitchHori(grid, item);
@@ -47,7 +49,7 @@ public class ItemUse : MonoBehaviour
         {
             if (grid.Data[idxR, idxC] == Factor.HasPuzzle)
             {
-                grid.SetDataIdx(idxR, idxC, Factor.Item1_MushroomAndWandoo);
+                grid.SetDataIdx(idxR, idxC, Factor.UseItem1);
                 grid.ChildGridPartDic[$"{idxR},{idxC}"].SetGridPartColor();
             }
         }
@@ -64,15 +66,17 @@ public class ItemUse : MonoBehaviour
         {
             if (grid.Data[idxR, idxC] == Factor.HasPuzzle)
             {
-                grid.SetDataIdx(idxR, idxC, Factor.Item1_MushroomAndWandoo);
+                grid.SetDataIdx(idxR, idxC, Factor.UseItem1);
                 grid.ChildGridPartDic[$"{idxR},{idxC}"].SetGridPartColor();
             }
         }
     }
     // 퍼즐 reset (기존것과 다르게)
-    private void CheckUseable_Item_c_Reset(Grid grid, Item item)
+    private void CheckUseable_Item_c_Reset(PuzzleManager puzzleManager, Grid grid, Item item)
     {
-        if (item.TriggeredGridPartIdxStr == string.Empty) return;
+        if (item.IsPuzzleTriggered == false) return;
+
+        SetPuzzleStatusDataCallback?.Invoke(Factor.PuzzleStatus_ItemUse);
     }
     // 하단 가로줄과 상태 변경
     private void CheckUseable_Item_d_SwitchHori(Grid grid, Item item)
@@ -86,7 +90,7 @@ public class ItemUse : MonoBehaviour
         if (item.TriggeredGridPartIdxStr == string.Empty) return;
         // TODO 최우측세로줄이면 return;
     }
-    public bool UseItem(Grid grid, Item item)
+    public bool UseItem(PuzzleManager puzzleManager, Grid grid, Item item)
     {
         if (grid == null || item == null) return false;
         switch (item.name)
@@ -96,7 +100,7 @@ public class ItemUse : MonoBehaviour
             case "Item_b_Wandoo":
                 return Use_Item_b_Wandoo(grid, item);
             case "Item_c_Reset":
-                return Use_Item_c_Reset(grid, item);
+                return Use_Item_c_Reset(puzzleManager, grid, item);
             case "Item_d_SwitchHori":
                 return Use_Item_d_SwitchHori(grid, item);
             case "Item_e_SwitchVerti":
@@ -138,19 +142,12 @@ public class ItemUse : MonoBehaviour
         int col = 0;
         int.TryParse(item.TriggeredGridPartIdxStr.Split(',')[1], out col);
 
-        if (grid.ChildGridPartDic[item.TriggeredGridPartIdxStr].Data == Factor.Item1_MushroomAndWandoo)
-        {
-            DataComplete(grid, Factor.Item1_MushroomAndWandoo, Factor.HasNoPuzzle, grid.Data.GetLength(0) - 1, 0, col, col, false);
-            _itemUseEffect.Effect_Item_a_Mushroom(grid, item, col);
-            return true;
-        }
-
         int rowLen = grid.Data.GetLength(0);
         for (int i = 0; i < rowLen; i++)
         {
-            if (grid.ChildGridPartDic[$"{i},{col}"].Data == Factor.Item1_MushroomAndWandoo)
+            if (grid.ChildGridPartDic[$"{i},{col}"].Data == Factor.UseItem1)
             {
-                DataComplete(grid, Factor.Item1_MushroomAndWandoo, Factor.HasNoPuzzle, grid.Data.GetLength(0) - 1, 0, col, col, false);
+                DataComplete(grid, Factor.UseItem1, Factor.HasNoPuzzle, grid.Data.GetLength(0) - 1, 0, col, col, false);
                 _itemUseEffect.Effect_Item_a_Mushroom(grid, item, col);
                 return true;
             }
@@ -163,19 +160,12 @@ public class ItemUse : MonoBehaviour
         int row = 0;
         int.TryParse(item.TriggeredGridPartIdxStr.Split(',')[0], out row);
 
-        if (grid.ChildGridPartDic[item.TriggeredGridPartIdxStr].Data == Factor.Item1_MushroomAndWandoo)
-        {
-            DataComplete(grid, Factor.Item1_MushroomAndWandoo, Factor.HasNoPuzzle, row, row, 0, grid.Data.GetLength(1) - 1, true);
-            _itemUseEffect.Effect_Item_b_Wandoo(grid, item, row);
-            return true;
-        }
-
         int colLen = grid.Data.GetLength(1);
         for (int i = 0; i < colLen; i++)
         {
-            if (grid.ChildGridPartDic[$"{row},{i}"].Data == Factor.Item1_MushroomAndWandoo)
+            if (grid.ChildGridPartDic[$"{row},{i}"].Data == Factor.UseItem1)
             {
-                DataComplete(grid, Factor.Item1_MushroomAndWandoo, Factor.HasNoPuzzle, row, row, 0, grid.Data.GetLength(1) - 1, true);
+                DataComplete(grid, Factor.UseItem1, Factor.HasNoPuzzle, row, row, 0, grid.Data.GetLength(1) - 1, true);
                 _itemUseEffect.Effect_Item_b_Wandoo(grid, item, row);
                 return true;
             }
@@ -183,9 +173,10 @@ public class ItemUse : MonoBehaviour
         return false;
     }
 
-    private bool Use_Item_c_Reset(Grid grid, Item item)
+    private bool Use_Item_c_Reset(PuzzleManager puzzleManager, Grid grid, Item item)
     {
-        return false;
+        if (item.IsPuzzleTriggered == false) return false;
+        puzzleManager.LazyStart(); return true;
     }
     private bool Use_Item_d_SwitchHori(Grid grid, Item item)
     {

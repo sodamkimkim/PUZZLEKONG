@@ -22,9 +22,12 @@ public class Factor : MonoBehaviour
     /// <summary>
     /// 4
     /// </summary>
-    public static int Item1_MushroomAndWandoo { get => 4; }
+    public static int UseItem1 { get => 4; }
     #endregion
-
+    #region PuzzleStatusData
+    public static int PuzzleStatus_Normal { get => 0; }
+    public static int PuzzleStatus_ItemUse { get => 1; }
+    #endregion
     #region Common Factor
     public static int CompleteScore { get => 5; }
     public static int IntInitialized { get => -99; }

@@ -6,6 +6,7 @@ public class Puzzle : MonoBehaviour
 {
     #region Hidden Private Variables
     private int[,] _data;
+    private int _statusData = 0;
     private int[] _lastIdx_rc;
     private Vector3 _spawnPos;
     private List<PZPart> _childPZPartList = new List<PZPart>();
@@ -23,6 +24,18 @@ public class Puzzle : MonoBehaviour
             SetChildColor(ChildColor);
         }
     }
+    public int StatusData
+    {
+        get => _statusData;
+        set
+        {
+            _statusData = value;
+            if (StatusData == Factor.PuzzleStatus_ItemUse) SetChildColor(new Color(500f / 255f, 500f / 255f, 500f / 255f));
+            else if(StatusData == Factor.PuzzleStatus_Normal) SetChildColor(ChildColor);
+            else SetChildColor(ChildColor); 
+        }
+
+    }
     public int[] LastIdx_rc { get => _lastIdx_rc; private set => _lastIdx_rc = value; }
 
     public List<PZPart> ChildPZPartList { get => _childPZPartList; private set => _childPZPartList = value; }
@@ -33,10 +46,10 @@ public class Puzzle : MonoBehaviour
         get => _activeSelf; set
         {
             _activeSelf = value;
-            if (ActiveSelf) 
-                SetChildColor(ChildColor); 
-            else 
-                SetChildColor(Factor.NotActiveColor); 
+            if (ActiveSelf)
+                SetChildColor(ChildColor);
+            else
+                SetChildColor(Factor.NotActiveColor);
         }
     }
     #endregion

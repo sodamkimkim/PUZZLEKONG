@@ -3,7 +3,7 @@ using UnityEngine;
 public class PuzzleSpawner : MonoBehaviour
 {
     [SerializeField]
-    private Transform _puzzleParentTr = null;
+    public Transform _puzzleParentTr = null;
     private GameObject[] PuzzlePrefabArr = null;
 
     private void Awake()

@@ -58,7 +58,7 @@ public class GridPart : MonoBehaviour
             Spr.color = ParentGrid.Color_Placable;
         else if (Data == Factor.Completable) // 3
             Spr.color = ParentGrid.Color_Completable;
-        else if (Data == Factor.Item1_MushroomAndWandoo) // 4
+        else if (Data == Factor.UseItem1) // 4
             Spr.color = ParentGrid.Color_Point;
         else
             Spr.color = Color.blue;

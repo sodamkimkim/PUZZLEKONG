@@ -40,8 +40,8 @@ public class TouchRaycast2D_Item : MonoBehaviour
     {
         if (TouchingItem == item) return;
 
-        Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition) + Factor.TouchingObjOffset;
-        pos.z = 0;
+        Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        pos.z = -1;
         _itemPosBackUp = pos;
 
         TouchingItem = item;
@@ -53,8 +53,8 @@ public class TouchRaycast2D_Item : MonoBehaviour
     {
         if (TouchingItem == null) return;
 
-        Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition) + Factor.TouchingObjOffset;
-        pos.z = 0;
+        Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        pos.z = -1;
         TouchingItem.SetPos(true, pos);
 
         if (pos == _itemPosBackUp) return;

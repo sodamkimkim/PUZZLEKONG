@@ -13,7 +13,7 @@ public class PuzzleManager : MonoBehaviour
     #endregion
 
     [SerializeField]
-    private PuzzleSpawner _puzzleSpawner = null;
+    public PuzzleSpawner _puzzleSpawner = null;
     [SerializeField]
     private Button _btnReset = null;
     private Dictionary<string, GameObject> _samePuzzleCheckDic = new Dictionary<string, GameObject>();

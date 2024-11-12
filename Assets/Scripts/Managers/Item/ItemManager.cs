@@ -6,7 +6,9 @@ using UnityEngine.UI;
 public class ItemManager : MonoBehaviour
 {
     [SerializeField]
-    private GridManager _gridManager = null; 
+    private GridManager _gridManager = null;
+    [SerializeField]
+    private PuzzleManager _puzzleManager = null;
     [SerializeField]
     private ItemUse _itemUse = null;
 
@@ -21,7 +23,7 @@ public class ItemManager : MonoBehaviour
 
     private void Start()
     {
-     //   SetItemSlotColor(ThemaManager.ETheme);
+        //   SetItemSlotColor(ThemaManager.ETheme);
         // Player가 가진 Item 갯수
         PlayerPrefs.SetInt("Item_a_Mushroom", 2);
         PlayerPrefs.SetInt("Item_b_Wandoo", 1);
@@ -40,7 +42,7 @@ public class ItemManager : MonoBehaviour
     }
     private void SetItemSlotColor(Enum.eTheme eTheme)
     {
-        SpriteRenderer spr =  _itemSlotGo.GetComponent<SpriteRenderer>();
+        SpriteRenderer spr = _itemSlotGo.GetComponent<SpriteRenderer>();
         switch (eTheme)
         {
             case Enum.eTheme.Grey:
@@ -69,10 +71,11 @@ public class ItemManager : MonoBehaviour
 
     public PuzzleManager.SetPuzzleActive SetPuzzlesActiveCallback;
 
+    public delegate LazyStart LazyStart();
     public void Init(PuzzleManager.SetPuzzleActive setPuzzlesActiveCallback)
     {
         SetPuzzlesActiveCallback = setPuzzlesActiveCallback;
-        _itemUse.Init(setPuzzlesActiveCallback);
+        _itemUse.Init(SetPuzzleStatusData, setPuzzlesActiveCallback) ;
     }
     private void InstantiateItem()
     {
@@ -120,7 +123,7 @@ public class ItemManager : MonoBehaviour
     public void CheckUseable(Item touchingItem)
     {
         if (touchingItem.TriggeredGridPartIdxStr == string.Empty) return;
-        _itemUse.CheckUseable(_gridManager.Grid, touchingItem);
+        _itemUse.CheckUseable(_puzzleManager, _gridManager.Grid, touchingItem);
     }
     public delegate void SetTouchEndItemReturn();
     // Item에 따른 로직 처리
@@ -129,7 +132,7 @@ public class ItemManager : MonoBehaviour
     {
         if (TouchRaycast2D_Item.TouchingItem == null) return;
 
-        if (_itemUse.UseItem(_gridManager.Grid, dropItem))
+        if (_itemUse.UseItem(_puzzleManager, _gridManager.Grid, dropItem))
         {
             // 아이템 갯수 반영, 남아있으면 돌려보내기
             PlayerPrefs.SetInt(dropItem.name, PlayerPrefs.GetInt(dropItem.name) - 1);
@@ -146,11 +149,23 @@ public class ItemManager : MonoBehaviour
     {
         foreach (KeyValuePair<string, GridPart> kvp in _gridManager.Grid.ChildGridPartDic)
         {
-            if (kvp.Value.Data == Factor.Item1_MushroomAndWandoo)
+            if (kvp.Value.Data == Factor.UseItem1)
             {
                 kvp.Value.Data = Factor.HasPuzzle;
                 kvp.Value.SetGridPartColor();
             }
+        }
+        SetPuzzleStatusData(Factor.PuzzleStatus_Normal);
+    }
+    public void SetPuzzleStatusData(int puzzleStatusFactor)
+    {
+        if (_puzzleManager.PuzzleGoArr == null) return;
+        foreach (GameObject puzzleGo in _puzzleManager.PuzzleGoArr)
+        {
+            if (puzzleGo == null) continue;
+            Puzzle puzzle = puzzleGo.GetComponent<Puzzle>();
+            if (puzzle == null || puzzle.ActiveSelf == false) continue;
+            puzzle.StatusData = puzzleStatusFactor;
         }
     }
 } // end of class
