@@ -22,7 +22,7 @@ public class Factor : MonoBehaviour
     /// <summary>
     /// 4
     /// </summary>
-    public static int Point { get => 4; }
+    public static int Item1_MushroomAndWandoo { get => 4; }
     #endregion
 
     #region Common Factor

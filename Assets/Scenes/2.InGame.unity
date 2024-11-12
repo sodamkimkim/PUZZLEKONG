@@ -3294,6 +3294,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _gridManager: {fileID: 540252145}
   _itemUse: {fileID: 2079459817}
+  _itemSlotGo: {fileID: 853112771}
   _itemSlotPosArr:
   - {fileID: 197068183}
   - {fileID: 972438534}

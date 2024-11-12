@@ -15,9 +15,10 @@ public class ThemaManager : MonoBehaviour
     /// 
     //   public static Enum.eTheme ETheme = Enum.eTheme.Grey;
     //  public static Enum.eTheme ETheme = Enum.eTheme.Green;
-     public static Enum.eTheme ETheme = Enum.eTheme.LightBlue;
-     // public static Enum.eTheme ETheme = Enum.eTheme.LightPurple;
-   // public static Enum.eTheme ETheme = Enum.eTheme.Pink;
+    private static Enum.eTheme _eTheme = Enum.eTheme.LightBlue;
+    public static Enum.eTheme ETheme { get=> _eTheme; set=> _eTheme = value; }
+    // public static Enum.eTheme ETheme = Enum.eTheme.LightPurple;
+    // public static Enum.eTheme ETheme = Enum.eTheme.Pink;
     //
     //public static Enum.eTheme ETheme = Enum.eTheme.Yellow;
     // public static Enum.eTheme ETheme = Enum.eTheme.Mint;

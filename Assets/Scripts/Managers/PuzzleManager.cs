@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
-
+using System.Collections;
+using System.Collections.Generic;
 [DefaultExecutionOrder(-8)]
 public class PuzzleManager : MonoBehaviour
 {
@@ -15,23 +16,40 @@ public class PuzzleManager : MonoBehaviour
     private PuzzleSpawner _puzzleSpawner = null;
     [SerializeField]
     private Button _btnReset = null;
+    private Dictionary<string, GameObject> _samePuzzleCheckDic = new Dictionary<string, GameObject>();
     private void Awake()
     {
+        _samePuzzleCheckDic.Clear();
         _btnReset.onClick.AddListener(() => LazyStart());
     }
-
     public void LazyStart()
     {
-        InstantiatePuzzleGos(ref _puzzleGoArr);
+        InstantiatePuzzleGos();
         _SetPuzzleActiveCallback?.Invoke();
         _checkStageCompleteOrGameOverCallback?.Invoke();
     }
-    private void InstantiatePuzzleGos(ref GameObject[] puzzleGoArr)
+    private void InstantiatePuzzleGos()
     {
         _puzzleSpawner.DestroyChilds();
 
-        for (int i = 0; i < _puzzleGoArr.Length; i++)
-            puzzleGoArr[i] = _puzzleSpawner.SpawnPuzzle(i);
+        for (int i = 0; i < PuzzleGoArr.Length; i++)
+        {
+            PuzzleGoArr[i] = _puzzleSpawner.SpawnPuzzle(i);
+        }
+
+        if (_samePuzzleCheckDic.ContainsKey(PuzzleGoArr[0].name) &&
+            _samePuzzleCheckDic.ContainsKey(PuzzleGoArr[1].name) &&
+            _samePuzzleCheckDic.ContainsKey(PuzzleGoArr[2].name))
+            InstantiatePuzzleGos();
+        else
+        {
+            _samePuzzleCheckDic.Clear();
+            for (int i = 0; i < PuzzleGoArr.Length; i++)
+            {
+                Util.CheckAndAddDictionary<GameObject>
+                    (_samePuzzleCheckDic, PuzzleGoArr[i].name, PuzzleGoArr[i]);
+            }
+        }
     }
 
     #region delegate

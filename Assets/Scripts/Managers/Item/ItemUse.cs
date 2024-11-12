@@ -47,7 +47,7 @@ public class ItemUse : MonoBehaviour
         {
             if (grid.Data[idxR, idxC] == Factor.HasPuzzle)
             {
-                grid.SetDataIdx(idxR, idxC, Factor.Point);
+                grid.SetDataIdx(idxR, idxC, Factor.Item1_MushroomAndWandoo);
                 grid.ChildGridPartDic[$"{idxR},{idxC}"].SetGridPartColor();
             }
         }
@@ -64,7 +64,7 @@ public class ItemUse : MonoBehaviour
         {
             if (grid.Data[idxR, idxC] == Factor.HasPuzzle)
             {
-                grid.SetDataIdx(idxR, idxC, Factor.Point);
+                grid.SetDataIdx(idxR, idxC, Factor.Item1_MushroomAndWandoo);
                 grid.ChildGridPartDic[$"{idxR},{idxC}"].SetGridPartColor();
             }
         }
@@ -86,7 +86,6 @@ public class ItemUse : MonoBehaviour
         if (item.TriggeredGridPartIdxStr == string.Empty) return;
         // TODO 최우측세로줄이면 return;
     }
-
     public bool UseItem(Grid grid, Item item)
     {
         if (grid == null || item == null) return false;
@@ -105,8 +104,8 @@ public class ItemUse : MonoBehaviour
         }
         return false;
     }
-
-    private void PointComplete(Grid grid, int startR, int endR, int startC, int endC, bool dirR)
+    private void DataComplete(Grid grid, int beforeFactor, int afterFactor
+        , int startR, int endR, int startC, int endC, bool dirR)
     {
         if (dirR)
         {
@@ -114,8 +113,8 @@ public class ItemUse : MonoBehaviour
             {
                 for (int c = startC; c <= endC; c++)
                 {
-                    if (grid.Data[r, c] == Factor.Point)
-                        grid.SetDataIdx(r, c, Factor.HasNoPuzzle);
+                    if (grid.Data[r, c] == beforeFactor)
+                        grid.SetDataIdx(r, c, afterFactor);
                 }
             }
         }
@@ -125,12 +124,12 @@ public class ItemUse : MonoBehaviour
             {
                 for (int c = startC; c <= endC; c++)
                 {
-                    if (grid.Data[r, c] == Factor.Point)
-                        grid.SetDataIdx(r, c, Factor.HasNoPuzzle);
+                    if (grid.Data[r, c] == beforeFactor)
+                        grid.SetDataIdx(r, c, afterFactor);
                 }
             }
         }
-        StartCoroutine(grid.SetGridPartColorCoroutine(startR, endR, startC, endC, dirR, Factor.CompleteCoroutineInterval*2));
+        StartCoroutine(grid.SetGridPartColorCoroutine(startR, endR, startC, endC, dirR, Factor.CompleteCoroutineInterval * 2));
         SetPuzzlesActiveCallback();
     }
     private bool Use_Item_a_Mushroom(Grid grid, Item item)
@@ -139,9 +138,9 @@ public class ItemUse : MonoBehaviour
         int col = 0;
         int.TryParse(item.TriggeredGridPartIdxStr.Split(',')[1], out col);
 
-        if (grid.ChildGridPartDic[item.TriggeredGridPartIdxStr].Data == Factor.Point)
+        if (grid.ChildGridPartDic[item.TriggeredGridPartIdxStr].Data == Factor.Item1_MushroomAndWandoo)
         {
-            PointComplete(grid, grid.Data.GetLength(0) - 1, 0, col, col, false);
+            DataComplete(grid, Factor.Item1_MushroomAndWandoo, Factor.HasNoPuzzle, grid.Data.GetLength(0) - 1, 0, col, col, false);
             _itemUseEffect.Effect_Item_a_Mushroom(grid, item, col);
             return true;
         }
@@ -149,9 +148,9 @@ public class ItemUse : MonoBehaviour
         int rowLen = grid.Data.GetLength(0);
         for (int i = 0; i < rowLen; i++)
         {
-            if (grid.ChildGridPartDic[$"{i},{col}"].Data == Factor.Point)
+            if (grid.ChildGridPartDic[$"{i},{col}"].Data == Factor.Item1_MushroomAndWandoo)
             {
-                PointComplete(grid, grid.Data.GetLength(0) - 1, 0, col, col, false);
+                DataComplete(grid, Factor.Item1_MushroomAndWandoo, Factor.HasNoPuzzle, grid.Data.GetLength(0) - 1, 0, col, col, false);
                 _itemUseEffect.Effect_Item_a_Mushroom(grid, item, col);
                 return true;
             }
@@ -164,9 +163,9 @@ public class ItemUse : MonoBehaviour
         int row = 0;
         int.TryParse(item.TriggeredGridPartIdxStr.Split(',')[0], out row);
 
-        if (grid.ChildGridPartDic[item.TriggeredGridPartIdxStr].Data == Factor.Point)
+        if (grid.ChildGridPartDic[item.TriggeredGridPartIdxStr].Data == Factor.Item1_MushroomAndWandoo)
         {
-            PointComplete(grid, row, row, 0, grid.Data.GetLength(1) - 1, true);
+            DataComplete(grid, Factor.Item1_MushroomAndWandoo, Factor.HasNoPuzzle, row, row, 0, grid.Data.GetLength(1) - 1, true);
             _itemUseEffect.Effect_Item_b_Wandoo(grid, item, row);
             return true;
         }
@@ -174,9 +173,9 @@ public class ItemUse : MonoBehaviour
         int colLen = grid.Data.GetLength(1);
         for (int i = 0; i < colLen; i++)
         {
-            if (grid.ChildGridPartDic[$"{row},{i}"].Data == Factor.Point)
+            if (grid.ChildGridPartDic[$"{row},{i}"].Data == Factor.Item1_MushroomAndWandoo)
             {
-                PointComplete(grid, row, row, 0, grid.Data.GetLength(1) - 1, true);
+                DataComplete(grid, Factor.Item1_MushroomAndWandoo, Factor.HasNoPuzzle, row, row, 0, grid.Data.GetLength(1) - 1, true);
                 _itemUseEffect.Effect_Item_b_Wandoo(grid, item, row);
                 return true;
             }

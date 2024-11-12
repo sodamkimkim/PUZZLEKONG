@@ -11,6 +11,9 @@ public class ItemManager : MonoBehaviour
     private ItemUse _itemUse = null;
 
     [SerializeField]
+    private GameObject _itemSlotGo = null;
+
+    [SerializeField]
     private GameObject[] _itemSlotPosArr = null;
 
     [SerializeField]
@@ -18,6 +21,7 @@ public class ItemManager : MonoBehaviour
 
     private void Start()
     {
+     //   SetItemSlotColor(ThemaManager.ETheme);
         // Player°¡ °¡Áø Item °¹¼ö
         PlayerPrefs.SetInt("Item_a_Mushroom", 2);
         PlayerPrefs.SetInt("Item_b_Wandoo", 1);
@@ -30,12 +34,39 @@ public class ItemManager : MonoBehaviour
         PlayerPrefs.SetString("ItemSlot0", "Item_b_Wandoo");
         PlayerPrefs.SetString("ItemSlot1", "Item_c_Reset");
         PlayerPrefs.SetString("ItemSlot2", "Item_a_Mushroom");
-        // PlayerPrefs.SetString("ItemSlot1", "Item_b_Wandoo");
-        // PlayerPrefs.SetString("ItemSlot2", "Item_c_Reset");
         PlayerPrefs.SetString("ItemSlot3", "Item_d_SwitchHori");
         PlayerPrefs.SetString("ItemSlot4", "Item_e_SwitchVerti");
         InstantiateItem();
     }
+    private void SetItemSlotColor(Enum.eTheme eTheme)
+    {
+        SpriteRenderer spr =  _itemSlotGo.GetComponent<SpriteRenderer>();
+        switch (eTheme)
+        {
+            case Enum.eTheme.Grey:
+                spr.color = Factor.Grey0;
+                break;
+            case Enum.eTheme.Green:
+                spr.color = Factor.Green0;
+                break;
+            case Enum.eTheme.LightPurple:
+                spr.color = Factor.LightPurple0;
+                break;
+            case Enum.eTheme.LightBlue:
+                spr.color = Factor.LightBlue0;
+                break;
+            case Enum.eTheme.Pink:
+                spr.color = Factor.Pink0;
+                break;
+            case Enum.eTheme.Yellow:
+                spr.color = Factor.Yellow0;
+                break;
+            case Enum.eTheme.Mint:
+                spr.color = Factor.Grey0;
+                break;
+        }
+    }
+
     public PuzzleManager.SetPuzzleActive SetPuzzlesActiveCallback;
 
     public void Init(PuzzleManager.SetPuzzleActive setPuzzlesActiveCallback)
@@ -115,7 +146,7 @@ public class ItemManager : MonoBehaviour
     {
         foreach (KeyValuePair<string, GridPart> kvp in _gridManager.Grid.ChildGridPartDic)
         {
-            if (kvp.Value.Data == Factor.Point)
+            if (kvp.Value.Data == Factor.Item1_MushroomAndWandoo)
             {
                 kvp.Value.Data = Factor.HasPuzzle;
                 kvp.Value.SetGridPartColor();

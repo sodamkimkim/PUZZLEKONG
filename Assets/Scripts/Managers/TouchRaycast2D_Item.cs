@@ -61,7 +61,6 @@ public class TouchRaycast2D_Item : MonoBehaviour
 
         _itemPosBackUp = pos;
 
-        // TODO Item Useable 
         _itemManager.CheckUseableReset();
         _itemManager.CheckUseable(TouchingItem);
     }
