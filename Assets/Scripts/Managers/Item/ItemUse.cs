@@ -75,8 +75,7 @@ public class ItemUse : MonoBehaviour
     // 퍼즐 reset (기존것과 다르게)
     private void CheckUseable_Item_c_Reset(PuzzleManager puzzleManager, Grid grid, Item item)
     {
-        if (item.TriggeredPuzzle == null) return;
-        Debug.Log(SetPuzzleStatusDataCallback.ToString());
+        if (item.TriggeredPuzzle == null) return; 
         SetPuzzleStatusDataCallback?.Invoke(Factor.PuzzleStatus_ItemUse);
     }
     // 하단 가로줄과 상태 변경
@@ -179,7 +178,10 @@ public class ItemUse : MonoBehaviour
         if (item.TriggeredPuzzle == null) return false;
 
         if (item.TriggeredPuzzle.ItemStatusData == Factor.PuzzleStatus_ItemUse)
-        { puzzleManager.LazyStart(); return true; }
+        {
+            puzzleManager.LazyStart();
+            return true;
+        }
         else return false;
     }
     private bool Use_Item_d_SwitchHori(Grid grid, Item item)

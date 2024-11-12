@@ -18,6 +18,7 @@ public class InGameManager : MonoBehaviour
     private EffectManager _effectManager = null;
     [SerializeField]
     private ItemManager _itemManager = null;
+    public static bool IsGameOver = false;
     private void Awake()
     {
         _puzzlePlaceManager.PuzzlePlacableChecker.Init(GameOverProcess, StageCompleteProcess);
@@ -37,6 +38,7 @@ public class InGameManager : MonoBehaviour
     }
     private void GameOverProcess()
     {
+        IsGameOver = true;
         _playerDataManager.UpdateData(_uiManager);
         _playerDataManager.SaveData();
         Debug.Log($"GameOver | {PlayerDataManager.GameData.ToString()}");

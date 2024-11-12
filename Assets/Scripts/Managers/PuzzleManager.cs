@@ -16,18 +16,42 @@ public class PuzzleManager : MonoBehaviour
     public PuzzleSpawner _puzzleSpawner = null;
     [SerializeField]
     private Button _btnReset = null;
-    private Dictionary<string, GameObject> _samePuzzleCheckDic = new Dictionary<string, GameObject>();
+    public delegate void CheckGameOver();
+    public delegate int SetPuzzleActive();
+    private CheckGameOver _checkStageCompleteOrGameOverCallback { get; set; }
+    private SetPuzzleActive _setPuzzleActiveCallback { get; set; }
+    public void Init(SetPuzzleActive SetPuzzleActiveCallback, CheckGameOver checkStageCompleteOrGameOverCallback)
+    {
+        _setPuzzleActiveCallback = SetPuzzleActiveCallback;
+        _checkStageCompleteOrGameOverCallback = checkStageCompleteOrGameOverCallback;
+    }
     private void Awake()
     {
-        _samePuzzleCheckDic.Clear();
         _btnReset.onClick.AddListener(() => LazyStart());
     }
+    //public void LazyStart()
+    //{
+    //    InstantiatePuzzleGos();
+    //    _setPuzzleActiveCallback?.Invoke();
+    //    _checkStageCompleteOrGameOverCallback?.Invoke();
+    //}
+    /// <summary>
+    /// 3퍼즐 모두 activeself == true 인걸로 생성해줘야 함
+    /// gameover나면 안됨
+    /// 똑같은거 3개 생성해도 됨
+    /// </summary>
     public void LazyStart()
     {
         InstantiatePuzzleGos();
-        _SetPuzzleActiveCallback?.Invoke();
-        _checkStageCompleteOrGameOverCallback?.Invoke();
+
+        if (_setPuzzleActiveCallback?.Invoke() <2)
+        {
+            Debug.Log("다시생성");
+            LazyStart();
+        } 
     }
+
+
     private void InstantiatePuzzleGos()
     {
         _puzzleSpawner.DestroyChilds();
@@ -36,31 +60,5 @@ public class PuzzleManager : MonoBehaviour
         {
             PuzzleGoArr[i] = _puzzleSpawner.SpawnPuzzle(i);
         }
-
-        if (_samePuzzleCheckDic.ContainsKey(PuzzleGoArr[0].name) &&
-            _samePuzzleCheckDic.ContainsKey(PuzzleGoArr[1].name) &&
-            _samePuzzleCheckDic.ContainsKey(PuzzleGoArr[2].name))
-            InstantiatePuzzleGos();
-        else
-        {
-            _samePuzzleCheckDic.Clear();
-            for (int i = 0; i < PuzzleGoArr.Length; i++)
-            {
-                Util.CheckAndAddDictionary<GameObject>
-                    (_samePuzzleCheckDic, PuzzleGoArr[i].name, PuzzleGoArr[i]);
-            }
-        }
     }
-
-    #region delegate
-    public delegate void CheckGameOver();
-    public delegate int SetPuzzleActive();
-    private CheckGameOver _checkStageCompleteOrGameOverCallback { get; set; }
-    private SetPuzzleActive _SetPuzzleActiveCallback { get; set; }
-    public void Iniit(SetPuzzleActive SetPuzzleActiveCallback, CheckGameOver checkStageCompleteOrGameOverCallback)
-    {
-        _SetPuzzleActiveCallback = SetPuzzleActiveCallback;
-        _checkStageCompleteOrGameOverCallback = checkStageCompleteOrGameOverCallback;
-    }
-    #endregion
 } // end of class

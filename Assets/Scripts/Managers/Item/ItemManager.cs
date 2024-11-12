@@ -25,9 +25,9 @@ public class ItemManager : MonoBehaviour
     {
         //   SetItemSlotColor(ThemaManager.ETheme);
         // Player°¡ °¡Áø Item °¹¼ö
-        PlayerPrefs.SetInt("Item_a_Mushroom", 2);
-        PlayerPrefs.SetInt("Item_b_Wandoo", 1);
-        PlayerPrefs.SetInt("Item_c_Reset", 5);
+        PlayerPrefs.SetInt("Item_a_Mushroom", 9999);
+        PlayerPrefs.SetInt("Item_b_Wandoo", 9999);
+        PlayerPrefs.SetInt("Item_c_Reset", 9999);
         PlayerPrefs.SetInt("Item_d_SwitchHori", 4);
         PlayerPrefs.SetInt("Item_e_SwitchVerti", 2);
         PlayerPrefs.Save();

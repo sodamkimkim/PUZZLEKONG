@@ -27,7 +27,7 @@ public class PuzzlePlaceManager : MonoBehaviour
     private void Awake()
     {
        // _gridManager.Iniit(SetPuzzlesActive, CheckStageComplete, CheckGameOver);
-        _puzzleManager.Iniit(SetPuzzlesActive, CheckStageCompleteOrGameOver);
+        _puzzleManager.Init(SetPuzzlesActive, CheckStageCompleteOrGameOver);
     }
     public void CheckStageCompleteOrGameOver()
     {

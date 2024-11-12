@@ -10,11 +10,12 @@ public class TouchRaycast_Item : MonoBehaviour
     private Vector3 _itemPosBackUp = Vector3.zero;
     private void Update()
     {
+     //   if (InGameManager.IsGameOver) return;
+        if (CompleteManager.IsProcessing) return;
         ShotRay();
     }
     public void ShotRay()
     {
-        if (CompleteManager.IsProcessing) return;
 #if UNITY_EDITOR || UNITY_STANDALONE
         Vector3 mouseWorldPos2 = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector2 rayOrigin2 = new Vector2(mouseWorldPos2.x, mouseWorldPos2.y);
@@ -42,7 +43,7 @@ public class TouchRaycast_Item : MonoBehaviour
         if (TouchingItem == item) return;
 
         Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        pos.z = -1;
+        pos.z = -0.5f;
         _itemPosBackUp = pos;
 
         TouchingItem = item;
@@ -55,7 +56,7 @@ public class TouchRaycast_Item : MonoBehaviour
         if (TouchingItem == null) return;
 
         Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        pos.z = -1;
+        pos.z = -0.5f;
         TouchingItem.SetPos(true, pos);
 
         if (pos == _itemPosBackUp) return;

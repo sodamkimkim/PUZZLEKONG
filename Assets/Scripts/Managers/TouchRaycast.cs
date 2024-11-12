@@ -14,11 +14,12 @@ public class TouchRaycast : MonoBehaviour
     private Vector3 _puzzlePosBackUp = Vector3.zero;
     private void Update()
     {
+    //    if (InGameManager.IsGameOver) return;
+        if (CompleteManager.IsProcessing) return;
         ShotRay();
     }
     public void ShotRay()
     {
-        if (CompleteManager.IsProcessing) return;
 
 #if UNITY_EDITOR || UNITY_STANDALONE 
         Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition); 
