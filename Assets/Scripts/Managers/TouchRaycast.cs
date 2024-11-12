@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class TouchRaycast2D : MonoBehaviour
+public class TouchRaycast : MonoBehaviour
 {
     #region Dependency Injection
     [SerializeField]
@@ -21,20 +21,21 @@ public class TouchRaycast2D : MonoBehaviour
         if (CompleteManager.IsProcessing) return;
 
 #if UNITY_EDITOR || UNITY_STANDALONE 
-        Vector3 mouseWorldPos2 = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        Vector2 rayOrigin2 = new Vector2(mouseWorldPos2.x, mouseWorldPos2.y);
+        Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition); 
+        RaycastHit hit;
 
-        RaycastHit2D hit2 = Physics2D.Raycast(rayOrigin2, Vector2.zero);
-
-        if (hit2.collider != null && hit2.transform.GetComponentInParent<Puzzle>() != null)
-        {
-            Puzzle puzzle = hit2.transform.GetComponentInParent<Puzzle>();
-
-            if (Input.GetMouseButtonDown(0))
-            {
-                if (puzzle.ActiveSelf == true)
-                    SetTouchBegin(puzzle);
+        if (Physics.Raycast(mouseWorldPos, transform.forward, out hit, 1000f))
+        { 
+            if (hit.transform.gameObject.tag == "PuzzlePart")
+            { 
+                if (Input.GetMouseButtonDown(0))
+                {
+                    Puzzle puzzle = hit.transform.GetComponentInParent<Puzzle>();
+                    if (puzzle.ActiveSelf == true)
+                        SetTouchBegin(puzzle);
+                }
             }
+
         }
 
         if (Input.GetMouseButton(0) && TouchingPuzzle != null)

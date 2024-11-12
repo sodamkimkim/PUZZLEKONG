@@ -48,8 +48,8 @@ public class BuildPuzzlePrefab : MonoBehaviour
                         puzzlePartGo.transform.rotation = Quaternion.identity;
                         puzzlePartGo.transform.localPosition = new Vector3(puzzlePartGo.transform.localScale.x * c + (isLeftOffset ? 0.1f * c : 0), -(puzzlePartGo.transform.localScale.y * r + (isUpperOffset ? 0.1f * r : 0)), 0);
 
-                        BoxCollider2D boxCollider2D = Util.CheckAndAddComponent<BoxCollider2D>(puzzlePartGo);
-                        boxCollider2D.size = new Vector2(1.1f, 1.1f);
+                        BoxCollider boxCollider = Util.CheckAndAddComponent<BoxCollider>(puzzlePartGo);
+                        boxCollider.size = new Vector2(1.1f, 1.1f);
 
                         Util.CheckAndAddComponent<PZPart>(puzzlePartGo);
                     }
@@ -63,9 +63,10 @@ public class BuildPuzzlePrefab : MonoBehaviour
 
             puzzlePrefab.transform.position = new Vector3(i * puzzlePrefab.transform.localScale.x * 4f, -3f, 1f);
 
-            Rigidbody2D rigidbody2D = Util.CheckAndAddComponent<Rigidbody2D>(puzzlePrefab);
-            rigidbody2D.constraints = RigidbodyConstraints2D.FreezeAll;
+            //Rigidbody rigidbody = Util.CheckAndAddComponent<Rigidbody>(puzzlePrefab);
+            //rigidbody.constraints = RigidbodyConstraints.FreezeAll;
+            //rigidbody.useGravity = false;
             puzzlePrefab.tag = "Puzzle";
-        } 
-    } 
+        }
+    }
 } // end of class

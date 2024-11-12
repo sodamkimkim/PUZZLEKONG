@@ -14,7 +14,7 @@ public class Item : MonoBehaviour
     public bool IsForEffect { get => _isForEffect; set => _isForEffect = value; }
 
     public string TriggeredGridPartIdxStr = string.Empty; // r,c 형태로 저장
-    public bool IsPuzzleTriggered = false;
+    public Puzzle TriggeredPuzzle = null;
     private void OnEnable()
     {
         LocalScaleSmall = transform.localScale;
@@ -55,10 +55,10 @@ public class Item : MonoBehaviour
     {
         if (TriggeredGridPartIdxStr != string.Empty)
             TriggeredGridPartIdxStr = string.Empty;
-        if (IsPuzzleTriggered != false)
-            IsPuzzleTriggered = false;
+        if (TriggeredPuzzle != null)
+            TriggeredPuzzle = null;
 
-        if (this != TouchRaycast2D_Item.TouchingItem) return;
+        if (this != TouchRaycast_Item.TouchingItem) return;
 
         RaycastHit hit;
         if (Physics.Raycast(this.gameObject.transform.position, transform.forward, out hit, 1000f))
@@ -68,31 +68,31 @@ public class Item : MonoBehaviour
             // # GridPart
             if (hit.collider != null && hit.transform.gameObject.tag == "GridPart")
             {
-                IsPuzzleTriggered = false;
+                TriggeredPuzzle = null;
                 if (TriggeredGridPartIdxStr != hit.transform.gameObject.name)
                     TriggeredGridPartIdxStr = hit.transform.gameObject.name;
             }
             // # Puzzle
-            else if (hit.collider != null && hit.transform.GetComponentInParent<Puzzle>() != null)
+            else if (hit.transform.gameObject.tag == "PuzzlePart")
             {
                 TriggeredGridPartIdxStr = string.Empty;
-                IsPuzzleTriggered = true;
-                Debug.Log($"{this.name} || {IsPuzzleTriggered}");
+                TriggeredPuzzle = hit.transform.gameObject.GetComponentInParent<Puzzle>();
+           //     Debug.Log($"{this.name} || {IsPuzzleTriggered}");
             }
             else
             {
                 if (TriggeredGridPartIdxStr != string.Empty)
                     TriggeredGridPartIdxStr = string.Empty;
-                if (IsPuzzleTriggered != false)
-                    IsPuzzleTriggered = false;
+                if (TriggeredPuzzle != null)
+                    TriggeredPuzzle = null;
             }
         }
         else
         {
             if (TriggeredGridPartIdxStr != string.Empty)
                 TriggeredGridPartIdxStr = string.Empty;
-            if (IsPuzzleTriggered != false)
-                IsPuzzleTriggered = false;
+            if (TriggeredPuzzle != null)
+                TriggeredPuzzle = null;
         }
     }
 } // end of class

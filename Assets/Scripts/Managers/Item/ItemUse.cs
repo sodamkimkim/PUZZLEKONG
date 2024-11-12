@@ -18,6 +18,7 @@ public class ItemUse : MonoBehaviour
     public void CheckUseable(PuzzleManager _puzzleManager, Grid grid, Item item)
     {
         if (grid == null || item == null) return;
+
         switch (item.name)
         {
             case "Item_a_Mushroom":
@@ -74,8 +75,8 @@ public class ItemUse : MonoBehaviour
     // 퍼즐 reset (기존것과 다르게)
     private void CheckUseable_Item_c_Reset(PuzzleManager puzzleManager, Grid grid, Item item)
     {
-        if (item.IsPuzzleTriggered == false) return;
-
+        if (item.TriggeredPuzzle == null) return;
+        Debug.Log(SetPuzzleStatusDataCallback.ToString());
         SetPuzzleStatusDataCallback?.Invoke(Factor.PuzzleStatus_ItemUse);
     }
     // 하단 가로줄과 상태 변경
@@ -175,8 +176,11 @@ public class ItemUse : MonoBehaviour
 
     private bool Use_Item_c_Reset(PuzzleManager puzzleManager, Grid grid, Item item)
     {
-        if (item.IsPuzzleTriggered == false) return false;
-        puzzleManager.LazyStart(); return true;
+        if (item.TriggeredPuzzle == null) return false;
+
+        if (item.TriggeredPuzzle.StatusData == Factor.PuzzleStatus_ItemUse)
+        { puzzleManager.LazyStart(); return true; }
+        else return false;
     }
     private bool Use_Item_d_SwitchHori(Grid grid, Item item)
     {

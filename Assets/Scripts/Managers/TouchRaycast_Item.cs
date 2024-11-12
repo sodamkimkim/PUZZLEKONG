@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TouchRaycast2D_Item : MonoBehaviour
+public class TouchRaycast_Item : MonoBehaviour
 {
     [SerializeField]
     private ItemManager _itemManager = null;
@@ -21,12 +21,13 @@ public class TouchRaycast2D_Item : MonoBehaviour
 
         RaycastHit2D hit2 = Physics2D.Raycast(rayOrigin2, Vector2.zero);
 
-        if (hit2.collider != null && hit2.transform.GetComponentInParent<Item>() != null)
+        if (hit2.collider != null)
         {
             Item item = hit2.transform.GetComponentInParent<Item>();
+            if (item != null)
+                if (Input.GetMouseButtonDown(0) && item.IsForEffect == false)
+                    SetTouchBegin(item);
 
-            if (Input.GetMouseButtonDown(0) && item.IsForEffect == false)
-                SetTouchBegin(item);
         }
 
         if (Input.GetMouseButton(0) && TouchingItem != null && TouchingItem.IsForEffect == false)

@@ -75,7 +75,7 @@ public class ItemManager : MonoBehaviour
     public void Init(PuzzleManager.SetPuzzleActive setPuzzlesActiveCallback)
     {
         SetPuzzlesActiveCallback = setPuzzlesActiveCallback;
-        _itemUse.Init(SetPuzzleStatusData, setPuzzlesActiveCallback) ;
+        _itemUse.Init(SetPuzzleStatusData, setPuzzlesActiveCallback);
     }
     private void InstantiateItem()
     {
@@ -122,7 +122,7 @@ public class ItemManager : MonoBehaviour
 
     public void CheckUseable(Item touchingItem)
     {
-        if (touchingItem.TriggeredGridPartIdxStr == string.Empty) return;
+
         _itemUse.CheckUseable(_puzzleManager, _gridManager.Grid, touchingItem);
     }
     public delegate void SetTouchEndItemReturn();
@@ -130,7 +130,7 @@ public class ItemManager : MonoBehaviour
     // 조건에 맞지 않으면 SetTouchEndItemReturn
     public void PlaceItem(Item dropItem, SetTouchEndItemReturn setTouchEndItemReturnCallback)
     {
-        if (TouchRaycast2D_Item.TouchingItem == null) return;
+        if (TouchRaycast_Item.TouchingItem == null) return;
 
         if (_itemUse.UseItem(_puzzleManager, _gridManager.Grid, dropItem))
         {

@@ -30,9 +30,9 @@ public class Puzzle : MonoBehaviour
         set
         {
             _statusData = value;
-            if (StatusData == Factor.PuzzleStatus_ItemUse) SetChildColor(new Color(500f / 255f, 500f / 255f, 500f / 255f));
-            else if(StatusData == Factor.PuzzleStatus_Normal) SetChildColor(ChildColor);
-            else SetChildColor(ChildColor); 
+            if (value == Factor.PuzzleStatus_ItemUse) SetChildColor(new Color(500f / 255f, 500f / 255f, 500f / 255f));
+            else if (value == Factor.PuzzleStatus_Normal) SetChildColor(ChildColor);
+            else SetChildColor(ChildColor);
         }
 
     }

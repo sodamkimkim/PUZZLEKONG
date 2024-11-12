@@ -27,7 +27,7 @@ public class PZPart : MonoBehaviour
     {
         if (TriggeredGridPartIdxStr != string.Empty)
             TriggeredGridPartIdxStr = string.Empty;
-        if (ParentPuzzle != TouchRaycast2D.TouchingPuzzle) return;
+        if (ParentPuzzle != TouchRaycast.TouchingPuzzle) return;
 
         RaycastHit hit;
         // Z축 방향으로 레이 쏘기 (transform.forward는 Z축 방향)

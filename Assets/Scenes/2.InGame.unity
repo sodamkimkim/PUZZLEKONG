@@ -972,7 +972,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 519420028}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a96ad32aa64a085478d48898d3d6f966, type: 3}
+  m_Script: {fileID: 11500000, guid: e71bb84dbfac3f748ace985c9794869f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _itemManager: {fileID: 2079459816}
@@ -3293,6 +3293,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _gridManager: {fileID: 540252145}
+  _puzzleManager: {fileID: 699796259}
   _itemUse: {fileID: 2079459817}
   _itemSlotGo: {fileID: 853112771}
   _itemSlotPosArr:

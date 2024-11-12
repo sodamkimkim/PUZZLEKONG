@@ -94,7 +94,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3096827426435114545}
   - component: {fileID: 8639300354973136934}
-  - component: {fileID: 4941329946277496540}
+  - component: {fileID: 3019861207575067051}
   m_Layer: 0
   m_Name: GridPart
   m_TagString: GridPart
@@ -170,7 +170,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!65 &4941329946277496540
+--- !u!65 &3019861207575067051
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

@@ -40,9 +40,9 @@ public class Factor : MonoBehaviour
     public static Vector3 PosBG { get => new Vector3(0f, 0f, 2f); }
     public static Vector3 PosGridSpawn { get => new Vector3(0f, 1f, 1f); }
 
-    public static Vector3 PosPuzzleSpawn0 { get => new Vector3(-1.5f, -2.8f, 0f); }
-    public static Vector3 PosPuzzleSpawn1 { get => new Vector3(0f, -2.8f, 0f); }
-    public static Vector3 PosPuzzleSpawn2 { get => new Vector3(1.5f, -2.8f, 0f); }
+    public static Vector3 PosPuzzleSpawn0 { get => new Vector3(-1.5f, -2.8f, 0.5f); }
+    public static Vector3 PosPuzzleSpawn1 { get => new Vector3(0f, -2.8f, 0.5f); }
+    public static Vector3 PosPuzzleSpawn2 { get => new Vector3(1.5f, -2.8f, 0.5f); }
     public static float PosEffectSpawnZ { get => -2f; }
 
     public static Vector3 ScalePuzzleSmall { get => new Vector3(0.2f, 0.2f, 1f); }

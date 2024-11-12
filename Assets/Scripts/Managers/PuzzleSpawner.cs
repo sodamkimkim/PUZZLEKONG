@@ -48,9 +48,10 @@ public class PuzzleSpawner : MonoBehaviour
         puzzleGo.transform.position = pos;
 
         // Rigidbody component
-        Util.CheckAndAddComponent<Rigidbody2D>(puzzleGo);
-        Rigidbody2D rigidbody2D = puzzleGo.GetComponent<Rigidbody2D>();
-        rigidbody2D.constraints = RigidbodyConstraints2D.FreezeAll;
+        //Util.CheckAndAddComponent<Rigidbody>(puzzleGo);
+        //Rigidbody rigidbody = puzzleGo.GetComponent<Rigidbody>();
+        //rigidbody.constraints = RigidbodyConstraints.FreezeAll;
+        //rigidbody.useGravity = false;
 
         // Puzzle component
         Util.CheckAndAddComponent<Puzzle>(puzzleGo);
