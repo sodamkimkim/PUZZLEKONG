@@ -15,12 +15,12 @@ public class TouchRaycast : MonoBehaviour
     private void Update()
     {
     //    if (InGameManager.IsGameOver) return;
-        if (CompleteManager.IsProcessing) return;
+        if (CompleteManager.IsProcessing) return; 
+        if (ItemManager.IsProcessing) return;
         ShotRay();
     }
     public void ShotRay()
-    {
-
+    { 
 #if UNITY_EDITOR || UNITY_STANDALONE 
         Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition); 
         RaycastHit hit;

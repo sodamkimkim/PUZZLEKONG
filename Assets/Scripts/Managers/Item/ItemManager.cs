@@ -20,7 +20,7 @@ public class ItemManager : MonoBehaviour
 
     [SerializeField]
     private GameObject[] _itemPrefabArr = null;
-
+    public static bool IsProcessing = false;
     private void Start()
     {
         //   SetItemSlotColor(ThemaManager.ETheme);
@@ -132,6 +132,7 @@ public class ItemManager : MonoBehaviour
     {
         if (TouchRaycast_Item.TouchingItem == null) return;
 
+       
         if (_itemUse.UseItem(_puzzleManager, _gridManager.Grid, dropItem))
         {
             // 아이템 갯수 반영, 남아있으면 돌려보내기
@@ -143,7 +144,7 @@ public class ItemManager : MonoBehaviour
         }
         else
             setTouchEndItemReturnCallback?.Invoke();
-
+        IsProcessing = false;
     }
     public void CheckUseableReset()
     {

@@ -12,6 +12,8 @@ public class TouchRaycast_Item : MonoBehaviour
     {
      //   if (InGameManager.IsGameOver) return;
         if (CompleteManager.IsProcessing) return;
+        if (ItemManager.IsProcessing) return;
+
         ShotRay();
     }
     public void ShotRay()
