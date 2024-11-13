@@ -16,11 +16,23 @@ public class Item : MonoBehaviour
     public int TriggeredGridPartIdxR = 0; // GridPart Idx
     public int TriggeredGridPartIdxC = 0; // GridPart Idx
     public Puzzle TriggeredPuzzle = null;
+    private GameObject _childParticleGo = null;
     private void OnEnable()
     {
         LocalScaleSmall = transform.localScale;
         //  Debug.Log($"{this.name} || {LocalScaleSmall}");
         Animator = Util.CheckAndAddComponent<Animator>(this.gameObject);
+        ParticleSystem ps = this.GetComponentInChildren<ParticleSystem>();
+        if (ps != null)
+        {
+            _childParticleGo = ps.gameObject;
+            _childParticleGo.SetActive(false);
+        }
+    }
+    public void ChildParticleSetActive(bool isActive)
+    {
+        if (_childParticleGo != null)
+            _childParticleGo.SetActive(isActive);
     }
     public void SetPos(bool isWorldPos, Vector3 pos)
     {

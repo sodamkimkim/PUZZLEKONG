@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class ItemUseEffect : MonoBehaviour
 {
+    [SerializeField]
+    private GameObject _effectPrefab_Fire = null;
     public void Effect_Item_a_Mushroom(Grid grid, Item item, int idxC)
     {
         if (grid == null || item == null) return;
@@ -46,14 +48,17 @@ public class ItemUseEffect : MonoBehaviour
     }
     public void Effect_Item_f_Bumb(Grid grid, Item item, int idxR, int idxC)
     {
-        if (grid == null || item == null) return;
-        GameObject cloneItemGo = Instantiate(item.gameObject, null);
-        Item itemClone = cloneItemGo.GetComponent<Item>();
-        itemClone.Anim("Anim2", true);
-        GridPart gp = grid.ChildGridPartDic[$"{idxR},{idxC}"];
-        itemClone.SetPos(true, gp.transform.position);
-        itemClone.SetScale(Enum.eItemScale.Small,1f);
-        Destroy(itemClone.gameObject, 0.5f);
+        if (grid == null || item == null) return; 
+        GameObject effectGo = Instantiate(_effectPrefab_Fire);
+        effectGo.transform.localScale = new Vector3(4f, 4f, 4f); 
+        effectGo.transform.position = item.gameObject.transform.position;
+        //GameObject cloneItemGo = Instantiate(item.gameObject, null);
+        //Item itemClone = cloneItemGo.GetComponent<Item>();
+        //itemClone.Anim("Anim2", true);
+        //GridPart gp = grid.ChildGridPartDic[$"{idxR},{idxC}"];
+        //itemClone.SetPos(true, gp.transform.position);
+        //itemClone.SetScale(Enum.eItemScale.Small,1f);
+        //Destroy(itemClone.gameObject, 0.5f);
     }
 
 } // end of class
