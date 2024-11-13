@@ -147,15 +147,21 @@ public class ItemManager : MonoBehaviour
     }
     public void CheckUseableReset()
     {
-        foreach (KeyValuePair<string, GridPart> kvp in _gridManager.Grid.ChildGridPartDic)
+        if (TouchRaycast_Item.TouchingItem == null) return;
+        if (TouchRaycast_Item.TouchingItem.name == "Item_a_Mushroom" ||
+            TouchRaycast_Item.TouchingItem.name == "Item_b_Wandoo")
         {
-            if (kvp.Value.Data == Factor.UseItem1)
+            foreach (KeyValuePair<string, GridPart> kvp in _gridManager.Grid.ChildGridPartDic)
             {
-                kvp.Value.Data = Factor.HasPuzzle;
-                kvp.Value.SetGridPartColor();
+                if (kvp.Value.Data == Factor.UseItem1)
+                {
+                    kvp.Value.Data = Factor.HasPuzzle;
+                    kvp.Value.SetGridPartColor();
+                }
             }
         }
-        SetPuzzleStatusData(Factor.PuzzleStatus_ItemNormal);
+        else if (TouchRaycast_Item.TouchingItem.name == "Item_c_Reset")
+            SetPuzzleStatusData(Factor.PuzzleStatus_ItemNormal);
     }
     public void SetPuzzleStatusData(int puzzleStatusFactor)
     {
@@ -166,14 +172,14 @@ public class ItemManager : MonoBehaviour
             Puzzle puzzle = puzzleGo.GetComponent<Puzzle>();
             if (puzzle == null /*|| puzzle.ActiveSelf == false*/) continue;
 
-            puzzle.ItemStatusData = puzzleStatusFactor; 
-            if(puzzle.ActiveSelf == false)
+            puzzle.ItemStatusData = puzzleStatusFactor;
+            if (puzzle.ActiveSelf == false)
             {
                 if (puzzleStatusFactor == Factor.PuzzleStatus_ItemUse)
                     puzzle.SetChildColor(puzzle.ItemUseColor);
                 else
                     puzzle.SetChildColor(puzzle.NotActiveColor);
-            } 
+            }
         }
     }
 } // end of class
