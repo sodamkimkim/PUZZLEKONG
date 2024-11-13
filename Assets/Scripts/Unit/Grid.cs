@@ -87,7 +87,6 @@ public class Grid : MonoBehaviour
         int colCnt = data.GetLength(1);
 
         for (int r = 0; r < rowCnt; r++)
-        {
             for (int c = 0; c < colCnt; c++)
             {
                 GridPart gridPart = ChildGridPartDic[$"{r},{c}"];
@@ -101,7 +100,6 @@ public class Grid : MonoBehaviour
                     gridPart.SetGridPartColor();
                 }
             }
-        }
     }
     public int GetDataIdx(int idxR, int idxC)
     {
@@ -135,24 +133,20 @@ public class Grid : MonoBehaviour
         if (dirR)
         {
             for (int r = startR; r <= endR; r++)
-            {
                 for (int c = startC; c <= endC; c++)
                 {
                     ChildGridPartDic[$"{r},{c}"].SetGridPartColor();
                     yield return new WaitForSeconds(interval);
                 }
-            }
         }
         else
         {
             for (int r = startR; r >= endR; r--)
-            {
                 for (int c = startC; c <= endC; c++)
                 {
                     ChildGridPartDic[$"{r},{c}"].SetGridPartColor();
                     yield return new WaitForSeconds(interval);
                 }
-            }
         }
     }
 } // end of class

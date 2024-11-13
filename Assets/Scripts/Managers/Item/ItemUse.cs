@@ -140,30 +140,22 @@ public class ItemUse : MonoBehaviour
         if (dirR)
         {
             for (int r = startR; r <= endR; r++)
-            {
                 for (int c = startC; c <= endC; c++)
-                {
                     if (grid.Data[r, c] == beforeFactor)
                     {
                         grid.SetDataIdx(r, c, afterFactor);
                         isItemUsed = true;
                     }
-                }
-            }
         }
         else
         {
             for (int r = startR; r >= endR; r--)
-            {
                 for (int c = startC; c <= endC; c++)
-                {
                     if (grid.Data[r, c] == beforeFactor)
                     {
                         grid.SetDataIdx(r, c, afterFactor);
                         isItemUsed = true;
                     }
-                }
-            }
         }
 
         if (isItemUsed)
@@ -218,10 +210,10 @@ public class ItemUse : MonoBehaviour
         if (item.TriggeredGridPartIdxR > grid.Data.GetLength(0) - 2) return false;
         if (item.TriggeredGridPartIdxC > grid.Data.GetLength(1) - 2) return false;
         if (item.TriggeredGridPartIdxR < 1f) return false;
-        if (item.TriggeredGridPartIdxC < 1f) return false;;
+        if (item.TriggeredGridPartIdxC < 1f) return false; ;
         int idxR = item.TriggeredGridPartIdxR;
         int idxC = item.TriggeredGridPartIdxC;
 
-        return DataComplete(grid, Factor.UseItem1, Factor.HasNoPuzzle, idxR-1, idxR + 1, idxC-1, idxC + 1, true, () => _itemUseEffect.Effect_Item_f_Bumb(grid, item, idxR, idxC));
+        return DataComplete(grid, Factor.UseItem1, Factor.HasNoPuzzle, idxR - 1, idxR + 1, idxC - 1, idxC + 1, true, () => _itemUseEffect.Effect_Item_f_Bumb(grid, item, idxR, idxC));
     }
 } // end of class
