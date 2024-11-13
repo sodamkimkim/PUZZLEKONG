@@ -13,7 +13,8 @@ public class Item : MonoBehaviour
     public Animator Animator { get => _animator; private set => _animator = value; }
     public bool IsForEffect { get => _isForEffect; set => _isForEffect = value; }
 
-    public string TriggeredGridPartIdxStr = string.Empty; // r,c 형태로 저장
+    public int TriggeredGridPartIdxR = 0; // GridPart Idx
+    public int TriggeredGridPartIdxC = 0; // GridPart Idx
     public Puzzle TriggeredPuzzle = null;
     private void OnEnable()
     {
@@ -51,10 +52,16 @@ public class Item : MonoBehaviour
     {
         ShotRay();
     }
+    private void SetTriggeredIdx(int r, int c)
+    {
+        if (TriggeredGridPartIdxR != r)
+            TriggeredGridPartIdxR = r;
+        if (TriggeredGridPartIdxC != c)
+            TriggeredGridPartIdxC = c;
+    }
     private void ShotRay()
     {
-        if (TriggeredGridPartIdxStr != string.Empty)
-            TriggeredGridPartIdxStr = string.Empty;
+        SetTriggeredIdx(Factor.IntInitialized, Factor.IntInitialized);
         if (TriggeredPuzzle != null)
             TriggeredPuzzle = null;
 
@@ -69,28 +76,27 @@ public class Item : MonoBehaviour
             if (hit.collider != null && hit.transform.gameObject.tag == "GridPart")
             {
                 TriggeredPuzzle = null;
-                if (TriggeredGridPartIdxStr != hit.transform.gameObject.name)
-                    TriggeredGridPartIdxStr = hit.transform.gameObject.name;
+                GridPart gp = hit.transform.gameObject.GetComponent<GridPart>();
+                if (gp != null)
+                    SetTriggeredIdx(gp.IdxRow, gp.IdxCol);
             }
             // # Puzzle
             else if (hit.transform.gameObject.tag == "PuzzlePart")
             {
-                TriggeredGridPartIdxStr = string.Empty;
+                SetTriggeredIdx(Factor.IntInitialized, Factor.IntInitialized);
                 TriggeredPuzzle = hit.transform.gameObject.GetComponentInParent<Puzzle>();
-           //     Debug.Log($"{this.name} || {IsPuzzleTriggered}");
+                //     Debug.Log($"{this.name} || {IsPuzzleTriggered}");
             }
             else
             {
-                if (TriggeredGridPartIdxStr != string.Empty)
-                    TriggeredGridPartIdxStr = string.Empty;
+                SetTriggeredIdx(Factor.IntInitialized, Factor.IntInitialized);
                 if (TriggeredPuzzle != null)
                     TriggeredPuzzle = null;
             }
         }
         else
         {
-            if (TriggeredGridPartIdxStr != string.Empty)
-                TriggeredGridPartIdxStr = string.Empty;
+            SetTriggeredIdx(Factor.IntInitialized, Factor.IntInitialized);
             if (TriggeredPuzzle != null)
                 TriggeredPuzzle = null;
         }

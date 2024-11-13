@@ -10,7 +10,7 @@ public class TouchRaycast_Item : MonoBehaviour
     private Vector3 _itemPosBackUp = Vector3.zero;
     private void Update()
     {
-     //   if (InGameManager.IsGameOver) return;
+        //   if (InGameManager.IsGameOver) return;
         if (CompleteManager.IsProcessing) return;
         if (ItemManager.IsProcessing) return;
 

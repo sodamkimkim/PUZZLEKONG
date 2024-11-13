@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class ItemUseEffect : MonoBehaviour
 {
-    public void Effect_Item_a_Mushroom(Grid grid, Item item, int col)
+    public void Effect_Item_a_Mushroom(Grid grid, Item item, int idxC)
     {
         if (grid == null || item == null) return;
 
         GameObject cloneItemGo = Instantiate(item.gameObject, null);
         Item itemClone = cloneItemGo.GetComponent<Item>();
-        itemClone.Anim("Anim1", true); // item에 Anim 만들기 
+        itemClone.Anim("Anim1", true);
         itemClone.SetScale(Enum.eItemScale.Small, 0.5f);
-        StartCoroutine(EffectCoroutine_Item_a_Mushroom(grid, itemClone, col));
+        StartCoroutine(EffectCoroutine_Item_a_Mushroom(grid, itemClone, idxC));
     }
     private IEnumerator EffectCoroutine_Item_a_Mushroom(Grid grid, Item itemClone, int idxC)
     {
@@ -24,15 +24,15 @@ public class ItemUseEffect : MonoBehaviour
         }
         DestroyImmediate(itemClone.gameObject);
     }
-    public void Effect_Item_b_Wandoo(Grid grid, Item item, int row)
+    public void Effect_Item_b_Wandoo(Grid grid, Item item, int idxR)
     {
         if (grid == null || item == null) return;
 
         GameObject cloneItemGo = Instantiate(item.gameObject, null);
         Item itemClone = cloneItemGo.GetComponent<Item>();
-        itemClone.Anim("Anim2", true); // item에 Anim 만들기 
+        itemClone.Anim("Anim2", true);
         itemClone.SetScale(Enum.eItemScale.Small, 0.5f);
-        StartCoroutine(EffectCoroutine_Item_b_Wandoo(grid, itemClone, row));
+        StartCoroutine(EffectCoroutine_Item_b_Wandoo(grid, itemClone, idxR));
     }
     private IEnumerator EffectCoroutine_Item_b_Wandoo(Grid grid, Item itemClone, int idxR)
     {
@@ -44,4 +44,16 @@ public class ItemUseEffect : MonoBehaviour
         }
         DestroyImmediate(itemClone.gameObject);
     }
+    public void Effect_Item_f_Bumb(Grid grid, Item item, int idxR, int idxC)
+    {
+        if (grid == null || item == null) return;
+        GameObject cloneItemGo = Instantiate(item.gameObject, null);
+        Item itemClone = cloneItemGo.GetComponent<Item>();
+        itemClone.Anim("Anim2", true);
+        GridPart gp = grid.ChildGridPartDic[$"{idxR},{idxC}"];
+        itemClone.SetPos(true, gp.transform.position + new Vector3(0.2f, -0.2f, 0f));
+        itemClone.SetScale(Enum.eItemScale.Small, 0.5f);
+        Destroy(itemClone.gameObject, 0.5f);
+    }
+
 } // end of class

@@ -21,6 +21,10 @@ public class ItemManager : MonoBehaviour
     [SerializeField]
     private GameObject[] _itemPrefabArr = null;
     public static bool IsProcessing = false;
+    public PuzzleManager.SetPuzzleActive SetPuzzlesActiveCallback;
+
+    public delegate LazyStart LazyStart();
+    public delegate void SetTouchEndItemReturn();
     private void Start()
     {
         //   SetItemSlotColor(ThemaManager.ETheme);
@@ -30,6 +34,7 @@ public class ItemManager : MonoBehaviour
         PlayerPrefs.SetInt("Item_c_Reset", 9999);
         PlayerPrefs.SetInt("Item_d_SwitchHori", 4);
         PlayerPrefs.SetInt("Item_e_SwitchVerti", 2);
+        PlayerPrefs.SetInt("Item_f_Bumb", 2);
         PlayerPrefs.Save();
 
         // Player가 Slot에 Item 지정
@@ -38,6 +43,7 @@ public class ItemManager : MonoBehaviour
         PlayerPrefs.SetString("ItemSlot2", "Item_a_Mushroom");
         PlayerPrefs.SetString("ItemSlot3", "Item_d_SwitchHori");
         PlayerPrefs.SetString("ItemSlot4", "Item_e_SwitchVerti");
+        PlayerPrefs.SetString("ItemSlot5", "Item_f_Bumb");
         InstantiateItem();
     }
     private void SetItemSlotColor(Enum.eTheme eTheme)
@@ -69,9 +75,6 @@ public class ItemManager : MonoBehaviour
         }
     }
 
-    public PuzzleManager.SetPuzzleActive SetPuzzlesActiveCallback;
-
-    public delegate LazyStart LazyStart();
     public void Init(PuzzleManager.SetPuzzleActive setPuzzlesActiveCallback)
     {
         SetPuzzlesActiveCallback = setPuzzlesActiveCallback;
@@ -109,6 +112,10 @@ public class ItemManager : MonoBehaviour
                 if (PlayerPrefs.GetInt(itemStr) == 0) return;
                 itemGo = Instantiate(_itemPrefabArr[4], _itemSlotPosArr[slotIdx].transform);
                 break;
+            case "Item_f_Bumb":
+                if (PlayerPrefs.GetInt(itemStr) == 0) return;
+                itemGo = Instantiate(_itemPrefabArr[5], _itemSlotPosArr[slotIdx].transform);
+                break;
         }
 
         if (itemGo == null) return;
@@ -121,18 +128,15 @@ public class ItemManager : MonoBehaviour
     }
 
     public void CheckUseable(Item touchingItem)
-    {
-
+    { 
         _itemUse.CheckUseable(_puzzleManager, _gridManager.Grid, touchingItem);
     }
-    public delegate void SetTouchEndItemReturn();
     // Item에 따른 로직 처리
     // 조건에 맞지 않으면 SetTouchEndItemReturn
     public void PlaceItem(Item dropItem, SetTouchEndItemReturn setTouchEndItemReturnCallback)
     {
         if (TouchRaycast_Item.TouchingItem == null) return;
-
-       
+         
         if (_itemUse.UseItem(_puzzleManager, _gridManager.Grid, dropItem))
         {
             // 아이템 갯수 반영, 남아있으면 돌려보내기
@@ -150,7 +154,8 @@ public class ItemManager : MonoBehaviour
     {
         if (TouchRaycast_Item.TouchingItem == null) return;
         if (TouchRaycast_Item.TouchingItem.name == "Item_a_Mushroom" ||
-            TouchRaycast_Item.TouchingItem.name == "Item_b_Wandoo")
+            TouchRaycast_Item.TouchingItem.name == "Item_b_Wandoo"||
+            TouchRaycast_Item.TouchingItem.name == "Item_f_Bumb")
         {
             foreach (KeyValuePair<string, GridPart> kvp in _gridManager.Grid.ChildGridPartDic)
             {
