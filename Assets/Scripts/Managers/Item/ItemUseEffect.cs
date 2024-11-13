@@ -20,7 +20,7 @@ public class ItemUseEffect : MonoBehaviour
         for (int r = rowLen - 1; r >= 0; r--)
         {
             itemClone.SetPos(true, grid.ChildGridPartDic[$"{r},{idxC}"].transform.position);
-            yield return new WaitForSeconds(Factor.CompleteCoroutineInterval * 2f);
+            yield return new WaitForSeconds(Factor.CompleteCoroutineInterval);
         }
         DestroyImmediate(itemClone.gameObject);
     }
@@ -40,7 +40,7 @@ public class ItemUseEffect : MonoBehaviour
         for (int c = 0; c < colLen; c++)
         {
             itemClone.SetPos(true, grid.ChildGridPartDic[$"{idxR},{c}"].transform.position);
-            yield return new WaitForSeconds(Factor.CompleteCoroutineInterval * 2f);
+            yield return new WaitForSeconds(Factor.CompleteCoroutineInterval );
         }
         DestroyImmediate(itemClone.gameObject);
     }
@@ -51,8 +51,8 @@ public class ItemUseEffect : MonoBehaviour
         Item itemClone = cloneItemGo.GetComponent<Item>();
         itemClone.Anim("Anim2", true);
         GridPart gp = grid.ChildGridPartDic[$"{idxR},{idxC}"];
-        itemClone.SetPos(true, gp.transform.position + new Vector3(0.2f, -0.2f, 0f));
-        itemClone.SetScale(Enum.eItemScale.Small, 0.5f);
+        itemClone.SetPos(true, gp.transform.position);
+        itemClone.SetScale(Enum.eItemScale.Small,1f);
         Destroy(itemClone.gameObject, 0.5f);
     }
 

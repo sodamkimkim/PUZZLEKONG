@@ -94,13 +94,22 @@ public class ItemUse : MonoBehaviour
     {
         if (item.TriggeredGridPartIdxR == Factor.IntInitialized) return;
         if (item.TriggeredGridPartIdxC == Factor.IntInitialized) return;
-        if (item.TriggeredGridPartIdxR == grid.Data.GetLength(0) - 1) return;
-        if (item.TriggeredGridPartIdxC == grid.Data.GetLength(1) - 1) return;
+        if (item.TriggeredGridPartIdxR > grid.Data.GetLength(0) - 2) return;
+        if (item.TriggeredGridPartIdxC > grid.Data.GetLength(1) - 2) return;
+        if (item.TriggeredGridPartIdxR < 1f) return;
+        if (item.TriggeredGridPartIdxC < 1f) return;
 
         int idxR = item.TriggeredGridPartIdxR;
         int idxC = item.TriggeredGridPartIdxC;
+        SetCheckData(grid, idxR - 1, idxC - 1, Factor.HasPuzzle, Factor.UseItem1);
+        SetCheckData(grid, idxR - 1, idxC, Factor.HasPuzzle, Factor.UseItem1);
+        SetCheckData(grid, idxR - 1, idxC + 1, Factor.HasPuzzle, Factor.UseItem1);
+
+        SetCheckData(grid, idxR, idxC - 1, Factor.HasPuzzle, Factor.UseItem1);
         SetCheckData(grid, idxR, idxC, Factor.HasPuzzle, Factor.UseItem1);
         SetCheckData(grid, idxR, idxC + 1, Factor.HasPuzzle, Factor.UseItem1);
+
+        SetCheckData(grid, idxR + 1, idxC - 1, Factor.HasPuzzle, Factor.UseItem1);
         SetCheckData(grid, idxR + 1, idxC, Factor.HasPuzzle, Factor.UseItem1);
         SetCheckData(grid, idxR + 1, idxC + 1, Factor.HasPuzzle, Factor.UseItem1);
     }
@@ -160,7 +169,7 @@ public class ItemUse : MonoBehaviour
         if (isItemUsed)
         {
             effectFunction?.Invoke();
-            StartCoroutine(grid.SetGridPartColorCoroutine(startR, endR, startC, endC, dirR, Factor.CompleteCoroutineInterval * 2));
+            StartCoroutine(grid.SetGridPartColorCoroutine(startR, endR, startC, endC, dirR, Factor.CompleteCoroutineInterval));
             SetPuzzlesActiveCallback();
         }
         return isItemUsed;
@@ -206,11 +215,13 @@ public class ItemUse : MonoBehaviour
     {
         if (item.TriggeredGridPartIdxR == Factor.IntInitialized) return false;
         if (item.TriggeredGridPartIdxC == Factor.IntInitialized) return false;
-        if (item.TriggeredGridPartIdxR + 1 >= grid.Data.GetLength(0)) return false;
-        if (item.TriggeredGridPartIdxC + 1 >= grid.Data.GetLength(1)) return false;
+        if (item.TriggeredGridPartIdxR > grid.Data.GetLength(0) - 2) return false;
+        if (item.TriggeredGridPartIdxC > grid.Data.GetLength(1) - 2) return false;
+        if (item.TriggeredGridPartIdxR < 1f) return false;
+        if (item.TriggeredGridPartIdxC < 1f) return false;;
         int idxR = item.TriggeredGridPartIdxR;
         int idxC = item.TriggeredGridPartIdxC;
 
-        return DataComplete(grid, Factor.UseItem1, Factor.HasNoPuzzle, idxR, idxR + 1, idxC, idxC + 1, true, () => _itemUseEffect.Effect_Item_f_Bumb(grid, item, idxR, idxC));
+        return DataComplete(grid, Factor.UseItem1, Factor.HasNoPuzzle, idxR-1, idxR + 1, idxC-1, idxC + 1, true, () => _itemUseEffect.Effect_Item_f_Bumb(grid, item, idxR, idxC));
     }
 } // end of class
