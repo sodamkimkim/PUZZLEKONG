@@ -80,14 +80,28 @@ public class ItemUse : MonoBehaviour
     {
         if (item.TriggeredGridPartIdxR == Factor.IntInitialized) return;
         if (item.TriggeredGridPartIdxC == Factor.IntInitialized) return;
-        // TODO 하단 가로줄이 없는 젤 마지막 가로줄이면 return;
+        if (item.TriggeredGridPartIdxR >= grid.Data.GetLength(0) - 1) return;
+
+        int idxR = item.TriggeredGridPartIdxR;
+        for (int idxC = 0; idxC < grid.Data.GetLength(1); idxC++)
+        {
+            SetCheckData(grid, idxR, idxC, Factor.HasPuzzle, Factor.UseItem1);
+            SetCheckData(grid, idxR + 1, idxC, Factor.HasPuzzle, Factor.UseItem1);
+        }
     }
     // 우측 세로줄과 상태 변경
     private void CheckUseable_Item_e_SwitchVerti(Grid grid, Item item)
     {
         if (item.TriggeredGridPartIdxR == Factor.IntInitialized) return;
         if (item.TriggeredGridPartIdxC == Factor.IntInitialized) return;
-        // TODO 최우측세로줄이면 return;
+        if (item.TriggeredGridPartIdxC >= grid.Data.GetLength(1) - 1) return;
+
+        int idxC = item.TriggeredGridPartIdxC;
+        for (int idxR = 0; idxR < grid.Data.GetLength(0); idxR++)
+        {
+            SetCheckData(grid, idxR, idxC, Factor.HasPuzzle, Factor.UseItem1);
+            SetCheckData(grid, idxR, idxC + 1, Factor.HasPuzzle, Factor.UseItem1);
+        }
     }
     // 2X2 
     private void CheckUseable_Item_f_Bumb(Grid grid, Item item)
@@ -101,6 +115,7 @@ public class ItemUse : MonoBehaviour
 
         int idxR = item.TriggeredGridPartIdxR;
         int idxC = item.TriggeredGridPartIdxC;
+
         SetCheckData(grid, idxR - 1, idxC - 1, Factor.HasPuzzle, Factor.UseItem1);
         SetCheckData(grid, idxR - 1, idxC, Factor.HasPuzzle, Factor.UseItem1);
         SetCheckData(grid, idxR - 1, idxC + 1, Factor.HasPuzzle, Factor.UseItem1);
@@ -196,12 +211,72 @@ public class ItemUse : MonoBehaviour
     }
     private bool Use_Item_d_SwitchHori(Grid grid, Item item)
     {
-        return false;
+        if (item.TriggeredGridPartIdxR == Factor.IntInitialized) return false;
+        if (item.TriggeredGridPartIdxC == Factor.IntInitialized) return false;
+        if (item.TriggeredGridPartIdxR >= grid.Data.GetLength(0) - 1) return false;
+
+        int idxR = item.TriggeredGridPartIdxR;
+        bool isItemUsed = false;
+        for (int c = 0; c < grid.Data.GetLength(1) - 1; c++)
+        {
+            if (grid.Data[idxR, c] == Factor.UseItem1)
+            {
+                isItemUsed = true;
+                grid.SetDataIdx(idxR, c, Factor.HasPuzzle);
+            }
+
+            if (grid.Data[idxR + 1, c] == Factor.UseItem1)
+                grid.SetDataIdx(idxR + 1, c, Factor.HasPuzzle);
+
+            int temp = grid.Data[idxR, c];
+
+            grid.SetDataIdx(idxR, c, grid.Data[idxR + 1, c]);
+            grid.SetDataIdx(idxR + 1, c, temp);
+
+        }
+
+        if (isItemUsed)
+        {
+            //effectFunction?.Invoke();
+            StartCoroutine(grid.SetGridPartColorCoroutine(idxR, idxR + 1, 0, grid.Data.GetLength(1) - 1, true, Factor.CompleteCoroutineInterval));
+            SetPuzzlesActiveCallback();
+        }
+        return isItemUsed;
     }
 
     private bool Use_Item_e_SwitchVerti(Grid grid, Item item)
     {
-        return false;
+        if (item.TriggeredGridPartIdxR == Factor.IntInitialized) return false;
+        if (item.TriggeredGridPartIdxC == Factor.IntInitialized) return false;
+        if (item.TriggeredGridPartIdxC >= grid.Data.GetLength(1) - 1) return false;
+
+        int idxC = item.TriggeredGridPartIdxC;
+
+        bool isItemUsed = false;
+        for (int r = 0; r < grid.Data.GetLength(0) - 1; r++)
+        {
+            if (grid.Data[r, idxC] == Factor.UseItem1)
+            {
+                isItemUsed = true;
+                grid.SetDataIdx(r, idxC, Factor.HasPuzzle);
+            }
+
+            if (grid.Data[r, idxC + 1] == Factor.UseItem1)
+                grid.SetDataIdx(r, idxC + 1, Factor.HasPuzzle);
+
+            int temp = grid.Data[r, idxC];
+
+            grid.SetDataIdx(r, idxC, grid.Data[r, idxC + 1]);
+            grid.SetDataIdx(r, idxC + 1, temp);
+        }
+
+        if (isItemUsed)
+        {
+            //effectFunction?.Invoke();
+            StartCoroutine(grid.SetGridPartColorCoroutine(0, grid.Data.GetLength(0) - 1, idxC, idxC + 1, true, Factor.CompleteCoroutineInterval));
+            SetPuzzlesActiveCallback();
+        }
+        return isItemUsed;
     }
     private bool Use_Item_f_Bumb(Grid grid, Item item)
     {

@@ -76,7 +76,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: aa7789d671852a74db91ea0cbafe593a, type: 3}
+  m_Sprite: {fileID: 21300000, guid: c44081b7a7059ea4183250f63b40dc36, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -120,6 +120,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c21108ac2f88c17479f146955429a036, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  TriggeredGridPartIdxR: 0
+  TriggeredGridPartIdxC: 0
+  TriggeredPuzzle: {fileID: 0}
 --- !u!61 &-3752301403600142180
 BoxCollider2D:
   m_ObjectHideFlags: 0

@@ -32,8 +32,8 @@ public class ItemManager : MonoBehaviour
         PlayerPrefs.SetInt("Item_a_Mushroom", 9999);
         PlayerPrefs.SetInt("Item_b_Wandoo", 9999);
         PlayerPrefs.SetInt("Item_c_Reset", 9999);
-        PlayerPrefs.SetInt("Item_d_SwitchHori", 4);
-        PlayerPrefs.SetInt("Item_e_SwitchVerti", 2);
+        PlayerPrefs.SetInt("Item_d_SwitchHori", 9999);
+        PlayerPrefs.SetInt("Item_e_SwitchVerti", 9999);
         PlayerPrefs.SetInt("Item_f_Bumb", 9999);
         PlayerPrefs.Save();
 
@@ -155,6 +155,8 @@ public class ItemManager : MonoBehaviour
         if (TouchRaycast_Item.TouchingItem == null) return;
         if (TouchRaycast_Item.TouchingItem.name == "Item_a_Mushroom" ||
             TouchRaycast_Item.TouchingItem.name == "Item_b_Wandoo"||
+            TouchRaycast_Item.TouchingItem.name == "Item_d_SwitchHori"||
+            TouchRaycast_Item.TouchingItem.name == "Item_e_SwitchVerti"||
             TouchRaycast_Item.TouchingItem.name == "Item_f_Bumb")
         {
             foreach (KeyValuePair<string, GridPart> kvp in _gridManager.Grid.ChildGridPartDic)
