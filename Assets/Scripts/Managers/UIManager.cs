@@ -35,6 +35,7 @@ public class UIManager : MonoBehaviour
     #endregion
     private void Awake()
     {
+        Panel_GameOver_Timer.SetActive(false);
         Panel_GameOver.SetActive(false);
         UITMP_TotalScore.SetActive(false);
         UITMP_TempText_Large.SetActive(false);

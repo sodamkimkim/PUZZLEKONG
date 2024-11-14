@@ -394,7 +394,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -174.4}
+  m_AnchoredPosition: {x: -29.7, y: -81}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &227162478
@@ -672,7 +672,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1953fc15c79dc6543b41947186e9d60f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _uITMP_TempText_Large: {fileID: 2038452151}
+  _uiTMP_TempText_Large: {fileID: 2038452151}
   _uITMP_TempText_Small: {fileID: 227162476}
   _panel_Gameover_Timer: {fileID: 1024127395}
   _panel_GameOver_Text: {fileID: 1102422740}
@@ -1275,8 +1275,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 166}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchoredPosition: {x: 0, y: 225.6}
+  m_SizeDelta: {x: 565.99, y: 300}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &692159439
 MonoBehaviour:
@@ -1333,7 +1333,7 @@ MonoBehaviour:
   m_fontSizeMax: 72
   m_fontStyle: 0
   m_HorizontalAlignment: 2
-  m_VerticalAlignment: 256
+  m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -3499,7 +3499,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -108.13}
+  m_AnchoredPosition: {x: 0, y: -14.729988}
   m_SizeDelta: {x: 500, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2038452153

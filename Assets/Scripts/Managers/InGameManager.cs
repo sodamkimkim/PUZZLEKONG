@@ -39,24 +39,27 @@ public class InGameManager : MonoBehaviour
     }
     private void GameOverProcess_Timer()
     {
-        // 5초 타이머 시작하여 조치 안하면 real gameover 
+        if (_puzzlePlaceManager.SetPuzzlesActive() > 0) return;
+
+        // 타이머 시작하여 조치 안하면 real gameover 
         StartCoroutine(GameOverCoroutine());
     }
     private IEnumerator GameOverCoroutine()
     {
-        for (int i = 9; i >= 0; i--)
-        {
-            _uiManager.GameOver_Timer(i.ToString());
-
+        for (int i = 7; i >= 0; i--)
+        { 
             if (_puzzlePlaceManager.SetPuzzlesActive() > 0)
             {
                 _uiManager.Panel_GameOver_Timer.SetActive(false);
                 StopCoroutine(GameOverCoroutine());
             }
-
-            yield return new WaitForSeconds(1f);
-            if (i == 0)
-                GameOverProcess_Real();
+            else
+            {
+                _uiManager.GameOver_Timer(i.ToString());
+                yield return new WaitForSeconds(1f);
+                if (i == 0)
+                    GameOverProcess_Real();
+            }
         }
     }
 
