@@ -35,6 +35,7 @@ public class ItemManager : MonoBehaviour
         PlayerPrefs.SetInt("Item_d_SwitchHori", 9999);
         PlayerPrefs.SetInt("Item_e_SwitchVerti", 9999);
         PlayerPrefs.SetInt("Item_f_Bumb", 9999);
+        PlayerPrefs.SetInt("Item_g_Eraser", 5);
         PlayerPrefs.Save();
 
         // Player가 Slot에 Item 지정
@@ -44,6 +45,7 @@ public class ItemManager : MonoBehaviour
         PlayerPrefs.SetString("ItemSlot3", "Item_d_SwitchHori");
         PlayerPrefs.SetString("ItemSlot4", "Item_e_SwitchVerti");
         PlayerPrefs.SetString("ItemSlot5", "Item_f_Bumb");
+        PlayerPrefs.SetString("ItemSlot6", "Item_g_Eraser");
         InstantiateItem();
     }
     private void SetItemSlotColor(Enum.eTheme eTheme)
@@ -116,6 +118,10 @@ public class ItemManager : MonoBehaviour
                 if (PlayerPrefs.GetInt(itemStr) == 0) return;
                 itemGo = Instantiate(_itemPrefabArr[5], _itemSlotPosArr[slotIdx].transform);
                 break;
+            case "Item_g_Eraser":
+                if (PlayerPrefs.GetInt(itemStr) == 0) return;
+                itemGo = Instantiate(_itemPrefabArr[6], _itemSlotPosArr[slotIdx].transform);
+                break;
         }
 
         if (itemGo == null) return;
@@ -157,7 +163,8 @@ public class ItemManager : MonoBehaviour
             TouchRaycast_Item.TouchingItem.name == "Item_b_Wandoo"||
             TouchRaycast_Item.TouchingItem.name == "Item_d_SwitchHori"||
             TouchRaycast_Item.TouchingItem.name == "Item_e_SwitchVerti"||
-            TouchRaycast_Item.TouchingItem.name == "Item_f_Bumb")
+            TouchRaycast_Item.TouchingItem.name == "Item_f_Bumb" ||
+            TouchRaycast_Item.TouchingItem.name == "Item_g_Eraser")
         {
             foreach (KeyValuePair<string, GridPart> kvp in _gridManager.Grid.ChildGridPartDic)
             {

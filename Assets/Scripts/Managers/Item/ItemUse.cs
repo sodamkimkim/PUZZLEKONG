@@ -39,6 +39,9 @@ public class ItemUse : MonoBehaviour
             case "Item_f_Bumb":
                 CheckUseable_Item_f_Bumb(grid, item);
                 break;
+            case "Item_g_Eraser":
+                CheckUseable_Item_g_Eraser(grid, item);
+                break;
         }
     }
     private void SetCheckData(Grid grid, int idxR, int idxC, int beforeData, int afterData)
@@ -128,6 +131,13 @@ public class ItemUse : MonoBehaviour
         SetCheckData(grid, idxR + 1, idxC, Factor.HasPuzzle, Factor.UseItem1);
         SetCheckData(grid, idxR + 1, idxC + 1, Factor.HasPuzzle, Factor.UseItem1);
     }
+    private void CheckUseable_Item_g_Eraser(Grid grid, Item item)
+    {
+        if (item.TriggeredGridPartIdxR == Factor.IntInitialized) return;
+        if (item.TriggeredGridPartIdxC == Factor.IntInitialized) return;
+
+        SetCheckData(grid, item.TriggeredGridPartIdxR, item.TriggeredGridPartIdxC, Factor.HasPuzzle, Factor.UseItem1);
+    }
     public bool UseItem(PuzzleManager puzzleManager, Grid grid, Item item)
     {
         if (grid == null || item == null) return false;
@@ -145,6 +155,8 @@ public class ItemUse : MonoBehaviour
                 return Use_Item_e_SwitchVerti(grid, item);
             case "Item_f_Bumb":
                 return Use_Item_f_Bumb(grid, item);
+            case "Item_g_Eraser":
+                return Use_Item_g_Eraser(grid, item);
         }
         return false;
     }
@@ -154,13 +166,23 @@ public class ItemUse : MonoBehaviour
         bool isItemUsed = false;
         if (dirR)
         {
-            for (int r = startR; r <= endR; r++)
-                for (int c = startC; c <= endC; c++)
-                    if (grid.Data[r, c] == beforeFactor)
-                    {
-                        grid.SetDataIdx(r, c, afterFactor);
-                        isItemUsed = true;
-                    }
+            // # start == end 일 때는 무조건 dirR == true로 입력!
+            if (startR == endR && startC == endC && grid.Data[startR, startC] == beforeFactor)
+            {
+                grid.SetDataIdx(startR, startC, afterFactor);
+                isItemUsed = true;
+            }
+            else
+            {
+                for (int r = startR; r <= endR; r++)
+                    for (int c = startC; c <= endC; c++)
+                        if (grid.Data[r, c] == beforeFactor)
+                        {
+                            grid.SetDataIdx(r, c, afterFactor);
+                            isItemUsed = true;
+                        }
+            }
+
         }
         else
         {
@@ -175,8 +197,12 @@ public class ItemUse : MonoBehaviour
 
         if (isItemUsed)
         {
-            effectFunction?.Invoke();
-            StartCoroutine(grid.SetGridPartColorCoroutine(startR, endR, startC, endC, dirR, Factor.CompleteCoroutineInterval));
+            if (effectFunction != null)
+                effectFunction?.Invoke();
+
+            if (startR == endR && startC == endC) grid.ChildGridPartDic[$"{startR},{startC}"].SetGridPartColor();
+            else StartCoroutine(grid.SetGridPartColorCoroutine(startR, endR, startC, endC, dirR, Factor.CompleteCoroutineInterval));
+
             SetPuzzlesActiveCallback();
         }
         return isItemUsed;
@@ -289,6 +315,14 @@ public class ItemUse : MonoBehaviour
         int idxR = item.TriggeredGridPartIdxR;
         int idxC = item.TriggeredGridPartIdxC;
 
-        return DataComplete(grid, Factor.UseItem1, Factor.HasNoPuzzle, idxR - 1, idxR + 1, idxC - 1, idxC + 1, true, () => _itemUseEffect.Effect_Item_f_Bumb(grid, item, idxR, idxC));
+        return DataComplete(grid, Factor.UseItem1, Factor.HasNoPuzzle, idxR - 1, idxR + 1, idxC - 1, idxC + 1, true, () => _itemUseEffect.Effect_Item_f_Bumb(grid, item));
+    }
+    private bool Use_Item_g_Eraser(Grid grid, Item item)
+    {
+        if (item.TriggeredGridPartIdxR == Factor.IntInitialized) return false;
+        if (item.TriggeredGridPartIdxC == Factor.IntInitialized) return false;
+        int idxR = item.TriggeredGridPartIdxR;
+        int idxC = item.TriggeredGridPartIdxC;
+        return DataComplete(grid, Factor.UseItem1, Factor.HasNoPuzzle, idxR, idxR, idxC, idxC, true, () => _itemUseEffect.Effect_Item_g_Eraser(grid, item, idxR, idxC));
     }
 } // end of class

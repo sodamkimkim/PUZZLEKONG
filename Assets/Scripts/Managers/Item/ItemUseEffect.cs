@@ -42,23 +42,30 @@ public class ItemUseEffect : MonoBehaviour
         for (int c = 0; c < colLen; c++)
         {
             itemClone.SetPos(true, grid.ChildGridPartDic[$"{idxR},{c}"].transform.position);
-            yield return new WaitForSeconds(Factor.CompleteCoroutineInterval );
+            yield return new WaitForSeconds(Factor.CompleteCoroutineInterval);
         }
         DestroyImmediate(itemClone.gameObject);
     }
-    public void Effect_Item_f_Bumb(Grid grid, Item item, int idxR, int idxC)
+    public void Effect_Item_f_Bumb(Grid grid, Item item)
     {
-        if (grid == null || item == null) return; 
+        if (grid == null || item == null) return;
         GameObject effectGo = Instantiate(_effectPrefab_Fire);
-        effectGo.transform.localScale = new Vector3(4f, 4f, 4f); 
+        effectGo.transform.localScale = new Vector3(4f, 4f, 4f);
         effectGo.transform.position = item.gameObject.transform.position;
-        //GameObject cloneItemGo = Instantiate(item.gameObject, null);
-        //Item itemClone = cloneItemGo.GetComponent<Item>();
-        //itemClone.Anim("Anim2", true);
-        //GridPart gp = grid.ChildGridPartDic[$"{idxR},{idxC}"];
-        //itemClone.SetPos(true, gp.transform.position);
-        //itemClone.SetScale(Enum.eItemScale.Small,1f);
-        //Destroy(itemClone.gameObject, 0.5f);
+    }
+    public void Effect_Item_g_Eraser(Grid grid, Item item, int idxR, int idxC)
+    {
+        if (grid == null || item == null) return;
+        GameObject cloneItemGo = Instantiate(item.gameObject, null);
+
+        float offsetX = cloneItemGo.transform.lossyScale.x * 0.1f;
+        float offsetY = cloneItemGo.transform.lossyScale.y * 0.3f;
+        cloneItemGo.transform.position = grid.ChildGridPartDic[$"{idxR},{idxC}"].transform.position + new Vector3(offsetX, offsetY, -1f);
+
+        Item itemClone = cloneItemGo.GetComponent<Item>();
+        itemClone.Anim("Anim1", true);
+        itemClone.SetScale(Enum.eItemScale.Small, 0.5f);
+        Destroy(itemClone.gameObject, 1f);
     }
 
 } // end of class
