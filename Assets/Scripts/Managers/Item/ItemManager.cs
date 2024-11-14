@@ -35,7 +35,7 @@ public class ItemManager : MonoBehaviour
         PlayerPrefs.SetInt("Item_d_SwitchHori", 9999);
         PlayerPrefs.SetInt("Item_e_SwitchVerti", 9999);
         PlayerPrefs.SetInt("Item_f_Bumb", 9999);
-        PlayerPrefs.SetInt("Item_g_Eraser", 5);
+        PlayerPrefs.SetInt("Item_g_Eraser", 9999);
         PlayerPrefs.Save();
 
         // Player가 Slot에 Item 지정

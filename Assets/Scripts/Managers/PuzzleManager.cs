@@ -29,12 +29,6 @@ public class PuzzleManager : MonoBehaviour
     {
         _btnReset.onClick.AddListener(() => LazyStart());
     }
-    //public void LazyStart()
-    //{
-    //    InstantiatePuzzleGos();
-    //    _setPuzzleActiveCallback?.Invoke();
-    //    _checkStageCompleteOrGameOverCallback?.Invoke();
-    //}
     /// <summary>
     /// 3퍼즐 모두 activeself == true 인걸로 생성해줘야 함
     /// gameover나면 안됨

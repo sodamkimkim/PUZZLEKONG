@@ -189,16 +189,16 @@ public class PuzzlePlacableChecker : MonoBehaviour
             for (int c = idxRangeC[0]; c <= idxRangeC[1]; c++)
             {
                 // #  
-                if (grid.Data[r, c] == 1) // grid의 해당 인덱스에 퍼즐이 놓여있을 떄
+                if (grid.Data[r, c] == Factor.HasPuzzle) // grid의 해당 인덱스에 퍼즐이 놓여있을 떄
                 {
-                    if (puzzle.Data[puzzleIdxR, puzzleIdxC] == 0) // => ok 
+                    if (puzzle.Data[puzzleIdxR, puzzleIdxC] == Factor.HasNoPuzzle) // => ok 
                         isPlacable &= true;
                     else  // (puzzle.Data[puzzleIdxR, puzzleIdxC] == 1) => no 
                         isPlacable &= false;
                 }
                 else // grid.Data[i, j] == 0 || 2  // grid의 해당 인덱스에 퍼즐이 놓여있지 않을 때
                 {
-                    if (puzzle.Data[puzzleIdxR, puzzleIdxC] == 1) // => ok 
+                    if (puzzle.Data[puzzleIdxR, puzzleIdxC] == Factor.HasPuzzle) // => ok 
                         isPlacable &= true;  // 담아주기?
                     else // (puzzle.Data[puzzleIdxR, puzzleIdxC] == 0) => ok 
                         isPlacable &= true;

@@ -1,5 +1,6 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
-
 public class InGameManager : MonoBehaviour
 {
     [SerializeField]
@@ -21,7 +22,7 @@ public class InGameManager : MonoBehaviour
     public static bool IsGameOver = false;
     private void Awake()
     {
-        _puzzlePlaceManager.PuzzlePlacableChecker.Init(GameOverProcess, StageCompleteProcess);
+        _puzzlePlaceManager.PuzzlePlacableChecker.Init(GameOverProcess_Timer, StageCompleteProcess);
         _completeManager.Init(_puzzlePlaceManager.SetPuzzlesActive);
         _itemManager.Init(_puzzlePlaceManager.SetPuzzlesActive);
     }
@@ -36,12 +37,43 @@ public class InGameManager : MonoBehaviour
         _puzzleManager.LazyStart();
         _completeManager.Complete(_puzzlePlaceManager.CheckStageCompleteOrGameOver);
     }
-    private void GameOverProcess()
+    private void GameOverProcess_Timer()
     {
-        IsGameOver = true;
-        _playerDataManager.UpdateData(_uiManager);
-        _playerDataManager.SaveData();
-        Debug.Log($"GameOver | {PlayerDataManager.GameData.ToString()}");
+        // 5초 타이머 시작하여 조치 안하면 real gameover 
+        StartCoroutine(GameOverCoroutine());
+    }
+    private IEnumerator GameOverCoroutine()
+    {
+        for (int i = 9; i >= 0; i--)
+        {
+            _uiManager.GameOver_Timer(i.ToString());
+
+            if (_puzzlePlaceManager.SetPuzzlesActive() > 0)
+            {
+                _uiManager.Panel_GameOver_Timer.SetActive(false);
+                StopCoroutine(GameOverCoroutine());
+            }
+
+            yield return new WaitForSeconds(1f);
+            if (i == 0)
+                GameOverProcess_Real();
+        }
+    }
+
+    private void GameOverProcess_Real()
+    {
+        // 한번더 검사
+        if (_puzzlePlaceManager.SetPuzzlesActive() == 0)
+        { // # real gameover
+            IsGameOver = true;
+            _playerDataManager.UpdateData(_uiManager);
+            _playerDataManager.SaveData();
+            Debug.Log($"GameOver | {PlayerDataManager.GameData.ToString()}");
+        }
+        else
+        {
+            _uiManager.Panel_GameOver_Timer.SetActive(false);
+        }
     }
     private void StageCompleteProcess()
     {

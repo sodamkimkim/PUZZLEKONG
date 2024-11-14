@@ -6,23 +6,31 @@ public class UIManager : MonoBehaviour
 {
     #region Hidden Private variables
     [SerializeField]
-    private GameObject _uITMP_TempText_Large;
+    private GameObject _uiTMP_TempText_Large;
     [SerializeField]
     private GameObject _uITMP_TempText_Small;
 
+    #region Gameover
+    [SerializeField]
+    private GameObject _panel_Gameover_Timer;
+    [SerializeField]
+    private TextMeshProUGUI _panel_GameOver_Text;
     [SerializeField]
     private GameObject _panel_GameOver;
     [SerializeField]
     private GameObject _uiTMP_TotalScore;
     #endregion
+    #endregion
 
     #region UI_GameOver
+    public GameObject Panel_GameOver_Timer => _panel_Gameover_Timer;
+    private TextMeshProUGUI Panel_GameOver_Text => _panel_GameOver_Text;
     public GameObject Panel_GameOver => _panel_GameOver;
     public GameObject UITMP_TotalScore => _uiTMP_TotalScore;
     #endregion
 
     #region UI_InGame
-    public GameObject UITMP_TempText_Large => _uITMP_TempText_Large;
+    public GameObject UITMP_TempText_Large => _uiTMP_TempText_Large;
     public GameObject UITMP_TempText_Small => _uITMP_TempText_Small;
     #endregion
     private void Awake()
@@ -30,6 +38,11 @@ public class UIManager : MonoBehaviour
         Panel_GameOver.SetActive(false);
         UITMP_TotalScore.SetActive(false);
         UITMP_TempText_Large.SetActive(false);
+    }
+    public void GameOver_Timer(string text)
+    {
+        if (Panel_GameOver_Timer.activeSelf == false) Panel_GameOver_Timer.SetActive(true);
+        _panel_GameOver_Text.text = text;
     }
     public void GameOver(string text)
     {
@@ -48,8 +61,8 @@ public class UIManager : MonoBehaviour
         tmpro.text = text;
         tmpro.color = color;
 
-        if (lazyClose) 
-            StartCoroutine(UISetActiveFalse(uiGo, 1f)); 
+        if (lazyClose)
+            StartCoroutine(UISetActiveFalse(uiGo, 1f));
     }
     IEnumerator UISetActiveFalse(GameObject uiGo, float delay)
     {
