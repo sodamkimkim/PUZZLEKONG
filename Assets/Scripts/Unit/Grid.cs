@@ -142,7 +142,7 @@ public class Grid : MonoBehaviour
         else
         {
             for (int r = startR; r >= endR; r--)
-                for (int c = startC; c <= endC; c++)
+                for (int c = startC; c >= endC; c--)
                 {
                     ChildGridPartDic[$"{r},{c}"].SetGridPartColor();
                     yield return new WaitForSeconds(interval);

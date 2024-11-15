@@ -42,6 +42,12 @@ public class ItemUse : MonoBehaviour
             case "Item_g_Eraser":
                 CheckUseable_Item_g_Eraser(grid, item);
                 break;
+            case "Item_h_PushLeft":
+                CheckUseable_Item_h_PushLeft(grid, item);
+                break;
+            case "Item_i_PushUp":
+                CheckUseable_Item_i_PushUp(grid, item);
+                break;
         }
     }
     private void SetCheckData(Grid grid, int idxR, int idxC, int beforeData, int afterData)
@@ -138,6 +144,24 @@ public class ItemUse : MonoBehaviour
 
         SetCheckData(grid, item.TriggeredGridPartIdxR, item.TriggeredGridPartIdxC, Factor.HasPuzzle, Factor.UseItem1);
     }
+    private void CheckUseable_Item_h_PushLeft(Grid grid, Item item)
+    {
+        if (item.TriggeredGridPartIdxR == Factor.IntInitialized) return;
+        if (item.TriggeredGridPartIdxC == Factor.IntInitialized) return;
+
+        for (int idxR = 0; idxR < grid.Data.GetLength(0); idxR++)
+            for (int idxC = 0; idxC < grid.Data.GetLength(1); idxC++)
+                SetCheckData(grid, idxR, idxC, Factor.HasPuzzle, Factor.UseItem1);
+    }
+    private void CheckUseable_Item_i_PushUp(Grid grid, Item item)
+    {
+        if (item.TriggeredGridPartIdxR == Factor.IntInitialized) return;
+        if (item.TriggeredGridPartIdxC == Factor.IntInitialized) return;
+
+        for (int idxR = 0; idxR < grid.Data.GetLength(0); idxR++)
+            for (int idxC = 0; idxC < grid.Data.GetLength(1); idxC++)
+                SetCheckData(grid, idxR, idxC, Factor.HasPuzzle, Factor.UseItem1);
+    }
     public bool UseItem(PuzzleManager puzzleManager, Grid grid, Item item)
     {
         if (grid == null || item == null) return false;
@@ -157,6 +181,10 @@ public class ItemUse : MonoBehaviour
                 return Use_Item_f_Bumb(grid, item);
             case "Item_g_Eraser":
                 return Use_Item_g_Eraser(grid, item);
+            case "Item_h_PushLeft":
+                return Use_Item_h_PushLeft(grid, item);
+            case "Item_i_PushUp":
+                return Use_Item_i_PushUp(grid, item);
         }
         return false;
     }
@@ -164,15 +192,16 @@ public class ItemUse : MonoBehaviour
         , int startR, int endR, int startC, int endC, bool dirR, System.Action effectFunction)
     {
         bool isItemUsed = false;
-        if (dirR)
+        // # 한칸 지우기
+        if (startR == endR && startC == endC && grid.Data[startR, startC] == beforeFactor)
         {
-            // # start == end 일 때는 무조건 dirR == true로 입력!
-            if (startR == endR && startC == endC && grid.Data[startR, startC] == beforeFactor)
-            {
-                grid.SetDataIdx(startR, startC, afterFactor);
-                isItemUsed = true;
-            }
-            else
+            grid.SetDataIdx(startR, startC, afterFactor);
+            isItemUsed = true;
+        }
+        // # 이외
+        else
+        {
+            if (dirR)
             {
                 for (int r = startR; r <= endR; r++)
                     for (int c = startC; c <= endC; c++)
@@ -182,17 +211,16 @@ public class ItemUse : MonoBehaviour
                             isItemUsed = true;
                         }
             }
-
-        }
-        else
-        {
-            for (int r = startR; r >= endR; r--)
-                for (int c = startC; c <= endC; c++)
-                    if (grid.Data[r, c] == beforeFactor)
-                    {
-                        grid.SetDataIdx(r, c, afterFactor);
-                        isItemUsed = true;
-                    }
+            else
+            {
+                for (int r = startR; r >= endR; r--)
+                    for (int c = startC; c >= endC; c--)
+                        if (grid.Data[r, c] == beforeFactor)
+                        {
+                            grid.SetDataIdx(r, c, afterFactor);
+                            isItemUsed = true;
+                        }
+            }
         }
 
         if (isItemUsed)
@@ -325,4 +353,118 @@ public class ItemUse : MonoBehaviour
         int idxC = item.TriggeredGridPartIdxC;
         return DataComplete(grid, Factor.UseItem1, Factor.HasNoPuzzle, idxR, idxR, idxC, idxC, true, () => _itemUseEffect.Effect_Item_g_Eraser(grid, item, idxR, idxC));
     }
+    private bool Use_Item_h_PushLeft(Grid grid, Item item)
+    {
+        if (item.TriggeredGridPartIdxR == Factor.IntInitialized) return false;
+        if (item.TriggeredGridPartIdxC == Factor.IntInitialized) return false;
+        int idxC = item.TriggeredGridPartIdxC;
+
+        int[] cntArr = new int[grid.Data.GetLength(0)]; // r번째 방에 각 Factor.HasPuzzle갯수 저장
+
+        for (int r = 0; r < grid.Data.GetLength(0); r++)
+        {
+            int cnt = 0;
+            for (int c = 0; c < grid.Data.GetLength(1); c++)
+                if (grid.Data[r, c] == Factor.HasPuzzle || grid.Data[r, c] == Factor.UseItem1) cnt++;
+
+            cntArr[r] = cnt;
+        }
+
+        // # 밀어주기 데이터 구하기
+        int[,] temp1 = new int[grid.Data.GetLength(0), grid.Data.GetLength(1)];
+        for (int r = 0; r < grid.Data.GetLength(0); r++)
+        {
+            for (int c = 0; c < cntArr[r]; c++)
+                temp1[r, c] = Factor.HasPuzzle;
+            for (int c = cntArr[r]; c < grid.Data.GetLength(1); c++)
+                temp1[r, c] = Factor.HasNoPuzzle;
+        }
+
+        // # 데이터 배열이 다름여부 체크
+        bool isDifferent = false;
+        for (int r = 0; r < grid.Data.GetLength(0); r++)
+        {
+            for (int c = 0; c < grid.Data.GetLength(1); c++)
+            {
+                if ((grid.Data[r, c] == Factor.UseItem1 || grid.Data[r, c] == Factor.HasPuzzle) && temp1[r, c] != Factor.HasPuzzle)
+                {
+                    isDifferent = true;
+                    break;
+                }
+
+            }
+
+            if (isDifferent)
+                break;
+        }
+
+        // # 아이템 적용
+        if (isDifferent)
+        {
+            grid.Data = temp1;
+            //_itemUseEffect.Effect_Item_h_PushLeft
+            // StartCoroutine(grid.SetGridPartColorCoroutine(0, grid.Data.GetLength(0) - 1, 0, grid.Data.GetLength(1) - 1, true, Factor.CompleteCoroutineInterval));
+            SetPuzzlesActiveCallback();
+        }
+
+        Debug.Log("PushUp - isDifferent" + isDifferent);
+        return isDifferent;
+    }
+    private bool Use_Item_i_PushUp(Grid grid, Item item)
+    {
+        if (item.TriggeredGridPartIdxR == Factor.IntInitialized) return false;
+        if (item.TriggeredGridPartIdxC == Factor.IntInitialized) return false;
+        int idxC = item.TriggeredGridPartIdxC;
+
+        int[] cntArr = new int[grid.Data.GetLength(1)]; // c번째 방에 각 Factor.HasPuzzle갯수 저장
+
+        for (int c = 0; c < grid.Data.GetLength(1); c++)
+        {
+            int cnt = 0;
+            for (int r = 0; r < grid.Data.GetLength(0); r++)
+                if (grid.Data[r, c] == Factor.HasPuzzle || grid.Data[r, c] == Factor.UseItem1) cnt++;
+
+            cntArr[c] = cnt;
+        }
+
+        // # 밀어주기 데이터 구하기
+        int[,] temp1 = new int[grid.Data.GetLength(0), grid.Data.GetLength(1)];
+        for (int c = 0; c < grid.Data.GetLength(1); c++)
+        {
+            for (int r = 0; r < cntArr[c]; r++)
+                temp1[r, c] = Factor.HasPuzzle;
+            for (int r = cntArr[c]; r < grid.Data.GetLength(1); r++)
+                temp1[r, c] = Factor.HasNoPuzzle;
+        }
+
+        // # 데이터 배열이 다름여부 체크
+        bool isDifferent = false;
+        for (int r = 0; r < grid.Data.GetLength(0); r++)
+        {
+
+            for (int c = 0; c < grid.Data.GetLength(1); c++)
+            {
+                if ((grid.Data[r, c] == Factor.UseItem1 || grid.Data[r, c] == Factor.HasPuzzle) && temp1[r, c] != Factor.HasPuzzle)
+                {
+                    isDifferent = true;
+                    break;
+                }
+
+            }
+            if (isDifferent)
+                break;
+        }
+        Debug.Log("PushLeft - isDifferent" + isDifferent);
+        // # 아이템 적용
+        if (isDifferent)
+        {
+            grid.Data = temp1;
+            //_itemUseEffect.Effect_Item_h_PushLeft
+            // StartCoroutine(grid.SetGridPartColorCoroutine(0, grid.Data.GetLength(0) - 1, 0, grid.Data.GetLength(1) - 1, true, Factor.CompleteCoroutineInterval));
+            SetPuzzlesActiveCallback();
+        }
+
+        return isDifferent;
+    }
+
 } // end of class
