@@ -6,10 +6,16 @@ using UnityEngine;
 public class ItemUse : MonoBehaviour
 {
     [SerializeField]
+    private CompleteManager _completeManager = null;
+    [SerializeField]
+    private PuzzlePlaceManager _puzzlePlaceManager = null;
+    [SerializeField]
     private ItemUseEffect _itemUseEffect = null;
+
     public PuzzleManager.SetPuzzleActive SetPuzzlesActiveCallback;
     public delegate void SetPuzzleStatusData(int puzzleStatusData);
     private SetPuzzleStatusData SetPuzzleStatusDataCallback;
+
     public void Init(SetPuzzleStatusData setPuzzleStatusData, PuzzleManager.SetPuzzleActive setPuzzlesActiveCallback)
     {
         SetPuzzleStatusDataCallback = setPuzzleStatusData;
@@ -193,6 +199,7 @@ public class ItemUse : MonoBehaviour
     public bool UseItem(PuzzleManager puzzleManager, Grid grid, Item item)
     {
         if (grid == null || item == null) return false;
+        ItemManager.IsProcessing = true;
         switch (item.name)
         {
             case "Item_a_Mushroom":
@@ -299,29 +306,21 @@ public class ItemUse : MonoBehaviour
 
         int idxR = item.TriggeredGridPartIdxR;
         bool isItemUsed = false;
-        for (int c = 0; c < grid.Data.GetLength(1) - 1; c++)
+        for (int c = 0; c < grid.Data.GetLength(1); c++)
         {
-            if (grid.Data[idxR, c] == Factor.UseItem1)
-            {
-                isItemUsed = true;
-                grid.SetDataIdx(idxR, c, Factor.HasPuzzle);
-            }
-
-            if (grid.Data[idxR + 1, c] == Factor.UseItem1)
-                grid.SetDataIdx(idxR + 1, c, Factor.HasPuzzle);
-
+            isItemUsed = true;
             int temp = grid.Data[idxR, c];
 
             grid.SetDataIdx(idxR, c, grid.Data[idxR + 1, c]);
             grid.SetDataIdx(idxR + 1, c, temp);
-
         }
 
         if (isItemUsed)
         {
             //effectFunction?.Invoke();
-            StartCoroutine(grid.SetGridPartColorCoroutine(idxR, idxR + 1, 0, grid.Data.GetLength(1) - 1, true, Factor.CompleteCoroutineInterval));
+            StartCoroutine(grid.SetGridPartColorCoroutine(idxR, idxR + 1, 0, grid.Data.GetLength(1) - 1, true, 0f));
             SetPuzzlesActiveCallback();
+            _completeManager.Complete(_puzzlePlaceManager.CheckStageCompleteOrGameOver);
         }
         return isItemUsed;
     }
@@ -333,19 +332,10 @@ public class ItemUse : MonoBehaviour
         if (item.TriggeredGridPartIdxC >= grid.Data.GetLength(1) - 1) return false;
 
         int idxC = item.TriggeredGridPartIdxC;
-
         bool isItemUsed = false;
-        for (int r = 0; r < grid.Data.GetLength(0) - 1; r++)
+        for (int r = 0; r < grid.Data.GetLength(0); r++)
         {
-            if (grid.Data[r, idxC] == Factor.UseItem1)
-            {
-                isItemUsed = true;
-                grid.SetDataIdx(r, idxC, Factor.HasPuzzle);
-            }
-
-            if (grid.Data[r, idxC + 1] == Factor.UseItem1)
-                grid.SetDataIdx(r, idxC + 1, Factor.HasPuzzle);
-
+            isItemUsed = true;
             int temp = grid.Data[r, idxC];
 
             grid.SetDataIdx(r, idxC, grid.Data[r, idxC + 1]);
@@ -355,8 +345,9 @@ public class ItemUse : MonoBehaviour
         if (isItemUsed)
         {
             //effectFunction?.Invoke();
-            StartCoroutine(grid.SetGridPartColorCoroutine(0, grid.Data.GetLength(0) - 1, idxC, idxC + 1, true, Factor.CompleteCoroutineInterval));
+            StartCoroutine(grid.SetGridPartColorCoroutine(0, grid.Data.GetLength(0) - 1, idxC, idxC + 1, true, 0f));
             SetPuzzlesActiveCallback();
+            _completeManager.Complete(_puzzlePlaceManager.CheckStageCompleteOrGameOver);
         }
         return isItemUsed;
     }
@@ -456,6 +447,7 @@ public class ItemUse : MonoBehaviour
             }
             StartCoroutine(grid.SetGridPartColorCoroutine(idxR - 1, idxR + 1, 0, grid.Data.GetLength(1) - 1, true, Factor.CompleteCoroutineInterval));
             SetPuzzlesActiveCallback();
+            _completeManager.Complete(_puzzlePlaceManager.CheckStageCompleteOrGameOver);
         }
 
         Debug.Log("PushLeft - isDifferent " + isDifferent);
@@ -504,7 +496,7 @@ public class ItemUse : MonoBehaviour
         {
             for (int r = 0; r < grid.Data.GetLength(0); r++)
             {
-                if ((grid.Data[r, idxC - 1 + c] == Factor.UseItem1 )
+                if ((grid.Data[r, idxC - 1 + c] == Factor.UseItem1)
                     && temp1[r, c] != Factor.HasPuzzle)
                 {
                     isDifferent = true;
@@ -532,10 +524,16 @@ public class ItemUse : MonoBehaviour
             }
             StartCoroutine(grid.SetGridPartColorCoroutine(0, grid.Data.GetLength(0) - 1, idxC - 1, idxC + 1, true, Factor.CompleteCoroutineInterval));
             SetPuzzlesActiveCallback();
+            _completeManager.Complete(_puzzlePlaceManager.CheckStageCompleteOrGameOver);
         }
 
         Debug.Log("PushUp - isDifferent " + isDifferent);
         return isDifferent;
+    }
+    IEnumerator DelayComplete(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        _completeManager.Complete(_puzzlePlaceManager.CheckStageCompleteOrGameOver);
     }
     private bool Use_Item_h_PushLeft_All(Grid grid, Item item)
     {

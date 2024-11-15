@@ -36,12 +36,12 @@ public class ItemManager : MonoBehaviour
         PlayerPrefs.SetInt("Item_e_SwitchVerti", 9999);
         PlayerPrefs.SetInt("Item_f_Bumb", 9999);
         PlayerPrefs.SetInt("Item_g_Eraser", 9999);
-        PlayerPrefs.SetInt("Item_h_PushLeft", 3);
-        PlayerPrefs.SetInt("Item_i_PushUp", 3);
+        PlayerPrefs.SetInt("Item_h_PushLeft", 9999);
+        PlayerPrefs.SetInt("Item_i_PushUp", 9999);
         PlayerPrefs.Save();
 
         // Player가 Slot에 Item 지정
-        PlayerPrefs.SetString("ItemSlot0", "Item_b_Wandoo");
+        PlayerPrefs.SetString("ItemSlot0", "Item_e_SwitchVerti");
         PlayerPrefs.SetString("ItemSlot1", "Item_c_Reset");
         PlayerPrefs.SetString("ItemSlot2", "Item_a_Mushroom");
         //PlayerPrefs.SetString("ItemSlot3", "Item_d_SwitchHori");
@@ -158,6 +158,7 @@ public class ItemManager : MonoBehaviour
          
         if (_itemUse.UseItem(_puzzleManager, _gridManager.Grid, dropItem))
         {
+       
             // 아이템 갯수 반영, 남아있으면 돌려보내기
             PlayerPrefs.SetInt(dropItem.name, PlayerPrefs.GetInt(dropItem.name) - 1);
             if (PlayerPrefs.GetInt(dropItem.name) == 0)

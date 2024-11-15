@@ -3681,6 +3681,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c65fc138cd6678347b9c3e5c796f743d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _completeManager: {fileID: 1000968076}
+  _puzzlePlaceManager: {fileID: 2125980420}
   _itemUseEffect: {fileID: 2079459818}
 --- !u!114 &2079459818
 MonoBehaviour:

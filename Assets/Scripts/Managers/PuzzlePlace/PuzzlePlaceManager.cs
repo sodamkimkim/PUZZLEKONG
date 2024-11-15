@@ -58,5 +58,5 @@ public class PuzzlePlaceManager : MonoBehaviour
             SetTouchEndPuzzleReturnCallback?.Invoke();
         else
             _completeManager.Complete(CheckStageCompleteOrGameOver);
-    }
+    } 
 } // end of class
