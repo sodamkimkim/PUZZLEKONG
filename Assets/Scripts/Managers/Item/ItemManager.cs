@@ -32,8 +32,8 @@ public class ItemManager : MonoBehaviour
         PlayerPrefs.SetInt("Item_a_Mushroom", 9999);
         PlayerPrefs.SetInt("Item_b_Wandoo", 9999);
         PlayerPrefs.SetInt("Item_c_Reset", 9999);
-        PlayerPrefs.SetInt("Item_d_SwitchHori", 9999);
-        PlayerPrefs.SetInt("Item_e_SwitchVerti", 9999);
+        PlayerPrefs.SetInt("Item_d_SwitchRows", 9999);
+        PlayerPrefs.SetInt("Item_e_SwitchColumns", 9999);
         PlayerPrefs.SetInt("Item_f_Bumb", 9999);
         PlayerPrefs.SetInt("Item_g_Eraser", 9999);
         PlayerPrefs.SetInt("Item_h_PushLeft", 9999);
@@ -41,45 +41,17 @@ public class ItemManager : MonoBehaviour
         PlayerPrefs.Save();
 
         // Player가 Slot에 Item 지정
-        PlayerPrefs.SetString("ItemSlot0", "Item_e_SwitchVerti");
+        PlayerPrefs.SetString("ItemSlot0", "Item_e_SwitchColumns");
         PlayerPrefs.SetString("ItemSlot1", "Item_c_Reset");
         PlayerPrefs.SetString("ItemSlot2", "Item_a_Mushroom");
-        //PlayerPrefs.SetString("ItemSlot3", "Item_d_SwitchHori");
-        //PlayerPrefs.SetString("ItemSlot4", "Item_e_SwitchVerti");
+        //PlayerPrefs.SetString("ItemSlot3", "Item_d_SwitchRows");
+        //PlayerPrefs.SetString("ItemSlot4", "Item_e_SwitchColumns");
         PlayerPrefs.SetString("ItemSlot3", "Item_f_Bumb");
         PlayerPrefs.SetString("ItemSlot4", "Item_g_Eraser");
         PlayerPrefs.SetString("ItemSlot5", "Item_h_PushLeft");
         PlayerPrefs.SetString("ItemSlot6", "Item_i_PushUp");
-        PlayerPrefs.SetString("ItemSlot7", "Item_d_SwitchHori");
+        PlayerPrefs.SetString("ItemSlot7", "Item_d_SwitchRows");
         InstantiateItem();
-    }
-    private void SetItemSlotColor(Enum.eTheme eTheme)
-    {
-        SpriteRenderer spr = _itemSlotGo.GetComponent<SpriteRenderer>();
-        switch (eTheme)
-        {
-            case Enum.eTheme.Grey:
-                spr.color = Factor.Grey0;
-                break;
-            case Enum.eTheme.Green:
-                spr.color = Factor.Green0;
-                break;
-            case Enum.eTheme.LightPurple:
-                spr.color = Factor.LightPurple0;
-                break;
-            case Enum.eTheme.LightBlue:
-                spr.color = Factor.LightBlue0;
-                break;
-            case Enum.eTheme.Pink:
-                spr.color = Factor.Pink0;
-                break;
-            case Enum.eTheme.Yellow:
-                spr.color = Factor.Yellow0;
-                break;
-            case Enum.eTheme.Mint:
-                spr.color = Factor.Grey0;
-                break;
-        }
     }
 
     public void Init(PuzzleManager.SetPuzzleActive setPuzzlesActiveCallback)
@@ -111,11 +83,11 @@ public class ItemManager : MonoBehaviour
                 if (PlayerPrefs.GetInt(itemStr) == 0) return;
                 itemGo = Instantiate(_itemPrefabArr[2], _itemSlotPosArr[slotIdx].transform);
                 break;
-            case "Item_d_SwitchHori":
+            case "Item_d_SwitchRows":
                 if (PlayerPrefs.GetInt(itemStr) == 0) return;
                 itemGo = Instantiate(_itemPrefabArr[3], _itemSlotPosArr[slotIdx].transform);
                 break;
-            case "Item_e_SwitchVerti":
+            case "Item_e_SwitchColumns":
                 if (PlayerPrefs.GetInt(itemStr) == 0) return;
                 itemGo = Instantiate(_itemPrefabArr[4], _itemSlotPosArr[slotIdx].transform);
                 break;
@@ -175,8 +147,8 @@ public class ItemManager : MonoBehaviour
         if (TouchRaycast_Item.TouchingItem == null) return;
         if (TouchRaycast_Item.TouchingItem.name == "Item_a_Mushroom" ||
             TouchRaycast_Item.TouchingItem.name == "Item_b_Wandoo"||
-            TouchRaycast_Item.TouchingItem.name == "Item_d_SwitchHori"||
-            TouchRaycast_Item.TouchingItem.name == "Item_e_SwitchVerti"||
+            TouchRaycast_Item.TouchingItem.name == "Item_d_SwitchRows"||
+            TouchRaycast_Item.TouchingItem.name == "Item_e_SwitchColumns"||
             TouchRaycast_Item.TouchingItem.name == "Item_f_Bumb" ||
             TouchRaycast_Item.TouchingItem.name == "Item_g_Eraser" ||
             TouchRaycast_Item.TouchingItem.name == "Item_h_PushLeft" ||
