@@ -41,16 +41,16 @@ public class ItemManager : MonoBehaviour
         PlayerPrefs.Save();
 
         // Player가 Slot에 Item 지정
-        PlayerPrefs.SetString("ItemSlot0", "Item_e_SwitchColumns");
-        PlayerPrefs.SetString("ItemSlot1", "Item_c_Reset");
-        PlayerPrefs.SetString("ItemSlot2", "Item_a_Mushroom");
+        PlayerPrefs.SetString("ItemSlot0", "Item_c_Reset");
+        PlayerPrefs.SetString("ItemSlot1", "Item_a_Mushroom");
         //PlayerPrefs.SetString("ItemSlot3", "Item_d_SwitchRows");
         //PlayerPrefs.SetString("ItemSlot4", "Item_e_SwitchColumns");
-        PlayerPrefs.SetString("ItemSlot3", "Item_f_Bumb");
-        PlayerPrefs.SetString("ItemSlot4", "Item_g_Eraser");
-        PlayerPrefs.SetString("ItemSlot5", "Item_h_PushLeft");
-        PlayerPrefs.SetString("ItemSlot6", "Item_i_PushUp");
-        PlayerPrefs.SetString("ItemSlot7", "Item_d_SwitchRows");
+        PlayerPrefs.SetString("ItemSlot2", "Item_f_Bumb");
+        PlayerPrefs.SetString("ItemSlot3", "Item_g_Eraser");
+        PlayerPrefs.SetString("ItemSlot4", "Item_h_PushLeft");
+        PlayerPrefs.SetString("ItemSlot5", "Item_i_PushUp");
+        PlayerPrefs.SetString("ItemSlot6", "Item_d_SwitchRows");
+        PlayerPrefs.SetString("ItemSlot7", "Item_e_SwitchColumns");
         InstantiateItem();
     }
 
