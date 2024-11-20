@@ -36,8 +36,9 @@ public static class Util
                 child.position += offset;
         }
     }
-    public static void CheckAndAddDictionary<T>(Dictionary<string, T> dic, string key, T value)
+    public static void AddOrChangeDictinaryValue<T>(Dictionary<string, T> dic, string key, T value)
     {
+        if (dic == null) return;
         if (dic.ContainsKey(key))
             dic[key] = value;
         else

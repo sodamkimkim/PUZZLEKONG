@@ -33,7 +33,7 @@ public class CompleteManager : MonoBehaviour
     [SerializeField]
     private UIManager _uiManager = null;
     [SerializeField]
-    private PlayerDataManager _playerDataManager = null;
+    private PlayerData _playerDataManager = null;
     [SerializeField]
     private GridManager _gridManager = null;
 
@@ -105,9 +105,9 @@ public class CompleteManager : MonoBehaviour
                 _uiManager.SetTMPText(_uiManager.UITMP_TempText_Small, $"+ {score}", Color.red, true);
             }
 
-            PlayerDataManager.GameData.NowScore += score;
-            _playerDataManager.SaveData();
-            Debug.Log($"Score : {score} | {PlayerDataManager.GameData.ToString()}");
+            PlayerData.Data.NowScore += score;
+            PlayerData.SaveData();
+            Debug.Log($"Score : {score} | {PlayerData.Data.ToString()}");
         }
         else
             _totalComboCnt = 0;

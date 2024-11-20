@@ -1,12 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 public class InGameManager : MonoBehaviour
 {
     [SerializeField]
     private UIManager _uiManager = null;
     [SerializeField]
-    private PlayerDataManager _playerDataManager = null;
+    private PlayerData _playerDataManager = null;
     [SerializeField]
     private GridManager _gridManager = null;
     [SerializeField]
@@ -21,7 +22,7 @@ public class InGameManager : MonoBehaviour
     private ItemManager _itemManager = null;
     public static bool IsGameOver = false;
     private void Awake()
-    {
+    { 
         _puzzlePlaceManager.PuzzlePlacableChecker.Init(GameOverProcess_Timer, StageCompleteProcess);
         _completeManager.Init(_puzzlePlaceManager.SetPuzzlesActive);
         _itemManager.Init(_puzzlePlaceManager.SetPuzzlesActive);
@@ -69,14 +70,28 @@ public class InGameManager : MonoBehaviour
         if (_puzzlePlaceManager.SetPuzzlesActive() == 0)
         { // # real gameover
             IsGameOver = true;
-            _playerDataManager.UpdateData(_uiManager);
-            _playerDataManager.SaveData();
-            Debug.Log($"GameOver | {PlayerDataManager.GameData.ToString()}");
+            UpdatePlayerData();
+            Debug.Log($"GameOver | {PlayerData.Data.ToString()}");
         }
         else
         {
             _uiManager.Panel_GameOver_Timer.SetActive(false);
         }
+    }
+    private void UpdatePlayerData()
+    {
+        PlayerData.Data.PlayerTotalScore += PlayerData.Data.NowScore;
+        if (PlayerData.Data.MyBestScore < PlayerData.Data.NowScore)
+        {
+            Debug.Log("BestScore °»½Å");
+            _uiManager.SetTMPText(_uiManager.UITMP_TempText_Large, "YOUR\nBEST SCORE!", Color.white, false);
+            Instantiate(_effectManager.EffectPrefab_Celebration_Finish, Factor.EffectPos_Celebration, Quaternion.identity);
+            PlayerData.Data.MyBestScore = PlayerData.Data.NowScore;
+        }
+        _uiManager.GameOver($"Score: {PlayerData.Data.NowScore}\nTotal: {PlayerData.Data.PlayerTotalScore}\nBest: {PlayerData.Data.MyBestScore}");
+
+        PlayerData.Data.NowScore = 0;
+        PlayerData.SaveData();
     }
     private void StageCompleteProcess()
     {
