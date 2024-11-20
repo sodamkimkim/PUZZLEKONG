@@ -24,4 +24,5 @@ public class Enum
     {
         Small, Big
     }
+    public enum eStage { Event, Item, Classic}
 } // end of class

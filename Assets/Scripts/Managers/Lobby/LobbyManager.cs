@@ -36,8 +36,5 @@ public class LobbyManager : MonoBehaviour
         _canvasBottomBtns.SetActive(true);
         _lobbyGo.SetActive(true);
     }
-    public void SwitchSceneToInGame()
-    {
-        SceneManager.LoadScene("2.InGame");
-    }
+
 } // end of class
