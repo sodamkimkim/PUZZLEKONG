@@ -81,7 +81,7 @@ public class CompleteManager : MonoBehaviour
         //    Debug.Log(Util.ConvertDoubleArrayToString(gridDataSync));
 
         int completeCnt = comboCnt_hori + comboCnt_verti + comboCnt_area;
-        ComboAndSaveData(completeCnt);
+        ComboAndUpdateData(completeCnt);
 
         // Complete 다됐으면
         IsProcessing = false;
@@ -89,7 +89,7 @@ public class CompleteManager : MonoBehaviour
         if (SetPuzzlesActiveCallback() == 0)
             CheckStageCompleteOrGameOver();
     }
-    private void ComboAndSaveData(int comboCnt)
+    private void ComboAndUpdateData(int comboCnt)
     {
         if (comboCnt > 0)
         {
@@ -103,19 +103,29 @@ public class CompleteManager : MonoBehaviour
                 _uiManager.SetTMPText(_uiManager.UITMP_TempText_Large, $"{_totalComboCnt} C O M B O", Color.white, true);
 
                 score *= _totalComboCnt;
-                _uiManager.SetTMPText(_uiManager.UITMP_TempText_Small, $"+ {score}", Color.red, true);
             }
-            SaveData(score);
+            _uiManager.SetTMPText(_uiManager.UITMP_TempText_Small, $"+ {score}", Color.red, true); 
+            UpdateData(score);
         }
         else
             _totalComboCnt = 0;
     }
-    private void SaveData(int score)
+    private void UpdateData(int score)
     {
         PlayerData.NowScore += score;
         PlayerData.PlayerTotalScore += score;
 
-        if (PlayerData.MyBestScore < PlayerData.NowScore) PlayerData.MyBestScore = PlayerData.NowScore;
+        //BestScore 갱신, UI 호출
+        if (PlayerData.NowScore < PlayerData.MyBestScore && PlayerData.NowScore >= PlayerData.MyBestScore - 20)
+            _uiManager.SetTMPText(_uiManager.UITMP_TempText_Large_1, $"Almost Your Best!!", Color.blue, true);
+        else if (PlayerData.NowScore == PlayerData.MyBestScore)
+            _uiManager.SetTMPText(_uiManager.UITMP_TempText_Large_1, $"Next time, Your New Best!!", Color.blue, true);
+        else if (PlayerData.NowScore > PlayerData.MyBestScore)
+        {
+            PlayerData.MyBestScore = PlayerData.NowScore;
+            _uiManager.SetTMPText(_uiManager.UITMP_TempText_Large_1, $"!!!New Best!!!", Color.red, true);
+        }
+
 
         Debug.Log($"Score : {score} | {PlayerData.ToString_Score()}");
     }

@@ -95,7 +95,7 @@ public class InGameManager : MonoBehaviour
             PlayerData.NowScore = 0;
         }
 
-        if (isNeedCelebration) _uiManager.GameOver($"Score: {PlayerData.NowScore}\nTotal: {PlayerData.PlayerTotalScore}\nBest: {PlayerData.MyBestScore}");
+        if (isNeedCelebration) _uiManager.GameOver($"Score: {PlayerData.NowScore}\nMyBest: {PlayerData.MyBestScore}\nMyTotal: {PlayerData.PlayerTotalScore}");
     }
     private void StageCompleteProcess()
     {

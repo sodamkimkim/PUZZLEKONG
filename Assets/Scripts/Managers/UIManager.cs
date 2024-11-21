@@ -9,6 +9,8 @@ public class UIManager : MonoBehaviour
     private GameObject _uiTMP_TempText_Large;
     [SerializeField]
     private GameObject _uITMP_TempText_Small;
+    [SerializeField]
+    private GameObject _uiTMP_TempText_Large_1;
 
     #region Gameover
     [SerializeField]
@@ -32,6 +34,7 @@ public class UIManager : MonoBehaviour
     #region UI_InGame
     public GameObject UITMP_TempText_Large => _uiTMP_TempText_Large;
     public GameObject UITMP_TempText_Small => _uITMP_TempText_Small;
+    public GameObject UITMP_TempText_Large_1 => _uiTMP_TempText_Large_1;
     #endregion
     private void Awake()
     {
@@ -39,6 +42,7 @@ public class UIManager : MonoBehaviour
         Panel_GameOver.SetActive(false);
         UITMP_TotalScore.SetActive(false);
         UITMP_TempText_Large.SetActive(false);
+        UITMP_TempText_Large_1.SetActive(false);
     }
     public void GameOver_Timer(string text)
     {
