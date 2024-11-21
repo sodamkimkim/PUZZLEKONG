@@ -17,42 +17,42 @@ public class BackgroundManager : MonoBehaviour
     {
         BGgo = GetBGGo(ThemaManager.ETheme);  
     } 
-    public GameObject GetBGGo(Enum.eTheme eTheme)
+    public GameObject GetBGGo(Str.eTheme eTheme)
     {
         GameObject bgGo = null; 
         switch (eTheme)
         {
-            case Enum.eTheme.Grey:
+            case Str.eTheme.Grey:
                 bgGo = Instantiate(BGArr[0], Vector3.zero, Quaternion.identity, _bgParentTr);
                 bgGo.GetComponent<SpriteRenderer>().color = Factor.Grey0;
                 bgGo.name = "BG_Default";
                 break;
-            case Enum.eTheme.Green:
+            case Str.eTheme.Green:
                 bgGo = Instantiate(BGArr[0], Vector3.zero, Quaternion.identity, _bgParentTr);
                 bgGo.GetComponent<SpriteRenderer>().color = Factor.Green0;
                 bgGo.name = "BG_Default";
                 break;
-            case Enum.eTheme.LightPurple:
+            case Str.eTheme.LightPurple:
                 bgGo = Instantiate(BGArr[0], Vector3.zero, Quaternion.identity, _bgParentTr);
                 bgGo.GetComponent<SpriteRenderer>().color = Factor.LightPurple0;
                 bgGo.name = "BG_Default";
                 break;
-            case Enum.eTheme.LightBlue:
+            case Str.eTheme.LightBlue:
                 bgGo = Instantiate(BGArr[0], Vector3.zero, Quaternion.identity, _bgParentTr);
                 bgGo.GetComponent<SpriteRenderer>().color = Factor.LightBlue0;
                 bgGo.name = "BG_Default";
                 break;
-            case Enum.eTheme.Pink:
+            case Str.eTheme.Pink:
                 bgGo = Instantiate(BGArr[0], Vector3.zero, Quaternion.identity, _bgParentTr);
                 bgGo.GetComponent<SpriteRenderer>().color = Factor.Pink0;
                 bgGo.name = "BG_Default";
                 break;
-            case Enum.eTheme.Yellow:
+            case Str.eTheme.Yellow:
                 bgGo = Instantiate(BGArr[0], Vector3.zero, Quaternion.identity, _bgParentTr);
                 bgGo.GetComponent<SpriteRenderer>().color = Factor.Yellow0;
                 bgGo.name = "BG_Default";
                 break;
-            case Enum.eTheme.Mint:
+            case Str.eTheme.Mint:
                 bgGo = Instantiate(BGArr[1], Vector3.zero, Quaternion.identity, _bgParentTr);
                 bgGo.GetComponent<SpriteRenderer>().color = Factor.BGColorDefault;
                 bgGo.name = "BG_MintChoco";

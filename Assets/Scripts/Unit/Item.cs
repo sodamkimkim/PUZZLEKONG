@@ -41,14 +41,14 @@ public class Item : MonoBehaviour
         else
             transform.localPosition = pos;
     }
-    public void SetScale(Enum.eItemScale eScale, float multiply)
+    public void SetScale(Str.eItemScale eScale, float multiply)
     {
         switch (eScale)
         {
-            case Enum.eItemScale.Small:
+            case Str.eItemScale.Small:
                 this.transform.localScale = LocalScaleSmall * multiply;
                 break;
-            case Enum.eItemScale.Big:
+            case Str.eItemScale.Big:
                 this.transform.localScale = LocalScaleSmall * 3f * multiply;
                 break;
         }

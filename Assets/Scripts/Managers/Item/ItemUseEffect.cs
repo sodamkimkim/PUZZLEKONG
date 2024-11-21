@@ -13,7 +13,7 @@ public class ItemUseEffect : MonoBehaviour
         GameObject cloneItemGo = Instantiate(item.gameObject, null);
         Item itemClone = cloneItemGo.GetComponent<Item>();
         itemClone.Anim("Anim1", true);
-        itemClone.SetScale(Enum.eItemScale.Small, 0.5f);
+        itemClone.SetScale(Str.eItemScale.Small, 0.5f);
         StartCoroutine(EffectCoroutine_Item_a_Mushroom(grid, itemClone, idxC));
     }
     private IEnumerator EffectCoroutine_Item_a_Mushroom(Grid grid, Item itemClone, int idxC)
@@ -33,7 +33,7 @@ public class ItemUseEffect : MonoBehaviour
         GameObject cloneItemGo = Instantiate(item.gameObject, null);
         Item itemClone = cloneItemGo.GetComponent<Item>();
         itemClone.Anim("Anim2", true);
-        itemClone.SetScale(Enum.eItemScale.Small, 0.5f);
+        itemClone.SetScale(Str.eItemScale.Small, 0.5f);
         StartCoroutine(EffectCoroutine_Item_b_Wandoo(grid, itemClone, idxR));
     }
     private IEnumerator EffectCoroutine_Item_b_Wandoo(Grid grid, Item itemClone, int idxR)
@@ -64,7 +64,7 @@ public class ItemUseEffect : MonoBehaviour
 
         Item itemClone = cloneItemGo.GetComponent<Item>();
         itemClone.Anim("Anim1", true);
-        itemClone.SetScale(Enum.eItemScale.Small, 0.5f);
+        itemClone.SetScale(Str.eItemScale.Small, 0.5f);
         Destroy(itemClone.gameObject, 1f);
     }
 

@@ -63,7 +63,10 @@ public class UIManager : MonoBehaviour
         tmpro.color = color;
 
         if (lazyClose)
+        {
+            StopCoroutine(nameof(UISetActiveFalse));
             StartCoroutine(UISetActiveFalse(uiGo, 1f));
+        }
     }
     IEnumerator UISetActiveFalse(GameObject uiGo, float delay)
     {

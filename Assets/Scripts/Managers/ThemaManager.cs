@@ -15,18 +15,18 @@ public class ThemaManager : MonoBehaviour
     /// 
     //   public static Enum.eTheme ETheme = Enum.eTheme.Grey;
     //  public static Enum.eTheme ETheme = Enum.eTheme.Green;
-    private static Enum.eTheme _eTheme = Enum.eTheme.LightBlue;
-    public static Enum.eTheme ETheme { get=> _eTheme; set=> _eTheme = value; }
+    private static Str.eTheme _eTheme = Str.eTheme.LightBlue;
+    public static Str.eTheme ETheme { get=> _eTheme; set=> _eTheme = value; }
     // public static Enum.eTheme ETheme = Enum.eTheme.LightPurple;
     // public static Enum.eTheme ETheme = Enum.eTheme.Pink;
     //
     //public static Enum.eTheme ETheme = Enum.eTheme.Yellow;
     // public static Enum.eTheme ETheme = Enum.eTheme.Mint;
 
-    public static Enum.eEffect_Complete Eeffect_Hori = Enum.eEffect_Complete.C1_RoundStar2;
-    public static Enum.eEffect_Complete Eeffect_Verti = Enum.eEffect_Complete.C1_Spark1;
-    public static Enum.eEffect_Complete Eeffect_Area = Enum.eEffect_Complete.C2_Love;
-    public static Enum.eEffect_Celebration Eeffect_Combo = Enum.eEffect_Celebration.Celebration2;
-    public static Enum.eEffect_Celebration Eeffect_Finish = Enum.eEffect_Celebration.Celebration2;
+    public static Str.eEffect_Complete Eeffect_Hori = Str.eEffect_Complete.C1_RoundStar2;
+    public static Str.eEffect_Complete Eeffect_Verti = Str.eEffect_Complete.C1_Spark1;
+    public static Str.eEffect_Complete Eeffect_Area = Str.eEffect_Complete.C2_Love;
+    public static Str.eEffect_Celebration Eeffect_Combo = Str.eEffect_Celebration.Celebration2;
+    public static Str.eEffect_Celebration Eeffect_Finish = Str.eEffect_Celebration.Celebration2;
 } // end of class
 

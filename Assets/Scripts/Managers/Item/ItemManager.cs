@@ -27,7 +27,7 @@ public class ItemManager : MonoBehaviour
     public delegate void SetTouchEndItemReturn();
     private void Start()
     {
-        if (StageManager.Stage != Enum.eStage.Item) return;
+        if (StageManager.Stage != Str.eStage.Item) return;
         //   SetItemSlotColor(ThemaManager.ETheme);
         // Player가 가진 Item 갯수
 
@@ -41,15 +41,13 @@ public class ItemManager : MonoBehaviour
     }
     private void InstantiateItem()
     {
-        if (Data.ItemPosDic != null)
-            for (int i = 0; i < _itemSlotPosArr.Length; i++)
-                InstantiateItemInItemSlot(i, Data.ItemPosDic[$"ItemSlot{i}"]);
+        for (int i = 0; i < _itemSlotPosArr.Length; i++)
+            InstantiateItemInItemSlot(i, PlayerData.GetString($"ItemSlot{i}"));
     }
     private void InstantiateItemInItemSlot(int slotIdx, string itemStr)
     {
         if (itemStr == string.Empty || itemStr == null) return;
-
-        if (Data.ItemDic == null || Data.ItemDic[itemStr] == 0) return;
+        if (PlayerData.GetInt(itemStr) == 0) return;
         GameObject itemGo = null;
         switch (itemStr)
         {
@@ -105,12 +103,9 @@ public class ItemManager : MonoBehaviour
         {
 
             // 아이템 갯수 반영, 남아있으면 돌려보내기
-            Data.ItemDic[dropItem.name] -= 1;
-            PlayerData.SaveData();
-            //PlayerPrefs.SetInt(dropItem.name, PlayerPrefs.GetInt(dropItem.name) - 1);
-            // PlayerPrefs.Save();
-            Debug.Log(dropItem.name + " -- " + Data.ItemDic[dropItem.name]);
-            if (Data.ItemDic[dropItem.name] == 0)
+            PlayerData.SetString(dropItem.name, (PlayerData.GetInt(dropItem.name) - 1).ToString());
+            Debug.Log(dropItem.name + " -- " + PlayerData.GetString(dropItem.name));
+            if (PlayerData.GetInt(dropItem.name) == 0)
                 DestroyImmediate(dropItem.gameObject);
             else
                 setTouchEndItemReturnCallback?.Invoke();

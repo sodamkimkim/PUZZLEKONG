@@ -53,7 +53,7 @@ public class TouchRaycast_Item : MonoBehaviour
         if (TouchingItem.name == "Item_f_Bumb")
             TouchingItem.ChildParticleSetActive(true);
         TouchingItem.SetPos(true, pos);
-        TouchingItem.SetScale(Enum.eItemScale.Big, 1f);
+        TouchingItem.SetScale(Str.eItemScale.Big, 1f);
     }
     private void SetTouchMoved()
     {
@@ -80,7 +80,7 @@ public class TouchRaycast_Item : MonoBehaviour
         TouchingItem.Anim("Anim1", false);
         if (TouchingItem.name == "Item_f_Bumb")
             TouchingItem.ChildParticleSetActive(false);
-        TouchingItem.SetScale(Enum.eItemScale.Small, 1f);
+        TouchingItem.SetScale(Str.eItemScale.Small, 1f);
         TouchingItem.SetPos(false, Vector3.zero);
         TouchingItem = null;
     }

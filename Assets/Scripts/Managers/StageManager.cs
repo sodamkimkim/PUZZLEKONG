@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class StageManager : MonoBehaviour
 {
     #region Hidden Private Variables
-    private static Enum.eStage _stage;
+    private static Str.eStage _stage;
     #endregion
 
     [SerializeField]
@@ -17,7 +17,7 @@ public class StageManager : MonoBehaviour
     [SerializeField]
     Button btnStageClassic = null;
 
-    public static Enum.eStage Stage { get => _stage; set => _stage = value; }
+    public static Str.eStage Stage { get => _stage; set => _stage = value; }
     public static StageManager Instance = null;
     private void Awake()
     {
@@ -32,19 +32,19 @@ public class StageManager : MonoBehaviour
         if (btnStageEvent != null)
             btnStageEvent.onClick.AddListener(() =>
             {
-                Stage = Enum.eStage.Event;
+                Stage = Str.eStage.Event;
                 SceneManager.LoadScene("2.InGame");
             });
         if (btnStageItem != null)
             btnStageItem.onClick.AddListener(() =>
         {
-            Stage = Enum.eStage.Item;
+            Stage = Str.eStage.Item;
             SceneManager.LoadScene("2.InGame");
         });
         if (btnStageClassic != null)
             btnStageClassic.onClick.AddListener(() =>
         {
-            Stage = Enum.eStage.Classic;
+            Stage = Str.eStage.Classic;
             SceneManager.LoadScene("2.InGame");
         });
 

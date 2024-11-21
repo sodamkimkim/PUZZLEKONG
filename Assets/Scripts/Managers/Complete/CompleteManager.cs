@@ -1,6 +1,7 @@
 using System.Collections;
-using System.Collections.Generic; 
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SocialPlatforms.Impl;
 
 /// <summary>
 /// 1. Comletable check & mark
@@ -78,7 +79,7 @@ public class CompleteManager : MonoBehaviour
         int comboCnt_verti = _completeVertical.Complete(_gridManager.Grid, gridDataSync);
         int comboCnt_area = _completeArea.Complete(_gridManager.Grid, gridDataSync);
         //    Debug.Log(Util.ConvertDoubleArrayToString(gridDataSync));
- 
+
         int completeCnt = comboCnt_hori + comboCnt_verti + comboCnt_area;
         ComboAndSaveData(completeCnt);
 
@@ -104,13 +105,19 @@ public class CompleteManager : MonoBehaviour
                 score *= _totalComboCnt;
                 _uiManager.SetTMPText(_uiManager.UITMP_TempText_Small, $"+ {score}", Color.red, true);
             }
-
-            PlayerData.Data.NowScore += score;
-            PlayerData.SaveData();
-            Debug.Log($"Score : {score} | {PlayerData.Data.ToString()}");
+            SaveData(score);
         }
         else
             _totalComboCnt = 0;
+    }
+    private void SaveData(int score)
+    {
+        PlayerData.NowScore += score;
+        PlayerData.PlayerTotalScore += score;
+
+        if (PlayerData.MyBestScore < PlayerData.NowScore) PlayerData.MyBestScore = PlayerData.NowScore;
+
+        Debug.Log($"Score : {score} | {PlayerData.ToString_Score()}");
     }
 
     public void CompleteEffect(Vector3 worldPos, MonoBehaviour callerMono)

@@ -40,37 +40,37 @@ public class Grid : MonoBehaviour
     {
         switch (ThemaManager.ETheme)
         {
-            case Enum.eTheme.Grey:
+            case Str.eTheme.Grey:
                 Color_HasNoPuzzle = Factor.Grey1;
                 Color_Placable = Factor.Grey2;
                 Color_HasPuzzle = Factor.Grey3;
                 break;
-            case Enum.eTheme.Green:
+            case Str.eTheme.Green:
                 Color_HasNoPuzzle = Factor.Green1;
                 Color_Placable = Factor.Green2;
                 Color_HasPuzzle = Factor.Green3;
                 break;
-            case Enum.eTheme.LightPurple:
+            case Str.eTheme.LightPurple:
                 Color_HasNoPuzzle = Factor.LightPurple1;
                 Color_Placable = Factor.LightPurple2;
                 Color_HasPuzzle = Factor.LightPurple3;
                 break;
-            case Enum.eTheme.LightBlue:
+            case Str.eTheme.LightBlue:
                 Color_HasNoPuzzle = Factor.LightBlue1;
                 Color_Placable = Factor.LightBlue2;
                 Color_HasPuzzle = Factor.LightBlue3;
                 break;
-            case Enum.eTheme.Pink:
+            case Str.eTheme.Pink:
                 Color_HasNoPuzzle = Factor.Pink1;
                 Color_Placable = Factor.Pink2;
                 Color_HasPuzzle = Factor.Pink3;
                 break;
-            case Enum.eTheme.Yellow:
+            case Str.eTheme.Yellow:
                 Color_HasNoPuzzle = Factor.Yellow1;
                 Color_Placable = Factor.Yellow2;
                 Color_HasPuzzle = Factor.Yellow3;
                 break;
-            case Enum.eTheme.Mint:
+            case Str.eTheme.Mint:
                 Color_HasNoPuzzle = Factor.BGColorDefault;
                 Color_Placable = Factor.Grey2;
                 Color_HasPuzzle = Factor.Green3;

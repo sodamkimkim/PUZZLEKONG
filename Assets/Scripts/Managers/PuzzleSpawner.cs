@@ -65,25 +65,25 @@ public class PuzzleSpawner : MonoBehaviour
             SpriteRenderer spr = pzPart.gameObject.GetComponent<SpriteRenderer>();
             switch (ThemaManager.ETheme)
             {
-                case Enum.eTheme.Grey:
+                case Str.eTheme.Grey:
                     spr.color = Factor.Grey3;
                     break;
-                case Enum.eTheme.Green:
+                case Str.eTheme.Green:
                     spr.color = Factor.Green3;
                     break;
-                case Enum.eTheme.LightPurple:
+                case Str.eTheme.LightPurple:
                     spr.color = Factor.LightPurple3;
                     break;
-                case Enum.eTheme.LightBlue:
+                case Str.eTheme.LightBlue:
                     spr.color = Factor.LightBlue3;
                     break;
-                case Enum.eTheme.Pink:
+                case Str.eTheme.Pink:
                     spr.color = Factor.Pink3;
                     break;
-                case Enum.eTheme.Yellow:
+                case Str.eTheme.Yellow:
                     spr.color = Factor.Yellow3;
                     break;
-                case Enum.eTheme.Mint:
+                case Str.eTheme.Mint:
                     spr.color = Factor.Green3;
                     break;
             } 

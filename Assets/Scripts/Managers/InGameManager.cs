@@ -22,7 +22,7 @@ public class InGameManager : MonoBehaviour
     private ItemManager _itemManager = null;
     public static bool IsGameOver = false;
     private void Awake()
-    { 
+    {
         _puzzlePlaceManager.PuzzlePlacableChecker.Init(GameOverProcess_Timer, StageCompleteProcess);
         _completeManager.Init(_puzzlePlaceManager.SetPuzzlesActive);
         _itemManager.Init(_puzzlePlaceManager.SetPuzzlesActive);
@@ -38,6 +38,10 @@ public class InGameManager : MonoBehaviour
         _puzzleManager.LazyStart();
         _completeManager.Complete(_puzzlePlaceManager.CheckStageCompleteOrGameOver);
     }
+    private void OnApplicationQuit()
+    {
+        UpdatePlayerData(false);
+    }
     private void GameOverProcess_Timer()
     {
         if (_puzzlePlaceManager.SetPuzzlesActive() > 0) return;
@@ -48,7 +52,7 @@ public class InGameManager : MonoBehaviour
     private IEnumerator GameOverCoroutine()
     {
         for (int i = 7; i >= 0; i--)
-        { 
+        {
             if (_puzzlePlaceManager.SetPuzzlesActive() > 0)
             {
                 _uiManager.Panel_GameOver_Timer.SetActive(false);
@@ -70,28 +74,28 @@ public class InGameManager : MonoBehaviour
         if (_puzzlePlaceManager.SetPuzzlesActive() == 0)
         { // # real gameover
             IsGameOver = true;
-            UpdatePlayerData();
-            Debug.Log($"GameOver | {PlayerData.Data.ToString()}");
+            UpdatePlayerData(true);
+            Debug.Log($"GameOver | {PlayerData.ToString()}");
         }
         else
         {
             _uiManager.Panel_GameOver_Timer.SetActive(false);
         }
     }
-    private void UpdatePlayerData()
-    {
-        PlayerData.Data.PlayerTotalScore += PlayerData.Data.NowScore;
-        if (PlayerData.Data.MyBestScore < PlayerData.Data.NowScore)
+    private void UpdatePlayerData(bool isNeedCelebration)
+    { 
+        if (PlayerData.MyBestScore == PlayerData.NowScore)
         {
             Debug.Log("BestScore °»½Å");
-            _uiManager.SetTMPText(_uiManager.UITMP_TempText_Large, "YOUR\nBEST SCORE!", Color.white, false);
-            Instantiate(_effectManager.EffectPrefab_Celebration_Finish, Factor.EffectPos_Celebration, Quaternion.identity);
-            PlayerData.Data.MyBestScore = PlayerData.Data.NowScore;
+            if (isNeedCelebration)
+            {
+                _uiManager.SetTMPText(_uiManager.UITMP_TempText_Large, "YOUR\nBEST SCORE!", Color.white, false);
+                Instantiate(_effectManager.EffectPrefab_Celebration_Finish, Factor.EffectPos_Celebration, Quaternion.identity);
+            }
+            PlayerData.NowScore = 0;
         }
-        _uiManager.GameOver($"Score: {PlayerData.Data.NowScore}\nTotal: {PlayerData.Data.PlayerTotalScore}\nBest: {PlayerData.Data.MyBestScore}");
 
-        PlayerData.Data.NowScore = 0;
-        PlayerData.SaveData();
+        if (isNeedCelebration) _uiManager.GameOver($"Score: {PlayerData.NowScore}\nTotal: {PlayerData.PlayerTotalScore}\nBest: {PlayerData.MyBestScore}");
     }
     private void StageCompleteProcess()
     {

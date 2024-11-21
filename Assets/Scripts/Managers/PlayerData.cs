@@ -6,139 +6,122 @@ using System.Text;
 using UnityEngine;
 using UnityEngine.UI;
 
-[System.Serializable]
-public class Data
-{
-    public int MyBestScore;
-    public int PlayerTotalScore;
-    public int NowScore;
-
-    public static Dictionary<string, int> ItemDic;
-    public static Dictionary<string, string> ItemPosDic;
-    public Data(int myBest, int playerTotalScore, int nowScore)
-    {
-        MyBestScore = myBest;
-        PlayerTotalScore = playerTotalScore;
-        NowScore = nowScore;
-
-
-        ItemDic = new Dictionary<string, int>();
-        ItemPosDic = new Dictionary<string, string>();
-        
-    }
-
-    public override string ToString()
-    {
-        return $"MyBest: {MyBestScore}, PlayerTotalScore: {PlayerTotalScore}, NowScore: {NowScore}";
-    }
-}
 public class PlayerData : MonoBehaviour
 {
-    public static PlayerData Instance = null;
-    public static Data Data = null;
-    public static string filePath = string.Empty;
-    public static readonly string encryptionKey = "BBUNIKONG_PUZZLEKONG_0512";
+    //  public static int NowScore = 0;
+    public static readonly string EncryptionKey = "BBUNIKONG_PUZZLEKONG_0512";
+    #region Properties
+    public static int NowScore { get => GetInt(Str.NowScore); set => SetString(Str.NowScore, value.ToString()); }
+    public static int PlayerTotalScore { get => GetInt(Str.PlayerTotalScore); set => SetString(Str.PlayerTotalScore, value.ToString()); }
+    public static int MyBestScore { get => GetInt(Str.MyBestScore); set => SetString(Str.MyBestScore, value.ToString()); }
+
+    public static int Item_a_Mushroom { get => GetInt(Str.Item_a_Mushroom); set => SetString(Str.Item_a_Mushroom, value.ToString()); }
+    public static int Item_b_Wandoo { get => GetInt(Str.Item_b_Wandoo); set => SetString(Str.Item_b_Wandoo, value.ToString()); }
+    public static int Item_c_Reset { get => GetInt(Str.Item_c_Reset); set => SetString(Str.Item_c_Reset, value.ToString()); }
+    public static int Item_d_SwitchRows { get => GetInt(Str.Item_d_SwitchRows); set => SetString(Str.Item_d_SwitchRows, value.ToString()); }
+    public static int Item_e_SwitchColumns { get => GetInt(Str.Item_e_SwitchColumns); set => SetString(Str.Item_e_SwitchColumns, value.ToString()); }
+    public static int Item_f_Bumb { get => GetInt(Str.Item_f_Bumb); set => SetString(Str.Item_f_Bumb, value.ToString()); }
+    public static int Item_g_Eraser { get => GetInt(Str.Item_g_Eraser); set => SetString(Str.Item_g_Eraser, value.ToString()); }
+    public static int Item_h_PushLeft { get => GetInt(Str.Item_h_PushLeft); set => SetString(Str.Item_h_PushLeft, value.ToString()); }
+    public static int Item_i_PushUp { get => GetInt(Str.Item_i_PushUp); set => SetString(Str.Item_i_PushUp, value.ToString()); }
+
+    public static string ItemSlot0 { get => GetString(Str.ItemSlot0); set => SetString(Str.ItemSlot0, value); }
+    public static string ItemSlot1 { get => GetString(Str.ItemSlot1); set => SetString(Str.ItemSlot1, value); }
+    public static string ItemSlot2 { get => GetString(Str.ItemSlot2); set => SetString(Str.ItemSlot2, value); }
+    public static string ItemSlot3 { get => GetString(Str.ItemSlot3); set => SetString(Str.ItemSlot3, value); }
+    public static string ItemSlot4 { get => GetString(Str.ItemSlot4); set => SetString(Str.ItemSlot4, value); }
+    public static string ItemSlot5 { get => GetString(Str.ItemSlot5); set => SetString(Str.ItemSlot5, value); }
+    public static string ItemSlot6 { get => GetString(Str.ItemSlot6); set => SetString(Str.ItemSlot6, value); }
+    public static string ItemSlot7 { get => GetString(Str.ItemSlot7); set => SetString(Str.ItemSlot7, value); }
+    #endregion
+    public static string ToString_Score()
+    {
+        return $"{Str.MyBestScore} : {MyBestScore} | {Str.PlayerTotalScore}: {PlayerTotalScore} | {Str.NowScore}: {NowScore}";
+    }
+
+    public static new string ToString()
+    {
+        return $"{Str.NowScore} : {NowScore}\n" +
+            $"{Str.MyBestScore} : {MyBestScore}\n" +
+            $"{Str.PlayerTotalScore} : {PlayerTotalScore}\n\n" +
+
+            $"{Str.Item_a_Mushroom} : {Item_a_Mushroom}\n" +
+            $"{Str.Item_b_Wandoo} : {Item_b_Wandoo}\n" +
+            $"{Str.Item_c_Reset} : {Item_c_Reset}\n" +
+            $"{Str.Item_d_SwitchRows} : {Item_d_SwitchRows}\n" +
+            $"{Str.Item_e_SwitchColumns} : {Item_e_SwitchColumns}\n" +
+            $"{Str.Item_f_Bumb} : {Item_f_Bumb}\n" +
+            $"{Str.Item_g_Eraser} : {Item_g_Eraser}\n" +
+            $"{Str.Item_h_PushLeft} : {Item_h_PushLeft}\n\n" +
+            $"{Str.Item_i_PushUp} : {Item_i_PushUp}\n\n" +
+
+            $"{Str.ItemSlot0} : {ItemSlot0}\n" +
+            $"{Str.ItemSlot1} : {ItemSlot1}\n" +
+            $"{Str.ItemSlot2} : {ItemSlot2}\n" +
+            $"{Str.ItemSlot3} : {ItemSlot3}\n" +
+            $"{Str.ItemSlot4} : {ItemSlot4}\n" +
+            $"{Str.ItemSlot5} : {ItemSlot5}\n" +
+            $"{Str.ItemSlot6} : {ItemSlot6}\n" +
+            $"{Str.ItemSlot7} : {ItemSlot7}";
+    }
 
     private void Awake()
     {
-        if (Instance == null)
-        {
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else Destroy(gameObject);
-
-        Data = new Data(0, 0, 0);
-        //  Btn_save.onClick.AddListener(SaveData);
-        filePath = Application.persistentDataPath + "/gamedata.dat";
-        LoadData();
-
-
+        NowScore = 0;
     }
     private void Start()
     {
-        // test data
-        PlayerPrefs.DeleteAll();
-        SetData();
+        //// test data
+       //  PlayerPrefs.DeleteAll();
+       //  SetTestData_Ecrypt(); 
     }
-    private void SetData()
+    public static void Save()
     {
-        Util.AddOrChangeDictinaryValue(Data.ItemDic, "Item_a_Mushroom", 9999);
-        Util.AddOrChangeDictinaryValue(Data.ItemDic, "Item_b_Wandoo", 9999);
-        Util.AddOrChangeDictinaryValue(Data.ItemDic, "Item_c_Reset", 9999);
-        Util.AddOrChangeDictinaryValue(Data.ItemDic, "Item_d_SwitchRows", 9999);
-        Util.AddOrChangeDictinaryValue(Data.ItemDic, "Item_e_SwitchColumns", 9999);
-        Util.AddOrChangeDictinaryValue(Data.ItemDic, "Item_f_Bumb", 9999);
-        Util.AddOrChangeDictinaryValue(Data.ItemDic, "Item_g_Eraser", 9999);
-        Util.AddOrChangeDictinaryValue(Data.ItemDic, "Item_h_PushLeft", 9999);
-        Util.AddOrChangeDictinaryValue(Data.ItemDic, "Item_i_PushUp", 9999);
-
-        Util.AddOrChangeDictinaryValue(Data.ItemPosDic, "ItemSlot0", "Item_c_Reset");
-        Util.AddOrChangeDictinaryValue(Data.ItemPosDic, "ItemSlot1", "Item_a_Mushroom");
-        Util.AddOrChangeDictinaryValue(Data.ItemPosDic, "ItemSlot2", "Item_f_Bumb");
-        Util.AddOrChangeDictinaryValue(Data.ItemPosDic, "ItemSlot3", "Item_g_Eraser");
-        Util.AddOrChangeDictinaryValue(Data.ItemPosDic, "ItemSlot4", "Item_h_PushLeft");
-        Util.AddOrChangeDictinaryValue(Data.ItemPosDic, "ItemSlot5", "Item_i_PushUp");
-        Util.AddOrChangeDictinaryValue(Data.ItemPosDic, "ItemSlot6", "Item_d_SwitchRows");
-        Util.AddOrChangeDictinaryValue(Data.ItemPosDic, "ItemSlot7", "Item_e_SwitchColumns");
-        SaveData();
-
-        //PlayerPrefs.SetInt("Item_a_Mushroom", 9999);
-        //PlayerPrefs.SetInt("Item_b_Wandoo", 9999);
-        //PlayerPrefs.SetInt("Item_c_Reset", 9999);
-        //PlayerPrefs.SetInt("Item_d_SwitchRows", 9999);
-        //PlayerPrefs.SetInt("Item_e_SwitchColumns", 9999);
-        //PlayerPrefs.SetInt("Item_f_Bumb", 9999);
-        //PlayerPrefs.SetInt("Item_g_Eraser", 9999);
-        //PlayerPrefs.SetInt("Item_h_PushLeft", 9999);
-        //PlayerPrefs.SetInt("Item_i_PushUp", 9999);
-        //PlayerPrefs.Save();
-
-        //// Player가 Slot에 Item 지정
-        //PlayerPrefs.SetString("ItemSlot0", "Item_c_Reset");
-        //PlayerPrefs.SetString("ItemSlot1", "Item_a_Mushroom");
-        ////PlayerPrefs.SetString("ItemSlot3", "Item_d_SwitchRows");
-        ////PlayerPrefs.SetString("ItemSlot4", "Item_e_SwitchColumns");
-        //PlayerPrefs.SetString("ItemSlot2", "Item_f_Bumb");
-        //PlayerPrefs.SetString("ItemSlot3", "Item_g_Eraser");
-        //PlayerPrefs.SetString("ItemSlot4", "Item_h_PushLeft");
-        //PlayerPrefs.SetString("ItemSlot5", "Item_i_PushUp");
-        //PlayerPrefs.SetString("ItemSlot6", "Item_d_SwitchRows");
-        //PlayerPrefs.SetString("ItemSlot7", "Item_e_SwitchColumns");
-        //PlayerPrefs.Save();
+        PlayerPrefs.Save();
     }
-    // 데이터 저장
-    // 데이터 불러오기
-    public void LoadData()
+    private void SetTestData_Ecrypt()
     {
-        if (File.Exists(filePath))
-        {
-            string encryptedData = File.ReadAllText(filePath);
-            string jsonData = Decrypt(encryptedData, encryptionKey);
+        NowScore = 0;
+        MyBestScore = 0;
+        PlayerTotalScore = 0;
 
-            Data = JsonUtility.FromJson<Data>(jsonData);
-            Data.NowScore = 0;
-        }
-        else
-        {
-            SaveData();
-            LoadData();
-        }
+        Item_a_Mushroom = 99;
+        Item_b_Wandoo = 99;
+        Item_c_Reset = 99;
+        Item_d_SwitchRows = 99;
+        Item_e_SwitchColumns = 99;
+        Item_f_Bumb = 99;
+        Item_g_Eraser = 99;
+        Item_h_PushLeft = 99;
+        Item_i_PushUp = 99;
+
+        // Player가 Slot에 Item 지정
+        ItemSlot0 = Str.Item_c_Reset;
+        ItemSlot1 = Str.Item_a_Mushroom;
+        ItemSlot2 = Str.Item_f_Bumb;
+        ItemSlot3 = Str.Item_g_Eraser;
+        ItemSlot4 = Str.Item_h_PushLeft;
+        ItemSlot5 = Str.Item_i_PushUp;
+        ItemSlot6 = Str.Item_d_SwitchRows;
+        ItemSlot7 = Str.Item_e_SwitchColumns;
     }
-    public static void SaveData()
+    public static void SetString(string key, string value)
     {
-        string jsonData = JsonUtility.ToJson(Data, true);
-        string encryptedData = Encrypt(jsonData, encryptionKey);
-
-        if (!File.Exists(filePath))
-        {
-            File.Create(filePath).Close(); // 파일 생성 후 닫기
-        }
-
-        File.WriteAllText(filePath, encryptedData);
+        PlayerPrefs.SetString(key, Encrypt(value, EncryptionKey));
+        PlayerPrefs.Save();
+    }
+    public static string GetString(string key)
+    {
+        return Decrypt(PlayerPrefs.GetString(key), EncryptionKey);
+    }
+    public static int GetInt(string key)
+    {
+        int newInt = 0;
+        int.TryParse(PlayerData.GetString(key), out newInt);
+        return newInt;
     }
 
-    private static string Encrypt(string plainText, string key)
+    public static string Encrypt(string plainText, string key)
     {
         byte[] keyBytes = GetAesKey(key);
         byte[] iv = new byte[16]; // 16바이트 IV 사용 (0으로 채워진 초기화 벡터)
@@ -163,7 +146,7 @@ public class PlayerData : MonoBehaviour
         }
     }
 
-    private string Decrypt(string cipherText, string key)
+    public static string Decrypt(string cipherText, string key)
     {
         byte[] keyBytes = GetAesKey(key);
         byte[] iv = new byte[16]; // 16바이트 IV 사용 (0으로 채워진 초기화 벡터)
