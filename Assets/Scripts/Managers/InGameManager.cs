@@ -42,6 +42,10 @@ public class InGameManager : MonoBehaviour
     {
         UpdatePlayerData(false);
     }
+    private void OnDisable()
+    {
+        UpdatePlayerData(false);
+    }
     private void GameOverProcess_Timer()
     {
         if (_puzzlePlaceManager.SetPuzzlesActive() > 0) return;

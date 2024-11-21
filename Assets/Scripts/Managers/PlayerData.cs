@@ -11,39 +11,68 @@ public class PlayerData : MonoBehaviour
     //  public static int NowScore = 0;
     public static readonly string EncryptionKey = "BBUNIKONG_PUZZLEKONG_0512";
     #region Properties
-    public static int NowScore { get => GetInt(Str.NowScore); set => SetString(Str.NowScore, value.ToString()); }
-    public static int PlayerTotalScore { get => GetInt(Str.PlayerTotalScore); set => SetString(Str.PlayerTotalScore, value.ToString()); }
-    public static int MyBestScore { get => GetInt(Str.MyBestScore); set => SetString(Str.MyBestScore, value.ToString()); }
+    public static int NowScore { get => GetInt(Str.NowScore); set => SetStr(Str.NowScore, value.ToString()); }
+    public static int PlayerTotalScore
+    {
+        get
+        {
+            if (StageManager.Stage.Equals(Str.eStage.Item)) return GetInt(Str.PlayerTotalScore_Item);
+            else return GetInt(Str.PlayerTotalScore_Classic);
+        }
+        set
+        {
+            if (StageManager.Stage.Equals(Str.eStage.Item)) SetStr(Str.PlayerTotalScore_Item, value.ToString());
+            else SetStr(Str.PlayerTotalScore_Classic, value.ToString());
+        }
+    }
+    public static int MyBestScore
+    {
+        get
+        {
+            if (StageManager.Stage.Equals(Str.eStage.Item)) return GetInt(Str.MyBestScore_Item);
+            else return GetInt(Str.MyBestScore_Classic);
+        }
+        set
+        {
+            if (StageManager.Stage.Equals(Str.eStage.Item)) SetStr(Str.MyBestScore_Item, value.ToString());
+            else SetStr(Str.MyBestScore_Classic, value.ToString());
+        }
+    }
 
-    public static int Item_a_Mushroom { get => GetInt(Str.Item_a_Mushroom); set => SetString(Str.Item_a_Mushroom, value.ToString()); }
-    public static int Item_b_Wandoo { get => GetInt(Str.Item_b_Wandoo); set => SetString(Str.Item_b_Wandoo, value.ToString()); }
-    public static int Item_c_Reset { get => GetInt(Str.Item_c_Reset); set => SetString(Str.Item_c_Reset, value.ToString()); }
-    public static int Item_d_SwitchRows { get => GetInt(Str.Item_d_SwitchRows); set => SetString(Str.Item_d_SwitchRows, value.ToString()); }
-    public static int Item_e_SwitchColumns { get => GetInt(Str.Item_e_SwitchColumns); set => SetString(Str.Item_e_SwitchColumns, value.ToString()); }
-    public static int Item_f_Bumb { get => GetInt(Str.Item_f_Bumb); set => SetString(Str.Item_f_Bumb, value.ToString()); }
-    public static int Item_g_Eraser { get => GetInt(Str.Item_g_Eraser); set => SetString(Str.Item_g_Eraser, value.ToString()); }
-    public static int Item_h_PushLeft { get => GetInt(Str.Item_h_PushLeft); set => SetString(Str.Item_h_PushLeft, value.ToString()); }
-    public static int Item_i_PushUp { get => GetInt(Str.Item_i_PushUp); set => SetString(Str.Item_i_PushUp, value.ToString()); }
+    public static int Item_a_Mushroom { get => GetInt(Str.Item_a_Mushroom); set => SetStr(Str.Item_a_Mushroom, value.ToString()); }
+    public static int Item_b_Wandoo { get => GetInt(Str.Item_b_Wandoo); set => SetStr(Str.Item_b_Wandoo, value.ToString()); }
+    public static int Item_c_Reset { get => GetInt(Str.Item_c_Reset); set => SetStr(Str.Item_c_Reset, value.ToString()); }
+    public static int Item_d_SwitchRows { get => GetInt(Str.Item_d_SwitchRows); set => SetStr(Str.Item_d_SwitchRows, value.ToString()); }
+    public static int Item_e_SwitchColumns { get => GetInt(Str.Item_e_SwitchColumns); set => SetStr(Str.Item_e_SwitchColumns, value.ToString()); }
+    public static int Item_f_Bumb { get => GetInt(Str.Item_f_Bumb); set => SetStr(Str.Item_f_Bumb, value.ToString()); }
+    public static int Item_g_Eraser { get => GetInt(Str.Item_g_Eraser); set => SetStr(Str.Item_g_Eraser, value.ToString()); }
+    public static int Item_h_PushLeft { get => GetInt(Str.Item_h_PushLeft); set => SetStr(Str.Item_h_PushLeft, value.ToString()); }
+    public static int Item_i_PushUp { get => GetInt(Str.Item_i_PushUp); set => SetStr(Str.Item_i_PushUp, value.ToString()); }
 
-    public static string ItemSlot0 { get => GetString(Str.ItemSlot0); set => SetString(Str.ItemSlot0, value); }
-    public static string ItemSlot1 { get => GetString(Str.ItemSlot1); set => SetString(Str.ItemSlot1, value); }
-    public static string ItemSlot2 { get => GetString(Str.ItemSlot2); set => SetString(Str.ItemSlot2, value); }
-    public static string ItemSlot3 { get => GetString(Str.ItemSlot3); set => SetString(Str.ItemSlot3, value); }
-    public static string ItemSlot4 { get => GetString(Str.ItemSlot4); set => SetString(Str.ItemSlot4, value); }
-    public static string ItemSlot5 { get => GetString(Str.ItemSlot5); set => SetString(Str.ItemSlot5, value); }
-    public static string ItemSlot6 { get => GetString(Str.ItemSlot6); set => SetString(Str.ItemSlot6, value); }
-    public static string ItemSlot7 { get => GetString(Str.ItemSlot7); set => SetString(Str.ItemSlot7, value); }
+    public static string ItemSlot0 { get => GetStr(Str.ItemSlot0); set => SetStr(Str.ItemSlot0, value); }
+    public static string ItemSlot1 { get => GetStr(Str.ItemSlot1); set => SetStr(Str.ItemSlot1, value); }
+    public static string ItemSlot2 { get => GetStr(Str.ItemSlot2); set => SetStr(Str.ItemSlot2, value); }
+    public static string ItemSlot3 { get => GetStr(Str.ItemSlot3); set => SetStr(Str.ItemSlot3, value); }
+    public static string ItemSlot4 { get => GetStr(Str.ItemSlot4); set => SetStr(Str.ItemSlot4, value); }
+    public static string ItemSlot5 { get => GetStr(Str.ItemSlot5); set => SetStr(Str.ItemSlot5, value); }
+    public static string ItemSlot6 { get => GetStr(Str.ItemSlot6); set => SetStr(Str.ItemSlot6, value); }
+    public static string ItemSlot7 { get => GetStr(Str.ItemSlot7); set => SetStr(Str.ItemSlot7, value); }
     #endregion
     public static string ToString_Score()
     {
-        return $"{Str.MyBestScore} : {MyBestScore} | {Str.PlayerTotalScore}: {PlayerTotalScore} | {Str.NowScore}: {NowScore}";
+        return $" {Str.NowScore}: {NowScore}\n" +
+            $"{Str.MyBestScore_Item} : {GetStr(Str.MyBestScore_Item)} | {Str.PlayerTotalScore_Item}: {GetStr(Str.PlayerTotalScore_Item)}\n" +
+            $"{Str.MyBestScore_Classic} : {GetStr(Str.MyBestScore_Classic)} | {Str.PlayerTotalScore_Classic}: {GetStr(Str.PlayerTotalScore_Classic)}";
     }
 
     public static new string ToString()
     {
         return $"{Str.NowScore} : {NowScore}\n" +
-            $"{Str.MyBestScore} : {MyBestScore}\n" +
-            $"{Str.PlayerTotalScore} : {PlayerTotalScore}\n\n" +
+            $"{Str.MyBestScore_Item} : {GetStr(Str.MyBestScore_Item)}\n" +
+            $"{Str.PlayerTotalScore_Item} : {GetStr(Str.PlayerTotalScore_Item)}\n" +
+
+            $"{Str.MyBestScore_Classic} : {GetStr(Str.MyBestScore_Classic)}\n" +
+            $"{Str.PlayerTotalScore_Classic} : {GetStr(Str.PlayerTotalScore_Classic)}\n\n" +
 
             $"{Str.Item_a_Mushroom} : {Item_a_Mushroom}\n" +
             $"{Str.Item_b_Wandoo} : {Item_b_Wandoo}\n" +
@@ -72,8 +101,8 @@ public class PlayerData : MonoBehaviour
     private void Start()
     {
         //// test data
-       //  PlayerPrefs.DeleteAll();
-       //  SetTestData_Ecrypt(); 
+        //PlayerPrefs.DeleteAll();
+        //SetTestData_Ecrypt();
     }
     public static void Save()
     {
@@ -82,8 +111,11 @@ public class PlayerData : MonoBehaviour
     private void SetTestData_Ecrypt()
     {
         NowScore = 0;
-        MyBestScore = 0;
-        PlayerTotalScore = 0;
+        SetStr(Str.MyBestScore_Item, 0.ToString());
+        SetStr(Str.MyBestScore_Classic, 0.ToString());
+
+        SetStr(Str.PlayerTotalScore_Item, 0.ToString());
+        SetStr(Str.PlayerTotalScore_Classic, 0.ToString());
 
         Item_a_Mushroom = 99;
         Item_b_Wandoo = 99;
@@ -105,19 +137,19 @@ public class PlayerData : MonoBehaviour
         ItemSlot6 = Str.Item_d_SwitchRows;
         ItemSlot7 = Str.Item_e_SwitchColumns;
     }
-    public static void SetString(string key, string value)
+    public static void SetStr(string key, string value)
     {
         PlayerPrefs.SetString(key, Encrypt(value, EncryptionKey));
         PlayerPrefs.Save();
     }
-    public static string GetString(string key)
+    public static string GetStr(string key)
     {
         return Decrypt(PlayerPrefs.GetString(key), EncryptionKey);
     }
     public static int GetInt(string key)
     {
         int newInt = 0;
-        int.TryParse(PlayerData.GetString(key), out newInt);
+        int.TryParse(PlayerData.GetStr(key), out newInt);
         return newInt;
     }
 

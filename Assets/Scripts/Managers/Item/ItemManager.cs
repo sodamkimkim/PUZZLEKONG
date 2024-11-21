@@ -42,7 +42,7 @@ public class ItemManager : MonoBehaviour
     private void InstantiateItem()
     {
         for (int i = 0; i < _itemSlotPosArr.Length; i++)
-            InstantiateItemInItemSlot(i, PlayerData.GetString($"ItemSlot{i}"));
+            InstantiateItemInItemSlot(i, PlayerData.GetStr($"ItemSlot{i}"));
     }
     private void InstantiateItemInItemSlot(int slotIdx, string itemStr)
     {
@@ -103,8 +103,8 @@ public class ItemManager : MonoBehaviour
         {
 
             // 아이템 갯수 반영, 남아있으면 돌려보내기
-            PlayerData.SetString(dropItem.name, (PlayerData.GetInt(dropItem.name) - 1).ToString());
-            Debug.Log(dropItem.name + " -- " + PlayerData.GetString(dropItem.name));
+            PlayerData.SetStr(dropItem.name, (PlayerData.GetInt(dropItem.name) - 1).ToString());
+            Debug.Log(dropItem.name + " -- " + PlayerData.GetStr(dropItem.name));
             if (PlayerData.GetInt(dropItem.name) == 0)
                 DestroyImmediate(dropItem.gameObject);
             else

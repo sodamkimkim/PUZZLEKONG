@@ -29,8 +29,10 @@ public class Str
 
     #region PlayerData
     public static string NowScore = "NowScore";
-    public static string MyBestScore = "MyBestScore";
-    public static string PlayerTotalScore = "PlayerTotalScore";
+    public static string MyBestScore_Item = "MyBestScore_Item";
+    public static string PlayerTotalScore_Item = "PlayerTotalScore_Item";
+    public static string MyBestScore_Classic = "MyBestScore_Classic";
+    public static string PlayerTotalScore_Classic = "PlayerTotalScore_Classic";
 
     public static string Item_a_Mushroom = "Item_a_Mushroom";
     public static string Item_b_Wandoo = "Item_b_Wandoo";

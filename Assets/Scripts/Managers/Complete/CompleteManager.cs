@@ -104,7 +104,7 @@ public class CompleteManager : MonoBehaviour
 
                 score *= _totalComboCnt;
             }
-            _uiManager.SetTMPText(_uiManager.UITMP_TempText_Small, $"+ {score}", Color.red, true); 
+            _uiManager.SetTMPText(_uiManager.UITMP_TempText_Small, $"+ {score}", Color.red, true);
             UpdateData(score);
         }
         else
