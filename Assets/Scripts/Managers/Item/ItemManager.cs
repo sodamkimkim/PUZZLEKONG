@@ -25,6 +25,11 @@ public class ItemManager : MonoBehaviour
 
     public delegate LazyStart LazyStart();
     public delegate void SetTouchEndItemReturn();
+
+    private void Awake()
+    {
+        _itemSlotGo.SetActive(false);
+    }
     private void Start()
     {
         if (StageManager.Stage != Str.eStage.Item) return;
@@ -41,6 +46,8 @@ public class ItemManager : MonoBehaviour
     }
     private void InstantiateItem()
     {
+        _itemSlotGo.SetActive(true);
+
         for (int i = 0; i < _itemSlotPosArr.Length; i++)
             InstantiateItemInItemSlot(i, PlayerData.GetStr($"ItemSlot{i}"));
     }
