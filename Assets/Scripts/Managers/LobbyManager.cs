@@ -28,13 +28,12 @@ public class LobbyManager : MonoBehaviour
 
     private void Awake()
     {
-      DontDestroyOnLoad(_canvasBottomBtns);
         SetActiveAllMenuGos(false);
         _canvasBottomBtns.SetActive(false);
 
         _btnHome.onClick.AddListener(SetActiveTrue_LobbyGo);
-        _btnStore.onClick.AddListener(SetActiveTrue_StoreGo);
-        _btnMy.onClick.AddListener(SetActiveTrue_MyGo);
+        _btnStore.onClick.AddListener(() => SetActiveTrue(_storeGo));
+        _btnMy.onClick.AddListener(() => SetActiveTrue(_myGo));
     }
     private void Start()
     {
@@ -62,20 +61,12 @@ public class LobbyManager : MonoBehaviour
     }
     private void SetActiveTrue_LobbyGo()
     {
-        SetActiveAllMenuGos(false);
-        _canvasBottomBtns.SetActive(true);
-        _homeGo.SetActive(true);
+        SetActiveTrue(_homeGo);
     }
-    private void SetActiveTrue_StoreGo()
+    private void SetActiveTrue(GameObject go)
     {
         SetActiveAllMenuGos(false);
         _canvasBottomBtns.SetActive(true);
-        _storeGo.SetActive(true);
-    }
-    private void SetActiveTrue_MyGo()
-    {
-        SetActiveAllMenuGos(false);
-        _canvasBottomBtns.SetActive(true);
-        _myGo.SetActive(true);
+        go.SetActive(true);
     }
 } // end of class

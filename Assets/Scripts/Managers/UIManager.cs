@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 public class UIManager : MonoBehaviour
 {
     #region Hidden Private variables
@@ -12,7 +13,6 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private GameObject _uiTMP_TempText_Large_1;
 
-    #region Gameover
     [SerializeField]
     private GameObject _panel_Gameover_Timer;
     [SerializeField]
@@ -21,7 +21,13 @@ public class UIManager : MonoBehaviour
     private GameObject _panel_GameOver;
     [SerializeField]
     private GameObject _uiTMP_TotalScore;
-    #endregion
+
+    [SerializeField]
+    private TextMeshProUGUI _tmp_NowScore = null;
+    [SerializeField]
+    private TextMeshProUGUI _tmp_MyBest = null;
+    [SerializeField]
+    private TextMeshProUGUI _tmp_PlayerTotal = null; 
     #endregion
 
     #region UI_GameOver
@@ -34,16 +40,10 @@ public class UIManager : MonoBehaviour
     #region UI_InGame
     public GameObject UITMP_TempText_Large => _uiTMP_TempText_Large;
     public GameObject UITMP_TempText_Small => _uITMP_TempText_Small;
-    public GameObject UITMP_TempText_Large_1 => _uiTMP_TempText_Large_1;
-    #endregion
-
-    #region UI_Score
-    [SerializeField]
-    public TextMeshProUGUI Tmp_NowScore = null;
-    [SerializeField]
-    public TextMeshProUGUI Tmp_MyBest = null;
-    [SerializeField]
-    public TextMeshProUGUI Tmp_PlayerTotal = null;
+    public GameObject UITMP_TempText_Large_1 => _uiTMP_TempText_Large_1; 
+    public TextMeshProUGUI Tmp_NowScore => _tmp_NowScore;
+    public TextMeshProUGUI Tmp_MyBest => _tmp_MyBest;
+    public TextMeshProUGUI Tmp_PlayerTotal => _tmp_PlayerTotal; 
     #endregion
 
     private void Awake()
@@ -106,5 +106,5 @@ public class UIManager : MonoBehaviour
         yield return new WaitForSeconds(delay);
         if (uiGo.activeSelf == true)
             uiGo.SetActive(false);
-    }
+    } 
 } // end of class

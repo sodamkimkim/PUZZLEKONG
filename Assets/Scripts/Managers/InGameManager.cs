@@ -7,8 +7,6 @@ public class InGameManager : MonoBehaviour
     [SerializeField]
     private UIManager _uiManager = null;
     [SerializeField]
-    private PlayerData _playerDataManager = null;
-    [SerializeField]
     private GridManager _gridManager = null;
     [SerializeField]
     private PuzzleManager _puzzleManager = null;
@@ -45,6 +43,10 @@ public class InGameManager : MonoBehaviour
     private void OnDisable()
     {
         UpdatePlayerData(false);
+    }
+    public   void ReturnToHome()
+    {
+        SceneManager.LoadScene("1.Lobby");
     }
     private void GameOverProcess_Timer()
     {
