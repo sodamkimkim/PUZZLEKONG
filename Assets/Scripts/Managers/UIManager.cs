@@ -36,6 +36,16 @@ public class UIManager : MonoBehaviour
     public GameObject UITMP_TempText_Small => _uITMP_TempText_Small;
     public GameObject UITMP_TempText_Large_1 => _uiTMP_TempText_Large_1;
     #endregion
+
+    #region UI_Score
+    [SerializeField]
+    public TextMeshProUGUI Tmp_NowScore = null;
+    [SerializeField]
+    public TextMeshProUGUI Tmp_MyBest = null;
+    [SerializeField]
+    public TextMeshProUGUI Tmp_PlayerTotal = null;
+    #endregion
+
     private void Awake()
     {
         Panel_GameOver_Timer.SetActive(false);
@@ -43,6 +53,25 @@ public class UIManager : MonoBehaviour
         UITMP_TotalScore.SetActive(false);
         UITMP_TempText_Large.SetActive(false);
         UITMP_TempText_Large_1.SetActive(false);
+    }
+    private void Start()
+    {
+        UpdateHeaderScore();
+    }
+    public void UpdateHeaderScore()
+    {
+        Tmp_NowScore.text = $"SCORE : {PlayerData.NowScore.ToString()}";
+        if (StageManager.Stage == Str.eStage.Item)
+        {
+            Tmp_MyBest.text = $"MYBEST : {PlayerData.GetStr(Str.MyBestScore_Item)}";
+            Tmp_PlayerTotal.text = $"PLAYER TOTAL : {PlayerData.GetStr(Str.PlayerTotalScore_Item)}";
+        }
+        else
+        {
+            Tmp_MyBest.text = $"MYBEST : {PlayerData.GetStr(Str.MyBestScore_Classic)}";
+            Tmp_PlayerTotal.text = $"PLAYER TOTAL : {PlayerData.GetStr(Str.PlayerTotalScore_Classic)}";
+        }
+
     }
     public void GameOver_Timer(string text)
     {

@@ -117,16 +117,16 @@ public class CompleteManager : MonoBehaviour
 
         //BestScore 갱신, UI 호출
         if (PlayerData.NowScore < PlayerData.MyBestScore && PlayerData.NowScore >= PlayerData.MyBestScore - 20)
-            _uiManager.SetTMPText(_uiManager.UITMP_TempText_Large_1, $"Almost Your Best!!", Color.blue, true);
+            _uiManager.SetTMPText(_uiManager.UITMP_TempText_Large_1, $"Almost Your Best", Color.blue, true);
         else if (PlayerData.NowScore == PlayerData.MyBestScore)
-            _uiManager.SetTMPText(_uiManager.UITMP_TempText_Large_1, $"Next time, Your New Best!!", Color.blue, true);
+            _uiManager.SetTMPText(_uiManager.UITMP_TempText_Large_1, $"Next time, Your New Best", Color.blue, true);
         else if (PlayerData.NowScore > PlayerData.MyBestScore)
         {
             PlayerData.MyBestScore = PlayerData.NowScore;
-            _uiManager.SetTMPText(_uiManager.UITMP_TempText_Large_1, $"!!!New Best!!!", Color.red, true);
+            _uiManager.SetTMPText(_uiManager.UITMP_TempText_Large_1, $"New Best", Color.red, true);
         }
 
-
+        _uiManager.UpdateHeaderScore();
         Debug.Log($"Score : {score} | {PlayerData.ToString_Score()}");
     }
 
