@@ -21,6 +21,7 @@ public class StageManager : MonoBehaviour
     public static StageManager Instance = null;
     private void Awake()
     {
+      //  Stage = Str.eStage.Item;
         if (Instance == null)
         {
             Instance = this;

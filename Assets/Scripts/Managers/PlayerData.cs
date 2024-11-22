@@ -102,7 +102,7 @@ public class PlayerData : MonoBehaviour
     {
         //// test data
         //PlayerPrefs.DeleteAll();
-        //SetTestData_Ecrypt();
+         SetTestData_Ecrypt();
     }
     public static void Save()
     {
@@ -120,8 +120,8 @@ public class PlayerData : MonoBehaviour
         Item_a_Mushroom = 99;
         Item_b_Wandoo = 99;
         Item_c_Reset = 99;
-        Item_d_SwitchRows = 99;
-        Item_e_SwitchColumns = 99;
+       // Item_d_SwitchRows = 99;
+        //Item_e_SwitchColumns = 99;
         Item_f_Bumb = 99;
         Item_g_Eraser = 99;
         Item_h_PushLeft = 99;
@@ -134,8 +134,8 @@ public class PlayerData : MonoBehaviour
         ItemSlot3 = Str.Item_g_Eraser;
         ItemSlot4 = Str.Item_h_PushLeft;
         ItemSlot5 = Str.Item_i_PushUp;
-        ItemSlot6 = Str.Item_d_SwitchRows;
-        ItemSlot7 = Str.Item_e_SwitchColumns;
+        ItemSlot6 = Str.Item_b_Wandoo;
+      //  ItemSlot7 = Str.Item_e_SwitchColumns;
     }
     public static void SetStr(string key, string value)
     {
