@@ -13,13 +13,13 @@ public class ThemaManager : MonoBehaviour
     /// 4. Puzzle»ö º¯°æ
     /// </summary>
     /// 
-    //   public static Str.eTheme _eTheme = Enum.eTheme.Grey;
-    public static Str.eTheme _eTheme = Str.eTheme.Green;
-    //    private static Str.eTheme _eTheme = Str.eTheme.LightBlue;
-    // public static Str.eTheme _eTheme = Enum.eTheme.LightPurple;
-    // public static Str.eTheme _eTheme = Enum.eTheme.Pink;
+  // public static Str.eTheme _eTheme = Str.eTheme.Grey;
+  //  public static Str.eTheme _eTheme = Str.eTheme.Green;
+   //    private static Str.eTheme _eTheme = Str.eTheme.LightBlue;
+  //   public static Str.eTheme _eTheme = Str.eTheme.LightPurple;
+    //public static Str.eTheme _eTheme = Str.eTheme.Pink;
     //
-    //public static  Str.eTheme _eTheme = Enum.eTheme.Yellow;
+     public static  Str.eTheme _eTheme = Str.eTheme.Yellow;
     // public static Str.eTheme _eTheme = Enum.eTheme.Mint;
     public static Str.eTheme ETheme { get => _eTheme; set => _eTheme = value; }
 
