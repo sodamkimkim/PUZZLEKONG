@@ -13,15 +13,15 @@ public class ThemaManager : MonoBehaviour
     /// 4. Puzzle»ö º¯°æ
     /// </summary>
     /// 
-    //   public static Enum.eTheme ETheme = Enum.eTheme.Grey;
-    //  public static Enum.eTheme ETheme = Enum.eTheme.Green;
-    private static Str.eTheme _eTheme = Str.eTheme.LightBlue;
-    public static Str.eTheme ETheme { get=> _eTheme; set=> _eTheme = value; }
-    // public static Enum.eTheme ETheme = Enum.eTheme.LightPurple;
-    // public static Enum.eTheme ETheme = Enum.eTheme.Pink;
+    //   public static Str.eTheme _eTheme = Enum.eTheme.Grey;
+    public static Str.eTheme _eTheme = Str.eTheme.Green;
+    //    private static Str.eTheme _eTheme = Str.eTheme.LightBlue;
+    // public static Str.eTheme _eTheme = Enum.eTheme.LightPurple;
+    // public static Str.eTheme _eTheme = Enum.eTheme.Pink;
     //
-    //public static Enum.eTheme ETheme = Enum.eTheme.Yellow;
-    // public static Enum.eTheme ETheme = Enum.eTheme.Mint;
+    //public static  Str.eTheme _eTheme = Enum.eTheme.Yellow;
+    // public static Str.eTheme _eTheme = Enum.eTheme.Mint;
+    public static Str.eTheme ETheme { get => _eTheme; set => _eTheme = value; }
 
     public static Str.eEffect_Complete Eeffect_Hori = Str.eEffect_Complete.C1_RoundStar2;
     public static Str.eEffect_Complete Eeffect_Verti = Str.eEffect_Complete.C1_Spark1;
