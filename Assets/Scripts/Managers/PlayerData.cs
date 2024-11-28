@@ -102,7 +102,8 @@ public class PlayerData : MonoBehaviour
     {
         //// test data
         //PlayerPrefs.DeleteAll();
-         SetTestData_Ecrypt();
+        NowScore = 0;
+        SetTestData_Ecrypt();
     }
     public static void Save()
     {
@@ -111,11 +112,11 @@ public class PlayerData : MonoBehaviour
     private void SetTestData_Ecrypt()
     {
         NowScore = 0;
-        SetStr(Str.MyBestScore_Item, 0.ToString());
-        SetStr(Str.MyBestScore_Classic, 0.ToString());
+        SetStr(Str.MyBestScore_Item, 9990.ToString());
+        SetStr(Str.MyBestScore_Classic, 9990.ToString());
 
-        SetStr(Str.PlayerTotalScore_Item, 0.ToString());
-        SetStr(Str.PlayerTotalScore_Classic, 0.ToString());
+        SetStr(Str.PlayerTotalScore_Item, 9990.ToString());
+        SetStr(Str.PlayerTotalScore_Classic, 9990.ToString());
 
         Item_a_Mushroom = 99;
         Item_b_Wandoo = 99;
