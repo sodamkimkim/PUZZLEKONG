@@ -10,7 +10,8 @@ public class PanelAndBtns : MonoBehaviour
     private Button[] _btnArr = null;
     [SerializeField]
     private GameObject[] _panelArr = null;
-
+    [SerializeField]
+    private Scrollbar[] _barArr = null;
     private void OnEnable()
     {
         for (int i = 0; i < _btnArr.Length; i++)
@@ -32,5 +33,6 @@ public class PanelAndBtns : MonoBehaviour
         _btnArr[idx].GetComponentInChildren<TextMeshProUGUI>().color = Color.white;
         _btnArr[idx].interactable = false;
         _panelArr[idx].SetActive(true);
+        _barArr[idx].value = 1;
     }
 } // end of class

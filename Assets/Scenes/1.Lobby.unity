@@ -4795,6 +4795,10 @@ MonoBehaviour:
   - {fileID: 1236870376}
   - {fileID: 681580769}
   - {fileID: 2102947138}
+  _barArr:
+  - {fileID: 1223159321}
+  - {fileID: 379226473}
+  - {fileID: 1086999424}
 --- !u!1 &619399325
 GameObject:
   m_ObjectHideFlags: 0
