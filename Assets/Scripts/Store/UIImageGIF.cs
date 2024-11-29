@@ -27,12 +27,16 @@ public class UIImageGIF : MonoBehaviour
     }
     private void OnEnable()
     {
+        if (_image == null) return;
+
         _currentSpriteIdx = 0;
         _spriteCurrentDelay = _spriteDelay;
         _image.sprite = _mainSprite;
     }
     private void Update()
     {
+        if (_image == null) return;
+
         if (!_isMoving)
         {
             _image.sprite = _mainSprite;

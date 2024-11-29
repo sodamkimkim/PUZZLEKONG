@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Store_UI_Effect : MonoBehaviour
+public class StoreUI : MonoBehaviour
 {
     private Button _button;
     private UIImageGIF uiImageGIF;
@@ -15,8 +15,12 @@ public class Store_UI_Effect : MonoBehaviour
     }
     private void UIBtnClick()
     {
-        uiImageGIF.IsMoving = true;
-        Invoke(nameof(SetGIFFalse), 3f);
+        if (uiImageGIF != null)
+        {
+            uiImageGIF.IsMoving = true;
+            CancelInvoke(nameof(SetGIFFalse));
+            Invoke(nameof(SetGIFFalse), 3f);
+        }
     }
     private void SetGIFFalse()
     {
