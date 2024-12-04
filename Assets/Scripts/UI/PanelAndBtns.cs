@@ -6,12 +6,17 @@ using UnityEngine.UI;
 
 public class PanelAndBtns : MonoBehaviour
 {
+    public StoreManager StoreManager = null;
     [SerializeField]
     private Button[] _btnArr = null;
     [SerializeField]
     private GameObject[] _panelArr = null;
     [SerializeField]
     private Scrollbar[] _barArr = null;
+    private void Awake()
+    {
+        StoreManager = this.GetComponentInParent<StoreManager>();
+    }
     private void OnEnable()
     {
         for (int i = 0; i < _btnArr.Length; i++)
@@ -30,6 +35,9 @@ public class PanelAndBtns : MonoBehaviour
             _btnArr[i].interactable = true;
             _panelArr[i].SetActive(false);
         }
+        if (StoreManager.ItemDetailUIGo.activeSelf == true)
+            StoreManager.CloseItemDetail();
+
         _btnArr[idx].GetComponentInChildren<TextMeshProUGUI>().color = Color.white;
         _btnArr[idx].interactable = false;
         _panelArr[idx].SetActive(true);

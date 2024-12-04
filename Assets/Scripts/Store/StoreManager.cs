@@ -8,7 +8,7 @@ using UnityEngine.UI;
 public class StoreManager : MonoBehaviour
 {
     [SerializeField]
-    private GameObject _itemDetailUIGo = null;
+    public GameObject ItemDetailUIGo = null;
     [SerializeField]
     private UIImageGIF _itemDetailGIF;
     [SerializeField]
@@ -26,7 +26,6 @@ public class StoreManager : MonoBehaviour
 
         if (_itemDetailGIF.IsItemDetail&& gifImage.ItemDetailSpriteArr.Length!=0)
         {
-            Debug.Log("?");
             _itemDetailGIF.MainSprite = gifImage.ItemDetailMainSprite;
         }
         else
@@ -59,11 +58,11 @@ public class StoreManager : MonoBehaviour
             _itemDetailInputField.gameObject.SetActive(false);
         }
 
-        _itemDetailUIGo.SetActive(true);
+        ItemDetailUIGo.SetActive(true);
     }
     public void CloseItemDetail()
     {
-        _itemDetailUIGo.SetActive(false);
+        ItemDetailUIGo.SetActive(false);
 
         _itemDetailGIF.Image.sprite = null;
         _itemDetailGIF.MainSprite = null;

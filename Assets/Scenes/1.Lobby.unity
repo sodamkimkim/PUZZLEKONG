@@ -6885,7 +6885,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96f500d0f9142bd4d9345873e669a3d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _itemDetailUIGo: {fileID: 1308218371}
+  ItemDetailUIGo: {fileID: 1308218371}
   _itemDetailGIF: {fileID: 48535216}
   _itemDetail_Name: {fileID: 1265549581}
   _itemDetailInputField: {fileID: 1277825965}
@@ -9036,6 +9036,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78634903e3c3a8640930115ea50a4732, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  StoreManager: {fileID: 0}
   _btnArr:
   - {fileID: 1028640754}
   - {fileID: 878798470}
@@ -18081,8 +18082,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2017194431}
   m_HandleRect: {fileID: 2017194430}
   m_Direction: 2
-  m_Value: 1.0000004
-  m_Size: 0.78555554
+  m_Value: 1
+  m_Size: 0.7855555
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
