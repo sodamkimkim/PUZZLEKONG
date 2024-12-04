@@ -26,7 +26,8 @@ public class Str
         Small, Big
     }
     public enum eStage { Classic, Item, Event }
-    public enum eItemCategory { Normal, HeartEvent}
+    public enum eItemUITag {UI_Theme, UI_Effect, UI_Item }
+    public enum eItemUse { Normal, HeartEvent}
     #region PlayerData
     public static string NowScore = "NowScore";
     public static string MyBestScore_Item = "MyBestScore_Item";

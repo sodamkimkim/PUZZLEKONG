@@ -14,16 +14,16 @@ public class StoreUI : MonoBehaviour
     [SerializeField]
     private string _itemInfoStr = string.Empty; 
     [SerializeField]
-    public Str.eItemCategory ItemCategory = Str.eItemCategory.Normal;
+    public Str.eItemUse ItemCategory = Str.eItemUse.Normal;
     private void Awake()
     {
         StoreManager = this.GetComponentInParent<StoreManager>();
         _button = GetComponent<Button>();
-        _button.onClick.AddListener(() => ClickUIBtn());
+        _button.onClick.AddListener(() => OnClickItemUIBtn());
         uiImageGIF = this.GetComponentInChildren<UIImageGIF>();
         _itemTMPArr = this.GetComponentsInChildren<TextMeshProUGUI>();
     }
-    private void ClickUIBtn()
+    private void OnClickItemUIBtn()
     {
         if (uiImageGIF != null && uiImageGIF.UseGIF)
         {
@@ -33,11 +33,12 @@ public class StoreUI : MonoBehaviour
         }
         if (StoreManager != null)
         { 
-            StoreManager.OpenItemDetail(uiImageGIF, this.name, _itemTMPArr[0].text, _itemInfoStr, ItemCategory, _itemTMPArr[1].text);
+            StoreManager.OpenItemDetail(this.gameObject.tag,uiImageGIF, this.name, _itemTMPArr[0].text, _itemInfoStr, ItemCategory, _itemTMPArr[1].text);
         }
     }
     private void SetGIFFalse()
     {
+        // GIF 이미지 동작중 False
         uiImageGIF.IsMoving = false;
     }
 } // end of class

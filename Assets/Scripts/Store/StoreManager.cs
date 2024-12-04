@@ -39,8 +39,8 @@ public class StoreManager : MonoBehaviour
         CloseItemDetail();
     }
 
-    public void OpenItemDetail(UIImageGIF gifImage, string goName, string itemName,
-       string itemInfo, Str.eItemCategory itemCategory, string priceStr)
+    public void OpenItemDetail(string itemUItag, UIImageGIF gifImage, string goName, string itemName,
+       string itemInfo, Str.eItemUse itemCategory, string priceStr)
     {
         CloseItemDetail();
 
@@ -79,8 +79,8 @@ public class StoreManager : MonoBehaviour
         }
 
         _itemDetail_Name.text = itemName;
-        SetPriceAndBuyCnt(itemCategory, priceStr);
-      
+        SetPriceAndBuyCnt(itemUItag, itemCategory, priceStr);
+
         ItemDetailUIGo.SetActive(true);
     }
 
@@ -89,27 +89,38 @@ public class StoreManager : MonoBehaviour
     /// </summary>
     /// <param name="itemCategory"></param>
     /// <param name="priceStr"></param>
-    private void SetPriceAndBuyCnt(Str.eItemCategory itemCategory ,string priceStr)
+    private void SetPriceAndBuyCnt(string itemUITag, Str.eItemUse itemCategory, string priceStr)
     {
         _itemPricePer1UnitStr = priceStr;
         SetItemPriceImage(itemCategory);
         _itemPrice.text = priceStr;
         _buyCntDropdown.value = 0;
+        if (itemUITag == Str.eItemUITag.UI_Theme.ToString() ||
+            itemUITag == Str.eItemUITag.UI_Effect.ToString())
+        {
+            _buyCntDropdown.interactable = false;
+        }
+        else if (itemUITag == Str.eItemUITag.UI_Item.ToString())
+        {
+            _buyCntDropdown.interactable = true;
+        }
+        else
+            _buyCntDropdown.interactable = false;
     }
-    private void SetItemPriceImage(Str.eItemCategory itemCategory)
+    private void SetItemPriceImage(Str.eItemUse itemCategory)
     {
         switch (itemCategory)
         {
-            case Str.eItemCategory.Normal:
+            case Str.eItemUse.Normal:
                 _itemPriceImage.sprite = _itemPriceSpriteArr[0];
                 break;
-            case Str.eItemCategory.HeartEvent:
+            case Str.eItemUse.HeartEvent:
                 _itemPriceImage.sprite = _itemPriceSpriteArr[1];
                 break;
         }
     }
     private void OnBuyCntDropdownValueChanged(int value)
-    { 
+    {
         int pricePer1Unit = 0;
         int.TryParse(_itemPricePer1UnitStr, out pricePer1Unit);
 
@@ -133,7 +144,7 @@ public class StoreManager : MonoBehaviour
         _itemDetailInputField.gameObject.SetActive(false);
         _itemDetailInputField.text = string.Empty;
 
-        SetPriceAndBuyCnt(Str.eItemCategory.Normal, string.Empty);  
+        SetPriceAndBuyCnt(string.Empty, Str.eItemUse.Normal, string.Empty);
     }
 
 } // end of class
