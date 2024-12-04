@@ -8,6 +8,9 @@ TagManager:
   - Grid
   - GridPart
   - PuzzlePart
+  - UI_Theme
+  - UI_Effect
+  - UI_Item
   layers:
   - Default
   - TransparentFX

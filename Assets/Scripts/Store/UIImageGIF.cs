@@ -6,53 +6,98 @@ using UnityEngine.UI;
 public class UIImageGIF : MonoBehaviour
 {
     [SerializeField]
-    private Image _image = null;
+    private bool _isItemDetail = false;
     [SerializeField]
-    private Sprite[] _spriteArr = null;
+    private bool _useGif = true;
+
+    public Image Image = null;
+    public bool UseGIF { get => _useGif; set => _useGif = value; }
     [SerializeField]
-    private Sprite _mainSprite = null;
+    public Sprite MainSprite = null;
+    [SerializeField]
+    public Sprite[] SpriteArr = null;
+
+    [SerializeField]
+    public bool useItemDetailSpriteArr = false;
+    [SerializeField]
+    public Sprite[] ItemDetailSpriteArr = null;
+    [SerializeField]
+    public Sprite ItemDetailMainSprite = null;
+
     private float _spriteDelay = 0.1f;
     private float _spriteCurrentDelay = 0;
     private int _currentSpriteIdx = 0;
     private bool _isMoving = false;
+    public bool IsItemDetail { get => _isItemDetail; set => _isItemDetail = value; }
+
     public bool IsMoving
     {
-        get => _isMoving; 
+        get => _isMoving;
         set
         {
+            if (IsItemDetail == true && value == false)
+            {
+                _isMoving = true;
+                return;
+            }
             _isMoving = value;
-            if (_image != null)
-                _image.sprite = _mainSprite;
+
+            SetSprite();
         }
     }
+
     private void OnEnable()
     {
-        if (_image == null) return;
+        Image = GetComponent<Image>();
+        if (Image == null) return;
+
+        //if (SpriteArr == null || SpriteArr.Length == 0 && IsItemDetail == true)
+        //    IsItemDetail = false;
 
         _currentSpriteIdx = 0;
         _spriteCurrentDelay = _spriteDelay;
-        _image.sprite = _mainSprite;
+
+        SetSprite();
     }
     private void Update()
     {
-        if (_image == null) return;
-
+        if (Image == null) return;
         if (!_isMoving)
         {
-            _image.sprite = _mainSprite;
+            SetSprite();
             return;
         }
+
+        if (SpriteArr == null || SpriteArr.Length == 0) return;
 
         _spriteCurrentDelay -= Time.deltaTime;
         if (_spriteCurrentDelay < 0)
         {
             _currentSpriteIdx++;
             _spriteCurrentDelay = 0;
-            if (_currentSpriteIdx >= _spriteArr.Length)
+            if (_currentSpriteIdx >= SpriteArr.Length)
                 _currentSpriteIdx = 0;
 
-            _image.sprite = _spriteArr[_currentSpriteIdx];
+            Image.sprite = SpriteArr[_currentSpriteIdx];
             _spriteCurrentDelay = _spriteDelay;
+        }
+    }
+    private void SetSprite()
+    {
+        if (Image == null || MainSprite == null) return;
+
+        if (IsItemDetail && useItemDetailSpriteArr)
+        {
+            if (MainSprite != ItemDetailMainSprite)
+                MainSprite = ItemDetailMainSprite;
+
+            if (MainSprite != Image.sprite)
+                Image.sprite = ItemDetailMainSprite;
+        }
+        else
+        {
+            if (MainSprite != Image.sprite)
+                Image.sprite = MainSprite;
         }
     }
 } // end of class

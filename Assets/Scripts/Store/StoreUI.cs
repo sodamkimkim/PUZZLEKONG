@@ -1,25 +1,36 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class StoreUI : MonoBehaviour
 {
+    public StoreManager StoreManager = null;
     private Button _button;
     private UIImageGIF uiImageGIF;
+    private TextMeshProUGUI[] itemTmps = null;
+    [SerializeField]
+    private string _itemInfoStr = string.Empty;
     private void Awake()
     {
+        StoreManager = this.GetComponentInParent<StoreManager>();
         _button = GetComponent<Button>();
-        _button.onClick.AddListener(() => UIBtnClick());
+        _button.onClick.AddListener(() => ClickUIBtn());
         uiImageGIF = this.GetComponentInChildren<UIImageGIF>();
+        itemTmps = this.GetComponentsInChildren<TextMeshProUGUI>();
     }
-    private void UIBtnClick()
+    private void ClickUIBtn()
     {
-        if (uiImageGIF != null)
+        if (uiImageGIF != null && uiImageGIF.UseGIF)
         {
             uiImageGIF.IsMoving = true;
             CancelInvoke(nameof(SetGIFFalse));
             Invoke(nameof(SetGIFFalse), 3f);
+        }
+        if (StoreManager != null)
+        { 
+            StoreManager.OpenItemDetail(uiImageGIF, this.name, itemTmps[0].text, itemTmps[1].text, _itemInfoStr);
         }
     }
     private void SetGIFFalse()
