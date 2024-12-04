@@ -9,11 +9,10 @@ public class StoreUI : MonoBehaviour
     public StoreManager StoreManager = null;
     private Button _button;
     private UIImageGIF uiImageGIF;
-    private TextMeshProUGUI[] itemTmps = null;
+ 
+    private TextMeshProUGUI[] _itemTMPArr = null; //0 : name, 1: price
     [SerializeField]
-    private string _itemInfoStr = string.Empty;
-    [SerializeField]
-    private TextMeshProUGUI _itemPriceStr = null;
+    private string _itemInfoStr = string.Empty; 
     [SerializeField]
     public Str.eItemCategory ItemCategory = Str.eItemCategory.Normal;
     private void Awake()
@@ -22,7 +21,7 @@ public class StoreUI : MonoBehaviour
         _button = GetComponent<Button>();
         _button.onClick.AddListener(() => ClickUIBtn());
         uiImageGIF = this.GetComponentInChildren<UIImageGIF>();
-        itemTmps = this.GetComponentsInChildren<TextMeshProUGUI>();
+        _itemTMPArr = this.GetComponentsInChildren<TextMeshProUGUI>();
     }
     private void ClickUIBtn()
     {
@@ -34,7 +33,7 @@ public class StoreUI : MonoBehaviour
         }
         if (StoreManager != null)
         { 
-            StoreManager.OpenItemDetail(uiImageGIF, this.name, itemTmps[0].text, itemTmps[1].text, _itemInfoStr, ItemCategory, _itemPriceStr.text);
+            StoreManager.OpenItemDetail(uiImageGIF, this.name, _itemTMPArr[0].text, _itemInfoStr, ItemCategory, _itemTMPArr[1].text);
         }
     }
     private void SetGIFFalse()

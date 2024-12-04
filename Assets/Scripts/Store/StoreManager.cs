@@ -4,30 +4,43 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+using static Str;
 
 public class StoreManager : MonoBehaviour
 {
     [SerializeField]
     public GameObject ItemDetailUIGo = null;
+
+    #region Image & Name & Info
     [SerializeField]
     private UIImageGIF _itemDetailGIF;
     [SerializeField]
     private TextMeshProUGUI _itemDetail_Name = null;
     [SerializeField]
     private TMP_InputField _itemDetailInputField = null;
+    #endregion
 
-
+    #region Price & BuyCnt
+    private string _itemPricePer1UnitStr = string.Empty;
     [SerializeField]
     private Sprite[] _itemPriceSpriteArr = null;
     [SerializeField]
     private Image _itemPriceImage = null;
     [SerializeField]
     private TextMeshProUGUI _itemPrice = null;
+
+    [SerializeField]
+    private TMP_Dropdown _buyCntDropdown = null;
+    #endregion
+
     private void Awake()
     {
+        _buyCntDropdown.onValueChanged.AddListener(OnBuyCntDropdownValueChanged);
         CloseItemDetail();
     }
-    public void OpenItemDetail(UIImageGIF gifImage, string goName, string itemName, string price, string itemInfo, Str.eItemCategory itemCategory,string priceStr)
+
+    public void OpenItemDetail(UIImageGIF gifImage, string goName, string itemName,
+       string itemInfo, Str.eItemCategory itemCategory, string priceStr)
     {
         CloseItemDetail();
 
@@ -38,7 +51,6 @@ public class StoreManager : MonoBehaviour
         else
             _itemDetailGIF.MainSprite = gifImage.MainSprite;
 
-        _itemDetail_Name.text = itemName;
 
         if (gifImage.useItemDetailSpriteArr && gifImage.ItemDetailSpriteArr.Length != 0)
         {
@@ -55,6 +67,7 @@ public class StoreManager : MonoBehaviour
             _itemDetailGIF.IsMoving = false;
         }
 
+        // ItemInfo
         if (itemInfo != string.Empty)
         {
             _itemDetailInputField.gameObject.SetActive(true);
@@ -65,9 +78,23 @@ public class StoreManager : MonoBehaviour
             _itemDetailInputField.gameObject.SetActive(false);
         }
 
+        _itemDetail_Name.text = itemName;
+        SetPriceAndBuyCnt(itemCategory, priceStr);
+      
+        ItemDetailUIGo.SetActive(true);
+    }
+
+    /// <summary>
+    /// PriceSprite, Price, BuyCntDropdown setting
+    /// </summary>
+    /// <param name="itemCategory"></param>
+    /// <param name="priceStr"></param>
+    private void SetPriceAndBuyCnt(Str.eItemCategory itemCategory ,string priceStr)
+    {
+        _itemPricePer1UnitStr = priceStr;
         SetItemPriceImage(itemCategory);
         _itemPrice.text = priceStr;
-        ItemDetailUIGo.SetActive(true);
+        _buyCntDropdown.value = 0;
     }
     private void SetItemPriceImage(Str.eItemCategory itemCategory)
     {
@@ -80,6 +107,16 @@ public class StoreManager : MonoBehaviour
                 _itemPriceImage.sprite = _itemPriceSpriteArr[1];
                 break;
         }
+    }
+    private void OnBuyCntDropdownValueChanged(int value)
+    { 
+        int pricePer1Unit = 0;
+        int.TryParse(_itemPricePer1UnitStr, out pricePer1Unit);
+
+        int cnt = 0;
+        int.TryParse(_buyCntDropdown.options[value].text, out cnt);
+
+        _itemPrice.text = (pricePer1Unit * cnt).ToString();
     }
     public void CloseItemDetail()
     {
@@ -96,7 +133,7 @@ public class StoreManager : MonoBehaviour
         _itemDetailInputField.gameObject.SetActive(false);
         _itemDetailInputField.text = string.Empty;
 
-        _itemPriceImage.sprite = null;
-        _itemPrice.text = string.Empty;
+        SetPriceAndBuyCnt(Str.eItemCategory.Normal, string.Empty);  
     }
+
 } // end of class
