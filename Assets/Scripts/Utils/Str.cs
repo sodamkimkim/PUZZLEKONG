@@ -26,7 +26,7 @@ public class Str
         Small, Big
     }
     public enum eStage { Classic, Item, Event }
-
+    public enum eItemCategory { Normal, HeartEvent}
     #region PlayerData
     public static string NowScore = "NowScore";
     public static string MyBestScore_Item = "MyBestScore_Item";

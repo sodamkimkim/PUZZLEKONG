@@ -12,6 +12,10 @@ public class StoreUI : MonoBehaviour
     private TextMeshProUGUI[] itemTmps = null;
     [SerializeField]
     private string _itemInfoStr = string.Empty;
+    [SerializeField]
+    private TextMeshProUGUI _itemPriceStr = null;
+    [SerializeField]
+    public Str.eItemCategory ItemCategory = Str.eItemCategory.Normal;
     private void Awake()
     {
         StoreManager = this.GetComponentInParent<StoreManager>();
@@ -30,7 +34,7 @@ public class StoreUI : MonoBehaviour
         }
         if (StoreManager != null)
         { 
-            StoreManager.OpenItemDetail(uiImageGIF, this.name, itemTmps[0].text, itemTmps[1].text, _itemInfoStr);
+            StoreManager.OpenItemDetail(uiImageGIF, this.name, itemTmps[0].text, itemTmps[1].text, _itemInfoStr, ItemCategory, _itemPriceStr.text);
         }
     }
     private void SetGIFFalse()

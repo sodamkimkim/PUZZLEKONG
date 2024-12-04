@@ -16,15 +16,22 @@ public class StoreManager : MonoBehaviour
     [SerializeField]
     private TMP_InputField _itemDetailInputField = null;
 
+
+    [SerializeField]
+    private Sprite[] _itemPriceSpriteArr = null;
+    [SerializeField]
+    private Image _itemPriceImage = null;
+    [SerializeField]
+    private TextMeshProUGUI _itemPrice = null;
     private void Awake()
     {
         CloseItemDetail();
     }
-    public void OpenItemDetail(UIImageGIF gifImage, string goName, string itemName, string price, string itemInfo)
+    public void OpenItemDetail(UIImageGIF gifImage, string goName, string itemName, string price, string itemInfo, Str.eItemCategory itemCategory,string priceStr)
     {
         CloseItemDetail();
 
-        if (_itemDetailGIF.IsItemDetail&& gifImage.ItemDetailSpriteArr.Length!=0)
+        if (_itemDetailGIF.IsItemDetail && gifImage.ItemDetailSpriteArr.Length != 0)
         {
             _itemDetailGIF.MainSprite = gifImage.ItemDetailMainSprite;
         }
@@ -58,7 +65,21 @@ public class StoreManager : MonoBehaviour
             _itemDetailInputField.gameObject.SetActive(false);
         }
 
+        SetItemPriceImage(itemCategory);
+        _itemPrice.text = priceStr;
         ItemDetailUIGo.SetActive(true);
+    }
+    private void SetItemPriceImage(Str.eItemCategory itemCategory)
+    {
+        switch (itemCategory)
+        {
+            case Str.eItemCategory.Normal:
+                _itemPriceImage.sprite = _itemPriceSpriteArr[0];
+                break;
+            case Str.eItemCategory.HeartEvent:
+                _itemPriceImage.sprite = _itemPriceSpriteArr[1];
+                break;
+        }
     }
     public void CloseItemDetail()
     {
@@ -75,5 +96,7 @@ public class StoreManager : MonoBehaviour
         _itemDetailInputField.gameObject.SetActive(false);
         _itemDetailInputField.text = string.Empty;
 
+        _itemPriceImage.sprite = null;
+        _itemPrice.text = string.Empty;
     }
 } // end of class
