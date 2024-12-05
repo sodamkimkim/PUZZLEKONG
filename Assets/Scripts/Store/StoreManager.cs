@@ -14,6 +14,7 @@ public class StoreManager : MonoBehaviour
     #region Image & Name & Info
     [SerializeField]
     private UIImageGIF _itemDetailGIF;
+    private RectTransform _itemDetailImageRtr = null;
     [SerializeField]
     private TextMeshProUGUI _itemDetail_Name = null;
     [SerializeField]
@@ -36,34 +37,54 @@ public class StoreManager : MonoBehaviour
     private void Awake()
     {
         _buyCntDropdown.onValueChanged.AddListener(OnBuyCntDropdownValueChanged);
+        _itemDetailImageRtr = _itemDetailGIF.gameObject.GetComponent<RectTransform>();
+
         CloseItemDetail();
     }
 
-    public void OpenItemDetail(string itemUItag, UIImageGIF gifImage, string goName, string itemName,
+    public void OpenItemDetail(string itemUItag, string goName, Image itemMainImage, UIImageGIF gifImage, string itemName,
        string itemInfo, Str.eItemUse itemCategory, string priceStr)
     {
         CloseItemDetail();
 
-        if (_itemDetailGIF.IsItemDetail && gifImage.ItemDetailSpriteArr.Length != 0)
-        {
-            _itemDetailGIF.MainSprite = gifImage.ItemDetailMainSprite;
-        }
+        // Item Detail Image 크기조정
+        if (goName.Equals("UI_ETC_VIP"))
+            _itemDetailImageRtr.sizeDelta = new Vector2(300f, 200f);
+        else if (goName.Equals("UI_ETC_KONG"))
+            _itemDetailImageRtr.sizeDelta = new Vector2(200f, 200f);
         else
-            _itemDetailGIF.MainSprite = gifImage.MainSprite;
+            _itemDetailImageRtr.sizeDelta = new Vector2(300f, 345f);
 
 
-        if (gifImage.useItemDetailSpriteArr && gifImage.ItemDetailSpriteArr.Length != 0)
+        // Item Detail Gif컨트롤
+        if (gifImage != null)
         {
-            _itemDetailGIF.SpriteArr = gifImage.ItemDetailSpriteArr;
-            _itemDetailGIF.IsMoving = true;
+            if (_itemDetailGIF.IsItemDetail && gifImage.ItemDetailSpriteArr.Length != 0)
+            {
+                _itemDetailGIF.MainSprite = gifImage.ItemDetailMainSprite;
+            }
+            else
+                _itemDetailGIF.MainSprite = gifImage.MainSprite;
+
+            if (gifImage.useItemDetailSpriteArr && gifImage.ItemDetailSpriteArr.Length != 0)
+            {
+                _itemDetailGIF.SpriteArr = gifImage.ItemDetailSpriteArr;
+                _itemDetailGIF.IsMoving = true;
+            }
+            else if (!gifImage.useItemDetailSpriteArr && gifImage.SpriteArr.Length != 0)
+            {// spriteArr은 있고, useItemDetailSpriteArr == false
+                _itemDetailGIF.SpriteArr = gifImage.SpriteArr;
+                _itemDetailGIF.IsMoving = true;
+            }
+            else if (gifImage.SpriteArr == null || gifImage.SpriteArr.Length == 0)
+            {// spriteArr할당 x 
+                _itemDetailGIF.IsMoving = false;
+            }
         }
-        else if (!gifImage.useItemDetailSpriteArr && gifImage.SpriteArr.Length != 0)
-        {// spriteArr은 있고, useItemDetailSpriteArr == false
-            _itemDetailGIF.SpriteArr = gifImage.SpriteArr;
-            _itemDetailGIF.IsMoving = true;
-        }
-        else if (gifImage.SpriteArr == null || gifImage.SpriteArr.Length == 0)
-        {// spriteArr할당 x 
+        // 클릭한 StoreUI 자식에 Gif가 없는 경우
+        else if (itemMainImage != null)
+        {
+            _itemDetailGIF.Image.sprite = itemMainImage.sprite;
             _itemDetailGIF.IsMoving = false;
         }
 
@@ -78,7 +99,10 @@ public class StoreManager : MonoBehaviour
             _itemDetailInputField.gameObject.SetActive(false);
         }
 
+        // Item 이름
         _itemDetail_Name.text = itemName;
+
+        // Item Price & BuyCnt
         SetPriceAndBuyCnt(itemUItag, itemCategory, priceStr);
 
         ItemDetailUIGo.SetActive(true);
@@ -96,11 +120,13 @@ public class StoreManager : MonoBehaviour
         _itemPrice.text = priceStr;
         _buyCntDropdown.value = 0;
         if (itemUITag == Str.eItemUITag.UI_Theme.ToString() ||
-            itemUITag == Str.eItemUITag.UI_Effect.ToString())
+            itemUITag == Str.eItemUITag.UI_Effect.ToString() ||
+            itemUITag == Str.eItemUITag.UI_NoBuyCnt.ToString())
         {
             _buyCntDropdown.interactable = false;
         }
-        else if (itemUITag == Str.eItemUITag.UI_Item.ToString())
+        else if (itemUITag == Str.eItemUITag.UI_Item.ToString() ||
+            itemUITag == Str.eItemUITag.UI_YesBuyCnt.ToString())
         {
             _buyCntDropdown.interactable = true;
         }
@@ -117,12 +143,15 @@ public class StoreManager : MonoBehaviour
             case Str.eItemUse.HeartEvent:
                 _itemPriceImage.sprite = _itemPriceSpriteArr[1];
                 break;
+            case Str.eItemUse.Dollar:
+                _itemPriceImage.sprite = _itemPriceSpriteArr[2];
+                break;
         }
     }
     private void OnBuyCntDropdownValueChanged(int value)
     {
-        int pricePer1Unit = 0;
-        int.TryParse(_itemPricePer1UnitStr, out pricePer1Unit);
+        float pricePer1Unit = 0f;
+        float.TryParse(_itemPricePer1UnitStr, out pricePer1Unit);
 
         int cnt = 0;
         int.TryParse(_buyCntDropdown.options[value].text, out cnt);

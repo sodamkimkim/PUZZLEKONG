@@ -11,6 +11,8 @@ TagManager:
   - UI_Theme
   - UI_Effect
   - UI_Item
+  - UI_NoBuyCnt
+  - UI_YesBuyCnt
   layers:
   - Default
   - TransparentFX
