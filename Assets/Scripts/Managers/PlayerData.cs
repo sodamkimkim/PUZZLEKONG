@@ -64,7 +64,7 @@ public class PlayerData : MonoBehaviour
             $"{Str.MyBestScore_Classic} : {GetStr(Str.MyBestScore_Classic)} | {Str.PlayerTotalScore_Classic}: {GetStr(Str.PlayerTotalScore_Classic)}";
     }
 
-    public static new string ToString()
+    public static string PlayerDataToString()
     {
         return $"{Str.NowScore} : {NowScore}\n" +
             $"{Str.MyBestScore_Item} : {GetStr(Str.MyBestScore_Item)}\n" +
@@ -137,6 +137,7 @@ public class PlayerData : MonoBehaviour
         ItemSlot4 = Str.Item_g_Eraser;
         ItemSlot5 = Str.Item_h_PushLeft;
         ItemSlot6 = Str.Item_i_PushUp;
+    //  PlayerDataToString();
     }
     public static void SetStr(string key, string value)
     {

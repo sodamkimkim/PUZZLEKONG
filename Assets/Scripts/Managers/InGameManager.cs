@@ -81,7 +81,7 @@ public class InGameManager : MonoBehaviour
         { // # real gameover
             IsGameOver = true;
             UpdatePlayerData(true);
-            Debug.Log($"GameOver | {PlayerData.ToString()}");
+            Debug.Log($"GameOver | {PlayerData.PlayerDataToString()}");
         }
         else
         {

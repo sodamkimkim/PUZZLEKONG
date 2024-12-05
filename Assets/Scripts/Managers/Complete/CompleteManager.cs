@@ -128,6 +128,7 @@ public class CompleteManager : MonoBehaviour
 
         _uiManager.UpdateHeaderScore();
         Debug.Log($"Score : {score} | {PlayerData.ToString_Score()}");
+       // PlayerData.PlayerDataToString();
     }
 
     public void CompleteEffect(Vector3 worldPos, MonoBehaviour callerMono)
