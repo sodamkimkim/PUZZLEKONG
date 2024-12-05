@@ -29,6 +29,7 @@ public class Str
     public enum eItemUITag { UI_Theme, UI_Effect, UI_Item, UI_NoBuyCnt, UI_YesBuyCnt }
     public enum eItemUse { Normal, HeartEvent, Dollar }
     #region PlayerData
+    public static string Kong = "Kong"; 
     public static string NowScore = "NowScore";
     public static string MyBestScore_Item = "MyBestScore_Item";
     public static string PlayerTotalScore_Item = "PlayerTotalScore_Item";

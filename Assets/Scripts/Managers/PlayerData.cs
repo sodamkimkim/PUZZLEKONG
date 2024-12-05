@@ -11,6 +11,7 @@ public class PlayerData : MonoBehaviour
     //  public static int NowScore = 0;
     public static readonly string EncryptionKey = "BBUNIKONG_PUZZLEKONG_0512";
     #region Properties
+    public static int Kong { get => GetInt(Str.Kong); set => SetStr(Str.Kong, value.ToString()); }
     public static int NowScore { get => GetInt(Str.NowScore); set => SetStr(Str.NowScore, value.ToString()); }
     public static int PlayerTotalScore
     {
@@ -38,7 +39,6 @@ public class PlayerData : MonoBehaviour
             else SetStr(Str.MyBestScore_Classic, value.ToString());
         }
     }
-
     public static int Item_a_Mushroom { get => GetInt(Str.Item_a_Mushroom); set => SetStr(Str.Item_a_Mushroom, value.ToString()); }
     public static int Item_b_Wandoo { get => GetInt(Str.Item_b_Wandoo); set => SetStr(Str.Item_b_Wandoo, value.ToString()); }
     public static int Item_c_Reset { get => GetInt(Str.Item_c_Reset); set => SetStr(Str.Item_c_Reset, value.ToString()); }
@@ -55,8 +55,7 @@ public class PlayerData : MonoBehaviour
     public static string ItemSlot3 { get => GetStr(Str.ItemSlot3); set => SetStr(Str.ItemSlot3, value); }
     public static string ItemSlot4 { get => GetStr(Str.ItemSlot4); set => SetStr(Str.ItemSlot4, value); }
     public static string ItemSlot5 { get => GetStr(Str.ItemSlot5); set => SetStr(Str.ItemSlot5, value); }
-    public static string ItemSlot6 { get => GetStr(Str.ItemSlot6); set => SetStr(Str.ItemSlot6, value); }
-    public static string ItemSlot7 { get => GetStr(Str.ItemSlot7); set => SetStr(Str.ItemSlot7, value); }
+    public static string ItemSlot6 { get => GetStr(Str.ItemSlot6); set => SetStr(Str.ItemSlot6, value); } 
     #endregion
     public static string ToString_Score()
     {
@@ -74,6 +73,7 @@ public class PlayerData : MonoBehaviour
             $"{Str.MyBestScore_Classic} : {GetStr(Str.MyBestScore_Classic)}\n" +
             $"{Str.PlayerTotalScore_Classic} : {GetStr(Str.PlayerTotalScore_Classic)}\n\n" +
 
+            $"{Str.Kong} : {Kong}\n" +
             $"{Str.Item_a_Mushroom} : {Item_a_Mushroom}\n" +
             $"{Str.Item_b_Wandoo} : {Item_b_Wandoo}\n" +
             $"{Str.Item_c_Reset} : {Item_c_Reset}\n" +
@@ -90,8 +90,7 @@ public class PlayerData : MonoBehaviour
             $"{Str.ItemSlot3} : {ItemSlot3}\n" +
             $"{Str.ItemSlot4} : {ItemSlot4}\n" +
             $"{Str.ItemSlot5} : {ItemSlot5}\n" +
-            $"{Str.ItemSlot6} : {ItemSlot6}\n" +
-            $"{Str.ItemSlot7} : {ItemSlot7}";
+            $"{Str.ItemSlot6} : {ItemSlot6}";
     }
 
     private void Awake()
@@ -101,7 +100,7 @@ public class PlayerData : MonoBehaviour
     private void Start()
     {
         //// test data
-        //PlayerPrefs.DeleteAll();
+         PlayerPrefs.DeleteAll();
         NowScore = 0;
         SetTestData_Ecrypt();
     }
@@ -112,6 +111,8 @@ public class PlayerData : MonoBehaviour
     private void SetTestData_Ecrypt()
     {
         NowScore = 0;
+        Kong = 9999;
+        // Item전 vs classic 데이터는 따로 저장
         SetStr(Str.MyBestScore_Item, 9990.ToString());
         SetStr(Str.MyBestScore_Classic, 9990.ToString());
 
@@ -121,7 +122,7 @@ public class PlayerData : MonoBehaviour
         Item_a_Mushroom = 99;
         Item_b_Wandoo = 99;
         Item_c_Reset = 99;
-       // Item_d_SwitchRows = 99;
+        // Item_d_SwitchRows = 99;
         //Item_e_SwitchColumns = 99;
         Item_f_Bumb = 99;
         Item_g_Eraser = 99;
@@ -129,14 +130,13 @@ public class PlayerData : MonoBehaviour
         Item_i_PushUp = 99;
 
         // Player가 Slot에 Item 지정
-        ItemSlot0 = Str.Item_c_Reset;
-        ItemSlot1 = Str.Item_a_Mushroom;
-        ItemSlot2 = Str.Item_f_Bumb;
-        ItemSlot3 = Str.Item_g_Eraser;
-        ItemSlot4 = Str.Item_h_PushLeft;
-        ItemSlot5 = Str.Item_i_PushUp;
-        ItemSlot6 = Str.Item_b_Wandoo;
-      //  ItemSlot7 = Str.Item_e_SwitchColumns;
+        ItemSlot0 = Str.Item_a_Mushroom;
+        ItemSlot1 = Str.Item_b_Wandoo;
+        ItemSlot2 = Str.Item_c_Reset;
+        ItemSlot3 = Str.Item_f_Bumb;
+        ItemSlot4 = Str.Item_g_Eraser;
+        ItemSlot5 = Str.Item_h_PushLeft;
+        ItemSlot6 = Str.Item_i_PushUp;
     }
     public static void SetStr(string key, string value)
     {
