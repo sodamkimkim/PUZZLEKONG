@@ -2710,8 +2710,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 371.51, y: -87}
-  m_SizeDelta: {x: 30, y: 30}
+  m_AnchoredPosition: {x: 371.51, y: -98.4}
+  m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &169210546
 MonoBehaviour:
@@ -3669,7 +3669,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   StoreManager: {fileID: 0}
-  _itemInfoStr: 
+  _itemInfoStr: Remove a row of the grid
   ItemCategory: 0
 --- !u!114 &208991920
 MonoBehaviour:
@@ -4601,7 +4601,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   StoreManager: {fileID: 0}
-  _itemInfoStr: 
+  _itemInfoStr: CURRENCY<br>IN PUZZLEKONG
   ItemCategory: 2
 --- !u!114 &261460470
 MonoBehaviour:
@@ -6338,7 +6338,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1350017660}
   m_Direction: 2
   m_Value: 1
-  m_Size: 0.33979726
+  m_Size: 0.33979723
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -7317,7 +7317,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u200B"
+  m_text: "MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM\u200B"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -7354,13 +7354,13 @@ MonoBehaviour:
   m_HorizontalAlignment: 1
   m_VerticalAlignment: 256
   m_textAlignment: 65535
-  m_characterSpacing: 0
+  m_characterSpacing: 18
   m_wordSpacing: 0
-  m_lineSpacing: 0
+  m_lineSpacing: 38.82
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_enableWordWrapping: 0
+  m_enableWordWrapping: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
   m_linkedTextComponent: {fileID: 0}
@@ -8043,7 +8043,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   StoreManager: {fileID: 0}
-  _itemInfoStr: NoAds\nPay For a month (Subscribe)
+  _itemInfoStr: "\xB7 Subscription<br>\xB7 NO-ADs<br>\xB7 A Monthly Gift-Set"
   ItemCategory: 2
 --- !u!114 &490418424
 MonoBehaviour:
@@ -12133,7 +12133,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   StoreManager: {fileID: 0}
-  _itemInfoStr: 
+  _itemInfoStr: 'Remove a column of the grid '
   ItemCategory: 0
 --- !u!114 &709696006
 MonoBehaviour:
@@ -12722,7 +12722,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   StoreManager: {fileID: 0}
-  _itemInfoStr: 
+  _itemInfoStr: Push puzzles of 3 columns to the top
   ItemCategory: 0
 --- !u!114 &756648626
 MonoBehaviour:
@@ -13227,7 +13227,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 445.1, y: -76.2}
+  m_AnchoredPosition: {x: 425.8, y: -98.4}
   m_SizeDelta: {x: 73.1, y: 20}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &808035861
@@ -13277,8 +13277,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 18.56
-  m_fontSizeBase: 18.56
+  m_fontSize: 16.3
+  m_fontSizeBase: 16.3
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -20946,8 +20946,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 154.69, y: 115.2}
-  m_SizeDelta: {x: 350, y: 50}
+  m_AnchoredPosition: {x: 135.5, y: 146.3}
+  m_SizeDelta: {x: 281.3, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1265549581
 MonoBehaviour:
@@ -21190,7 +21190,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1277825964}
   - component: {fileID: 1277825967}
-  - component: {fileID: 1277825966}
+  - component: {fileID: 1277825968}
   - component: {fileID: 1277825965}
   m_Layer: 0
   m_Name: InputField_ItemInfo
@@ -21216,8 +21216,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 156.74, y: 28.7}
-  m_SizeDelta: {x: 300, y: 80}
+  m_AnchoredPosition: {x: 162.2, y: 26.1}
+  m_SizeDelta: {x: 350, y: 158.91}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1277825965
 MonoBehaviour:
@@ -21244,7 +21244,7 @@ MonoBehaviour:
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_DisabledColor: {r: 1, g: 1, b: 1, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -21258,8 +21258,8 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
-  m_TargetGraphic: {fileID: 1277825966}
+  m_Interactable: 0
+  m_TargetGraphic: {fileID: 1277825968}
   m_TextViewport: {fileID: 1038525785}
   m_TextComponent: {fileID: 461206197}
   m_Placeholder: {fileID: 1581847294}
@@ -21271,7 +21271,7 @@ MonoBehaviour:
   m_InputType: 0
   m_AsteriskChar: 42
   m_KeyboardType: 0
-  m_LineType: 0
+  m_LineType: 1
   m_HideMobileInput: 0
   m_HideSoftKeyboard: 0
   m_CharacterValidation: 0
@@ -21305,19 +21305,27 @@ MonoBehaviour:
   m_CaretColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
   m_CustomCaretColor: 0
   m_SelectionColor: {r: 0.65882355, g: 0.80784315, b: 1, a: 0.7529412}
-  m_Text: 
+  m_Text: MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
   m_CaretBlinkRate: 0.85
   m_CaretWidth: 1
   m_ReadOnly: 0
   m_RichText: 1
   m_GlobalFontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_OnFocusSelectAll: 1
+  m_OnFocusSelectAll: 0
   m_ResetOnDeActivation: 1
   m_RestoreOriginalTextOnEscape: 1
   m_isRichTextEditingAllowed: 0
   m_LineLimit: 0
   m_InputValidator: {fileID: 0}
---- !u!114 &1277825966
+--- !u!222 &1277825967
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1277825963}
+  m_CullTransparentMesh: 1
+--- !u!114 &1277825968
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -21330,15 +21338,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.8679245, g: 0.8679245, b: 0.8679245, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 8b05cb7efba1c1e4fab8c463a221903f, type: 3}
-  m_Type: 1
+  m_Sprite: {fileID: 0}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -21347,14 +21355,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!222 &1277825967
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1277825963}
-  m_CullTransparentMesh: 1
 --- !u!1 &1294824415
 GameObject:
   m_ObjectHideFlags: 0
@@ -23495,7 +23495,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   StoreManager: {fileID: 0}
-  _itemInfoStr: 
+  _itemInfoStr: Push puzzles of 3 rows to the left
   ItemCategory: 0
 --- !u!114 &1391283658
 MonoBehaviour:
@@ -25354,7 +25354,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1581847291}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
@@ -27847,7 +27847,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   StoreManager: {fileID: 0}
-  _itemInfoStr: 
+  _itemInfoStr: Remove 3X3 puzzles in the grid
   ItemCategory: 0
 --- !u!114 &1738327508
 MonoBehaviour:
@@ -28772,7 +28772,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   StoreManager: {fileID: 0}
-  _itemInfoStr: 
+  _itemInfoStr: Reset puzzles
   ItemCategory: 0
 --- !u!114 &1799513849
 MonoBehaviour:
@@ -29160,7 +29160,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   StoreManager: {fileID: 0}
-  _itemInfoStr: 
+  _itemInfoStr: Remove 1 puzzle in the grid
   ItemCategory: 0
 --- !u!114 &1812083874
 MonoBehaviour:

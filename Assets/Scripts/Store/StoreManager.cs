@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -92,7 +93,7 @@ public class StoreManager : MonoBehaviour
         if (itemInfo != string.Empty)
         {
             _itemDetailInputField.gameObject.SetActive(true);
-            _itemDetailInputField.text = itemInfo;
+            _itemDetailInputField.text =  itemInfo.Replace("<br>", Environment.NewLine);
         }
         else
         {
