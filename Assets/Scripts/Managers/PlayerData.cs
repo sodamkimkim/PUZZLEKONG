@@ -4,7 +4,7 @@ using System.IO;
 using System.Security.Cryptography;
 using System.Text;
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class PlayerData : MonoBehaviour
 {
@@ -55,7 +55,7 @@ public class PlayerData : MonoBehaviour
     public static string ItemSlot3 { get => GetStr(Str.ItemSlot3); set => SetStr(Str.ItemSlot3, value); }
     public static string ItemSlot4 { get => GetStr(Str.ItemSlot4); set => SetStr(Str.ItemSlot4, value); }
     public static string ItemSlot5 { get => GetStr(Str.ItemSlot5); set => SetStr(Str.ItemSlot5, value); }
-    public static string ItemSlot6 { get => GetStr(Str.ItemSlot6); set => SetStr(Str.ItemSlot6, value); } 
+    public static string ItemSlot6 { get => GetStr(Str.ItemSlot6); set => SetStr(Str.ItemSlot6, value); }
     #endregion
     public static string ToString_Score()
     {
@@ -95,14 +95,17 @@ public class PlayerData : MonoBehaviour
 
     private void Awake()
     {
+        DontDestroyOnLoad(this.gameObject);
         NowScore = 0;
+
     }
     private void Start()
     {
         //// test data
-         PlayerPrefs.DeleteAll();
+        PlayerPrefs.DeleteAll();
         NowScore = 0;
         SetTestData_Ecrypt();
+        Debug.Log(PlayerDataToString());
     }
     public static void Save()
     {
@@ -122,8 +125,8 @@ public class PlayerData : MonoBehaviour
         Item_a_Mushroom = 99;
         Item_b_Wandoo = 99;
         Item_c_Reset = 99;
-        // Item_d_SwitchRows = 99;
-        //Item_e_SwitchColumns = 99;
+        Item_d_SwitchRows = 0;
+        Item_e_SwitchColumns = 0;
         Item_f_Bumb = 99;
         Item_g_Eraser = 99;
         Item_h_PushLeft = 99;
@@ -137,7 +140,7 @@ public class PlayerData : MonoBehaviour
         ItemSlot4 = Str.Item_g_Eraser;
         ItemSlot5 = Str.Item_h_PushLeft;
         ItemSlot6 = Str.Item_i_PushUp;
-    //  PlayerDataToString();
+
     }
     public static void SetStr(string key, string value)
     {
@@ -146,13 +149,19 @@ public class PlayerData : MonoBehaviour
     }
     public static string GetStr(string key)
     {
-        return Decrypt(PlayerPrefs.GetString(key), EncryptionKey);
+        if (PlayerPrefs.HasKey(key))
+            return Decrypt(PlayerPrefs.GetString(key), EncryptionKey);
+        else return string.Empty;
     }
     public static int GetInt(string key)
     {
-        int newInt = 0;
-        int.TryParse(PlayerData.GetStr(key), out newInt);
-        return newInt;
+        if (PlayerPrefs.HasKey(key))
+        {
+            int newInt = 0;
+            int.TryParse(PlayerData.GetStr(key), out newInt);
+            return newInt;
+        }
+        else return 0;
     }
 
     public static string Encrypt(string plainText, string key)
