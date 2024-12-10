@@ -2,8 +2,12 @@ using UnityEngine;
 
 public class Factor : MonoBehaviour
 {
-    #region GameData
-    public static int GamePriceKong = 1;
+    #region Game Logic Factor
+    public static int CompleteScore { get => 1; }
+    public static int GamePriceKong { get => 1; } // GameStage ÁøÀÔ Price(1Äá)
+    public static int GameOverTimeSecond { get => 7; } // GameOverTimer 7ÃÊ
+
+
     #endregion
 
     #region GridPartData 
@@ -39,7 +43,6 @@ public class Factor : MonoBehaviour
     public static int PuzzleStatus_ItemUse { get => 1; }  
     #endregion
     #region Common Factor
-    public static int CompleteScore { get => 5; }
     public static int IntInitialized { get => -99; }
     public static float CompleteCoroutineInterval { get => 0.07f; }
     public static float CompletableOffset { get => 0.8f; }

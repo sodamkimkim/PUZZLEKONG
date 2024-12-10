@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using System.Globalization;
+using Unity.VisualScripting;
 public class UIManager : MonoBehaviour
 {
     #region Hidden Private variables
@@ -23,11 +25,13 @@ public class UIManager : MonoBehaviour
     private GameObject _uiTMP_TotalScore;
 
     [SerializeField]
+    private TextMeshProUGUI _tmp_Kong;
+    [SerializeField]
     private TextMeshProUGUI _tmp_NowScore = null;
     [SerializeField]
     private TextMeshProUGUI _tmp_MyBest = null;
     [SerializeField]
-    private TextMeshProUGUI _tmp_PlayerTotal = null; 
+    private TextMeshProUGUI _tmp_PlayerTotal = null;
     #endregion
 
     #region UI_GameOver
@@ -40,9 +44,12 @@ public class UIManager : MonoBehaviour
     #region UI_InGame
     public GameObject UITMP_TempText_Large => _uiTMP_TempText_Large;
     public GameObject UITMP_TempText_Small => _uITMP_TempText_Small;
-    public GameObject UITMP_TempText_Large_1 => _uiTMP_TempText_Large_1; 
+    public GameObject UITMP_TempText_Large_1 => _uiTMP_TempText_Large_1;
+    #endregion
+    #region UI_Header
+    public TextMeshProUGUI Tmp_Kong => _tmp_Kong;
     public TextMeshProUGUI Tmp_NowScore => _tmp_NowScore;
-    public TextMeshProUGUI Tmp_MyBest => _tmp_MyBest;
+    public TextMeshProUGUI Tmp_MyBest => _tmp_MyBest; 
     public TextMeshProUGUI Tmp_PlayerTotal => _tmp_PlayerTotal; 
     #endregion
 
@@ -60,18 +67,19 @@ public class UIManager : MonoBehaviour
     }
     public void UpdateHeaderScore()
     {
-        Tmp_NowScore.text = $"SCORE : {PlayerData.NowScore.ToString()}";
+        Tmp_NowScore.text = $"SCORE : {Util.InvariantCurture(PlayerData.NowScore)}";
+
         if (StageManager.Stage == Str.eStage.Item)
         {
-            Tmp_MyBest.text = $"MYBEST : {PlayerData.GetStr(Str.MyBestScore_Item)}";
-            Tmp_PlayerTotal.text = $"PLAYER TOTAL : {PlayerData.GetStr(Str.PlayerTotalScore_Item)}";
+            Tmp_MyBest.text = $"MYBEST : {Util.InvariantCurture(PlayerData.GetInt(Str.MyBestScore_Item))}";
+            Tmp_PlayerTotal.text = $"PLAYER TOTAL : {Util.InvariantCurture(PlayerData.GetInt(Str.PlayerTotalScore_Item))}";  
         }
         else
         {
-            Tmp_MyBest.text = $"MYBEST : {PlayerData.GetStr(Str.MyBestScore_Classic)}";
-            Tmp_PlayerTotal.text = $"PLAYER TOTAL : {PlayerData.GetStr(Str.PlayerTotalScore_Classic)}";
+            Tmp_MyBest.text = $"MYBEST : {Util.InvariantCurture(PlayerData.GetInt(Str.MyBestScore_Classic))}";
+            Tmp_PlayerTotal.text = $"PLAYER TOTAL : {Util.InvariantCurture(PlayerData.GetInt(Str.PlayerTotalScore_Classic))}";  
         }
-
+        Tmp_Kong.text = PlayerData.Kong.ToString();
     }
     public void GameOver_Timer(string text)
     {
@@ -106,5 +114,5 @@ public class UIManager : MonoBehaviour
         yield return new WaitForSeconds(delay);
         if (uiGo.activeSelf == true)
             uiGo.SetActive(false);
-    } 
+    }
 } // end of class

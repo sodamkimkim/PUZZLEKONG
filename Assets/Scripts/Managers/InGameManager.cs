@@ -19,6 +19,8 @@ public class InGameManager : MonoBehaviour
     [SerializeField]
     private ItemManager _itemManager = null;
     public static bool IsGameOver = false;
+    public readonly int CompleteCntValue = 10;
+    public int CompleteCnt = 0;
     private void Awake()
     {
         _puzzlePlaceManager.PuzzlePlacableChecker.Init(GameOverProcess_Timer, StageCompleteProcess);
@@ -57,7 +59,7 @@ public class InGameManager : MonoBehaviour
     }
     private IEnumerator GameOverCoroutine()
     {
-        for (int i = 7; i >= 0; i--)
+        for (int i = Factor.GameOverTimeSecond; i >= 0; i--)
         {
             if (_puzzlePlaceManager.SetPuzzlesActive() > 0)
             {
@@ -101,10 +103,21 @@ public class InGameManager : MonoBehaviour
             PlayerData.NowScore = 0;
         }
 
+
         if (isNeedCelebration) _uiManager.GameOver($"Score: {PlayerData.NowScore}\nMyBest: {PlayerData.MyBestScore}\nMyTotal: {PlayerData.PlayerTotalScore}");
     }
     private void StageCompleteProcess()
     {
+        CompleteCnt++;
+        if(CompleteCnt == CompleteCntValue)
+        {
+            // 1ÄáÁö±Þ
+         //   _uiManager.
+          PlayerData.Kong++;
+            CompleteCnt = 0;
+        }
+
+        
         _puzzleManager.LazyStart();
     }
 } // end of class

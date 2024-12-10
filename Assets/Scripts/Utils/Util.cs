@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
+using System.Globalization;
 
 public static class Util
 {
@@ -91,4 +92,10 @@ public static class Util
 
         return sb.ToString();
     }
-}
+     public static string InvariantCurture(int param)
+    {
+        if (param <= 99999999)
+            return param.ToString("N0", CultureInfo.InvariantCulture);
+        else return "99,999,999+";
+    }
+} // end of class
