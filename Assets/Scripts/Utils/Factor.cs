@@ -3,6 +3,7 @@ using UnityEngine;
 public class Factor : MonoBehaviour
 {
     #region Game Logic Factor
+    public static int LevelUpPlayerTotalScore { get => 1000000; }
     public static int CompleteScore { get => 1; }
     public static int GamePriceKong { get => 1; } // GameStage ¡¯¿‘ Price(1ƒ·)
     public static int GameOverTimeSecond { get => 7; } // GameOverTimer 7√ 

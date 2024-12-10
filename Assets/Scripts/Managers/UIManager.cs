@@ -25,6 +25,8 @@ public class UIManager : MonoBehaviour
     private GameObject _uiTMP_TotalScore;
 
     [SerializeField]
+    private TextMeshProUGUI _tmp_Level;
+    [SerializeField]
     private TextMeshProUGUI _tmp_Kong;
     [SerializeField]
     private TextMeshProUGUI _tmp_NowScore = null;
@@ -47,10 +49,11 @@ public class UIManager : MonoBehaviour
     public GameObject UITMP_TempText_Large_1 => _uiTMP_TempText_Large_1;
     #endregion
     #region UI_Header
+    public TextMeshProUGUI Tmp_Level => _tmp_Level;
     public TextMeshProUGUI Tmp_Kong => _tmp_Kong;
     public TextMeshProUGUI Tmp_NowScore => _tmp_NowScore;
     public TextMeshProUGUI Tmp_MyBest => _tmp_MyBest; 
-    public TextMeshProUGUI Tmp_PlayerTotal => _tmp_PlayerTotal; 
+  public TextMeshProUGUI Tmp_PlayerTotal => _tmp_PlayerTotal; 
     #endregion
 
     private void Awake()
@@ -72,14 +75,15 @@ public class UIManager : MonoBehaviour
         if (StageManager.Stage == Str.eStage.Item)
         {
             Tmp_MyBest.text = $"MYBEST : {Util.InvariantCurture(PlayerData.GetInt(Str.MyBestScore_Item))}";
-            Tmp_PlayerTotal.text = $"PLAYER TOTAL : {Util.InvariantCurture(PlayerData.GetInt(Str.PlayerTotalScore_Item))}";  
+             Tmp_PlayerTotal.text = $"TOTAL - ITEM : {Util.InvariantCurture(PlayerData.GetInt(Str.PlayerTotalScore_Item))}";  
         }
         else
         {
             Tmp_MyBest.text = $"MYBEST : {Util.InvariantCurture(PlayerData.GetInt(Str.MyBestScore_Classic))}";
-            Tmp_PlayerTotal.text = $"PLAYER TOTAL : {Util.InvariantCurture(PlayerData.GetInt(Str.PlayerTotalScore_Classic))}";  
+             Tmp_PlayerTotal.text = $"TOTAL - CLASSIC : {Util.InvariantCurture(PlayerData.GetInt(Str.PlayerTotalScore_Classic))}";  
         }
         Tmp_Kong.text = PlayerData.Kong.ToString();
+        Tmp_Level.text = PlayerData.Level.ToString();
     }
     public void GameOver_Timer(string text)
     {

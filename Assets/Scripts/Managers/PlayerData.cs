@@ -11,6 +11,12 @@ public class PlayerData : MonoBehaviour
     //  public static int NowScore = 0;
     public static readonly string EncryptionKey = "BBUNIKONG_PUZZLEKONG_0512";
     #region Properties
+    public static int Level { get => GetInt(Str.Level); 
+        set  {
+            if (value > 10000)
+                value = 10000;
+
+            SetStr(Str.Level, value.ToString()); } }
     public static int Kong { get => GetInt(Str.Kong); set => SetStr(Str.Kong, value.ToString()); }
     public static int NowScore { get => GetInt(Str.NowScore); set => SetStr(Str.NowScore, value.ToString()); }
     public static int PlayerTotalScore
@@ -22,8 +28,18 @@ public class PlayerData : MonoBehaviour
         }
         set
         {
-            if (StageManager.Stage.Equals(Str.eStage.Item)) SetStr(Str.PlayerTotalScore_Item, value.ToString());
-            else SetStr(Str.PlayerTotalScore_Classic, value.ToString());
+            int val = value;
+            if (val >= Factor.LevelUpPlayerTotalScore)
+            {
+                while (val >= Factor.LevelUpPlayerTotalScore)
+                {
+                    Level++;
+                    val -= Factor.LevelUpPlayerTotalScore;
+                }
+            }
+
+            if (StageManager.Stage.Equals(Str.eStage.Item)) SetStr(Str.PlayerTotalScore_Item, val.ToString());
+            else SetStr(Str.PlayerTotalScore_Classic, val.ToString());
         }
     }
     public static int MyBestScore
@@ -59,14 +75,16 @@ public class PlayerData : MonoBehaviour
     #endregion
     public static string ToString_Score()
     {
-        return $" {Str.NowScore}: {NowScore}\n" +
+        return $"{Str.Level}: {Level} | \n{Str.Kong}: {Kong}\n | {Str.NowScore}: {NowScore}\n" +
             $"{Str.MyBestScore_Item} : {GetStr(Str.MyBestScore_Item)} | {Str.PlayerTotalScore_Item}: {GetStr(Str.PlayerTotalScore_Item)}\n" +
             $"{Str.MyBestScore_Classic} : {GetStr(Str.MyBestScore_Classic)} | {Str.PlayerTotalScore_Classic}: {GetStr(Str.PlayerTotalScore_Classic)}";
     }
 
     public static string PlayerDataToString()
     {
-        return $"{Str.NowScore} : {NowScore}\n" +
+        return $"{Str.Level} : {Level}\n" +
+            $"{Str.Kong} : {Kong}\n" +
+            $"{Str.NowScore} : {NowScore}\n" +
             $"{Str.MyBestScore_Item} : {GetStr(Str.MyBestScore_Item)}\n" +
             $"{Str.PlayerTotalScore_Item} : {GetStr(Str.PlayerTotalScore_Item)}\n" +
 
@@ -77,8 +95,6 @@ public class PlayerData : MonoBehaviour
             $"{Str.Item_a_Mushroom} : {Item_a_Mushroom}\n" +
             $"{Str.Item_b_Wandoo} : {Item_b_Wandoo}\n" +
             $"{Str.Item_c_Reset} : {Item_c_Reset}\n" +
-            $"{Str.Item_d_SwitchRows} : {Item_d_SwitchRows}\n" +
-            $"{Str.Item_e_SwitchColumns} : {Item_e_SwitchColumns}\n" +
             $"{Str.Item_f_Bumb} : {Item_f_Bumb}\n" +
             $"{Str.Item_g_Eraser} : {Item_g_Eraser}\n" +
             $"{Str.Item_h_PushLeft} : {Item_h_PushLeft}\n\n" +
@@ -114,19 +130,23 @@ public class PlayerData : MonoBehaviour
     private void SetTestData_Ecrypt()
     {
         NowScore = 0;
+        Level = 10000;
         Kong = 9999;
         // Item전 vs classic 데이터는 따로 저장
-        SetStr(Str.MyBestScore_Item, 9990.ToString());
-        SetStr(Str.MyBestScore_Classic, 9990.ToString());
+        SetStr(Str.MyBestScore_Item, 0.ToString());
+        SetStr(Str.MyBestScore_Classic, 0.ToString());
 
-        SetStr(Str.PlayerTotalScore_Item, 9990.ToString());
-        SetStr(Str.PlayerTotalScore_Classic, 9990.ToString());
+        StageManager.Stage = Str.eStage.Item;
+        PlayerTotalScore = 99999999;
+        StageManager.Stage = Str.eStage.Classic;
+        PlayerTotalScore = 99999999;
+        //  SetStr(Str.PlayerTotalScore_Item, 99999999.ToString());
+        //  SetStr(Str.PlayerTotalScore_Classic, 99999999.ToString());
 
         Item_a_Mushroom = 99;
         Item_b_Wandoo = 99;
         Item_c_Reset = 99;
-        Item_d_SwitchRows = 0;
-        Item_e_SwitchColumns = 0;
+
         Item_f_Bumb = 99;
         Item_g_Eraser = 99;
         Item_h_PushLeft = 99;

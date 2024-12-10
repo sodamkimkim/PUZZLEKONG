@@ -46,7 +46,7 @@ public class InGameManager : MonoBehaviour
     {
         UpdatePlayerData(false);
     }
-    public   void ReturnToHome()
+    public void ReturnToHome()
     {
         SceneManager.LoadScene("1.Lobby");
     }
@@ -91,8 +91,8 @@ public class InGameManager : MonoBehaviour
         }
     }
     private void UpdatePlayerData(bool isNeedCelebration)
-    { 
-        if (PlayerData.MyBestScore == PlayerData.NowScore)
+    {
+        if (PlayerData.MyBestScore < PlayerData.NowScore)
         {
             Debug.Log("BestScore °»½Å");
             if (isNeedCelebration)
@@ -109,15 +109,15 @@ public class InGameManager : MonoBehaviour
     private void StageCompleteProcess()
     {
         CompleteCnt++;
-        if(CompleteCnt == CompleteCntValue)
+        if (CompleteCnt == CompleteCntValue)
         {
             // 1ÄáÁö±Þ
-         //   _uiManager.
-          PlayerData.Kong++;
+            //   _uiManager.
+            PlayerData.Kong++;
             CompleteCnt = 0;
         }
 
-        
+
         _puzzleManager.LazyStart();
     }
 } // end of class
