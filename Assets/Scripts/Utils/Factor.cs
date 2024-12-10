@@ -2,6 +2,10 @@ using UnityEngine;
 
 public class Factor : MonoBehaviour
 {
+    #region GameData
+    public static int GamePriceKong = 1;
+    #endregion
+
     #region GridPartData 
     /// <summary>
     /// 0

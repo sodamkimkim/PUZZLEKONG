@@ -58,10 +58,15 @@ public class StoreUI : MonoBehaviour
             CancelInvoke(nameof(SetGIFFalse));
             Invoke(nameof(SetGIFFalse), 3f);
         }
-        if (StoreManager != null)
+        if (this.name == "UI_ETC_ADFORKONG")
         {
-            StoreManager.OpenItemDetail(this.gameObject.tag, this.name, _itemMainImage,_uiImageGIF, _itemTMPArr[0].text, _itemInfoStr, ItemCategory, _itemTMPArr[1].text);
+            // ±¤°íº¸°í 1Äá¾ò±â
         }
+        else if (StoreManager != null)
+        {
+            StoreManager.OpenItemDetail(this.gameObject.tag, this.name, _itemMainImage, _uiImageGIF, _itemTMPArr[0].text, _itemInfoStr, ItemCategory, _itemTMPArr[1].text);
+        }
+
     }
     private void SetGIFFalse()
     {
