@@ -52,8 +52,8 @@ public class UIManager : MonoBehaviour
     public TextMeshProUGUI Tmp_Level => _tmp_Level;
     public TextMeshProUGUI Tmp_Kong => _tmp_Kong;
     public TextMeshProUGUI Tmp_NowScore => _tmp_NowScore;
-    public TextMeshProUGUI Tmp_MyBest => _tmp_MyBest; 
-  public TextMeshProUGUI Tmp_PlayerTotal => _tmp_PlayerTotal; 
+    public TextMeshProUGUI Tmp_MyBest => _tmp_MyBest;
+    public TextMeshProUGUI Tmp_PlayerTotal => _tmp_PlayerTotal;
     #endregion
 
     private void Awake()
@@ -75,14 +75,14 @@ public class UIManager : MonoBehaviour
         if (StageManager.Stage == Str.eStage.Item)
         {
             Tmp_MyBest.text = $"MYBEST : {Util.InvariantCurture(PlayerData.GetInt(Str.MyBestScore_Item))}";
-             Tmp_PlayerTotal.text = $"TOTAL - ITEM : {Util.InvariantCurture(PlayerData.GetInt(Str.PlayerTotalScore_Item))}";  
+            Tmp_PlayerTotal.text = $"TOTAL - ITEM : {Util.InvariantCurture(PlayerData.GetInt(Str.PlayerTotalScore_Item))}";
         }
         else
         {
             Tmp_MyBest.text = $"MYBEST : {Util.InvariantCurture(PlayerData.GetInt(Str.MyBestScore_Classic))}";
-             Tmp_PlayerTotal.text = $"TOTAL - CLASSIC : {Util.InvariantCurture(PlayerData.GetInt(Str.PlayerTotalScore_Classic))}";  
+            Tmp_PlayerTotal.text = $"TOTAL - CLASSIC : {Util.InvariantCurture(PlayerData.GetInt(Str.PlayerTotalScore_Classic))}";
         }
-        Tmp_Kong.text = PlayerData.Kong.ToString();
+        Tmp_Kong.text = Util.InvariantCurture(PlayerData.Kong);
         Tmp_Level.text = PlayerData.Level.ToString();
     }
     public void GameOver_Timer(string text)

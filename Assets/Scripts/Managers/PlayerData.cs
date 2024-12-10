@@ -131,7 +131,7 @@ public class PlayerData : MonoBehaviour
     {
         NowScore = 0;
         Level = 10000;
-        Kong = 9999;
+        Kong = 999999999;
         // Item전 vs classic 데이터는 따로 저장
         SetStr(Str.MyBestScore_Item, 0.ToString());
         SetStr(Str.MyBestScore_Classic, 0.ToString());

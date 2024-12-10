@@ -112,9 +112,9 @@ public class InGameManager : MonoBehaviour
         if (CompleteCnt == CompleteCntValue)
         {
             // 1ÄáÁö±Ş
-            //   _uiManager.
             PlayerData.Kong++;
-            CompleteCnt = 0;
+           CompleteCnt = 0;
+            _uiManager.UpdateHeaderScore();
         }
 
 
